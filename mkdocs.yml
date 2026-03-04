@@ -1,0 +1,39 @@
+site_name: Curso de Programacao Orientada a Objetos
+site_description: Trilha de POO para Engenharia com C++ e Python
+site_url: ""
+repo_url: ""
+repo_name: ""
+
+theme:
+  name: material
+  language: pt-BR
+  features:
+    - navigation.sections
+    - navigation.expand
+    - content.code.copy
+
+plugins:
+  - search
+  - mkdocs-video
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - tables
+  - toc:
+      permalink: true
+
+exclude_docs: |
+  plano_de_implementacao.md
+  referencias.md
+  avaliacoes/
+  fundamentos_poo_cpp_python/
+  guias_operacionais/
+  modelagem_analise_codigo/
+  projeto_integrador/
+
+nav:
+  - Inicio: index.md
+  - 01. Fundamentos Git e IDE: fundamentos_git_ide/index.md
