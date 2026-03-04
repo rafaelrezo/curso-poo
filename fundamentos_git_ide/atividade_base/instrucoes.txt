@@ -1,0 +1,19 @@
+# Atividade base - Fundamentos Git e IDE
+
+Arquivos iniciais para a pratica:
+
+- `sensor.cpp`
+- `sensor.py`
+
+## C++
+
+```bash
+g++ -std=c++17 -Wall -Wextra -O2 sensor.cpp -o app_cpp
+./app_cpp
+```
+
+## Python
+
+```bash
+python3 sensor.py
+```
