@@ -93,7 +93,7 @@ Guias com capturas oficiais:
 
 ### Video da aula (Git)
 
-![type:video](https://www.youtube.com/embed/gMh6lrXibWY)
+![type:video](https://www.youtube.com/embed/4hpUALY4Rrk)
 
 ### 2.1 Conceitos principais
 
