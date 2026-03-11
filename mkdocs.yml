@@ -29,7 +29,6 @@ exclude_docs: |
   plano_de_implementacao.md
   referencias.md
   avaliacoes/
-  fundamentos_poo_cpp_python/
   guias_operacionais/
   modelagem_analise_codigo/
   projeto_integrador/
@@ -37,3 +36,4 @@ exclude_docs: |
 nav:
   - Inicio: index.md
   - 01. Fundamentos Git e IDE: fundamentos_git_ide/index.md
+  - 02. Fundamentos de POO em C++ e Python: fundamentos_poo_cpp_python/index.md

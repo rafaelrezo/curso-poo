@@ -16,32 +16,32 @@
 
 ## 1. Conteudo liberado hoje
 
-- Hoje o foco e apenas `Fundamentos Git e IDE`.
-- As demais unidades foram mantidas no repositorio, mas ocultadas temporariamente da navegacao.
-- Objetivo da aula: preparar ambiente, criar codigo, versionar e colaborar com PR.
+- `01. Fundamentos Git e IDE`: preparar ambiente, criar repositorio, sincronizar e colaborar.
+- `02. Fundamentos de POO em C++ e Python`: iniciar classes, objetos, metodos e construtores com exemplos guiados.
+- As demais unidades continuam no repositorio, mas seguem ocultadas enquanto a trilha inicial e consolidada.
 
-## 2. Trilha da aula de hoje
+## 2. Trilha inicial do curso
 
 1. Uso do VS Code para C++ e Python (criar, compilar e executar).
 2. Fundamentos de Git e GitHub no fluxo pratico.
-3. Colaboracao com branch, fork e pull request.
-4. Atividade guiada em dupla com compartilhamento de repositorio.
+3. Criacao do repositorio e sincronizacao com remoto.
+4. Introducao a classes, objetos, metodos e construtores em C++.
 
-## 3. Resultado esperado ao final da aula
+## 3. Resultado esperado nesta virada de unidade
 
 - Cada aluno com repositorio funcional no GitHub.
-- Historico de commits organizado por etapas de desenvolvimento.
-- Um PR aberto e revisado entre colegas.
+- Autonomia minima para clonar, versionar e sincronizar alteracoes.
+- Base conceitual suficiente para comecar a ler codigo orientado a objetos.
 
 ## Mini-caso pratico
 
-Dois alunos implementam um calculo simples de media de sensores em C++ e Python, versionam em etapas e integram melhorias por PR.
+Um aluno cria e sincroniza seu repositorio; na sequencia, le e adapta um exemplo de `Sensor` em C++ para entender como um objeto representa um elemento real da planta ou bancada.
 
 ## Perguntas de revisao rapida
 
 1. Qual a diferenca entre `commit` e `push`?
-2. Quando usar branch e quando usar fork?
-3. Por que PR com revisao melhora a qualidade da entrega?
+2. O que muda quando passamos de variaveis soltas para um objeto com estado e comportamento?
+3. Por que ler criticamente um exemplo pronto e tao importante quanto conseguir executa-lo?
 
 ## Fontes de referencia
 
