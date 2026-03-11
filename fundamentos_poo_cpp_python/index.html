@@ -1,0 +1,1729 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Trilha de POO para Engenharia com C++ e Python">
+      
+      
+      
+      
+        <link rel="prev" href="../fundamentos_git_ide/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
+    
+    
+      
+        <title>02. Fundamentos de POO em C++ e Python - Curso de Programacao Orientada a Objetos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fundamentos-de-poo-em-c-classes-objetos-metodos-e-construtores" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href=".." title="Curso de Programacao Orientada a Objetos" class="md-header__button md-logo" aria-label="Curso de Programacao Orientada a Objetos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Curso de Programacao Orientada a Objetos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              02. Fundamentos de POO em C++ e Python
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Curso de Programacao Orientada a Objetos" class="md-nav__button md-logo" aria-label="Curso de Programacao Orientada a Objetos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Curso de Programacao Orientada a Objetos
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fundamentos_git_ide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01. Fundamentos Git e IDE
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02. Fundamentos de POO em C++ e Python
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02. Fundamentos de POO em C++ e Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#objetivos-de-aprendizagem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos de aprendizagem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#video-da-aula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video da aula
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-antes-de-falar-de-sintaxe-por-que-poo-importa-aqui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Antes de falar de sintaxe: por que POO importa aqui?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-roteiro-base-com-w3schools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Roteiro base com W3Schools
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Roteiro base com W3Schools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-usar-esta-trilha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como usar esta trilha
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-classe-e-objeto-no-contexto-de-engenharia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Classe e objeto no contexto de engenharia
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Classe e objeto no contexto de engenharia">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-em-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo em C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-que-ler-criticamente-aqui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que ler criticamente aqui
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#primeira-conclusao-importante" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Primeira conclusao importante
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-metodos-comportamento-tambem-pertence-ao-objeto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Metodos: comportamento tambem pertence ao objeto
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Metodos: comportamento tambem pertence ao objeto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-em-c_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo em C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leitura-critica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leitura critica
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quando-faz-sentido-mover-comportamento-para-a-classe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quando faz sentido mover comportamento para a classe
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-construtores-o-objeto-deve-nascer-pronto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Construtores: o objeto deve nascer pronto
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Construtores: o objeto deve nascer pronto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-em-c_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo em C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-ganho-pratico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O ganho pratico
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-ponte-c-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Ponte C++ -&gt; Python
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Ponte C++ -&gt; Python">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mesmo-conceito-em-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mesmo conceito em C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mesmo-conceito-em-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mesmo conceito em Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-que-destacar-em-aula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que destacar em aula
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-pratica-guiada-do-exemplo-da-w3schools-para-um-problema-real" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Pratica guiada: do exemplo da W3Schools para um problema real
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Pratica guiada: do exemplo da W3Schools para um problema real">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#etapa-1-comece-pelo-exemplo-pronto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Etapa 1. Comece pelo exemplo pronto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etapa-2-troque-o-dominio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Etapa 2. Troque o dominio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etapa-3-adicione-um-comportamento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Etapa 3. Adicione um comportamento
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etapa-4-force-um-estado-inicial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Etapa 4. Force um estado inicial
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etapa-5-faca-a-revisao-do-proprio-codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Etapa 5. Faca a revisao do proprio codigo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-leitura-critica-de-codigo-nao-aceite-qualquer-classe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Leitura critica de codigo: nao aceite qualquer classe
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Leitura critica de codigo: nao aceite qualquer classe">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-que-esta-bom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que esta bom
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-que-esta-fraco" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que esta fraco
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-pensamento-critico-que-queremos-formar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O pensamento critico que queremos formar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-mini-caso-pratico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Mini-caso pratico
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-videos-e-cursos-ilustrativos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Videos e cursos ilustrativos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Videos e cursos ilustrativos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#video-principal-desta-unidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video principal desta unidade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#video-complementar-curto-para-construtores-em-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video complementar curto para construtores em C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trilha-externa-opcional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trilha externa opcional
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#perguntas-de-revisao-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perguntas de revisao rapida
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fontes-de-referencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fontes de referencia
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#objetivos-de-aprendizagem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos de aprendizagem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#video-da-aula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video da aula
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-antes-de-falar-de-sintaxe-por-que-poo-importa-aqui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Antes de falar de sintaxe: por que POO importa aqui?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-roteiro-base-com-w3schools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Roteiro base com W3Schools
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Roteiro base com W3Schools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-usar-esta-trilha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como usar esta trilha
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-classe-e-objeto-no-contexto-de-engenharia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Classe e objeto no contexto de engenharia
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Classe e objeto no contexto de engenharia">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-em-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo em C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-que-ler-criticamente-aqui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que ler criticamente aqui
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#primeira-conclusao-importante" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Primeira conclusao importante
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-metodos-comportamento-tambem-pertence-ao-objeto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Metodos: comportamento tambem pertence ao objeto
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Metodos: comportamento tambem pertence ao objeto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-em-c_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo em C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leitura-critica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leitura critica
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quando-faz-sentido-mover-comportamento-para-a-classe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quando faz sentido mover comportamento para a classe
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-construtores-o-objeto-deve-nascer-pronto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Construtores: o objeto deve nascer pronto
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Construtores: o objeto deve nascer pronto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-em-c_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo em C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-ganho-pratico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O ganho pratico
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-ponte-c-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Ponte C++ -&gt; Python
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Ponte C++ -&gt; Python">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mesmo-conceito-em-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mesmo conceito em C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mesmo-conceito-em-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mesmo conceito em Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-que-destacar-em-aula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que destacar em aula
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-pratica-guiada-do-exemplo-da-w3schools-para-um-problema-real" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Pratica guiada: do exemplo da W3Schools para um problema real
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Pratica guiada: do exemplo da W3Schools para um problema real">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#etapa-1-comece-pelo-exemplo-pronto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Etapa 1. Comece pelo exemplo pronto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etapa-2-troque-o-dominio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Etapa 2. Troque o dominio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etapa-3-adicione-um-comportamento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Etapa 3. Adicione um comportamento
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etapa-4-force-um-estado-inicial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Etapa 4. Force um estado inicial
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etapa-5-faca-a-revisao-do-proprio-codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Etapa 5. Faca a revisao do proprio codigo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-leitura-critica-de-codigo-nao-aceite-qualquer-classe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Leitura critica de codigo: nao aceite qualquer classe
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Leitura critica de codigo: nao aceite qualquer classe">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-que-esta-bom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que esta bom
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-que-esta-fraco" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que esta fraco
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-pensamento-critico-que-queremos-formar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O pensamento critico que queremos formar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-mini-caso-pratico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Mini-caso pratico
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-videos-e-cursos-ilustrativos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Videos e cursos ilustrativos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Videos e cursos ilustrativos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#video-principal-desta-unidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video principal desta unidade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#video-complementar-curto-para-construtores-em-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video complementar curto para construtores em C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trilha-externa-opcional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trilha externa opcional
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#perguntas-de-revisao-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perguntas de revisao rapida
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fontes-de-referencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fontes de referencia
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<div><h1 id="fundamentos-de-poo-em-c-classes-objetos-metodos-e-construtores">Fundamentos de POO em C++: classes, objetos, metodos e construtores<a class="headerlink" href="#fundamentos-de-poo-em-c-classes-objetos-metodos-e-construtores" title="Permanent link">¶</a></h1>
+<h2 id="objetivos-de-aprendizagem">Objetivos de aprendizagem<a class="headerlink" href="#objetivos-de-aprendizagem" title="Permanent link">¶</a></h2>
+<ul>
+<li>Entender o que <code>classe</code>, <code>objeto</code>, <code>metodo</code> e <code>construtor</code> resolvem na pratica.</li>
+<li>Ler exemplos simples em C++ com olhar critico, identificando estado, comportamento e riscos.</li>
+<li>Traduzir o mesmo conceito de C++ para Python sem perder o foco no modelo do problema.</li>
+</ul>
+<p><strong>Tempo estimado:</strong> 4h</p>
+<h2 id="video-da-aula">Video da aula<a class="headerlink" href="#video-da-aula" title="Permanent link">¶</a></h2>
+<p><div class="video-container"><iframe src="https://www.youtube.com/embed/GHLFEhdk7Ys" style="position:relative;width:100%;height:22.172vw" frameborder="0" allowfullscreen alt="type:video"></iframe></div></p>
+<hr>
+<h2 id="1-antes-de-falar-de-sintaxe-por-que-poo-importa-aqui">1. Antes de falar de sintaxe: por que POO importa aqui?<a class="headerlink" href="#1-antes-de-falar-de-sintaxe-por-que-poo-importa-aqui" title="Permanent link">¶</a></h2>
+<p>Quem veio de C ja sabe escrever passos. O novo desafio agora e organizar o programa em partes que facam sentido no dominio.</p>
+<p>Para alunos de engenharia de controle e automacao, isso aparece o tempo todo:</p>
+<ul>
+<li>um <code>Sensor</code> tem estado: tag, unidade, valor lido;</li>
+<li>uma <code>Valvula</code> tem comportamento: abrir, fechar, limitar abertura;</li>
+<li>um <code>Reservatorio</code> precisa garantir regras: nivel nao pode ficar negativo.</li>
+</ul>
+<p>Em vez de espalhar dados e funcoes pelo programa inteiro, a POO aproxima o codigo do equipamento, do processo ou do servico que estamos modelando.</p>
+<p><strong>Ideia central desta aula:</strong> classe nao existe para "deixar o codigo mais bonito". Classe existe para concentrar responsabilidade.</p>
+<hr>
+<h2 id="2-roteiro-base-com-w3schools">2. Roteiro base com W3Schools<a class="headerlink" href="#2-roteiro-base-com-w3schools" title="Permanent link">¶</a></h2>
+<p>Voce ja usou em sala os links da W3Schools. Nesta unidade eles viram o trilho principal de leitura e experimentacao.</p>
+<table>
+<thead>
+<tr>
+<th>Secao</th>
+<th>Leitura base</th>
+<th>Link direto para testar</th>
+<th>O que observar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Visao geral de OO</td>
+<td><a href="https://www.w3schools.com/cpp/cpp_oop.asp">C++ OOP</a></td>
+<td><a href="https://www.w3schools.com/cpp/default.asp">Tutorial C++</a></td>
+<td>C++ suporta POO, mas continua sendo uma linguagem multiparadigma</td>
+</tr>
+<tr>
+<td>Classe e objeto</td>
+<td><a href="https://www.w3schools.com/cpp/cpp_classes.asp">Classes/Objects</a></td>
+<td><a href="https://www.w3schools.com/cpp/trycpp.asp?filename=demo_object_attr">Try: atributos em objeto</a></td>
+<td>diferenca entre molde (<code>class</code>) e instancia (<code>obj</code>)</td>
+</tr>
+<tr>
+<td>Metodos</td>
+<td><a href="https://www.w3schools.com/cpp/cpp_class_methods.asp">Class Methods</a></td>
+<td><a href="https://www.w3schools.com/cpp/trycpp.asp?filename=demo_object_method">Try: metodo na classe</a></td>
+<td>o metodo age sobre um objeto concreto</td>
+</tr>
+<tr>
+<td>Construtores</td>
+<td><a href="https://www.w3schools.com/cpp/cpp_constructors.asp">Constructors</a></td>
+<td><a href="https://www.w3schools.com/cpp/trycpp.asp?filename=demo_constructor">Try: construtor simples</a></td>
+<td>o objeto nasce com uma configuracao inicial</td>
+</tr>
+<tr>
+<td>Construtor com parametros</td>
+<td><a href="https://www.w3schools.com/cpp/cpp_constructors.asp">Constructors</a></td>
+<td><a href="https://www.w3schools.com/cpp/trycpp.asp?filename=demo_constructor_param">Try: construtor com parametros</a></td>
+<td>criar objeto pronto costuma ser melhor que "criar vazio e remendar depois"</td>
+</tr>
+</tbody>
+</table>
+<h3 id="como-usar-esta-trilha">Como usar esta trilha<a class="headerlink" href="#como-usar-esta-trilha" title="Permanent link">¶</a></h3>
+<ol>
+<li>Leia a secao na W3Schools.</li>
+<li>Abra o <code>Try it Yourself</code>.</li>
+<li>Rode o codigo sem alterar nada.</li>
+<li>Mude nomes, valores e mensagens.</li>
+<li>Responda: "o que esta guardado no objeto?" e "o que o metodo faz por esse objeto?".</li>
+</ol>
+<hr>
+<h2 id="3-classe-e-objeto-no-contexto-de-engenharia">3. Classe e objeto no contexto de engenharia<a class="headerlink" href="#3-classe-e-objeto-no-contexto-de-engenharia" title="Permanent link">¶</a></h2>
+<p>Uma forma simples de pensar:</p>
+<ul>
+<li><code>classe</code> = especificacao do componente;</li>
+<li><code>objeto</code> = componente concreto criado a partir dessa especificacao.</li>
+</ul>
+<h3 id="exemplo-em-c">Exemplo em C++<a class="headerlink" href="#exemplo-em-c" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Sensor</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">tag</span><span class="p">;</span>
+<span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">unidade</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">valor</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Sensor</span><span class="w"> </span><span class="n">sensorSala</span><span class="p">;</span>
+<span class="w">    </span><span class="n">sensorSala</span><span class="p">.</span><span class="n">tag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"TQ-01"</span><span class="p">;</span>
+<span class="w">    </span><span class="n">sensorSala</span><span class="p">.</span><span class="n">unidade</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"C"</span><span class="p">;</span>
+<span class="w">    </span><span class="n">sensorSala</span><span class="p">.</span><span class="n">valor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">26.4</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">sensorSala</span><span class="p">.</span><span class="n">tag</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">" = "</span>
+<span class="w">         </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">sensorSala</span><span class="p">.</span><span class="n">valor</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">" "</span>
+<span class="w">         </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">sensorSala</span><span class="p">.</span><span class="n">unidade</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="o-que-ler-criticamente-aqui">O que ler criticamente aqui<a class="headerlink" href="#o-que-ler-criticamente-aqui" title="Permanent link">¶</a></h3>
+<ul>
+<li>A classe representa algo do mundo real ou e apenas um pacote solto de variaveis?</li>
+<li>O nome da classe ajuda a entender o dominio?</li>
+<li>O objeto nasce em estado valido ou qualquer valor serve?</li>
+<li>Se outro trecho do programa escrever <code>valor = -999</code>, quem impede?</li>
+</ul>
+<h3 id="primeira-conclusao-importante">Primeira conclusao importante<a class="headerlink" href="#primeira-conclusao-importante" title="Permanent link">¶</a></h3>
+<p>Para comecar, atributos publicos ajudam a visualizar o conceito. Para manter software real, isso costuma ser insuficiente. Em breve voce vai estudar encapsulamento exatamente por causa desse limite.</p>
+<hr>
+<h2 id="4-metodos-comportamento-tambem-pertence-ao-objeto">4. Metodos: comportamento tambem pertence ao objeto<a class="headerlink" href="#4-metodos-comportamento-tambem-pertence-ao-objeto" title="Permanent link">¶</a></h2>
+<p>Se a classe so guarda dados, o risco e virar uma "estrutura com nome bonito". O proximo passo e colocar comportamento relevante dentro dela.</p>
+<h3 id="exemplo-em-c_1">Exemplo em C++<a class="headerlink" href="#exemplo-em-c_1" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Sensor</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">tag</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">valor</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">exibirLeitura</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">tag</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">" -&gt; "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">valor</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Sensor</span><span class="w"> </span><span class="n">sensorSala</span><span class="p">;</span>
+<span class="w">    </span><span class="n">sensorSala</span><span class="p">.</span><span class="n">tag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"TQ-01"</span><span class="p">;</span>
+<span class="w">    </span><span class="n">sensorSala</span><span class="p">.</span><span class="n">valor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">26.4</span><span class="p">;</span>
+<span class="w">    </span><span class="n">sensorSala</span><span class="p">.</span><span class="n">exibirLeitura</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="leitura-critica">Leitura critica<a class="headerlink" href="#leitura-critica" title="Permanent link">¶</a></h3>
+<p>Perguntas que o aluno deve aprender a fazer:</p>
+<ol>
+<li>Esse metodo realmente pertence ao objeto ou deveria estar fora da classe?</li>
+<li>O nome do metodo descreve uma acao observavel?</li>
+<li>O metodo depende de dados que estao coerentes?</li>
+<li>Se eu tiver 20 sensores, esse metodo ajuda a evitar repeticao?</li>
+</ol>
+<h3 id="quando-faz-sentido-mover-comportamento-para-a-classe">Quando faz sentido mover comportamento para a classe<a class="headerlink" href="#quando-faz-sentido-mover-comportamento-para-a-classe" title="Permanent link">¶</a></h3>
+<ul>
+<li>quando a acao depende do estado interno do objeto;</li>
+<li>quando a regra precisa acompanhar o dado;</li>
+<li>quando isso reduz repeticao e ambiguidade.</li>
+</ul>
+<hr>
+<h2 id="5-construtores-o-objeto-deve-nascer-pronto">5. Construtores: o objeto deve nascer pronto<a class="headerlink" href="#5-construtores-o-objeto-deve-nascer-pronto" title="Permanent link">¶</a></h2>
+<p>Uma classe melhora muito quando ela evita objetos "quebrados" logo na criacao.</p>
+<h3 id="exemplo-em-c_2">Exemplo em C++<a class="headerlink" href="#exemplo-em-c_2" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Sensor</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">tag</span><span class="p">;</span>
+<span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">unidade</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">valor</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">Sensor</span><span class="p">(</span><span class="n">string</span><span class="w"> </span><span class="n">novaTag</span><span class="p">,</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="n">novaUnidade</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">valorInicial</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">tag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">novaTag</span><span class="p">;</span>
+<span class="w">        </span><span class="n">unidade</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">novaUnidade</span><span class="p">;</span>
+<span class="w">        </span><span class="n">valor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">valorInicial</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">exibirLeitura</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">tag</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">" = "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">valor</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">" "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">unidade</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Sensor</span><span class="w"> </span><span class="n">sensorSala</span><span class="p">(</span><span class="s">"TQ-01"</span><span class="p">,</span><span class="w"> </span><span class="s">"C"</span><span class="p">,</span><span class="w"> </span><span class="mf">26.4</span><span class="p">);</span>
+<span class="w">    </span><span class="n">sensorSala</span><span class="p">.</span><span class="n">exibirLeitura</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="o-ganho-pratico">O ganho pratico<a class="headerlink" href="#o-ganho-pratico" title="Permanent link">¶</a></h3>
+<p>Sem construtor, o programa pode criar um objeto vazio e preencher depois.
+Com construtor, o programa cria um objeto que ja nasce com identidade minima.</p>
+<p>Para o aluno iniciante, a pergunta certa nao e "qual a sintaxe do construtor?".
+A pergunta certa e:</p>
+<p><strong>"Quais dados sao obrigatorios para esse objeto existir de forma coerente?"</strong></p>
+<p>Essa pergunta melhora a modelagem.</p>
+<hr>
+<h2 id="6-ponte-c-python">6. Ponte C++ -&gt; Python<a class="headerlink" href="#6-ponte-c-python" title="Permanent link">¶</a></h2>
+<p>O conceito e o mesmo. A diferenca principal, neste ponto do curso, e sintatica.</p>
+<h3 id="mesmo-conceito-em-c">Mesmo conceito em C++<a class="headerlink" href="#mesmo-conceito-em-c" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Valvula</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">tag</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">abertura</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">Valvula</span><span class="p">(</span><span class="n">string</span><span class="w"> </span><span class="n">novaTag</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">aberturaInicial</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">tag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">novaTag</span><span class="p">;</span>
+<span class="w">        </span><span class="n">abertura</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aberturaInicial</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">exibirEstado</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">tag</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">" -&gt; "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">abertura</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"%</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Valvula</span><span class="w"> </span><span class="n">v1</span><span class="p">(</span><span class="s">"XV-02"</span><span class="p">,</span><span class="w"> </span><span class="mf">35.0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">v1</span><span class="p">.</span><span class="n">exibirEstado</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="mesmo-conceito-em-python">Mesmo conceito em Python<a class="headerlink" href="#mesmo-conceito-em-python" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Valvula</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">abertura</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">abertura</span> <span class="o">=</span> <span class="n">abertura</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">exibir_estado</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">abertura</span><span class="si">}</span><span class="s2">%"</span><span class="p">)</span>
+
+
+<span class="n">v1</span> <span class="o">=</span> <span class="n">Valvula</span><span class="p">(</span><span class="s2">"XV-02"</span><span class="p">,</span> <span class="mf">35.0</span><span class="p">)</span>
+<span class="n">v1</span><span class="o">.</span><span class="n">exibir_estado</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="o-que-destacar-em-aula">O que destacar em aula<a class="headerlink" href="#o-que-destacar-em-aula" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th>C++</th>
+<th>Python</th>
+<th>Impacto didatico</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Criacao da classe</td>
+<td><code>class Nome { ... };</code></td>
+<td><code>class Nome:</code></td>
+<td>muda a forma, nao muda a ideia</td>
+</tr>
+<tr>
+<td>Construtor</td>
+<td>mesmo nome da classe</td>
+<td><code>__init__</code></td>
+<td>ambos inicializam o objeto</td>
+</tr>
+<tr>
+<td>Chamada de metodo</td>
+<td><code>obj.metodo()</code></td>
+<td><code>obj.metodo()</code></td>
+<td>o uso do objeto e muito parecido</td>
+</tr>
+<tr>
+<td>Declaracao de atributos</td>
+<td>mais explicita</td>
+<td>mais flexivel</td>
+<td>C++ ajuda a ver melhor o tipo; Python reduz ruido visual</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="7-pratica-guiada-do-exemplo-da-w3schools-para-um-problema-real">7. Pratica guiada: do exemplo da W3Schools para um problema real<a class="headerlink" href="#7-pratica-guiada-do-exemplo-da-w3schools-para-um-problema-real" title="Permanent link">¶</a></h2>
+<h3 id="etapa-1-comece-pelo-exemplo-pronto">Etapa 1. Comece pelo exemplo pronto<a class="headerlink" href="#etapa-1-comece-pelo-exemplo-pronto" title="Permanent link">¶</a></h3>
+<p>Abra:</p>
+<ul>
+<li><a href="https://www.w3schools.com/cpp/trycpp.asp?filename=demo_object_attr">Try: atributos em objeto</a></li>
+<li><a href="https://www.w3schools.com/cpp/trycpp.asp?filename=demo_object_method">Try: metodo na classe</a></li>
+<li><a href="https://www.w3schools.com/cpp/trycpp.asp?filename=demo_constructor_param">Try: construtor com parametros</a></li>
+</ul>
+<h3 id="etapa-2-troque-o-dominio">Etapa 2. Troque o dominio<a class="headerlink" href="#etapa-2-troque-o-dominio" title="Permanent link">¶</a></h3>
+<p>Substitua <code>MyClass</code> por <code>Sensor</code>.</p>
+<p>Troque os campos genericos por:</p>
+<ul>
+<li><code>tag</code></li>
+<li><code>unidade</code></li>
+<li><code>valor</code></li>
+</ul>
+<h3 id="etapa-3-adicione-um-comportamento">Etapa 3. Adicione um comportamento<a class="headerlink" href="#etapa-3-adicione-um-comportamento" title="Permanent link">¶</a></h3>
+<p>Crie um metodo <code>exibirLeitura()</code> que mostre:</p>
+<div class="highlight"><pre><span></span><code>TQ-01 = 26.4 C
+</code></pre></div>
+<h3 id="etapa-4-force-um-estado-inicial">Etapa 4. Force um estado inicial<a class="headerlink" href="#etapa-4-force-um-estado-inicial" title="Permanent link">¶</a></h3>
+<p>Agora remova a criacao "vazia" do objeto e use construtor:</p>
+<div class="highlight"><pre><span></span><code><span class="n">Sensor</span><span class="w"> </span><span class="n">sensorSala</span><span class="p">(</span><span class="s">"TQ-01"</span><span class="p">,</span><span class="w"> </span><span class="s">"C"</span><span class="p">,</span><span class="w"> </span><span class="mf">26.4</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="etapa-5-faca-a-revisao-do-proprio-codigo">Etapa 5. Faca a revisao do proprio codigo<a class="headerlink" href="#etapa-5-faca-a-revisao-do-proprio-codigo" title="Permanent link">¶</a></h3>
+<p>Antes de considerar a atividade pronta, responda:</p>
+<ol>
+<li>O nome da classe representa um objeto do dominio?</li>
+<li>O objeto pode nascer sem informacao essencial?</li>
+<li>O metodo criado usa dados do proprio objeto?</li>
+<li>Algum atributo aceitaria valores absurdos sem nenhuma regra?</li>
+<li>O codigo esta facil de ler para um colega?</li>
+</ol>
+<hr>
+<h2 id="8-leitura-critica-de-codigo-nao-aceite-qualquer-classe">8. Leitura critica de codigo: nao aceite qualquer classe<a class="headerlink" href="#8-leitura-critica-de-codigo-nao-aceite-qualquer-classe" title="Permanent link">¶</a></h2>
+<p>Leia este exemplo:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Sensor</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">tag</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">valor</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">setValor</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">valor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<h3 id="o-que-esta-bom">O que esta bom<a class="headerlink" href="#o-que-esta-bom" title="Permanent link">¶</a></h3>
+<ul>
+<li>o nome da classe faz sentido;</li>
+<li>existe uma tentativa de centralizar a alteracao do valor.</li>
+</ul>
+<h3 id="o-que-esta-fraco">O que esta fraco<a class="headerlink" href="#o-que-esta-fraco" title="Permanent link">¶</a></h3>
+<ul>
+<li><code>tag</code> continua exposta e pode ser alterada livremente;</li>
+<li><code>setValor()</code> nao valida nada;</li>
+<li>o codigo nao deixa claro qual faixa de valor e aceitavel;</li>
+<li>qualquer objeto pode nascer sem <code>tag</code>;</li>
+<li>a classe ainda esta muito proxima de um pacote de dados.</li>
+</ul>
+<h3 id="o-pensamento-critico-que-queremos-formar">O pensamento critico que queremos formar<a class="headerlink" href="#o-pensamento-critico-que-queremos-formar" title="Permanent link">¶</a></h3>
+<p>O aluno nao deve olhar para o codigo e perguntar apenas:</p>
+<p><strong>"Compila?"</strong></p>
+<p>Ele deve perguntar tambem:</p>
+<ul>
+<li>faz sentido para o dominio?</li>
+<li>protege o estado do objeto?</li>
+<li>facilita manutencao?</li>
+<li>comunica a intencao?</li>
+</ul>
+<p>Essa habilidade de leitura sera mais importante do que apenas gerar codigo.</p>
+<hr>
+<h2 id="9-mini-caso-pratico">9. Mini-caso pratico<a class="headerlink" href="#9-mini-caso-pratico" title="Permanent link">¶</a></h2>
+<p>Uma bancada de teste possui tres componentes:</p>
+<ul>
+<li><code>SensorTemperatura</code></li>
+<li><code>Valvula</code></li>
+<li><code>Reservatorio</code></li>
+</ul>
+<p>Escolha um deles e modele:</p>
+<ol>
+<li>quais dados minimos ele precisa guardar;</li>
+<li>qual metodo simples ele deve oferecer;</li>
+<li>quais dados devem ser obrigatorios no construtor.</li>
+</ol>
+<p><strong>Desafio de revisao:</strong> troque seu codigo com um colega e peca que ele responda:</p>
+<ul>
+<li>o objeto nasce coerente?</li>
+<li>o nome dos membros esta claro?</li>
+<li>o metodo representa uma acao real?</li>
+<li>falta alguma regra de negocio?</li>
+</ul>
+<hr>
+<h2 id="10-videos-e-cursos-ilustrativos">10. Videos e cursos ilustrativos<a class="headerlink" href="#10-videos-e-cursos-ilustrativos" title="Permanent link">¶</a></h2>
+<h3 id="video-principal-desta-unidade">Video principal desta unidade<a class="headerlink" href="#video-principal-desta-unidade" title="Permanent link">¶</a></h3>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=GHLFEhdk7Ys">UNIVESP - Programacao Orientada a Objetos: Classes e Objetos</a></li>
+</ul>
+<h3 id="video-complementar-curto-para-construtores-em-c">Video complementar curto para construtores em C++<a class="headerlink" href="#video-complementar-curto-para-construtores-em-c" title="Permanent link">¶</a></h3>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=lkaDJMwwGXw">Tutorial C++ - Construtores (MrAppleBR)</a></li>
+</ul>
+<h3 id="trilha-externa-opcional">Trilha externa opcional<a class="headerlink" href="#trilha-externa-opcional" title="Permanent link">¶</a></h3>
+<ul>
+<li><a href="https://www.w3schools.com/cpp/default.asp">W3Schools C++ Tutorial</a></li>
+<li><a href="https://www.youtube.com/watch?v=tHXO_j4RfGw">UNIVESP - Apresentacao da disciplina de POO</a></li>
+</ul>
+<p>Observacao didatica: o video da UNIVESP ajuda no conceito. A W3Schools entra como laboratorio rapido porque permite editar e executar exemplos no navegador.</p>
+<hr>
+<h2 id="perguntas-de-revisao-rapida">Perguntas de revisao rapida<a class="headerlink" href="#perguntas-de-revisao-rapida" title="Permanent link">¶</a></h2>
+<ol>
+<li>Qual a diferenca pratica entre <code>classe</code> e <code>objeto</code>?</li>
+<li>Por que um <code>metodo</code> pode ser melhor do que uma funcao solta em alguns casos?</li>
+<li>O que um construtor bem pensado evita no inicio da vida do objeto?</li>
+</ol>
+<h2 id="fontes-de-referencia">Fontes de referencia<a class="headerlink" href="#fontes-de-referencia" title="Permanent link">¶</a></h2>
+<ul>
+<li>https://www.w3schools.com/cpp/cpp_oop.asp</li>
+<li>https://www.w3schools.com/cpp/cpp_classes.asp</li>
+<li>https://www.w3schools.com/cpp/cpp_class_methods.asp</li>
+<li>https://www.w3schools.com/cpp/cpp_constructors.asp</li>
+<li>https://www.w3schools.com/cpp/trycpp.asp?filename=demo_object_attr</li>
+<li>https://www.w3schools.com/cpp/trycpp.asp?filename=demo_object_method</li>
+<li>https://www.w3schools.com/cpp/trycpp.asp?filename=demo_constructor</li>
+<li>https://www.w3schools.com/cpp/trycpp.asp?filename=demo_constructor_param</li>
+<li>https://en.cppreference.com/w/cpp/language/class</li>
+<li>https://en.cppreference.com/w/cpp/language/constructor</li>
+<li>https://docs.python.org/3/tutorial/classes.html</li>
+</ul></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.expand", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
