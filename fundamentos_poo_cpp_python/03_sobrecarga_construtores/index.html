@@ -1,0 +1,2269 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Trilha de POO para Engenharia com C++ e Python">
+      
+      
+      
+      
+        <link rel="prev" href="../">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
+    
+    
+      
+        <title>03. Sobrecarga de Construtores em C++ - Curso de Programacao Orientada a Objetos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sobrecarga-de-construtores-em-c-modelando-gemeos-digitais-na-piramide-de-automacao" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../.." title="Curso de Programacao Orientada a Objetos" class="md-header__button md-logo" aria-label="Curso de Programacao Orientada a Objetos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Curso de Programacao Orientada a Objetos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              03. Sobrecarga de Construtores em C++
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Curso de Programacao Orientada a Objetos" class="md-nav__button md-logo" aria-label="Curso de Programacao Orientada a Objetos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Curso de Programacao Orientada a Objetos
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fundamentos_git_ide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01. Fundamentos Git e IDE
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02. Fundamentos de POO em C++ e Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03. Sobrecarga de Construtores em C++
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03. Sobrecarga de Construtores em C++
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#objetivos-de-aprendizagem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos de aprendizagem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#video-da-aula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video da aula
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-problema-de-modelagem-o-mesmo-equipamento-pode-nascer-com-informacoes-diferentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Problema de modelagem: o mesmo equipamento pode nascer com informacoes diferentes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-roteiro-base-com-w3schools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Roteiro base com W3Schools
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Roteiro base com W3Schools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-usar-esta-trilha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como usar esta trilha
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-fundamentacao-teorica-o-que-e-sobrecarga-de-construtor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Fundamentacao teorica: o que e sobrecarga de construtor?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Fundamentacao teorica: o que e sobrecarga de construtor?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-que-isso-significa-na-pratica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que isso significa na pratica
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quando-faz-sentido-usar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quando faz sentido usar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quando-nao-faz-sentido-usar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quando nao faz sentido usar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leitura-didatica-no-contexto-da-piramide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leitura didatica no contexto da piramide
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regra-de-bolso-para-o-aluno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regra de bolso para o aluno
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-como-c-suporta-isso-formalmente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Como C++ suporta isso formalmente
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Como C++ suporta isso formalmente">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#regras-importantes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regras importantes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-curto-de-ideia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo curto de ideia
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ponto-tecnico-importante" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ponto tecnico importante
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#boas-praticas-minimas-em-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Boas praticas minimas em C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#erros-comuns-em-sala" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Erros comuns em sala
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-exemplo-aplicado-gemeos-digitais-de-sensores-atuadores-e-controladores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Exemplo aplicado: gemeos digitais de sensores, atuadores e controladores
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Exemplo aplicado: gemeos digitais de sensores, atuadores e controladores">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-que-esse-exemplo-mostra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que esse exemplo mostra
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trecho-central-em-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trecho central em C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-esse-exemplo-e-didatico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por que esse exemplo e didatico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leitura-guiada-da-saida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leitura guiada da saida
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-compilar-em-sala" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como compilar em sala
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-ponte-c-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Ponte C++ -&gt; Python
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Ponte C++ -&gt; Python">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#em-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Em C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#em-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Em Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entao-python-nao-suporta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entao Python nao suporta?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-de-construtor-alternativo-em-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo de construtor alternativo em Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparacao-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparacao rapida
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparacao-de-tecnicas-de-inicializacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparacao de tecnicas de inicializacao
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recomendacao-pratica-por-cenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recomendacao pratica por cenario
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-mini-caso-pratico-um-gemeo-digital-ao-longo-da-piramide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Mini-caso pratico: um gemeo digital ao longo da piramide
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Mini-caso pratico: um gemeo digital ao longo da piramide">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#situacao-1-cadastro-inicial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Situacao 1. Cadastro inicial
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#situacao-2-parametrizacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Situacao 2. Parametrizacao
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#situacao-3-execucao-em-planta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Situacao 3. Execucao em planta
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-projeto-exemplo-para-seguir-em-sala" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Projeto exemplo para seguir em sala
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Projeto exemplo para seguir em sala">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cenario
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#objetivo-de-demonstracao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivo de demonstracao
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#roteiro-de-conducao-em-sala" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Roteiro de conducao em sala
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saida-esperada-da-discussao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Saida esperada da discussao
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#perguntas-que-valem-a-pena-fazer-em-sala" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perguntas que valem a pena fazer em sala
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-exercicios-para-casa-projeto-basico-de-pratica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Exercicios para casa: projeto basico de pratica
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Exercicios para casa: projeto basico de pratica">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enunciado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enunciado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regras-da-atividade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regras da atividade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checklist-de-entrega" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checklist de entrega
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resultado-esperado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resultado esperado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#desafio-opcional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Desafio opcional
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comando-sugerido-para-o-aluno-testar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comando sugerido para o aluno testar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-videos-e-materiais-complementares" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Videos e materiais complementares
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Videos e materiais complementares">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#video-principal-desta-unidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video principal desta unidade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#videolaboratorio-complementar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video/laboratorio complementar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observacao-didatica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observacao didatica
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#perguntas-de-revisao-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perguntas de revisao rapida
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fontes-de-referencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fontes de referencia
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#objetivos-de-aprendizagem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos de aprendizagem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#video-da-aula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video da aula
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-problema-de-modelagem-o-mesmo-equipamento-pode-nascer-com-informacoes-diferentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Problema de modelagem: o mesmo equipamento pode nascer com informacoes diferentes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-roteiro-base-com-w3schools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Roteiro base com W3Schools
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Roteiro base com W3Schools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-usar-esta-trilha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como usar esta trilha
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-fundamentacao-teorica-o-que-e-sobrecarga-de-construtor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Fundamentacao teorica: o que e sobrecarga de construtor?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Fundamentacao teorica: o que e sobrecarga de construtor?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-que-isso-significa-na-pratica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que isso significa na pratica
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quando-faz-sentido-usar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quando faz sentido usar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quando-nao-faz-sentido-usar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quando nao faz sentido usar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leitura-didatica-no-contexto-da-piramide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leitura didatica no contexto da piramide
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regra-de-bolso-para-o-aluno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regra de bolso para o aluno
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-como-c-suporta-isso-formalmente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Como C++ suporta isso formalmente
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Como C++ suporta isso formalmente">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#regras-importantes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regras importantes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-curto-de-ideia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo curto de ideia
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ponto-tecnico-importante" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ponto tecnico importante
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#boas-praticas-minimas-em-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Boas praticas minimas em C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#erros-comuns-em-sala" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Erros comuns em sala
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-exemplo-aplicado-gemeos-digitais-de-sensores-atuadores-e-controladores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Exemplo aplicado: gemeos digitais de sensores, atuadores e controladores
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Exemplo aplicado: gemeos digitais de sensores, atuadores e controladores">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-que-esse-exemplo-mostra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que esse exemplo mostra
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trecho-central-em-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trecho central em C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-esse-exemplo-e-didatico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por que esse exemplo e didatico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leitura-guiada-da-saida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leitura guiada da saida
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-compilar-em-sala" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como compilar em sala
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-ponte-c-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Ponte C++ -&gt; Python
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Ponte C++ -&gt; Python">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#em-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Em C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#em-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Em Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entao-python-nao-suporta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entao Python nao suporta?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-de-construtor-alternativo-em-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo de construtor alternativo em Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparacao-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparacao rapida
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparacao-de-tecnicas-de-inicializacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparacao de tecnicas de inicializacao
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recomendacao-pratica-por-cenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recomendacao pratica por cenario
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-mini-caso-pratico-um-gemeo-digital-ao-longo-da-piramide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Mini-caso pratico: um gemeo digital ao longo da piramide
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Mini-caso pratico: um gemeo digital ao longo da piramide">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#situacao-1-cadastro-inicial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Situacao 1. Cadastro inicial
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#situacao-2-parametrizacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Situacao 2. Parametrizacao
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#situacao-3-execucao-em-planta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Situacao 3. Execucao em planta
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-projeto-exemplo-para-seguir-em-sala" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Projeto exemplo para seguir em sala
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Projeto exemplo para seguir em sala">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cenario
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#objetivo-de-demonstracao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivo de demonstracao
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#roteiro-de-conducao-em-sala" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Roteiro de conducao em sala
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saida-esperada-da-discussao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Saida esperada da discussao
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#perguntas-que-valem-a-pena-fazer-em-sala" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perguntas que valem a pena fazer em sala
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-exercicios-para-casa-projeto-basico-de-pratica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Exercicios para casa: projeto basico de pratica
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Exercicios para casa: projeto basico de pratica">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enunciado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enunciado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regras-da-atividade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regras da atividade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checklist-de-entrega" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checklist de entrega
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resultado-esperado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resultado esperado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#desafio-opcional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Desafio opcional
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comando-sugerido-para-o-aluno-testar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comando sugerido para o aluno testar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-videos-e-materiais-complementares" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Videos e materiais complementares
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Videos e materiais complementares">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#video-principal-desta-unidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video principal desta unidade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#videolaboratorio-complementar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video/laboratorio complementar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observacao-didatica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observacao didatica
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#perguntas-de-revisao-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perguntas de revisao rapida
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fontes-de-referencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fontes de referencia
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<div><h1 id="sobrecarga-de-construtores-em-c-modelando-gemeos-digitais-na-piramide-de-automacao">Sobrecarga de construtores em C++: modelando gemeos digitais na piramide de automacao<a class="headerlink" href="#sobrecarga-de-construtores-em-c-modelando-gemeos-digitais-na-piramide-de-automacao" title="Permanent link">¶</a></h1>
+<h2 id="objetivos-de-aprendizagem">Objetivos de aprendizagem<a class="headerlink" href="#objetivos-de-aprendizagem" title="Permanent link">¶</a></h2>
+<ul>
+<li>Entender por que uma classe pode precisar de mais de um construtor para representar estados iniciais diferentes do mesmo objeto.</li>
+<li>Identificar como a sobrecarga de construtores e resolvida em C++ e quais cuidados de modelagem isso exige.</li>
+<li>Comparar o suporte em C++ com as alternativas disponiveis em Python para inicializacao flexivel de objetos.</li>
+</ul>
+<p><strong>Tempo estimado:</strong> 4h</p>
+<h2 id="video-da-aula">Video da aula<a class="headerlink" href="#video-da-aula" title="Permanent link">¶</a></h2>
+<p><div class="video-container"><iframe src="https://www.youtube.com/embed/lkaDJMwwGXw" style="position:relative;width:100%;height:22.172vw" frameborder="0" allowfullscreen alt="type:video"></iframe></div></p>
+<hr>
+<h2 id="1-problema-de-modelagem-o-mesmo-equipamento-pode-nascer-com-informacoes-diferentes">1. Problema de modelagem: o mesmo equipamento pode nascer com informacoes diferentes<a class="headerlink" href="#1-problema-de-modelagem-o-mesmo-equipamento-pode-nascer-com-informacoes-diferentes" title="Permanent link">¶</a></h2>
+<p>Na piramide de automacao, o mesmo elemento da planta pode ser conhecido em niveis diferentes de detalhe:</p>
+<ul>
+<li>na camada de campo, um <code>Sensor</code> pode ser descoberto apenas pela <code>tag</code>;</li>
+<li>na camada de supervisao, esse mesmo sensor pode receber unidade, faixa e valor atual;</li>
+<li>na camada de controle ou engenharia, o objeto pode nascer com dados mais completos, como limites, endereco e descricao funcional.</li>
+</ul>
+<p>Se a classe tiver apenas um construtor, o desenvolvedor pode ser forcado a:</p>
+<ul>
+<li>criar objetos incompletos e "remendar" depois;</li>
+<li>repetir atribuicoes em varios pontos do codigo;</li>
+<li>perder clareza sobre quais dados sao realmente obrigatorios.</li>
+</ul>
+<p>Sobrecarga de construtores resolve isso quando diferentes formas de criacao representam situacoes legitimas do dominio.</p>
+<p><strong>Ideia central desta aula:</strong> nao se trata de "ter varios jeitos de escrever o mesmo codigo". Trata-se de explicitar, no proprio modelo, diferentes formas validas de um objeto nascer.</p>
+<table>
+<thead>
+<tr>
+<th>Camada da piramide</th>
+<th>Informacao disponivel</th>
+<th>Exemplo de criacao</th>
+<th>Decisao didatica</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Campo</td>
+<td>apenas <code>tag</code> e tipo do ativo</td>
+<td><code>SensorAnalogico("LT-101")</code></td>
+<td>construtor minimo</td>
+</tr>
+<tr>
+<td>Engenharia</td>
+<td><code>tag</code>, unidade e faixa</td>
+<td><code>SensorAnalogico("LT-101", "%", 0.0, 100.0)</code></td>
+<td>construtor intermediario</td>
+</tr>
+<tr>
+<td>Supervisao/execucao</td>
+<td><code>tag</code>, faixa e valor atual</td>
+<td><code>SensorAnalogico("LT-101", "%", 0.0, 100.0, 63.8)</code></td>
+<td>construtor completo</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="2-roteiro-base-com-w3schools">2. Roteiro base com W3Schools<a class="headerlink" href="#2-roteiro-base-com-w3schools" title="Permanent link">¶</a></h2>
+<p>Os exemplos da W3Schools continuam sendo uma boa porta de entrada para o assunto.</p>
+<table>
+<thead>
+<tr>
+<th>Secao</th>
+<th>Leitura base</th>
+<th>Link direto para testar</th>
+<th>O que observar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Construtores</td>
+<td><a href="https://www.w3schools.com/cpp/cpp_constructors.asp">Constructors</a></td>
+<td><a href="https://www.w3schools.com/cpp/trycpp.asp?filename=demo_constructor_param">Try: construtor com parametros</a></td>
+<td>um objeto pode nascer pronto</td>
+</tr>
+<tr>
+<td>Sobrecarga de construtores</td>
+<td><a href="https://www.w3schools.com/cpp/cpp_constructors_overloading.asp">Constructor Overloading</a></td>
+<td><a href="https://www.w3schools.com/cpp/trycpp.asp?filename=demo_constructor_overloading">Try: constructor overloading</a></td>
+<td>a mesma classe pode ter mais de um construtor</td>
+</tr>
+<tr>
+<td>Sobrecarga em geral</td>
+<td><a href="https://www.w3schools.com/cpp/cpp_function_overloading.asp">Function Overloading</a></td>
+<td><a href="https://www.w3schools.com/cpp/trycpp.asp?filename=demo_function_overloading">Try: overload de funcao</a></td>
+<td>a regra central e assinatura diferente</td>
+</tr>
+</tbody>
+</table>
+<h3 id="como-usar-esta-trilha">Como usar esta trilha<a class="headerlink" href="#como-usar-esta-trilha" title="Permanent link">¶</a></h3>
+<ol>
+<li>Rode primeiro o exemplo pronto sem alterar nada.</li>
+<li>Identifique quais construtores existem e quais argumentos cada um recebe.</li>
+<li>Pergunte: "cada forma de criacao corresponde a uma situacao real do dominio?"</li>
+<li>Troque o exemplo generico por um elemento da automacao industrial.</li>
+</ol>
+<hr>
+<h2 id="3-fundamentacao-teorica-o-que-e-sobrecarga-de-construtor">3. Fundamentacao teorica: o que e sobrecarga de construtor?<a class="headerlink" href="#3-fundamentacao-teorica-o-que-e-sobrecarga-de-construtor" title="Permanent link">¶</a></h2>
+<p>Em C++, uma classe pode declarar mais de um construtor, desde que as assinaturas sejam diferentes em numero e/ou tipos de parametros.</p>
+<h3 id="o-que-isso-significa-na-pratica">O que isso significa na pratica<a class="headerlink" href="#o-que-isso-significa-na-pratica" title="Permanent link">¶</a></h3>
+<ul>
+<li>todos os construtores tem o mesmo nome da classe;</li>
+<li>o compilador escolhe qual usar com base nos argumentos fornecidos;</li>
+<li>essa escolha segue as regras de <code>overload resolution</code>;</li>
+<li>a sobrecarga nao existe para esconder ambiguidade, e sim para modelar formas validas de inicializacao.</li>
+</ul>
+<h3 id="quando-faz-sentido-usar">Quando faz sentido usar<a class="headerlink" href="#quando-faz-sentido-usar" title="Permanent link">¶</a></h3>
+<ul>
+<li>quando o objeto pode nascer com configuracao minima ou completa;</li>
+<li>quando existe um valor padrao coerente para parte dos dados;</li>
+<li>quando o dominio possui mais de um fluxo legitimo de criacao.</li>
+</ul>
+<h3 id="quando-nao-faz-sentido-usar">Quando nao faz sentido usar<a class="headerlink" href="#quando-nao-faz-sentido-usar" title="Permanent link">¶</a></h3>
+<ul>
+<li>quando os construtores fazem a mesma coisa com pequenas variacoes cosmeticas;</li>
+<li>quando comecam a surgir muitas assinaturas parecidas e ambiguas;</li>
+<li>quando um metodo de fabrica ou uma classe auxiliar comunicaria melhor a intencao.</li>
+</ul>
+<h3 id="leitura-didatica-no-contexto-da-piramide">Leitura didatica no contexto da piramide<a class="headerlink" href="#leitura-didatica-no-contexto-da-piramide" title="Permanent link">¶</a></h3>
+<p>Um gemeo digital simples de um <code>SensorAnalogico</code> pode nascer de tres maneiras:</p>
+<ol>
+<li>apenas com <code>tag</code>, porque o ativo foi detectado mas ainda nao parametrizado;</li>
+<li>com <code>tag</code>, <code>unidade</code> e faixa, porque veio da engenharia;</li>
+<li>com tudo isso mais o <code>valorAtual</code>, porque veio da supervisao em tempo de execucao.</li>
+</ol>
+<p>Se essas tres situacoes sao reais, a classe pode comunicar isso diretamente pelos construtores.</p>
+<h3 id="regra-de-bolso-para-o-aluno">Regra de bolso para o aluno<a class="headerlink" href="#regra-de-bolso-para-o-aluno" title="Permanent link">¶</a></h3>
+<p>Use sobrecarga quando cada assinatura contar uma historia diferente sobre a criacao do objeto.</p>
+<p>Evite sobrecarga quando:</p>
+<ul>
+<li>a diferenca for apenas "comodidade de quem escreve";</li>
+<li>a classe passar a aceitar combinacoes demais e perder clareza;</li>
+<li>um construtor com parametros opcionais ou um metodo nomeado comunicar melhor a intencao.</li>
+</ul>
+<hr>
+<h2 id="4-como-c-suporta-isso-formalmente">4. Como C++ suporta isso formalmente<a class="headerlink" href="#4-como-c-suporta-isso-formalmente" title="Permanent link">¶</a></h2>
+<p>O suporte em C++ e direto: construtores sao funcoes especiais da classe e participam do mecanismo de sobrecarga da linguagem.</p>
+<h3 id="regras-importantes">Regras importantes<a class="headerlink" href="#regras-importantes" title="Permanent link">¶</a></h3>
+<ul>
+<li>construtor nao tem tipo de retorno;</li>
+<li>a diferenca entre construtores vem da assinatura, nao do nome;</li>
+<li>o compilador escolhe o construtor mais adequado na criacao do objeto;</li>
+<li>listas de inicializacao (<code>: membro(valor)</code>) sao a forma idiomatica de inicializar atributos;</li>
+<li>desde C++11, um construtor pode delegar para outro da mesma classe.</li>
+</ul>
+<h3 id="exemplo-curto-de-ideia">Exemplo curto de ideia<a class="headerlink" href="#exemplo-curto-de-ideia" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Sensor</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">Sensor</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">    </span><span class="n">Sensor</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">tag</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">    </span><span class="n">Sensor</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">unidade</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">minimo</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">maximo</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>Aqui nao ha tres classes diferentes. Ha tres formas reconhecidas de criar o mesmo tipo de objeto.</p>
+<h3 id="ponto-tecnico-importante">Ponto tecnico importante<a class="headerlink" href="#ponto-tecnico-importante" title="Permanent link">¶</a></h3>
+<p>Se dois construtores ficarem parecidos demais, a chamada pode virar ambigua. Exemplo comum:</p>
+<div class="highlight"><pre><span></span><code><span class="n">Sensor</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">valor</span><span class="p">);</span>
+<span class="n">Sensor</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">valor</span><span class="p">);</span>
+</code></pre></div>
+<p>Uma chamada mal planejada pode exigir conversoes e confundir o iniciante. Por isso, sobrecarga boa precisa de intencao clara.</p>
+<h3 id="boas-praticas-minimas-em-c">Boas praticas minimas em C++<a class="headerlink" href="#boas-praticas-minimas-em-c" title="Permanent link">¶</a></h3>
+<ul>
+<li>prefira listas de inicializacao em vez de criar o objeto vazio e atribuir depois;</li>
+<li>concentre a validacao no construtor mais completo;</li>
+<li>use delegacao para evitar repetir logica em varios construtores;</li>
+<li>considere <code>explicit</code> em construtores de um parametro para evitar conversoes implicitas acidentais.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SensorAnalogico</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">SensorAnalogico</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">tag</span><span class="p">)</span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">SensorAnalogico</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="s">"desconhecida"</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">100.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="w">    </span><span class="n">SensorAnalogico</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">unidade</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">minimo</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">maximo</span><span class="p">)</span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">SensorAnalogico</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">unidade</span><span class="p">,</span><span class="w"> </span><span class="n">minimo</span><span class="p">,</span><span class="w"> </span><span class="n">maximo</span><span class="p">,</span><span class="w"> </span><span class="n">minimo</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="w">    </span><span class="n">SensorAnalogico</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">unidade</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">minimo</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">maximo</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">valor</span><span class="p">)</span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">tag</span><span class="p">(</span><span class="n">tag</span><span class="p">),</span><span class="w"> </span><span class="n">unidade</span><span class="p">(</span><span class="n">unidade</span><span class="p">),</span><span class="w"> </span><span class="n">minimo</span><span class="p">(</span><span class="n">minimo</span><span class="p">),</span><span class="w"> </span><span class="n">maximo</span><span class="p">(</span><span class="n">maximo</span><span class="p">),</span><span class="w"> </span><span class="n">valorAtual</span><span class="p">(</span><span class="n">valor</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<span class="p">};</span>
+</code></pre></div>
+<h3 id="erros-comuns-em-sala">Erros comuns em sala<a class="headerlink" href="#erros-comuns-em-sala" title="Permanent link">¶</a></h3>
+<ul>
+<li>criar um construtor "gigante" com parametros demais sem nome claro;</li>
+<li>repetir a mesma validacao em todos os construtores;</li>
+<li>deixar o objeto nascer em estado invalido e tentar consertar depois;</li>
+<li>usar sobrecarga onde um metodo nomeado deixaria o fluxo mais legivel.</li>
+</ul>
+<hr>
+<h2 id="5-exemplo-aplicado-gemeos-digitais-de-sensores-atuadores-e-controladores">5. Exemplo aplicado: gemeos digitais de sensores, atuadores e controladores<a class="headerlink" href="#5-exemplo-aplicado-gemeos-digitais-de-sensores-atuadores-e-controladores" title="Permanent link">¶</a></h2>
+<p>No repositorio, o exemplo compilavel desta aula esta em:</p>
+<ul>
+<li><a href="exemplo_piramide_automacao.cpp">exemplo_piramide_automacao.cpp</a></li>
+</ul>
+<h3 id="o-que-esse-exemplo-mostra">O que esse exemplo mostra<a class="headerlink" href="#o-que-esse-exemplo-mostra" title="Permanent link">¶</a></h3>
+<ul>
+<li><code>SensorAnalogico</code> com construtor minimo, intermediario e completo;</li>
+<li><code>ValvulaControle</code> com construtor padrao e com abertura inicial;</li>
+<li><code>ControladorPID</code> com construtor completo e construtor delegado;</li>
+<li>objetos nascendo em estados diferentes, mas coerentes com o dominio.</li>
+</ul>
+<h3 id="trecho-central-em-c">Trecho central em C++<a class="headerlink" href="#trecho-central-em-c" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">SensorAnalogico</span><span class="w"> </span><span class="n">sensorDescoberto</span><span class="p">(</span><span class="s">"LT-101"</span><span class="p">);</span>
+<span class="n">SensorAnalogico</span><span class="w"> </span><span class="n">sensorEngenharia</span><span class="p">(</span><span class="s">"LT-101"</span><span class="p">,</span><span class="w"> </span><span class="s">"%"</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">100.0</span><span class="p">);</span>
+<span class="n">SensorAnalogico</span><span class="w"> </span><span class="n">sensorConfigurado</span><span class="p">(</span><span class="s">"TT-201"</span><span class="p">,</span><span class="w"> </span><span class="s">"C"</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">150.0</span><span class="p">,</span><span class="w"> </span><span class="mf">72.5</span><span class="p">);</span>
+
+<span class="n">ValvulaControle</span><span class="w"> </span><span class="n">valvulaPadrao</span><span class="p">(</span><span class="s">"XV-101"</span><span class="p">);</span>
+<span class="n">ValvulaControle</span><span class="w"> </span><span class="n">valvulaOperando</span><span class="p">(</span><span class="s">"FV-301"</span><span class="p">,</span><span class="w"> </span><span class="mf">45.0</span><span class="p">);</span>
+
+<span class="n">ControladorPID</span><span class="w"> </span><span class="n">controladorRapido</span><span class="p">(</span><span class="s">"LIC-101"</span><span class="p">);</span>
+<span class="n">ControladorPID</span><span class="w"> </span><span class="n">controladorCompleto</span><span class="p">(</span><span class="s">"TIC-201"</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="por-que-esse-exemplo-e-didatico">Por que esse exemplo e didatico<a class="headerlink" href="#por-que-esse-exemplo-e-didatico" title="Permanent link">¶</a></h3>
+<ul>
+<li>a <code>tag</code> comunica identidade do ativo;</li>
+<li>a sobrecarga mostra diferentes niveis de detalhamento do mesmo ativo;</li>
+<li>o aluno percebe que o construtor nao e "enfeite sintatico", mas uma decisao de modelagem;</li>
+<li>o dominio de automacao ajuda a visualizar o objeto como representacao de equipamento real.</li>
+</ul>
+<h3 id="leitura-guiada-da-saida">Leitura guiada da saida<a class="headerlink" href="#leitura-guiada-da-saida" title="Permanent link">¶</a></h3>
+<p>Ao executar, discuta com a turma:</p>
+<ul>
+<li>qual objeto nasceu com dados minimos;</li>
+<li>qual objeto representa um ativo ja parametrizado pela engenharia;</li>
+<li>qual objeto representa um ativo com dado de processo ja conhecido;</li>
+<li>onde a delegacao evitou repeticao no codigo.</li>
+</ul>
+<h3 id="como-compilar-em-sala">Como compilar em sala<a class="headerlink" href="#como-compilar-em-sala" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>g++<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>docs/fundamentos_poo_cpp_python/03_sobrecarga_construtores/exemplo_piramide_automacao.cpp<span class="w"> </span>-o<span class="w"> </span>exemplo_piramide
+./exemplo_piramide
+</code></pre></div>
+<hr>
+<h2 id="6-ponte-c-python">6. Ponte C++ -&gt; Python<a class="headerlink" href="#6-ponte-c-python" title="Permanent link">¶</a></h2>
+<p>O conceito de inicializacao existe nas duas linguagens, mas o mecanismo nao e o mesmo.</p>
+<h3 id="em-c">Em C++<a class="headerlink" href="#em-c" title="Permanent link">¶</a></h3>
+<p>Ha suporte nativo a multiplos construtores na mesma classe.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SensorAnalogico</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">SensorAnalogico</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">tag</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">tag</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">    </span><span class="n">SensorAnalogico</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">unidade</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">minimo</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">maximo</span><span class="p">)</span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">tag</span><span class="p">(</span><span class="n">tag</span><span class="p">),</span><span class="w"> </span><span class="n">unidade</span><span class="p">(</span><span class="n">unidade</span><span class="p">),</span><span class="w"> </span><span class="n">minimo</span><span class="p">(</span><span class="n">minimo</span><span class="p">),</span><span class="w"> </span><span class="n">maximo</span><span class="p">(</span><span class="n">maximo</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<span class="p">};</span>
+</code></pre></div>
+<h3 id="em-python">Em Python<a class="headerlink" href="#em-python" title="Permanent link">¶</a></h3>
+<p>Python nao oferece sobrecarga real de <code>__init__</code> como em C++. Se voce escrever dois <code>__init__</code>, o ultimo sobrescreve o anterior.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SensorAnalogico</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">unidade</span><span class="o">=</span><span class="s2">"desconhecida"</span><span class="p">,</span> <span class="n">minimo</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">maximo</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">valor</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unidade</span> <span class="o">=</span> <span class="n">unidade</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minimo</span> <span class="o">=</span> <span class="n">minimo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maximo</span> <span class="o">=</span> <span class="n">maximo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valor</span> <span class="o">=</span> <span class="n">valor</span>
+</code></pre></div>
+<h3 id="entao-python-nao-suporta">Entao Python nao suporta?<a class="headerlink" href="#entao-python-nao-suporta" title="Permanent link">¶</a></h3>
+<p><strong>Resposta didatica:</strong> nao do mesmo jeito que C++.</p>
+<p>Python costuma resolver o problema com:</p>
+<ul>
+<li>parametros opcionais em um unico <code>__init__</code>;</li>
+<li>argumentos nomeados;</li>
+<li>metodos de fabrica com <code>@classmethod</code>;</li>
+<li>em alguns casos, <code>dataclasses</code> para reduzir codigo repetitivo.</li>
+<li>em projetos maiores, funcoes de fabrica ou classes auxiliares para manter a criacao legivel.</li>
+</ul>
+<h3 id="exemplo-de-construtor-alternativo-em-python">Exemplo de construtor alternativo em Python<a class="headerlink" href="#exemplo-de-construtor-alternativo-em-python" title="Permanent link">¶</a></h3>
+<p>No repositorio, o espelho em Python esta em:</p>
+<ul>
+<li><a href="exemplo_python_init_flexivel.py">exemplo_python_init_flexivel.py</a></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SensorAnalogico</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">unidade</span><span class="o">=</span><span class="s2">"desconhecida"</span><span class="p">,</span> <span class="n">minimo</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">maximo</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">valor</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unidade</span> <span class="o">=</span> <span class="n">unidade</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minimo</span> <span class="o">=</span> <span class="n">minimo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maximo</span> <span class="o">=</span> <span class="n">maximo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valor</span> <span class="o">=</span> <span class="n">valor</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">descoberto_na_rede</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parametrizado</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">unidade</span><span class="p">,</span> <span class="n">minimo</span><span class="p">,</span> <span class="n">maximo</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">unidade</span><span class="p">,</span> <span class="n">minimo</span><span class="p">,</span> <span class="n">maximo</span><span class="p">,</span> <span class="n">minimo</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">com_leitura_atual</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">unidade</span><span class="p">,</span> <span class="n">minimo</span><span class="p">,</span> <span class="n">maximo</span><span class="p">,</span> <span class="n">valor</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">unidade</span><span class="p">,</span> <span class="n">minimo</span><span class="p">,</span> <span class="n">maximo</span><span class="p">,</span> <span class="n">valor</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="comparacao-rapida">Comparacao rapida<a class="headerlink" href="#comparacao-rapida" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th>C++</th>
+<th>Python</th>
+<th>Impacto didatico</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Multiplos construtores</td>
+<td>sim, nativamente</td>
+<td>nao, no mesmo formato</td>
+<td>C++ torna a diferenca de assinatura parte da modelagem</td>
+</tr>
+<tr>
+<td>Inicializacao flexivel</td>
+<td>sobrecarga e delegacao</td>
+<td>defaults e <code>@classmethod</code></td>
+<td>Python favorece flexibilidade sintatica</td>
+</tr>
+<tr>
+<td>Risco para o iniciante</td>
+<td>ambiguidade de sobrecarga</td>
+<td>objetos excessivamente permissivos</td>
+<td>em ambos os casos, a modelagem precisa ser intencional</td>
+</tr>
+</tbody>
+</table>
+<h3 id="comparacao-de-tecnicas-de-inicializacao">Comparacao de tecnicas de inicializacao<a class="headerlink" href="#comparacao-de-tecnicas-de-inicializacao" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Tecnica/Padrao</th>
+<th>Melhor uso</th>
+<th>Esforco</th>
+<th>Entregavel</th>
+<th>Limitacao</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sobrecarga de construtores em C++</td>
+<td>estados iniciais bem distintos e tipados</td>
+<td>baixo a medio</td>
+<td>objeto coerente ja na criacao</td>
+<td>pode gerar ambiguidade se as assinaturas forem parecidas</td>
+</tr>
+<tr>
+<td><code>__init__</code> com parametros opcionais em Python</td>
+<td>classes pequenas com poucas variacoes</td>
+<td>baixo</td>
+<td>inicializacao curta e flexivel</td>
+<td>aceita combinacoes ruins com facilidade</td>
+</tr>
+<tr>
+<td><code>@classmethod</code> nomeado em Python</td>
+<td>fluxos de criacao com nomes claros</td>
+<td>medio</td>
+<td>codigo mais legivel para quem le</td>
+<td>aumenta a quantidade de metodos</td>
+</tr>
+<tr>
+<td>Metodo de fabrica/classe auxiliar</td>
+<td>regra de criacao mais rica ou com validacoes externas</td>
+<td>medio a alto</td>
+<td>construcao mais explicita e organizada</td>
+<td>adiciona mais camadas ao exemplo</td>
+</tr>
+</tbody>
+</table>
+<h3 id="recomendacao-pratica-por-cenario">Recomendacao pratica por cenario<a class="headerlink" href="#recomendacao-pratica-por-cenario" title="Permanent link">¶</a></h3>
+<ul>
+<li>use sobrecarga em C++ quando o tipo e as assinaturas ajudarem a contar a historia do dominio;</li>
+<li>use <code>@classmethod</code> em Python quando quiser nomes claros para diferentes fluxos de criacao;</li>
+<li>evite "um unico construtor faz tudo" quando a inicializacao comecar a exigir muitos <code>if</code>s.</li>
+</ul>
+<hr>
+<h2 id="7-mini-caso-pratico-um-gemeo-digital-ao-longo-da-piramide">7. Mini-caso pratico: um gemeo digital ao longo da piramide<a class="headerlink" href="#7-mini-caso-pratico-um-gemeo-digital-ao-longo-da-piramide" title="Permanent link">¶</a></h2>
+<p>Imagine a linha abaixo:</p>
+<ul>
+<li>um transmissor de nivel <code>LT-101</code> na camada de campo;</li>
+<li>uma valvula <code>XV-101</code> comandada pelo CLP;</li>
+<li>um controlador <code>LIC-101</code> na camada de controle.</li>
+</ul>
+<h3 id="situacao-1-cadastro-inicial">Situacao 1. Cadastro inicial<a class="headerlink" href="#situacao-1-cadastro-inicial" title="Permanent link">¶</a></h3>
+<p>O sistema de engenharia conhece apenas a <code>tag</code> do equipamento.</p>
+<div class="highlight"><pre><span></span><code><span class="n">SensorAnalogico</span><span class="w"> </span><span class="n">lt101</span><span class="p">(</span><span class="s">"LT-101"</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="situacao-2-parametrizacao">Situacao 2. Parametrizacao<a class="headerlink" href="#situacao-2-parametrizacao" title="Permanent link">¶</a></h3>
+<p>Agora o sistema recebe unidade e faixa de operacao.</p>
+<div class="highlight"><pre><span></span><code><span class="n">SensorAnalogico</span><span class="w"> </span><span class="n">lt101</span><span class="p">(</span><span class="s">"LT-101"</span><span class="p">,</span><span class="w"> </span><span class="s">"%"</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">100.0</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="situacao-3-execucao-em-planta">Situacao 3. Execucao em planta<a class="headerlink" href="#situacao-3-execucao-em-planta" title="Permanent link">¶</a></h3>
+<p>O supervisorio passa a leitura atual do processo.</p>
+<div class="highlight"><pre><span></span><code><span class="n">SensorAnalogico</span><span class="w"> </span><span class="n">lt101</span><span class="p">(</span><span class="s">"LT-101"</span><span class="p">,</span><span class="w"> </span><span class="s">"%"</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">100.0</span><span class="p">,</span><span class="w"> </span><span class="mf">63.8</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Licao didatica:</strong> o objeto continua sendo <code>SensorAnalogico</code>. O que muda e a quantidade de informacao confiavel disponivel no momento da criacao.</p>
+<hr>
+<h2 id="8-projeto-exemplo-para-seguir-em-sala">8. Projeto exemplo para seguir em sala<a class="headerlink" href="#8-projeto-exemplo-para-seguir-em-sala" title="Permanent link">¶</a></h2>
+<h3 id="cenario">Cenario<a class="headerlink" href="#cenario" title="Permanent link">¶</a></h3>
+<p>Voce vai representar um pequeno trecho de uma estacao automatizada de mistura:</p>
+<ul>
+<li>um sensor de nivel;</li>
+<li>uma valvula de entrada;</li>
+<li>um controlador PID simples.</li>
+</ul>
+<h3 id="objetivo-de-demonstracao">Objetivo de demonstracao<a class="headerlink" href="#objetivo-de-demonstracao" title="Permanent link">¶</a></h3>
+<ol>
+<li>Mostrar mais de um construtor por classe.</li>
+<li>Criar objetos com diferentes niveis de configuracao.</li>
+<li>Exibir no terminal o estado inicial de cada gemeo digital.</li>
+</ol>
+<h3 id="roteiro-de-conducao-em-sala">Roteiro de conducao em sala<a class="headerlink" href="#roteiro-de-conducao-em-sala" title="Permanent link">¶</a></h3>
+<ol>
+<li>Compile e execute o arquivo base.</li>
+<li>Mostre qual construtor foi chamado em cada criacao.</li>
+<li>Peca aos alunos para prever a saida antes de rodar.</li>
+<li>Troque valores e acrescente um novo ativo com outra forma de criacao.</li>
+<li>Discuta qual construtor representa melhor cada etapa da planta.</li>
+</ol>
+<h3 id="saida-esperada-da-discussao">Saida esperada da discussao<a class="headerlink" href="#saida-esperada-da-discussao" title="Permanent link">¶</a></h3>
+<ul>
+<li>quando usar construtor minimo;</li>
+<li>quando exigir mais parametros;</li>
+<li>quando a flexibilidade melhora o modelo;</li>
+<li>quando a flexibilidade piora a clareza.</li>
+</ul>
+<h3 id="perguntas-que-valem-a-pena-fazer-em-sala">Perguntas que valem a pena fazer em sala<a class="headerlink" href="#perguntas-que-valem-a-pena-fazer-em-sala" title="Permanent link">¶</a></h3>
+<ol>
+<li>Este construtor realmente representa um estado inicial valido?</li>
+<li>Ha alguma sobrecarga que esta sobrando?</li>
+<li>A leitura da chamada deixa claro o que o objeto sabe ao nascer?</li>
+<li>Em Python, eu preferiria defaults ou um metodo nomeado?</li>
+</ol>
+<hr>
+<h2 id="9-exercicios-para-casa-projeto-basico-de-pratica">9. Exercicios para casa: projeto basico de pratica<a class="headerlink" href="#9-exercicios-para-casa-projeto-basico-de-pratica" title="Permanent link">¶</a></h2>
+<p>No repositorio, ha um arquivo-base para a atividade:</p>
+<ul>
+<li><a href="projeto_casa_automacao_base.cpp">projeto_casa_automacao_base.cpp</a></li>
+</ul>
+<p>Se quiser levar uma referencia pronta para revisao posterior, mantenha tambem:</p>
+<ul>
+<li><a href="projeto_casa_automacao.cpp">projeto_casa_automacao.cpp</a></li>
+</ul>
+<h3 id="enunciado">Enunciado<a class="headerlink" href="#enunciado" title="Permanent link">¶</a></h3>
+<p>Modele tres gemeos digitais simples:</p>
+<ul>
+<li><code>SensorNivel</code></li>
+<li><code>Bomba</code></li>
+<li><code>ControladorTanque</code></li>
+</ul>
+<h3 id="regras-da-atividade">Regras da atividade<a class="headerlink" href="#regras-da-atividade" title="Permanent link">¶</a></h3>
+<p>Cada classe deve ter:</p>
+<ul>
+<li>um construtor minimo, com identidade basica;</li>
+<li>um construtor mais completo, com parametros de operacao;</li>
+<li>um metodo <code>exibirResumo()</code>.</li>
+</ul>
+<h3 id="tarefas">Tarefas<a class="headerlink" href="#tarefas" title="Permanent link">¶</a></h3>
+<ol>
+<li>Criar pelo menos dois objetos de cada classe usando construtores diferentes.</li>
+<li>Mostrar no terminal como cada objeto nasceu.</li>
+<li>Explicar, em comentario curto, por que cada sobrecarga faz sentido no dominio.</li>
+<li>Evitar criar construtores que deixem o objeto em estado absurdo.</li>
+</ol>
+<h3 id="checklist-de-entrega">Checklist de entrega<a class="headerlink" href="#checklist-de-entrega" title="Permanent link">¶</a></h3>
+<ul>
+<li>o codigo compila;</li>
+<li>cada classe possui ao menos duas formas validas de criacao;</li>
+<li>o nome dos parametros ajuda a entender a intencao;</li>
+<li>o metodo <code>exibirResumo()</code> mostra claramente o estado inicial do objeto;</li>
+<li>ha um comentario curto justificando cada sobrecarga criada.</li>
+</ul>
+<h3 id="resultado-esperado">Resultado esperado<a class="headerlink" href="#resultado-esperado" title="Permanent link">¶</a></h3>
+<p>Um programa pequeno, legivel e compilavel, cujo foco seja apenas reforcar o conceito de sobrecarga de construtores.</p>
+<h3 id="desafio-opcional">Desafio opcional<a class="headerlink" href="#desafio-opcional" title="Permanent link">¶</a></h3>
+<p>Adicione validacao simples:</p>
+<ul>
+<li>bomba com velocidade entre <code>0</code> e <code>100</code>;</li>
+<li>sensor com faixa minima menor que maxima;</li>
+<li>controlador com ganho proporcional positivo.</li>
+</ul>
+<h3 id="comando-sugerido-para-o-aluno-testar">Comando sugerido para o aluno testar<a class="headerlink" href="#comando-sugerido-para-o-aluno-testar" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>g++<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>docs/fundamentos_poo_cpp_python/03_sobrecarga_construtores/projeto_casa_automacao.cpp<span class="w"> </span>-o<span class="w"> </span>projeto_casa
+./projeto_casa
+</code></pre></div>
+<hr>
+<h2 id="10-videos-e-materiais-complementares">10. Videos e materiais complementares<a class="headerlink" href="#10-videos-e-materiais-complementares" title="Permanent link">¶</a></h2>
+<h3 id="video-principal-desta-unidade">Video principal desta unidade<a class="headerlink" href="#video-principal-desta-unidade" title="Permanent link">¶</a></h3>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=lkaDJMwwGXw">Tutorial C++ - Construtores (MrAppleBR)</a></li>
+</ul>
+<h3 id="videolaboratorio-complementar">Video/laboratorio complementar<a class="headerlink" href="#videolaboratorio-complementar" title="Permanent link">¶</a></h3>
+<ul>
+<li><a href="https://www.w3schools.com/cpp/cpp_constructors_overloading.asp">W3Schools - Constructor Overloading</a></li>
+<li><a href="https://www.w3schools.com/cpp/trycpp.asp?filename=demo_constructor_overloading">W3Schools - Try it Yourself: constructor overloading</a></li>
+</ul>
+<h3 id="observacao-didatica">Observacao didatica<a class="headerlink" href="#observacao-didatica" title="Permanent link">¶</a></h3>
+<p>O video principal e curto e funciona bem como aquecimento. A parte especifica de sobrecarga fica mais forte quando o aluno le, roda e modifica o exemplo interativo da W3Schools e, na sequencia, traduz o dominio para automacao.</p>
+<hr>
+<h2 id="perguntas-de-revisao-rapida">Perguntas de revisao rapida<a class="headerlink" href="#perguntas-de-revisao-rapida" title="Permanent link">¶</a></h2>
+<ol>
+<li>Quando a sobrecarga de construtores melhora a modelagem de um objeto?</li>
+<li>Como o compilador de C++ decide qual construtor chamar?</li>
+<li>Por que Python resolve esse problema de forma diferente de C++?</li>
+</ol>
+<h2 id="fontes-de-referencia">Fontes de referencia<a class="headerlink" href="#fontes-de-referencia" title="Permanent link">¶</a></h2>
+<ul>
+<li>https://www.w3schools.com/cpp/cpp_constructors.asp</li>
+<li>https://www.w3schools.com/cpp/cpp_constructors_overloading.asp</li>
+<li>https://www.w3schools.com/cpp/cpp_function_overloading.asp</li>
+<li>https://en.cppreference.com/w/cpp/language/constructor</li>
+<li>https://en.cppreference.com/w/cpp/language/overload_resolution</li>
+<li>https://docs.python.org/3/tutorial/classes.html</li>
+<li>https://docs.python.org/3/library/dataclasses.html</li>
+</ul></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
