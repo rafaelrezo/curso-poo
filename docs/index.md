@@ -19,6 +19,7 @@
 - `01. Fundamentos Git e IDE`: preparar ambiente, criar repositorio, sincronizar e colaborar.
 - `02. Fundamentos de POO em C++ e Python`: iniciar classes, objetos, metodos e construtores com exemplos guiados.
 - `03. Sobrecarga de construtores em C++`: modelar diferentes formas de nascimento do objeto com foco em automacao industrial.
+- `04. Acesso, encapsulamento e heranca em C++`: proteger estado interno, discutir `friend` com criterio e reutilizar comportamento com hierarquias simples.
 - As demais unidades continuam no repositorio, mas seguem ocultadas enquanto a trilha inicial e consolidada.
 
 ## 2. Trilha inicial do curso
@@ -28,12 +29,13 @@
 3. Criacao do repositorio e sincronizacao com remoto.
 4. Introducao a classes, objetos, metodos e construtores em C++.
 5. Sobrecarga de construtores em C++ com comparacao didatica com Python.
+6. Encapsulamento, `friend` e heranca em C++ para proteger invariantes e especializar ativos do dominio.
 
 ## 3. Resultado esperado nesta virada de unidade
 
 - Cada aluno com repositorio funcional no GitHub.
 - Autonomia minima para clonar, versionar e sincronizar alteracoes.
-- Base conceitual suficiente para comecar a ler codigo orientado a objetos e entender diferentes formas de inicializacao.
+- Base conceitual suficiente para ler codigo orientado a objetos, entender diferentes formas de inicializacao e comecar a avaliar quando o estado deve ficar protegido.
 
 ## Mini-caso pratico
 
@@ -43,7 +45,7 @@ Um aluno cria e sincroniza seu repositorio; na sequencia, le e adapta exemplos d
 
 1. Qual a diferenca entre `commit` e `push`?
 2. O que muda quando passamos de variaveis soltas para um objeto com estado e comportamento?
-3. Por que um mesmo objeto pode precisar de mais de uma forma valida de inicializacao?
+3. Quando faz sentido proteger atributos e expor apenas operacoes publicas em vez de deixar tudo aberto?
 
 ## Fontes de referencia
 

@@ -38,3 +38,4 @@ nav:
   - 01. Fundamentos Git e IDE: fundamentos_git_ide/index.md
   - 02. Fundamentos de POO em C++ e Python: fundamentos_poo_cpp_python/index.md
   - 03. Sobrecarga de Construtores em C++: fundamentos_poo_cpp_python/03_sobrecarga_construtores/index.md
+  - 04. Acesso, Encapsulamento e Heranca em C++: fundamentos_poo_cpp_python/04_encapsulamento_heranca/index.md
