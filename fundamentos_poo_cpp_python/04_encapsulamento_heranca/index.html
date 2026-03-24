@@ -1,0 +1,2319 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Trilha de POO para Engenharia com C++ e Python">
+      
+      
+      
+      
+        <link rel="prev" href="../03_sobrecarga_construtores/">
+      
+      
+        <link rel="next" href="../05_polimorfismo/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
+    
+    
+      
+        <title>04. Acesso, Encapsulamento e Heranca em C++ - Curso de Programacao Orientada a Objetos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#especificadores-de-acesso-encapsulamento-friend-e-heranca-em-c-protegendo-ativos-industriais" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../.." title="Curso de Programacao Orientada a Objetos" class="md-header__button md-logo" aria-label="Curso de Programacao Orientada a Objetos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Curso de Programacao Orientada a Objetos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              04. Acesso, Encapsulamento e Heranca em C++
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Curso de Programacao Orientada a Objetos" class="md-nav__button md-logo" aria-label="Curso de Programacao Orientada a Objetos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Curso de Programacao Orientada a Objetos
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fundamentos_git_ide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01. Fundamentos Git e IDE
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02. Fundamentos de POO em C++ e Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_sobrecarga_construtores/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03. Sobrecarga de Construtores em C++
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04. Acesso, Encapsulamento e Heranca em C++
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04. Acesso, Encapsulamento e Heranca em C++
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#objetivos-de-aprendizagem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos de aprendizagem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#video-da-aula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video da aula
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-problema-de-modelagem-quando-tudo-e-publico-qualquer-parte-do-sistema-pode-quebrar-o-objeto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Problema de modelagem: quando tudo e publico, qualquer parte do sistema pode quebrar o objeto
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-roteiro-base-com-w3schools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Roteiro base com W3Schools
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Roteiro base com W3Schools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-usar-esta-trilha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como usar esta trilha
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-especificadores-de-acesso-e-encapsulamento-quem-pode-fazer-o-que-com-o-objeto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Especificadores de acesso e encapsulamento: quem pode fazer o que com o objeto?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Especificadores de acesso e encapsulamento: quem pode fazer o que com o objeto?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#leitura-rapida-dos-tres-niveis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leitura rapida dos tres niveis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-que-isso-significa-na-pratica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que isso significa na pratica
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ponto-tecnico-importante" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ponto tecnico importante
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entao-o-que-e-encapsulamento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entao o que e encapsulamento?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-curto-em-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo curto em C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#erros-comuns-nesta-virada-de-nivel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Erros comuns nesta virada de nivel
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-friend-excecao-controlada-nao-padrao-de-modelagem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. friend: excecao controlada, nao padrao de modelagem
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. friend: excecao controlada, nao padrao de modelagem">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-que-friend-faz" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que friend faz
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quando-faz-sentido-em-exemplos-didaticos-e-projetos-reais" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quando faz sentido em exemplos didaticos e projetos reais
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quando-comeca-a-ficar-ruim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quando comeca a ficar ruim
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regra-de-bolso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regra de bolso
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-de-ideia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo de ideia
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-heranca-reutilizar-comportamento-sem-copiar-classe-inteira" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Heranca: reutilizar comportamento sem copiar classe inteira
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Heranca: reutilizar comportamento sem copiar classe inteira">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-pergunta-certa-nao-e-da-para-herdar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A pergunta certa nao e "da para herdar?"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leitura-pratica-da-heranca-publica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leitura pratica da heranca publica
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-que-a-classe-derivada-herda-e-o-que-ela-nao-herda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que a classe derivada herda, e o que ela nao herda
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparacao-de-tecnicas-de-reutilizacao-e-controle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparacao de tecnicas de reutilizacao e controle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#foco-didatico-desta-aula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Foco didatico desta aula
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-exemplo-aplicado-estacao-de-bombeamento-com-sensor-bomba-e-auditoria-de-calibracao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Exemplo aplicado: estacao de bombeamento com sensor, bomba e auditoria de calibracao
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Exemplo aplicado: estacao de bombeamento com sensor, bomba e auditoria de calibracao">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-que-esse-exemplo-mostra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que esse exemplo mostra
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trecho-central-em-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trecho central em C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-esse-exemplo-e-didatico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por que esse exemplo e didatico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leitura-guiada-da-saida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leitura guiada da saida
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-compilar-em-sala" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como compilar em sala
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-ponte-c-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Ponte C++ -&gt; Python
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Ponte C++ -&gt; Python">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#em-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Em C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#em-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Em Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#espelho-em-python-no-repositorio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Espelho em Python no repositorio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparacao-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparacao rapida
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recomendacao-pratica-por-cenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recomendacao pratica por cenario
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mini-caso-pratico-monitoramento-de-uma-estacao-de-tratamento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Mini-caso pratico: monitoramento de uma estacao de tratamento
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Mini-caso pratico: monitoramento de uma estacao de tratamento">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#situacao-1-leitura-operacional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Situacao 1. Leitura operacional
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#situacao-2-especializacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Situacao 2. Especializacao
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#situacao-3-diagnostico-excepcional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Situacao 3. Diagnostico excepcional
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-exercicios-para-casa-atividade-guiada-de-encapsulamento-e-heranca" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Exercicios para casa: atividade guiada de encapsulamento e heranca
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Exercicios para casa: atividade guiada de encapsulamento e heranca">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enunciado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enunciado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regras-da-atividade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regras da atividade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checklist-de-entrega" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checklist de entrega
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comando-sugerido-para-o-aluno-testar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comando sugerido para o aluno testar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-videos-e-materiais-complementares" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Videos e materiais complementares
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Videos e materiais complementares">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#video-principal-desta-unidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video principal desta unidade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#video-complementar-para-heranca" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video complementar para heranca
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#laboratorio-complementar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laboratorio complementar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observacao-didatica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observacao didatica
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#perguntas-de-revisao-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perguntas de revisao rapida
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fontes-de-referencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fontes de referencia
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_polimorfismo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05. Polimorfismo em C++
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#objetivos-de-aprendizagem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos de aprendizagem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#video-da-aula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video da aula
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-problema-de-modelagem-quando-tudo-e-publico-qualquer-parte-do-sistema-pode-quebrar-o-objeto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Problema de modelagem: quando tudo e publico, qualquer parte do sistema pode quebrar o objeto
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-roteiro-base-com-w3schools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Roteiro base com W3Schools
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Roteiro base com W3Schools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-usar-esta-trilha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como usar esta trilha
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-especificadores-de-acesso-e-encapsulamento-quem-pode-fazer-o-que-com-o-objeto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Especificadores de acesso e encapsulamento: quem pode fazer o que com o objeto?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Especificadores de acesso e encapsulamento: quem pode fazer o que com o objeto?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#leitura-rapida-dos-tres-niveis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leitura rapida dos tres niveis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-que-isso-significa-na-pratica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que isso significa na pratica
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ponto-tecnico-importante" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ponto tecnico importante
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entao-o-que-e-encapsulamento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entao o que e encapsulamento?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-curto-em-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo curto em C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#erros-comuns-nesta-virada-de-nivel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Erros comuns nesta virada de nivel
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-friend-excecao-controlada-nao-padrao-de-modelagem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. friend: excecao controlada, nao padrao de modelagem
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. friend: excecao controlada, nao padrao de modelagem">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-que-friend-faz" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que friend faz
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quando-faz-sentido-em-exemplos-didaticos-e-projetos-reais" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quando faz sentido em exemplos didaticos e projetos reais
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quando-comeca-a-ficar-ruim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quando comeca a ficar ruim
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regra-de-bolso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regra de bolso
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-de-ideia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo de ideia
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-heranca-reutilizar-comportamento-sem-copiar-classe-inteira" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Heranca: reutilizar comportamento sem copiar classe inteira
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Heranca: reutilizar comportamento sem copiar classe inteira">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-pergunta-certa-nao-e-da-para-herdar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A pergunta certa nao e "da para herdar?"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leitura-pratica-da-heranca-publica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leitura pratica da heranca publica
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-que-a-classe-derivada-herda-e-o-que-ela-nao-herda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que a classe derivada herda, e o que ela nao herda
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparacao-de-tecnicas-de-reutilizacao-e-controle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparacao de tecnicas de reutilizacao e controle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#foco-didatico-desta-aula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Foco didatico desta aula
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-exemplo-aplicado-estacao-de-bombeamento-com-sensor-bomba-e-auditoria-de-calibracao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Exemplo aplicado: estacao de bombeamento com sensor, bomba e auditoria de calibracao
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Exemplo aplicado: estacao de bombeamento com sensor, bomba e auditoria de calibracao">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-que-esse-exemplo-mostra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que esse exemplo mostra
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trecho-central-em-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trecho central em C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-esse-exemplo-e-didatico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por que esse exemplo e didatico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leitura-guiada-da-saida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leitura guiada da saida
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-compilar-em-sala" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como compilar em sala
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-ponte-c-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Ponte C++ -&gt; Python
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Ponte C++ -&gt; Python">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#em-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Em C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#em-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Em Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#espelho-em-python-no-repositorio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Espelho em Python no repositorio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparacao-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparacao rapida
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recomendacao-pratica-por-cenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recomendacao pratica por cenario
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mini-caso-pratico-monitoramento-de-uma-estacao-de-tratamento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Mini-caso pratico: monitoramento de uma estacao de tratamento
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Mini-caso pratico: monitoramento de uma estacao de tratamento">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#situacao-1-leitura-operacional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Situacao 1. Leitura operacional
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#situacao-2-especializacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Situacao 2. Especializacao
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#situacao-3-diagnostico-excepcional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Situacao 3. Diagnostico excepcional
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-exercicios-para-casa-atividade-guiada-de-encapsulamento-e-heranca" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Exercicios para casa: atividade guiada de encapsulamento e heranca
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Exercicios para casa: atividade guiada de encapsulamento e heranca">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enunciado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enunciado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regras-da-atividade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regras da atividade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checklist-de-entrega" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checklist de entrega
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comando-sugerido-para-o-aluno-testar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comando sugerido para o aluno testar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-videos-e-materiais-complementares" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Videos e materiais complementares
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Videos e materiais complementares">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#video-principal-desta-unidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video principal desta unidade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#video-complementar-para-heranca" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video complementar para heranca
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#laboratorio-complementar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laboratorio complementar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observacao-didatica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observacao didatica
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#perguntas-de-revisao-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perguntas de revisao rapida
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fontes-de-referencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fontes de referencia
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<div><h1 id="especificadores-de-acesso-encapsulamento-friend-e-heranca-em-c-protegendo-ativos-industriais">Especificadores de acesso, encapsulamento, friend e heranca em C++: protegendo ativos industriais<a class="headerlink" href="#especificadores-de-acesso-encapsulamento-friend-e-heranca-em-c-protegendo-ativos-industriais" title="Permanent link">¶</a></h1>
+<h2 id="objetivos-de-aprendizagem">Objetivos de aprendizagem<a class="headerlink" href="#objetivos-de-aprendizagem" title="Permanent link">¶</a></h2>
+<ul>
+<li>Diferenciar <code>public</code>, <code>private</code> e <code>protected</code> como decisoes de modelagem, e nao apenas de sintaxe.</li>
+<li>Entender como o encapsulamento protege regras do objeto e por que <code>friend</code> deve ser tratado como excecao controlada.</li>
+<li>Reconhecer quando heranca publica representa uma relacao <code>is-a</code> valida em C++ e como esse raciocinio aparece em Python.</li>
+</ul>
+<p><strong>Tempo estimado:</strong> 4h</p>
+<h2 id="video-da-aula">Video da aula<a class="headerlink" href="#video-da-aula" title="Permanent link">¶</a></h2>
+<p><div class="video-container"><iframe src="https://www.youtube.com/embed/hYp2Ki1u3ms" style="position:relative;width:100%;height:22.172vw" frameborder="0" allowfullscreen alt="type:video"></iframe></div></p>
+<hr>
+<h2 id="1-problema-de-modelagem-quando-tudo-e-publico-qualquer-parte-do-sistema-pode-quebrar-o-objeto">1. Problema de modelagem: quando tudo e publico, qualquer parte do sistema pode quebrar o objeto<a class="headerlink" href="#1-problema-de-modelagem-quando-tudo-e-publico-qualquer-parte-do-sistema-pode-quebrar-o-objeto" title="Permanent link">¶</a></h2>
+<p>Na aula 2, atributos publicos ajudaram a visualizar o que uma classe guarda. Para aprender o conceito, isso funciona. Para manter software real, isso vira risco rapidamente.</p>
+<p>Imagine um <code>SensorPressao</code> em uma estacao de bombeamento:</p>
+<ul>
+<li>se <code>valorAtual</code> for publico, qualquer trecho do programa pode escrever <code>-50.0</code>;</li>
+<li>se <code>limiteAlarme</code> for publico, alguem pode zerar o limite sem criterio;</li>
+<li>se o estado de bloqueio for publico, o objeto deixa de proteger a propria operacao.</li>
+</ul>
+<p>O problema nao e "esconder por esconder". O problema e garantir que o objeto continue coerente ao longo da vida do programa.</p>
+<table>
+<thead>
+<tr>
+<th>Situacao</th>
+<th>Se tudo for publico</th>
+<th>Impacto pratico</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Atualizar leitura do sensor</td>
+<td>qualquer funcao escreve qualquer valor</td>
+<td>leitura invalida entra no sistema</td>
+</tr>
+<tr>
+<td>Alterar limite de alarme</td>
+<td>qualquer modulo muda o limite</td>
+<td>alarmes falsos ou alarmes omitidos</td>
+</tr>
+<tr>
+<td>Mudar area do equipamento</td>
+<td>qualquer trecho reclassifica o ativo</td>
+<td>rastreabilidade e manutencao ficam confusas</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ideia central desta aula:</strong> especificador de acesso nao e decoracao. Ele define quem pode tocar em cada parte do modelo e em quais condicoes.</p>
+<hr>
+<h2 id="2-roteiro-base-com-w3schools">2. Roteiro base com W3Schools<a class="headerlink" href="#2-roteiro-base-com-w3schools" title="Permanent link">¶</a></h2>
+<p>Os quatro links abaixo formam o trilho principal desta unidade. Eles organizam a progressao de um jeito didatico:</p>
+<table>
+<thead>
+<tr>
+<th>Secao</th>
+<th>Leitura base</th>
+<th>Link direto para testar</th>
+<th>O que observar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Especificadores de acesso</td>
+<td><a href="https://www.w3schools.com/cpp/cpp_access_specifiers.asp">Access Specifiers</a></td>
+<td><a href="https://www.w3schools.com/cpp/trycpp.asp?filename=demo_access_public">Try: acesso publico</a></td>
+<td><code>public</code>, <code>private</code> e <code>protected</code> controlam quem pode tocar no estado</td>
+</tr>
+<tr>
+<td>Encapsulamento</td>
+<td><a href="https://www.w3schools.com/cpp/cpp_encapsulation.asp">Encapsulation</a></td>
+<td><a href="https://www.w3schools.com/cpp/trycpp.asp?filename=demo_encapsulation">Try: encapsulamento com getter/setter</a></td>
+<td>esconder dados sensiveis e expor uma API publica coerente</td>
+</tr>
+<tr>
+<td><code>friend</code></td>
+<td><a href="https://www.w3schools.com/cpp/cpp_friend_function.asp">Friend Functions</a></td>
+<td><a href="https://www.w3schools.com/cpp/trycpp.asp?filename=demo_friend_function">Try: friend function</a></td>
+<td><code>friend</code> abre uma excecao pontual ao encapsulamento</td>
+</tr>
+<tr>
+<td>Heranca</td>
+<td><a href="https://www.w3schools.com/cpp/cpp_inheritance.asp">Inheritance</a></td>
+<td><a href="https://www.w3schools.com/cpp/trycpp.asp?filename=demo_inheritance">Try: heranca simples</a></td>
+<td>a classe derivada reaproveita comportamento da base quando existe relacao <code>is-a</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="como-usar-esta-trilha">Como usar esta trilha<a class="headerlink" href="#como-usar-esta-trilha" title="Permanent link">¶</a></h3>
+<ol>
+<li>Rode cada exemplo exatamente como esta.</li>
+<li>Identifique quem pode acessar cada membro e por qual caminho.</li>
+<li>Troque o exemplo generico por um ativo de engenharia, automacao ou servicos.</li>
+<li>Pergunte: "estou protegendo uma regra de negocio ou so escondendo dado sem criterio?"</li>
+</ol>
+<hr>
+<h2 id="3-especificadores-de-acesso-e-encapsulamento-quem-pode-fazer-o-que-com-o-objeto">3. Especificadores de acesso e encapsulamento: quem pode fazer o que com o objeto?<a class="headerlink" href="#3-especificadores-de-acesso-e-encapsulamento-quem-pode-fazer-o-que-com-o-objeto" title="Permanent link">¶</a></h2>
+<p>Na W3Schools, a primeira mensagem importante e direta: C++ trabalha com tres especificadores de acesso.</p>
+<h3 id="leitura-rapida-dos-tres-niveis">Leitura rapida dos tres niveis<a class="headerlink" href="#leitura-rapida-dos-tres-niveis" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Especificador</th>
+<th>Quem acessa</th>
+<th>Melhor uso</th>
+<th>Risco se abusar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>public</code></td>
+<td>qualquer codigo que tenha acesso ao objeto</td>
+<td>operacoes que fazem parte do contrato publico da classe</td>
+<td>expor demais e perder controle do estado</td>
+</tr>
+<tr>
+<td><code>private</code></td>
+<td>apenas a propria classe</td>
+<td>dados internos e regras que nao devem ser manipuladas por fora</td>
+<td>criar getters/setters cosmeticos sem criterio</td>
+</tr>
+<tr>
+<td><code>protected</code></td>
+<td>a propria classe e classes derivadas</td>
+<td>pontos de extensao pensados para heranca</td>
+<td>virar um "atalho" para fugir de encapsulamento</td>
+</tr>
+</tbody>
+</table>
+<h3 id="o-que-isso-significa-na-pratica">O que isso significa na pratica<a class="headerlink" href="#o-que-isso-significa-na-pratica" title="Permanent link">¶</a></h3>
+<ul>
+<li><code>public</code> deve expor comportamento observavel: ligar bomba, atualizar leitura, consultar estado.</li>
+<li><code>private</code> deve guardar o que sustenta o contrato do objeto: limites, flags, valores internos, detalhes de calibracao.</li>
+<li><code>protected</code> deve ser usado com parcimonia quando a classe-base precisa permitir extensao por subclasses.</li>
+</ul>
+<h3 id="ponto-tecnico-importante">Ponto tecnico importante<a class="headerlink" href="#ponto-tecnico-importante" title="Permanent link">¶</a></h3>
+<p>Segundo a documentacao do <code>cppreference</code>, classes declaradas com <code>class</code> possuem membros <code>private</code> por padrao, enquanto <code>struct</code> usa <code>public</code> por padrao. Isso e detalhe de linguagem, mas ajuda a lembrar que C++ trata encapsulamento como parte do modelo, nao como detalhe opcional.</p>
+<h3 id="entao-o-que-e-encapsulamento">Entao o que e encapsulamento?<a class="headerlink" href="#entao-o-que-e-encapsulamento" title="Permanent link">¶</a></h3>
+<p>Na formulacao da W3Schools, encapsulamento significa esconder dados sensiveis e expor formas controladas de leitura e alteracao.</p>
+<p>Em sala, vale traduzir isso para uma regra mais operacional:</p>
+<p><strong>Conceito -&gt; impacto -&gt; acao recomendada</strong></p>
+<ul>
+<li>conceito: nem todo atributo deve ficar disponivel para escrita externa;</li>
+<li>impacto: o objeto pode garantir estado coerente e reduzir efeitos colaterais;</li>
+<li>acao recomendada: exponha metodos publicos que representem intencoes do dominio, nao apenas campos abertos.</li>
+</ul>
+<h3 id="exemplo-curto-em-c">Exemplo curto em C++<a class="headerlink" href="#exemplo-curto-em-c" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ValvulaControle</span><span class="w"> </span><span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">abertura</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">ValvulaControle</span><span class="p">()</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">abertura</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">definirAbertura</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">novaAbertura</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">novaAbertura</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">abertura</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<span class="w">            </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">novaAbertura</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">100.0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">abertura</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">100.0</span><span class="p">;</span>
+<span class="w">            </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">abertura</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">novaAbertura</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">getAbertura</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">abertura</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>Aqui, a classe nao expoe o atributo diretamente. Ela expoe uma acao publica que preserva a faixa de operacao.</p>
+<h3 id="erros-comuns-nesta-virada-de-nivel">Erros comuns nesta virada de nivel<a class="headerlink" href="#erros-comuns-nesta-virada-de-nivel" title="Permanent link">¶</a></h3>
+<ul>
+<li>transformar todo atributo em <code>public</code> por comodidade;</li>
+<li>criar <code>get</code> e <code>set</code> para tudo, sem regra alguma;</li>
+<li>usar <code>protected</code> em qualquer campo porque "talvez uma subclasse precise";</li>
+<li>esquecer que o objetivo nao e esconder nomes, e sim proteger invariantes.</li>
+</ul>
+<hr>
+<h2 id="4-friend-excecao-controlada-nao-padrao-de-modelagem">4. <code>friend</code>: excecao controlada, nao padrao de modelagem<a class="headerlink" href="#4-friend-excecao-controlada-nao-padrao-de-modelagem" title="Permanent link">¶</a></h2>
+<p>Depois de estudar encapsulamento, o aluno costuma perguntar: "entao nunca mais posso acessar dado privado de fora?"</p>
+<p>Em C++, a resposta e: <strong>normalmente nao, mas existe a palavra-chave <code>friend</code> para casos bem especificos</strong>.</p>
+<h3 id="o-que-friend-faz">O que <code>friend</code> faz<a class="headerlink" href="#o-que-friend-faz" title="Permanent link">¶</a></h3>
+<ul>
+<li>uma funcao <code>friend</code> nao e metodo da classe;</li>
+<li>mesmo assim, ela pode acessar membros <code>private</code> e <code>protected</code>;</li>
+<li>esse acesso precisa ser declarado explicitamente pela classe.</li>
+</ul>
+<h3 id="quando-faz-sentido-em-exemplos-didaticos-e-projetos-reais">Quando faz sentido em exemplos didaticos e projetos reais<a class="headerlink" href="#quando-faz-sentido-em-exemplos-didaticos-e-projetos-reais" title="Permanent link">¶</a></h3>
+<ul>
+<li>funcoes de exibicao fortemente acopladas ao objeto, como <code>operator&lt;&lt;</code>;</li>
+<li>adaptadores de integracao que precisam montar uma visao interna controlada;</li>
+<li>relatorios de diagnostico ou manutencao que nao justificam abrir toda a API publica.</li>
+</ul>
+<h3 id="quando-comeca-a-ficar-ruim">Quando comeca a ficar ruim<a class="headerlink" href="#quando-comeca-a-ficar-ruim" title="Permanent link">¶</a></h3>
+<ul>
+<li>quando varias funcoes externas so funcionam porque viraram <code>friend</code>;</li>
+<li>quando <code>friend</code> substitui uma API publica mal pensada;</li>
+<li>quando a classe precisa de "amigos demais" para ser usada.</li>
+</ul>
+<h3 id="regra-de-bolso">Regra de bolso<a class="headerlink" href="#regra-de-bolso" title="Permanent link">¶</a></h3>
+<p>Se <code>friend</code> aparece como recurso excepcional, pode ser justificavel.</p>
+<p>Se <code>friend</code> virou estrategia padrao de acesso, o encapsulamento provavelmente esta fraco.</p>
+<h3 id="exemplo-de-ideia">Exemplo de ideia<a class="headerlink" href="#exemplo-de-ideia" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SensorPressao</span><span class="w"> </span><span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">valorAtual</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">SensorPressao</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">valor</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">valorAtual</span><span class="p">(</span><span class="n">valor</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="w">    </span><span class="k">friend</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">auditar</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">SensorPressao</span><span class="o">&amp;</span><span class="w"> </span><span class="n">sensor</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">auditar</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">SensorPressao</span><span class="o">&amp;</span><span class="w"> </span><span class="n">sensor</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">sensor</span><span class="p">.</span><span class="n">valorAtual</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>O ponto didatico nao e "como burlar o <code>private</code>". O ponto e entender que a propria classe escolhe conceder um acesso excepcional e delimitado.</p>
+<hr>
+<h2 id="5-heranca-reutilizar-comportamento-sem-copiar-classe-inteira">5. Heranca: reutilizar comportamento sem copiar classe inteira<a class="headerlink" href="#5-heranca-reutilizar-comportamento-sem-copiar-classe-inteira" title="Permanent link">¶</a></h2>
+<p>Na W3Schools, heranca aparece como reuso de atributos e metodos entre uma classe-base e uma classe derivada. Isso esta correto, mas ainda incompleto para um curso de engenharia.</p>
+<h3 id="a-pergunta-certa-nao-e-da-para-herdar">A pergunta certa nao e "da para herdar?"<a class="headerlink" href="#a-pergunta-certa-nao-e-da-para-herdar" title="Permanent link">¶</a></h3>
+<p>A pergunta certa e:</p>
+<p><strong>"a classe derivada realmente e um tipo mais especifico da classe-base?"</strong></p>
+<p>Se a resposta for sim, heranca publica pode fazer sentido.</p>
+<p>Se a resposta for nao, provavelmente voce precisa de composicao, e nao de heranca.</p>
+<h3 id="leitura-pratica-da-heranca-publica">Leitura pratica da heranca publica<a class="headerlink" href="#leitura-pratica-da-heranca-publica" title="Permanent link">¶</a></h3>
+<p>O <code>cppreference</code> resume a ideia central assim: em heranca publica, o objeto derivado deve se comportar como um objeto da base. Em linguagem de modelagem, a relacao e <code>is-a</code>.</p>
+<p>Exemplos que costumam funcionar:</p>
+<ul>
+<li><code>SensorPressao</code> e um <code>AtivoIndustrial</code>;</li>
+<li><code>BombaRecalque</code> e um <code>AtivoIndustrial</code>;</li>
+<li><code>ValvulaControle</code> e um <code>AtivoIndustrial</code>.</li>
+</ul>
+<p>Exemplo que costuma dar problema:</p>
+<ul>
+<li><code>SalaDeControle</code> herdar de <code>Sensor</code>, so porque ambos tem <code>tag</code>.</li>
+</ul>
+<h3 id="o-que-a-classe-derivada-herda-e-o-que-ela-nao-herda">O que a classe derivada herda, e o que ela nao herda<a class="headerlink" href="#o-que-a-classe-derivada-herda-e-o-que-ela-nao-herda" title="Permanent link">¶</a></h3>
+<ul>
+<li>membros <code>public</code> da base continuam acessiveis como <code>public</code> na derivada, se a heranca for publica;</li>
+<li>membros <code>protected</code> continuam acessiveis para a derivada;</li>
+<li>membros <code>private</code> da base nao ficam acessiveis diretamente na derivada.</li>
+</ul>
+<p>Isso e importante: a subclasse reaproveita a base, mas nao ganha direito automatico de mexer em todos os detalhes internos.</p>
+<h3 id="comparacao-de-tecnicas-de-reutilizacao-e-controle">Comparacao de tecnicas de reutilizacao e controle<a class="headerlink" href="#comparacao-de-tecnicas-de-reutilizacao-e-controle" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Tecnica/Padrao</th>
+<th>Melhor uso</th>
+<th>Esforco</th>
+<th>Entregavel</th>
+<th>Limitacao</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Encapsulamento com <code>private</code> + API publica</td>
+<td>proteger estado e validar regras do objeto</td>
+<td>medio</td>
+<td>classe mais segura e legivel</td>
+<td>adiciona metodos e exige intencao de projeto</td>
+</tr>
+<tr>
+<td><code>protected</code> como ponto de extensao</td>
+<td>classe-base feita para derivacao</td>
+<td>medio</td>
+<td>reaproveitamento com algum controle</td>
+<td>aumenta acoplamento entre base e derivadas</td>
+</tr>
+<tr>
+<td><code>friend</code> controlado</td>
+<td>diagnostico, impressao ou integracao muito proxima da classe</td>
+<td>medio</td>
+<td>acesso excepcional sem abrir tudo</td>
+<td>pode corroer encapsulamento se usado em excesso</td>
+</tr>
+<tr>
+<td>Heranca publica</td>
+<td>relacao <code>is-a</code> real entre base e derivada</td>
+<td>medio</td>
+<td>subtipo reutilizavel e coerente</td>
+<td>hierarquia ruim espalha erro por varias classes</td>
+</tr>
+<tr>
+<td>Composicao</td>
+<td>relacao <code>has-a</code> ou colaboracao entre objetos</td>
+<td>medio</td>
+<td>modelo mais desacoplado</td>
+<td>exige delegacao explicita e menos "atalho" sintatico</td>
+</tr>
+</tbody>
+</table>
+<h3 id="foco-didatico-desta-aula">Foco didatico desta aula<a class="headerlink" href="#foco-didatico-desta-aula" title="Permanent link">¶</a></h3>
+<p>Para a trilha inicial do curso, a recomendacao pratica e:</p>
+<ul>
+<li>priorize heranca publica quando houver <code>is-a</code>;</li>
+<li>use <code>protected</code> com moderacao;</li>
+<li>evite <code>private inheritance</code> e <code>protected inheritance</code> como primeira escolha em exemplos iniciais;</li>
+<li>compare sempre com a alternativa de composicao.</li>
+</ul>
+<hr>
+<h2 id="6-exemplo-aplicado-estacao-de-bombeamento-com-sensor-bomba-e-auditoria-de-calibracao">6. Exemplo aplicado: estacao de bombeamento com sensor, bomba e auditoria de calibracao<a class="headerlink" href="#6-exemplo-aplicado-estacao-de-bombeamento-com-sensor-bomba-e-auditoria-de-calibracao" title="Permanent link">¶</a></h2>
+<p>No repositorio, o exemplo compilavel desta aula esta em:</p>
+<ul>
+<li><a href="exemplo_estacao_bombeamento.cpp">exemplo_estacao_bombeamento.cpp</a></li>
+</ul>
+<h3 id="o-que-esse-exemplo-mostra">O que esse exemplo mostra<a class="headerlink" href="#o-que-esse-exemplo-mostra" title="Permanent link">¶</a></h3>
+<ul>
+<li><code>AtivoIndustrial</code> encapsula <code>tag</code> e estado de bloqueio;</li>
+<li><code>SensorPressao</code> e <code>BombaRecalque</code> herdam publicamente da classe-base;</li>
+<li>a area operacional fica disponivel para extensao controlada na hierarquia;</li>
+<li>uma funcao <code>friend</code> gera relatorio de calibracao sem abrir todo o estado interno.</li>
+</ul>
+<h3 id="trecho-central-em-c">Trecho central em C++<a class="headerlink" href="#trecho-central-em-c" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">AtivoIndustrial</span><span class="w"> </span><span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">tag</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">bloqueado</span><span class="p">;</span>
+
+<span class="k">protected</span><span class="o">:</span>
+<span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">area</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">redefinirArea</span><span class="p">(</span><span class="n">string</span><span class="w"> </span><span class="n">novaArea</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">area</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">novaArea</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">SensorPressao</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">AtivoIndustrial</span><span class="w"> </span><span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">valorAtual</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">limiteAlarme</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">offsetCalibracao</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="k">friend</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">emitirRelatorioCalibracao</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">SensorPressao</span><span class="o">&amp;</span><span class="w"> </span><span class="n">sensor</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div>
+<h3 id="por-que-esse-exemplo-e-didatico">Por que esse exemplo e didatico<a class="headerlink" href="#por-que-esse-exemplo-e-didatico" title="Permanent link">¶</a></h3>
+<ul>
+<li><code>tag</code> nao pode ser alterada livremente por qualquer codigo;</li>
+<li>a subclasse usa o que a base oferece sem violar o <code>private</code>;</li>
+<li><code>friend</code> aparece como excecao localizada, e nao como porta geral de acesso;</li>
+<li>o dominio continua proximo de sistemas industriais reais.</li>
+</ul>
+<h3 id="leitura-guiada-da-saida">Leitura guiada da saida<a class="headerlink" href="#leitura-guiada-da-saida" title="Permanent link">¶</a></h3>
+<p>Ao executar, discuta com a turma:</p>
+<ol>
+<li>quais dados ficaram protegidos na base;</li>
+<li>quais operacoes a subclasse reaproveitou;</li>
+<li>por que o relatorio de calibracao nao foi implementado como acesso publico geral;</li>
+<li>em que ponto heranca economizou duplicacao de codigo.</li>
+</ol>
+<h3 id="como-compilar-em-sala">Como compilar em sala<a class="headerlink" href="#como-compilar-em-sala" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>g++<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>docs/fundamentos_poo_cpp_python/04_encapsulamento_heranca/exemplo_estacao_bombeamento.cpp<span class="w"> </span>-o<span class="w"> </span>exemplo_encapsulamento
+./exemplo_encapsulamento
+</code></pre></div>
+<hr>
+<h2 id="7-ponte-c-python">7. Ponte C++ -&gt; Python<a class="headerlink" href="#7-ponte-c-python" title="Permanent link">¶</a></h2>
+<p>O conceito de encapsulamento e heranca existe nas duas linguagens, mas o mecanismo nao e identico.</p>
+<h3 id="em-c">Em C++<a class="headerlink" href="#em-c" title="Permanent link">¶</a></h3>
+<ul>
+<li><code>private</code>, <code>protected</code> e <code>public</code> sao parte formal da linguagem;</li>
+<li><code>friend</code> permite uma excecao declarada explicitamente;</li>
+<li>heranca publica comunica relacao <code>is-a</code> e preserva acesso conforme a base.</li>
+</ul>
+<h3 id="em-python">Em Python<a class="headerlink" href="#em-python" title="Permanent link">¶</a></h3>
+<ul>
+<li>nao existe "privado real" no mesmo sentido de C++;</li>
+<li>o tutorial oficial recomenda tratar nomes com <code>_</code> como nao publicos por convencao;</li>
+<li>heranca usa <code>class Derivada(Base):</code> e <code>super()</code>;</li>
+<li>nao existe equivalente direto a <code>friend</code>, entao a saida usual e expor um metodo/propriedade publica bem pensada.</li>
+</ul>
+<h3 id="espelho-em-python-no-repositorio">Espelho em Python no repositorio<a class="headerlink" href="#espelho-em-python-no-repositorio" title="Permanent link">¶</a></h3>
+<ul>
+<li><a href="exemplo_python_encapsulamento_heranca.py">exemplo_python_encapsulamento_heranca.py</a></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">AtivoIndustrial</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">area</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tag</span> <span class="o">=</span> <span class="n">tag</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_area</span> <span class="o">=</span> <span class="n">area</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bloqueado</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tag</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tag</span>
+</code></pre></div>
+<h3 id="comparacao-rapida">Comparacao rapida<a class="headerlink" href="#comparacao-rapida" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th>C++</th>
+<th>Python</th>
+<th>Impacto didatico</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Controle de acesso</td>
+<td>formal na linguagem</td>
+<td>convencional na maior parte dos casos</td>
+<td>C++ torna a fronteira mais explicita</td>
+</tr>
+<tr>
+<td>Encapsulamento</td>
+<td><code>private</code> + API publica</td>
+<td><code>_atributo</code>, <code>@property</code> e disciplina de projeto</td>
+<td>Python depende mais de convencao</td>
+</tr>
+<tr>
+<td>Heranca</td>
+<td><code>class Derivada : public Base</code></td>
+<td><code>class Derivada(Base)</code></td>
+<td>a ideia de especializacao continua</td>
+</tr>
+<tr>
+<td>Sobrescrita</td>
+<td>precisa respeitar a interface da base</td>
+<td>o tutorial oficial lembra que metodos sao efetivamente <code>virtual</code></td>
+<td>Python torna polimorfismo mais flexivel</td>
+</tr>
+<tr>
+<td><code>friend</code></td>
+<td>existe</td>
+<td>nao ha equivalente direto</td>
+<td>em Python, prefira API publica clara</td>
+</tr>
+</tbody>
+</table>
+<h3 id="recomendacao-pratica-por-cenario">Recomendacao pratica por cenario<a class="headerlink" href="#recomendacao-pratica-por-cenario" title="Permanent link">¶</a></h3>
+<ul>
+<li>em C++, use encapsulamento para defender invariantes e reduzir mutacao acidental;</li>
+<li>em Python, use convencoes e <code>@property</code> quando a leitura/escrita precisar de regra;</li>
+<li>nas duas linguagens, so use heranca quando a especializacao fizer sentido no dominio.</li>
+</ul>
+<hr>
+<h2 id="8-mini-caso-pratico-monitoramento-de-uma-estacao-de-tratamento">8. Mini-caso pratico: monitoramento de uma estacao de tratamento<a class="headerlink" href="#8-mini-caso-pratico-monitoramento-de-uma-estacao-de-tratamento" title="Permanent link">¶</a></h2>
+<p>Imagine uma estacao com estes ativos:</p>
+<ul>
+<li>um <code>SensorPressao</code> na linha de recalque;</li>
+<li>uma <code>BombaRecalque</code> que envia agua ao reservatorio elevado;</li>
+<li>um servico de manutencao que precisa auditar calibracao.</li>
+</ul>
+<h3 id="situacao-1-leitura-operacional">Situacao 1. Leitura operacional<a class="headerlink" href="#situacao-1-leitura-operacional" title="Permanent link">¶</a></h3>
+<p>O sistema atualiza a pressao por um metodo controlado:</p>
+<div class="highlight"><pre><span></span><code><span class="n">sensor</span><span class="p">.</span><span class="n">atualizarValor</span><span class="p">(</span><span class="mf">6.8</span><span class="p">);</span>
+</code></pre></div>
+<p>Em vez de escrever no atributo diretamente, a classe decide como aceitar esse valor.</p>
+<h3 id="situacao-2-especializacao">Situacao 2. Especializacao<a class="headerlink" href="#situacao-2-especializacao" title="Permanent link">¶</a></h3>
+<p><code>SensorPressao</code> e <code>BombaRecalque</code> compartilham identidade, area e estado de bloqueio porque ambos sao <code>AtivoIndustrial</code>.</p>
+<h3 id="situacao-3-diagnostico-excepcional">Situacao 3. Diagnostico excepcional<a class="headerlink" href="#situacao-3-diagnostico-excepcional" title="Permanent link">¶</a></h3>
+<p>A manutencao precisa enxergar um <code>offsetCalibracao</code> interno.</p>
+<p>Em vez de abrir esse campo para todo o sistema, a classe libera acesso pontual a uma funcao <code>friend</code>.</p>
+<p><strong>Licao didatica:</strong> encapsular nao significa impedir trabalho. Significa decidir com clareza quais portas existem, quem pode usa-las e por que elas existem.</p>
+<hr>
+<h2 id="9-exercicios-para-casa-atividade-guiada-de-encapsulamento-e-heranca">9. Exercicios para casa: atividade guiada de encapsulamento e heranca<a class="headerlink" href="#9-exercicios-para-casa-atividade-guiada-de-encapsulamento-e-heranca" title="Permanent link">¶</a></h2>
+<p>No repositorio, ha um arquivo-base para a atividade:</p>
+<ul>
+<li><a href="projeto_estacao_bombeamento_base.cpp">projeto_estacao_bombeamento_base.cpp</a></li>
+</ul>
+<p>Se quiser manter uma referencia pronta para revisao posterior, use tambem:</p>
+<ul>
+<li><a href="projeto_estacao_bombeamento.cpp">projeto_estacao_bombeamento.cpp</a></li>
+</ul>
+<h3 id="enunciado">Enunciado<a class="headerlink" href="#enunciado" title="Permanent link">¶</a></h3>
+<p>Modele uma pequena estacao com:</p>
+<ul>
+<li><code>AtivoCampo</code> como classe-base;</li>
+<li><code>SensorNivel</code> como classe derivada;</li>
+<li><code>BombaDosadora</code> como classe derivada.</li>
+</ul>
+<h3 id="regras-da-atividade">Regras da atividade<a class="headerlink" href="#regras-da-atividade" title="Permanent link">¶</a></h3>
+<ul>
+<li>a base deve encapsular <code>tag</code> e estado de bloqueio;</li>
+<li>as derivadas nao devem acessar diretamente membros <code>private</code> da base;</li>
+<li><code>protected</code> deve aparecer apenas onde realmente ajuda a extensao;</li>
+<li>o <code>friend</code> de <code>SensorNivel</code> deve ser usado apenas para inspecao tecnica.</li>
+</ul>
+<h3 id="tarefas">Tarefas<a class="headerlink" href="#tarefas" title="Permanent link">¶</a></h3>
+<ol>
+<li>Implementar os construtores das derivadas reaproveitando a classe-base.</li>
+<li>Criar metodos publicos que validem alteracoes de nivel e vazao.</li>
+<li>Declarar e definir a funcao <code>friend</code> de inspecao do sensor.</li>
+<li>Exibir no terminal um resumo dos objetos criados.</li>
+<li>Justificar, em comentario curto, por que cada membro ficou <code>public</code>, <code>private</code> ou <code>protected</code>.</li>
+</ol>
+<h3 id="checklist-de-entrega">Checklist de entrega<a class="headerlink" href="#checklist-de-entrega" title="Permanent link">¶</a></h3>
+<ul>
+<li>o codigo compila;</li>
+<li>o estado importante ficou protegido;</li>
+<li>as derivadas reutilizam a base sem duplicacao desnecessaria;</li>
+<li>a funcao <code>friend</code> ficou localizada e justificavel;</li>
+<li>o terminal mostra um resumo legivel dos ativos.</li>
+</ul>
+<h3 id="comando-sugerido-para-o-aluno-testar">Comando sugerido para o aluno testar<a class="headerlink" href="#comando-sugerido-para-o-aluno-testar" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>g++<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>docs/fundamentos_poo_cpp_python/04_encapsulamento_heranca/projeto_estacao_bombeamento.cpp<span class="w"> </span>-o<span class="w"> </span>projeto_bombeamento
+./projeto_bombeamento
+</code></pre></div>
+<hr>
+<h2 id="10-videos-e-materiais-complementares">10. Videos e materiais complementares<a class="headerlink" href="#10-videos-e-materiais-complementares" title="Permanent link">¶</a></h2>
+<h3 id="video-principal-desta-unidade">Video principal desta unidade<a class="headerlink" href="#video-principal-desta-unidade" title="Permanent link">¶</a></h3>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=hYp2Ki1u3ms">Curso de C++ #65 - POO, Encapsulamento - P7 (CFB Cursos)</a></li>
+</ul>
+<h3 id="video-complementar-para-heranca">Video complementar para heranca<a class="headerlink" href="#video-complementar-para-heranca" title="Permanent link">¶</a></h3>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=TLQzg0b-AY4">Curso de C++ #47 - POO, Classes, Heranca - P4 (CFB Cursos)</a></li>
+</ul>
+<h3 id="laboratorio-complementar">Laboratorio complementar<a class="headerlink" href="#laboratorio-complementar" title="Permanent link">¶</a></h3>
+<ul>
+<li><a href="https://www.w3schools.com/cpp/cpp_access_specifiers.asp">W3Schools - Access Specifiers</a></li>
+<li><a href="https://www.w3schools.com/cpp/cpp_encapsulation.asp">W3Schools - Encapsulation</a></li>
+<li><a href="https://www.w3schools.com/cpp/cpp_friend_function.asp">W3Schools - Friend Functions</a></li>
+<li><a href="https://www.w3schools.com/cpp/cpp_inheritance.asp">W3Schools - Inheritance</a></li>
+</ul>
+<h3 id="observacao-didatica">Observacao didatica<a class="headerlink" href="#observacao-didatica" title="Permanent link">¶</a></h3>
+<p>O video principal ajuda a abrir o assunto. A compreensao melhora quando o aluno alterna entre leitura, execucao no navegador e adaptacao do exemplo para um dominio de engenharia.</p>
+<hr>
+<h2 id="perguntas-de-revisao-rapida">Perguntas de revisao rapida<a class="headerlink" href="#perguntas-de-revisao-rapida" title="Permanent link">¶</a></h2>
+<ol>
+<li>Qual a diferenca pratica entre <code>private</code> e <code>protected</code> em uma hierarquia de classes?</li>
+<li>Em que situacoes <code>friend</code> pode ser justificavel sem enfraquecer demais o encapsulamento?</li>
+<li>Como decidir se uma relacao deve usar heranca publica ou composicao?</li>
+</ol>
+<h2 id="fontes-de-referencia">Fontes de referencia<a class="headerlink" href="#fontes-de-referencia" title="Permanent link">¶</a></h2>
+<ul>
+<li>https://www.w3schools.com/cpp/cpp_access_specifiers.asp</li>
+<li>https://www.w3schools.com/cpp/cpp_encapsulation.asp</li>
+<li>https://www.w3schools.com/cpp/cpp_friend_function.asp</li>
+<li>https://www.w3schools.com/cpp/cpp_inheritance.asp</li>
+<li>https://www.w3schools.com/cpp/trycpp.asp?filename=demo_access_public</li>
+<li>https://www.w3schools.com/cpp/trycpp.asp?filename=demo_encapsulation</li>
+<li>https://www.w3schools.com/cpp/trycpp.asp?filename=demo_friend_function</li>
+<li>https://www.w3schools.com/cpp/trycpp.asp?filename=demo_inheritance</li>
+<li>https://en.cppreference.com/w/cpp/language/access</li>
+<li>https://en.cppreference.com/w/cpp/language/friend</li>
+<li>https://en.cppreference.com/w/cpp/language/derived_class</li>
+<li>https://docs.python.org/3/tutorial/classes.html</li>
+</ul></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
