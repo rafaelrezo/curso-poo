@@ -20,6 +20,7 @@
 - `02. Fundamentos de POO em C++ e Python`: iniciar classes, objetos, metodos e construtores com exemplos guiados.
 - `03. Sobrecarga de construtores em C++`: modelar diferentes formas de nascimento do objeto com foco em automacao industrial.
 - `04. Acesso, encapsulamento e heranca em C++`: proteger estado interno, discutir `friend` com criterio e reutilizar comportamento com hierarquias simples.
+- `05. Polimorfismo em C++`: comandar diferentes ativos por uma interface comum, com `virtual` e `override`.
 - As demais unidades continuam no repositorio, mas seguem ocultadas enquanto a trilha inicial e consolidada.
 
 ## 2. Trilha inicial do curso
@@ -30,16 +31,17 @@
 4. Introducao a classes, objetos, metodos e construtores em C++.
 5. Sobrecarga de construtores em C++ com comparacao didatica com Python.
 6. Encapsulamento, `friend` e heranca em C++ para proteger invariantes e especializar ativos do dominio.
+7. Polimorfismo em C++ para tratar diferentes equipamentos por um contrato unico.
 
 ## 3. Resultado esperado nesta virada de unidade
 
 - Cada aluno com repositorio funcional no GitHub.
 - Autonomia minima para clonar, versionar e sincronizar alteracoes.
-- Base conceitual suficiente para ler codigo orientado a objetos, entender diferentes formas de inicializacao e comecar a avaliar quando o estado deve ficar protegido.
+- Base conceitual suficiente para ler codigo orientado a objetos, entender diferentes formas de inicializacao, proteger estado e reconhecer quando um mesmo comando deve acionar comportamentos distintos.
 
 ## Mini-caso pratico
 
-Um aluno cria e sincroniza seu repositorio; na sequencia, le e adapta exemplos de `Sensor`, `Valvula` e `Controlador` em C++ para entender como um objeto representa um elemento real da planta e como ele pode nascer com configuracoes diferentes.
+Um aluno cria e sincroniza seu repositorio; na sequencia, le e adapta exemplos de `Sensor`, `Valvula`, `Controlador` e `AtuadorMalha` em C++ para entender como um objeto representa um elemento real da planta, como ele pode nascer com configuracoes diferentes e como varios equipamentos podem responder ao mesmo comando por uma interface comum.
 
 ## Perguntas de revisao rapida
 
