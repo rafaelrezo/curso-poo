@@ -16,6 +16,9 @@ plugins:
   - search
   - mkdocs-video
 
+extra_css:
+  - stylesheets/extra.css
+
 markdown_extensions:
   - admonition
   - pymdownx.highlight
@@ -40,7 +43,7 @@ nav:
   - Inicio: index.md
   - 01. Fundamentos Git e IDE: fundamentos_git_ide/index.md
   - 02. Fundamentos de POO em C++ e Python: fundamentos_poo_cpp_python/index.md
-  - 03. UML e Diagrama de Classes: modelagem_analise_codigo/index.md
-  - 04. Sobrecarga de Construtores em C++: fundamentos_poo_cpp_python/03_sobrecarga_construtores/index.md
-  - 05. Acesso, Encapsulamento e Heranca em C++: fundamentos_poo_cpp_python/04_encapsulamento_heranca/index.md
-  - 06. Polimorfismo em C++: fundamentos_poo_cpp_python/05_polimorfismo/index.md
+  - 03. Sobrecarga de Construtores em C++: fundamentos_poo_cpp_python/03_sobrecarga_construtores/index.md
+  - 04. Acesso, Encapsulamento e Heranca em C++: fundamentos_poo_cpp_python/04_encapsulamento_heranca/index.md
+  - 05. Polimorfismo em C++: fundamentos_poo_cpp_python/05_polimorfismo/index.md
+  - 06. UML e Diagrama de Classes: modelagem_analise_codigo/index.md
