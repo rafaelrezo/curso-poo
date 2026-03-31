@@ -738,138 +738,32 @@ Quando essa separacao aparece cedo no desenho, o codigo tende a nascer com mais 
 
 ---
 
-## 10. Atividades praticas: Mermaid Live e modelagem final
+## 10. Atividade da unidade: via GitHub Classroom
 
-### Atividade 1. Primeiro contato com `mermaid.live`
+Nesta unidade, a atividade principal saiu do material do site e passou a existir como um **repositorio starter independente**, proprio para uso no GitHub Classroom.
 
-Antes da atividade principal, faca uma etapa curta de aquecimento para a turma aprender a escrever um diagrama sem depender ainda do arquivo `.md` do repositorio.
+### Onde esta a atividade
 
-### Objetivo
+- Starter repo: [RafaelEmerick-POO/poo-20261-cenario-04-modelagem-uml](https://github.com/RafaelEmerick-POO/poo-20261-cenario-04-modelagem-uml)
 
-- aprender o fluxo basico do editor online;
-- entender como um bloco `classDiagram` vira um diagrama visual;
-- validar rapidamente erros de sintaxe antes de levar o conteudo para Markdown.
+### Por que a atividade foi movida
 
-### Ferramenta
+- para ensinar fluxo real com `assignment`, branch, issue, commit e pull request;
+- para separar claramente **conteudo de estudo** e **repositorio de entrega**;
+- para permitir que cada aluno ou equipe receba sua propria copia pelo GitHub Classroom.
 
-- Editor online: [Mermaid Live](https://mermaid.live/)
+### O que o aluno vai encontrar no starter
 
-### Roteiro da atividade
+- `README.md` com o enunciado completo;
+- arquivos-base para o diagrama e para a implementacao inicial;
+- `AI_LOG.md`;
+- template de issue;
+- template de pull request;
+- referencias oficiais para Mermaid, Markdown e modelagem.
 
-1. Abrir o `https://mermaid.live/`.
-2. Apagar o exemplo padrao que vier carregado no editor.
-3. Colar um diagrama inicial simples.
-4. Alterar nomes de classes, atributos e relacoes.
-5. Conferir se o diagrama renderizou sem erro.
-6. Salvar o link compartilhavel ou exportar uma imagem para registrar a tentativa.
+### Recomendacao para o docente
 
-### Modelo inicial para colar no editor
-
-``` mermaid
-classDiagram
-    class Equipamento {
-        -tag: string
-        -ativo: bool
-        +ligar() void
-        +desligar() void
-    }
-
-    class SensorTemperatura {
-        -valorAtual: double
-        +atualizarLeitura(valor: double) void
-    }
-
-    Equipamento <|-- SensorTemperatura
-```
-
-### Código do modelo inicial para copiar e colar
-
-```text
-classDiagram
-    class Equipamento {
-        -tag: string
-        -ativo: bool
-        +ligar() void
-        +desligar() void
-    }
-
-    class SensorTemperatura {
-        -valorAtual: double
-        +atualizarLeitura(valor: double) void
-    }
-
-    Equipamento <|-- SensorTemperatura
-```
-
-### Entregavel da atividade 1
-
-- link do diagrama salvo no `mermaid.live` ou exportacao em imagem;
-- pequeno texto com `3` frases explicando:
-  1. quais classes foram desenhadas;
-  2. qual relacao foi usada;
-  3. que duvida de sintaxe apareceu durante o teste.
-
-### Referencias de apoio rapido
-
-- [Mermaid Live Editor](https://mermaid.live/)
-- [Mermaid - Class diagrams](https://mermaid.js.org/syntax/classDiagram.html)
-- [GitHub Docs - Basic writing and formatting syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
-
-### Observacao didatica
-
-Se a turma ainda nao domina Markdown, esta atividade deve vir antes da atividade principal. O foco aqui nao e modelar um sistema completo, e sim aprender o ciclo: escrever -> renderizar -> corrigir.
-
-### Atividade 2. Modelar e implementar um nucleo minimo
-
-### Enunciado
-
-Modele um **sistema de monitoramento de laboratorio de ensaios** com pelo menos estas classes:
-
-- `Laboratorio`
-- `Equipamento`
-- `SensorTemperatura`
-- `OrdemCalibracao`
-- uma classe adicional escolhida por voce
-
-### Regras da atividade
-
-- se possivel, comecar o rascunho no `mermaid.live` e so depois migrar para o `.md`;
-- o diagrama deve ser feito em `mermaid`;
-- use no minimo `5` classes;
-- inclua pelo menos `1` relacao de generalizacao;
-- inclua pelo menos `1` relacao de composicao ou agregacao;
-- explicite multiplicidade em pelo menos `3` relacoes;
-- cada classe principal deve ter ao menos `2` atributos e `1` operacao.
-
-### Tarefas
-
-1. Escrever um pequeno texto de requisito com `5` a `8` linhas.
-2. Extrair as classes candidatas.
-3. Montar um primeiro rascunho no `mermaid.live`.
-4. Migrar o diagrama validado para um arquivo `.md` no repositorio.
-5. Justificar em comentario curto por que cada relacao foi escolhida.
-6. Implementar o esqueleto de `2` classes em C++ ou Python.
-7. Fazer `commit` com uma mensagem objetiva, por exemplo: `feat: modela laboratorio com diagrama UML inicial`.
-
-### Entregaveis esperados
-
-- um link ou exportacao da versao inicial feita no `mermaid.live`;
-- um arquivo `.md` com o texto do problema e o bloco `mermaid`;
-- um arquivo `.cpp` ou `.py` com pelo menos duas classes do modelo;
-- uma justificativa curta dizendo onde houve composicao, heranca e associacao.
-
-### Checklist de revisao
-
-- o rascunho inicial foi testado no `mermaid.live`;
-- as classes representam entidades do dominio e nao apenas telas ou menus;
-- os nomes das operacoes indicam comportamento observavel;
-- ha pelo menos uma decisao clara de encapsulamento;
-- a heranca usada representa mesmo uma relacao `is-a`;
-- o diagrama ajuda a prever a implementacao, e nao o contrario.
-
-### Desafio opcional
-
-Transforme uma relacao inicialmente desenhada como heranca em composicao e explique qual versao ficou melhor para o dominio escolhido.
+Use esse starter como `assigned repository` no GitHub Classroom e mantenha esta pagina apenas como referencia conceitual da aula.
 
 ---
 
