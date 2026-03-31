@@ -1,0 +1,2543 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Trilha de POO para Engenharia com C++ e Python">
+      
+      
+      
+      
+        <link rel="prev" href="../fundamentos_poo_cpp_python/">
+      
+      
+        <link rel="next" href="../fundamentos_poo_cpp_python/03_sobrecarga_construtores/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
+    
+    
+      
+        <title>03. UML e Diagrama de Classes - Curso de Programacao Orientada a Objetos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#uml-e-diagrama-de-classes-modelando-objetos-antes-do-codigo" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href=".." title="Curso de Programacao Orientada a Objetos" class="md-header__button md-logo" aria-label="Curso de Programacao Orientada a Objetos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Curso de Programacao Orientada a Objetos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              03. UML e Diagrama de Classes
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Curso de Programacao Orientada a Objetos" class="md-nav__button md-logo" aria-label="Curso de Programacao Orientada a Objetos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Curso de Programacao Orientada a Objetos
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fundamentos_git_ide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01. Fundamentos Git e IDE
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fundamentos_poo_cpp_python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02. Fundamentos de POO em C++ e Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03. UML e Diagrama de Classes
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03. UML e Diagrama de Classes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#objetivos-de-aprendizagem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos de aprendizagem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#video-da-aula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video da aula
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-por-que-uml-entra-agora-na-trilha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Por que UML entra agora na trilha?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-o-que-e-uml-e-o-que-um-diagrama-de-classes-realmente-mostra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. O que e UML e o que um diagrama de classes realmente mostra?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. O que e UML e o que um diagrama de classes realmente mostra?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classe-uml-mais-simples-possivel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classe UML mais simples possivel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#classe-uml-com-atributos-e-operacoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classe UML com atributos e operacoes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-ler-esse-retangulo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como ler esse retangulo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leitura-didatica-da-visibilidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leitura didatica da visibilidade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ponto-importante-para-a-turma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ponto importante para a turma
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-como-o-diagrama-de-classes-se-relaciona-com-poo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Como o diagrama de classes se relaciona com POO?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Como o diagrama de classes se relaciona com POO?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-curto-o-diagrama-como-ponte-para-encapsulamento-e-heranca" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo curto: o diagrama como ponte para encapsulamento e heranca
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-que-esse-desenho-ja-comunica-antes-do-codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que esse desenho ja comunica antes do codigo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-relacionamentos-uml-quando-usar-cada-um" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Relacionamentos UML: quando usar cada um
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Relacionamentos UML: quando usar cada um">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-com-relacoes-diferentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo com relacoes diferentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparacao-de-relacionamentos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparacao de relacionamentos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recomendacao-pratica-por-cenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recomendacao pratica por cenario
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#erro-classico-de-modelagem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Erro classico de modelagem
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-multiplicidade-quantos-objetos-podem-se-relacionar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Multiplicidade: quantos objetos podem se relacionar?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Multiplicidade: quantos objetos podem se relacionar?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-com-multiplicidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo com multiplicidade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-interpretar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como interpretar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiplicidades-mais-frequentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multiplicidades mais frequentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#impacto-pratico-no-codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Impacto pratico no codigo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-como-sair-de-um-texto-de-requisito-para-um-diagrama-de-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Como sair de um texto de requisito para um diagrama de classes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Como sair de um texto de requisito para um diagrama de classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#texto-inicial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Texto inicial
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#passo-1-destacar-entidades-candidatas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Passo 1. Destacar entidades candidatas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#passo-2-perguntar-qual-responsabilidade-pertence-a-cada-classe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Passo 2. Perguntar qual responsabilidade pertence a cada classe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#passo-3-decidir-relacoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Passo 3. Decidir relacoes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resultado-inicial-em-mermaid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resultado inicial em Mermaid
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#licao-didatica-importante" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Licao didatica importante
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-ponte-c-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Ponte C++ -&gt; Python
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Ponte C++ -&gt; Python">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mesmo-modelo-mesma-intencao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mesmo modelo, mesma intencao
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traducao-para-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Traducao para C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traducao-para-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Traducao para Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-que-destacar-em-aula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que destacar em aula
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mensagem-principal-da-ponte" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mensagem principal da ponte
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-como-uml-e-usada-na-pratica-sem-virar-burocracia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Como UML e usada na pratica sem virar burocracia
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Como UML e usada na pratica sem virar burocracia">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uso-pratico-mais-comum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uso pratico mais comum
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quando-o-diagrama-ajuda-muito" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quando o diagrama ajuda muito
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quando-o-diagrama-atrapalha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quando o diagrama atrapalha
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regra-pratica-para-este-curso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regra pratica para este curso
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-mini-caso-pratico-eta-com-tanque-sensor-e-bomba-dosadora" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Mini-caso pratico: ETA com tanque, sensor e bomba dosadora
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Mini-caso pratico: ETA com tanque, sensor e bomba dosadora">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modelo-inicial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modelo inicial
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-que-discutir-com-a-turma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que discutir com a turma
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#licao-de-modelagem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Licao de modelagem
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-atividade-pratica-final-modelar-e-implementar-um-nucleo-minimo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Atividade pratica final: modelar e implementar um nucleo minimo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Atividade pratica final: modelar e implementar um nucleo minimo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enunciado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enunciado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regras-da-atividade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regras da atividade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregaveis-esperados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregaveis esperados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checklist-de-revisao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checklist de revisao
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#desafio-opcional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Desafio opcional
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-videos-e-materiais-complementares" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Videos e materiais complementares
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Videos e materiais complementares">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#video-principal-desta-unidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video principal desta unidade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leituralaboratorio-complementar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leitura/laboratorio complementar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observacao-didatica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observacao didatica
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#perguntas-de-revisao-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perguntas de revisao rapida
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fontes-de-referencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fontes de referencia
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fundamentos_poo_cpp_python/03_sobrecarga_construtores/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04. Sobrecarga de Construtores em C++
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fundamentos_poo_cpp_python/04_encapsulamento_heranca/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05. Acesso, Encapsulamento e Heranca em C++
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fundamentos_poo_cpp_python/05_polimorfismo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06. Polimorfismo em C++
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#objetivos-de-aprendizagem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos de aprendizagem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#video-da-aula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video da aula
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-por-que-uml-entra-agora-na-trilha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Por que UML entra agora na trilha?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-o-que-e-uml-e-o-que-um-diagrama-de-classes-realmente-mostra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. O que e UML e o que um diagrama de classes realmente mostra?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. O que e UML e o que um diagrama de classes realmente mostra?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classe-uml-mais-simples-possivel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classe UML mais simples possivel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#classe-uml-com-atributos-e-operacoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classe UML com atributos e operacoes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-ler-esse-retangulo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como ler esse retangulo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leitura-didatica-da-visibilidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leitura didatica da visibilidade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ponto-importante-para-a-turma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ponto importante para a turma
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-como-o-diagrama-de-classes-se-relaciona-com-poo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Como o diagrama de classes se relaciona com POO?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Como o diagrama de classes se relaciona com POO?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-curto-o-diagrama-como-ponte-para-encapsulamento-e-heranca" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo curto: o diagrama como ponte para encapsulamento e heranca
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-que-esse-desenho-ja-comunica-antes-do-codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que esse desenho ja comunica antes do codigo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-relacionamentos-uml-quando-usar-cada-um" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Relacionamentos UML: quando usar cada um
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Relacionamentos UML: quando usar cada um">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-com-relacoes-diferentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo com relacoes diferentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparacao-de-relacionamentos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparacao de relacionamentos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recomendacao-pratica-por-cenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recomendacao pratica por cenario
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#erro-classico-de-modelagem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Erro classico de modelagem
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-multiplicidade-quantos-objetos-podem-se-relacionar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Multiplicidade: quantos objetos podem se relacionar?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Multiplicidade: quantos objetos podem se relacionar?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-com-multiplicidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo com multiplicidade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-interpretar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como interpretar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiplicidades-mais-frequentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multiplicidades mais frequentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#impacto-pratico-no-codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Impacto pratico no codigo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-como-sair-de-um-texto-de-requisito-para-um-diagrama-de-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Como sair de um texto de requisito para um diagrama de classes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Como sair de um texto de requisito para um diagrama de classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#texto-inicial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Texto inicial
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#passo-1-destacar-entidades-candidatas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Passo 1. Destacar entidades candidatas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#passo-2-perguntar-qual-responsabilidade-pertence-a-cada-classe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Passo 2. Perguntar qual responsabilidade pertence a cada classe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#passo-3-decidir-relacoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Passo 3. Decidir relacoes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resultado-inicial-em-mermaid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resultado inicial em Mermaid
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#licao-didatica-importante" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Licao didatica importante
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-ponte-c-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Ponte C++ -&gt; Python
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Ponte C++ -&gt; Python">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mesmo-modelo-mesma-intencao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mesmo modelo, mesma intencao
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traducao-para-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Traducao para C++
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traducao-para-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Traducao para Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-que-destacar-em-aula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que destacar em aula
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mensagem-principal-da-ponte" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mensagem principal da ponte
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-como-uml-e-usada-na-pratica-sem-virar-burocracia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Como UML e usada na pratica sem virar burocracia
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Como UML e usada na pratica sem virar burocracia">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uso-pratico-mais-comum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uso pratico mais comum
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quando-o-diagrama-ajuda-muito" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quando o diagrama ajuda muito
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quando-o-diagrama-atrapalha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quando o diagrama atrapalha
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regra-pratica-para-este-curso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regra pratica para este curso
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-mini-caso-pratico-eta-com-tanque-sensor-e-bomba-dosadora" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Mini-caso pratico: ETA com tanque, sensor e bomba dosadora
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Mini-caso pratico: ETA com tanque, sensor e bomba dosadora">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modelo-inicial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modelo inicial
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-que-discutir-com-a-turma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que discutir com a turma
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#licao-de-modelagem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Licao de modelagem
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-atividade-pratica-final-modelar-e-implementar-um-nucleo-minimo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Atividade pratica final: modelar e implementar um nucleo minimo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Atividade pratica final: modelar e implementar um nucleo minimo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enunciado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enunciado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regras-da-atividade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regras da atividade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregaveis-esperados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregaveis esperados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checklist-de-revisao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checklist de revisao
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#desafio-opcional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Desafio opcional
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-videos-e-materiais-complementares" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Videos e materiais complementares
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Videos e materiais complementares">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#video-principal-desta-unidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video principal desta unidade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leituralaboratorio-complementar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leitura/laboratorio complementar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observacao-didatica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observacao didatica
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#perguntas-de-revisao-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perguntas de revisao rapida
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fontes-de-referencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fontes de referencia
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<div><h1 id="uml-e-diagrama-de-classes-modelando-objetos-antes-do-codigo">UML e Diagrama de Classes: modelando objetos antes do codigo<a class="headerlink" href="#uml-e-diagrama-de-classes-modelando-objetos-antes-do-codigo" title="Permanent link">¶</a></h1>
+<h2 id="objetivos-de-aprendizagem">Objetivos de aprendizagem<a class="headerlink" href="#objetivos-de-aprendizagem" title="Permanent link">¶</a></h2>
+<ul>
+<li>Entender como UML ajuda a representar classes, atributos, operacoes e relacoes de forma util para POO.</li>
+<li>Ler e construir diagramas de classes com foco em responsabilidade, visibilidade, multiplicidade e tipo de relacionamento.</li>
+<li>Traduzir um diagrama de classes para decisoes concretas em C++ e Python sem confundir modelo com sintaxe.</li>
+</ul>
+<p><strong>Tempo estimado:</strong> 4h</p>
+<h2 id="video-da-aula">Video da aula<a class="headerlink" href="#video-da-aula" title="Permanent link">¶</a></h2>
+<p><div class="video-container"><iframe src="https://www.youtube.com/embed/rDidOn6KN9k" style="position:relative;width:100%;height:22.172vw" frameborder="0" allowfullscreen alt="type:video"></iframe></div></p>
+<hr>
+<h2 id="1-por-que-uml-entra-agora-na-trilha">1. Por que UML entra agora na trilha?<a class="headerlink" href="#1-por-que-uml-entra-agora-na-trilha" title="Permanent link">¶</a></h2>
+<p>A turma ja viu <code>classe</code>, <code>objeto</code>, <code>metodo</code>, <code>construtor</code>, encapsulamento, heranca e polimorfismo como ideias de POO. O proximo passo natural e aprender a <strong>pensar o modelo antes de escrever o codigo</strong>.</p>
+<p>E aqui entra a UML.</p>
+<p>UML nao substitui implementacao. UML tambem nao existe para produzir desenho bonito. Em um curso de POO, ela serve para um objetivo muito mais util:</p>
+<ul>
+<li>deixar explicitas as classes importantes do dominio;</li>
+<li>mostrar quem conhece quem;</li>
+<li>registrar responsabilidades e limites de acesso;</li>
+<li>discutir erros de modelagem antes de gastar tempo com codigo.</li>
+</ul>
+<p><strong>Ideia central desta aula:</strong> diagrama de classes e uma ferramenta de raciocinio. Ele ajuda a validar a estrutura do sistema antes que a sintaxe esconda os problemas de modelagem.</p>
+<hr>
+<h2 id="2-o-que-e-uml-e-o-que-um-diagrama-de-classes-realmente-mostra">2. O que e UML e o que um diagrama de classes realmente mostra?<a class="headerlink" href="#2-o-que-e-uml-e-o-que-um-diagrama-de-classes-realmente-mostra" title="Permanent link">¶</a></h2>
+<p>A UML e uma linguagem padrao de modelagem usada para visualizar e especificar a estrutura de sistemas de software. Dentro dela, o diagrama de classes e um dos artefatos mais importantes para POO porque ele mostra a <strong>estrutura estatica</strong> do sistema:</p>
+<ul>
+<li>classes;</li>
+<li>atributos;</li>
+<li>operacoes;</li>
+<li>relacionamentos;</li>
+<li>multiplicidades;</li>
+<li>visibilidade e abstracao.</li>
+</ul>
+<h3 id="classe-uml-mais-simples-possivel">Classe UML mais simples possivel<a class="headerlink" href="#classe-uml-mais-simples-possivel" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>classDiagram
+    class Sensor</code></pre>
+<p>Esse primeiro desenho quase nao diz nada. Ele apenas informa que <code>Sensor</code> e uma classe relevante no modelo.</p>
+<h3 id="classe-uml-com-atributos-e-operacoes">Classe UML com atributos e operacoes<a class="headerlink" href="#classe-uml-com-atributos-e-operacoes" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>classDiagram
+    class Sensor {
+        -tag: string
+        -unidade: string
+        -valorAtual: double
+        +atualizarLeitura(valor: double) void
+        +foraDaFaixa(min: double, max: double) bool
+        +exibirResumo() void
+    }</code></pre>
+<h3 id="como-ler-esse-retangulo">Como ler esse retangulo<a class="headerlink" href="#como-ler-esse-retangulo" title="Permanent link">¶</a></h3>
+<ul>
+<li>parte superior: nome da classe;</li>
+<li>parte central: atributos ou estado;</li>
+<li>parte inferior: operacoes ou comportamento;</li>
+<li>simbolos como <code>+</code>, <code>-</code> e <code>#</code>: nivel de visibilidade.</li>
+</ul>
+<h3 id="leitura-didatica-da-visibilidade">Leitura didatica da visibilidade<a class="headerlink" href="#leitura-didatica-da-visibilidade" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Notacao UML</th>
+<th>Significado</th>
+<th>Relacao com POO</th>
+<th>Pergunta pratica</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>+</code></td>
+<td>publico</td>
+<td>faz parte do contrato externo</td>
+<td>o restante do sistema realmente precisa chamar isso?</td>
+</tr>
+<tr>
+<td><code>-</code></td>
+<td>privado</td>
+<td>protege detalhe interno</td>
+<td>esse dado precisa ser mexido de fora?</td>
+</tr>
+<tr>
+<td><code>#</code></td>
+<td>protegido</td>
+<td>extensao por heranca</td>
+<td>subclasses precisam mesmo enxergar isso?</td>
+</tr>
+<tr>
+<td><code>&lt;&lt;abstract&gt;&gt;</code></td>
+<td>classe abstrata</td>
+<td>contrato parcial</td>
+<td>faz sentido existir objeto direto dessa classe?</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ponto-importante-para-a-turma">Ponto importante para a turma<a class="headerlink" href="#ponto-importante-para-a-turma" title="Permanent link">¶</a></h3>
+<p>Diagrama de classes <strong>nao e codigo executavel</strong>. Ele simplifica.</p>
+<p>Por isso, o diagrama nao precisa listar cada getter, cada setter ou cada detalhe de biblioteca. O foco deve ficar no que ajuda a entender o modelo.</p>
+<hr>
+<h2 id="3-como-o-diagrama-de-classes-se-relaciona-com-poo">3. Como o diagrama de classes se relaciona com POO?<a class="headerlink" href="#3-como-o-diagrama-de-classes-se-relaciona-com-poo" title="Permanent link">¶</a></h2>
+<p>O diagrama de classes nao e um assunto paralelo a POO. Ele e uma forma de <strong>explicitar visualmente</strong> os mesmos conceitos que depois aparecem no codigo.</p>
+<table>
+<thead>
+<tr>
+<th>Conceito de POO</th>
+<th>Como aparece no diagrama</th>
+<th>O que isso ajuda a decidir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Classe</td>
+<td>retangulo com nome</td>
+<td>quais entidades sao centrais no dominio</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>atributos</td>
+<td>o que cada objeto precisa guardar</td>
+</tr>
+<tr>
+<td>Comportamento</td>
+<td>operacoes</td>
+<td>que acoes pertencem ao objeto</td>
+</tr>
+<tr>
+<td>Encapsulamento</td>
+<td>visibilidade <code>+</code>, <code>-</code>, <code>#</code></td>
+<td>o que fica exposto e o que fica protegido</td>
+</tr>
+<tr>
+<td>Heranca</td>
+<td>generalizacao</td>
+<td>quando uma classe realmente e um subtipo de outra</td>
+</tr>
+<tr>
+<td>Composicao/agregacao</td>
+<td>relacoes entre classes</td>
+<td>como objetos colaboram sem virar uma massa de codigo</td>
+</tr>
+<tr>
+<td>Polimorfismo</td>
+<td>abstracao e especializacao</td>
+<td>que contrato comum diferentes objetos podem respeitar</td>
+</tr>
+</tbody>
+</table>
+<h3 id="exemplo-curto-o-diagrama-como-ponte-para-encapsulamento-e-heranca">Exemplo curto: o diagrama como ponte para encapsulamento e heranca<a class="headerlink" href="#exemplo-curto-o-diagrama-como-ponte-para-encapsulamento-e-heranca" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>classDiagram
+    class AtivoIndustrial {
+        #tag: string
+        #area: string
+        +exibirIdentificacao() void
+    }
+
+    class SensorPressao {
+        -valorAtual: double
+        +atualizarLeitura(valor: double) void
+    }
+
+    class BombaRecalque {
+        -ligada: bool
+        +ligar() void
+        +desligar() void
+    }
+
+    AtivoIndustrial &lt;|-- SensorPressao
+    AtivoIndustrial &lt;|-- BombaRecalque</code></pre>
+<h3 id="o-que-esse-desenho-ja-comunica-antes-do-codigo">O que esse desenho ja comunica antes do codigo<a class="headerlink" href="#o-que-esse-desenho-ja-comunica-antes-do-codigo" title="Permanent link">¶</a></h3>
+<ul>
+<li><code>SensorPressao</code> e <code>BombaRecalque</code> compartilham uma base comum;</li>
+<li>a classe-base concentra identidade e informacao operacional comum;</li>
+<li>cada derivada tem estado e comportamento especificos;</li>
+<li>a estrutura sugere uma relacao <code>is-a</code>, nao apenas reaproveitamento oportunista.</li>
+</ul>
+<p><strong>Leitura critica:</strong> se a unica semelhanca entre duas classes for ter <code>tag</code>, isso ainda nao justifica heranca.</p>
+<hr>
+<h2 id="4-relacionamentos-uml-quando-usar-cada-um">4. Relacionamentos UML: quando usar cada um<a class="headerlink" href="#4-relacionamentos-uml-quando-usar-cada-um" title="Permanent link">¶</a></h2>
+<p>O maior erro dos iniciantes costuma ser este: desenhar classes isoladas, mas errar o tipo de relacao entre elas.</p>
+<p>Em POO, boa parte da qualidade da modelagem depende menos do nome das classes e mais de <strong>como elas se conectam</strong>.</p>
+<h3 id="exemplo-com-relacoes-diferentes">Exemplo com relacoes diferentes<a class="headerlink" href="#exemplo-com-relacoes-diferentes" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>classDiagram
+    class Planta
+    class Tanque
+    class SensorNivel
+    class Controlador
+    class HistoricoLeituras
+
+    Planta *-- "1..*" Tanque : contem
+    Tanque o-- "0..*" SensorNivel : agrega
+    Controlador --&gt; "1" Tanque : regula
+    Controlador ..&gt; HistoricoLeituras : consulta</code></pre>
+<h3 id="comparacao-de-relacionamentos">Comparacao de relacionamentos<a class="headerlink" href="#comparacao-de-relacionamentos" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Tecnica/Padrao</th>
+<th>Melhor uso</th>
+<th>Esforco</th>
+<th>Entregavel</th>
+<th>Limitacao</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Associacao</td>
+<td>quando duas classes colaboram de forma direta</td>
+<td>baixo</td>
+<td>ligacao clara entre objetos</td>
+<td>nao explica propriedade nem ciclo de vida</td>
+</tr>
+<tr>
+<td>Agregacao</td>
+<td>quando um objeto agrupa outros que podem existir separadamente</td>
+<td>medio</td>
+<td>nocao de conjunto ou colecao</td>
+<td>costuma ser confundida com associacao simples</td>
+</tr>
+<tr>
+<td>Composicao</td>
+<td>quando a parte depende fortemente do todo</td>
+<td>medio</td>
+<td>relacao forte de pertencimento</td>
+<td>exige mais cuidado com ciclo de vida</td>
+</tr>
+<tr>
+<td>Generalizacao</td>
+<td>quando existe relacao real <code>is-a</code></td>
+<td>medio</td>
+<td>hierarquia de classes coerente</td>
+<td>vira erro estrutural se usada so para reaproveitar codigo</td>
+</tr>
+<tr>
+<td>Dependencia</td>
+<td>quando uma classe apenas usa outra pontualmente</td>
+<td>baixo</td>
+<td>acoplamento mais leve e temporario</td>
+<td>diz menos sobre estrutura duradoura</td>
+</tr>
+</tbody>
+</table>
+<h3 id="recomendacao-pratica-por-cenario">Recomendacao pratica por cenario<a class="headerlink" href="#recomendacao-pratica-por-cenario" title="Permanent link">¶</a></h3>
+<ul>
+<li>use <strong>associacao</strong> quando um objeto conhece ou chama outro;</li>
+<li>use <strong>agregacao</strong> quando existe agrupamento, mas as partes podem continuar existindo fora do todo;</li>
+<li>use <strong>composicao</strong> quando a parte faz sentido apenas dentro do todo modelado;</li>
+<li>use <strong>generalizacao</strong> quando a pergunta "isso e um tipo de..." faz sentido no dominio;</li>
+<li>use <strong>dependencia</strong> para colaboracoes temporarias, parametros de metodo ou servicos auxiliares.</li>
+</ul>
+<h3 id="erro-classico-de-modelagem">Erro classico de modelagem<a class="headerlink" href="#erro-classico-de-modelagem" title="Permanent link">¶</a></h3>
+<p>Muitos alunos tentam resolver tudo com heranca. Isso costuma produzir hierarquias artificiais.</p>
+<p>Regra de bolso:</p>
+<ul>
+<li>se a relacao e <code>tem um</code>, pense primeiro em composicao ou agregacao;</li>
+<li>se a relacao e <code>usa</code>, pense em associacao ou dependencia;</li>
+<li>se a relacao e <code>e um tipo de</code>, so entao investigue heranca.</li>
+</ul>
+<hr>
+<h2 id="5-multiplicidade-quantos-objetos-podem-se-relacionar">5. Multiplicidade: quantos objetos podem se relacionar?<a class="headerlink" href="#5-multiplicidade-quantos-objetos-podem-se-relacionar" title="Permanent link">¶</a></h2>
+<p>Um bom diagrama de classes nao responde apenas "quem se conecta com quem". Ele tambem responde "em que quantidade essa relacao faz sentido?".</p>
+<h3 id="exemplo-com-multiplicidade">Exemplo com multiplicidade<a class="headerlink" href="#exemplo-com-multiplicidade" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>classDiagram
+    class Cliente
+    class Pedido
+    class ItemPedido
+    class Produto
+
+    Cliente "1" --&gt; "0..*" Pedido : cria
+    Pedido "1" *-- "1..*" ItemPedido : possui
+    ItemPedido "*" --&gt; "1" Produto : referencia</code></pre>
+<h3 id="como-interpretar">Como interpretar<a class="headerlink" href="#como-interpretar" title="Permanent link">¶</a></h3>
+<ul>
+<li>um <code>Cliente</code> pode criar zero ou muitos <code>Pedido</code>;</li>
+<li>cada <code>Pedido</code> possui um ou muitos <code>ItemPedido</code>;</li>
+<li>cada <code>ItemPedido</code> referencia exatamente um <code>Produto</code>.</li>
+</ul>
+<h3 id="multiplicidades-mais-frequentes">Multiplicidades mais frequentes<a class="headerlink" href="#multiplicidades-mais-frequentes" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Notacao</th>
+<th>Leitura</th>
+<th>Exemplo de interpretacao</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1</code></td>
+<td>exatamente um</td>
+<td>cada pedido tem um codigo</td>
+</tr>
+<tr>
+<td><code>0..1</code></td>
+<td>zero ou um</td>
+<td>um equipamento pode ter ou nao um controlador associado</td>
+</tr>
+<tr>
+<td><code>1..*</code></td>
+<td>um ou muitos</td>
+<td>um tanque possui uma ou varias medicoes ao longo do tempo</td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>muitos</td>
+<td>um operador pode consultar muitos alarmes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="impacto-pratico-no-codigo">Impacto pratico no codigo<a class="headerlink" href="#impacto-pratico-no-codigo" title="Permanent link">¶</a></h3>
+<p>Multiplicidade bem pensada ajuda a decidir:</p>
+<ul>
+<li>se um atributo deve ser singular ou colecao;</li>
+<li>se a ausencia da relacao e aceitavel;</li>
+<li>se o construtor deve exigir um objeto associado;</li>
+<li>se ha necessidade de validacao para evitar estado invalido.</li>
+</ul>
+<hr>
+<h2 id="6-como-sair-de-um-texto-de-requisito-para-um-diagrama-de-classes">6. Como sair de um texto de requisito para um diagrama de classes<a class="headerlink" href="#6-como-sair-de-um-texto-de-requisito-para-um-diagrama-de-classes" title="Permanent link">¶</a></h2>
+<p>Em sala, o aluno precisa aprender um metodo, nao apenas decorar simbolos.</p>
+<h3 id="texto-inicial">Texto inicial<a class="headerlink" href="#texto-inicial" title="Permanent link">¶</a></h3>
+<blockquote>
+<p>Uma estacao de monitoramento possui reservatorios. Cada reservatorio recebe leituras de sensores. Um controlador analisa as leituras e pode gerar alarmes quando a faixa segura e violada.</p>
+</blockquote>
+<h3 id="passo-1-destacar-entidades-candidatas">Passo 1. Destacar entidades candidatas<a class="headerlink" href="#passo-1-destacar-entidades-candidatas" title="Permanent link">¶</a></h3>
+<ul>
+<li>estacao de monitoramento;</li>
+<li>reservatorio;</li>
+<li>sensor;</li>
+<li>controlador;</li>
+<li>alarme.</li>
+</ul>
+<h3 id="passo-2-perguntar-qual-responsabilidade-pertence-a-cada-classe">Passo 2. Perguntar qual responsabilidade pertence a cada classe<a class="headerlink" href="#passo-2-perguntar-qual-responsabilidade-pertence-a-cada-classe" title="Permanent link">¶</a></h3>
+<ul>
+<li><code>Reservatorio</code> guarda capacidade e nivel atual?</li>
+<li><code>SensorNivel</code> mede e atualiza leitura?</li>
+<li><code>ControladorNivel</code> avalia faixa segura e decide acao?</li>
+<li><code>Alarme</code> representa um evento ou apenas uma mensagem solta?</li>
+</ul>
+<h3 id="passo-3-decidir-relacoes">Passo 3. Decidir relacoes<a class="headerlink" href="#passo-3-decidir-relacoes" title="Permanent link">¶</a></h3>
+<ul>
+<li>a estacao contem reservatorios;</li>
+<li>um reservatorio recebe leituras de sensores;</li>
+<li>o controlador usa sensores e pode emitir alarmes.</li>
+</ul>
+<h3 id="resultado-inicial-em-mermaid">Resultado inicial em Mermaid<a class="headerlink" href="#resultado-inicial-em-mermaid" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>classDiagram
+    class EstacaoMonitoramento {
+        -nome: string
+        +adicionarReservatorio() void
+    }
+
+    class Reservatorio {
+        -codigo: string
+        -capacidadeLitros: double
+        -nivelAtual: double
+        +atualizarNivel(valor: double) void
+    }
+
+    class SensorNivel {
+        -tag: string
+        -valorAtual: double
+        +coletar() double
+    }
+
+    class ControladorNivel {
+        +avaliarFaixa() bool
+        +gerarAlarme() void
+    }
+
+    class Alarme {
+        -mensagem: string
+        -severidade: int
+    }
+
+    EstacaoMonitoramento "1" *-- "1..*" Reservatorio : contem
+    Reservatorio "1" o-- "1..*" SensorNivel : monitora
+    ControladorNivel --&gt; "1..*" SensorNivel : le
+    ControladorNivel --&gt; "0..*" Alarme : gera</code></pre>
+<h3 id="licao-didatica-importante">Licao didatica importante<a class="headerlink" href="#licao-didatica-importante" title="Permanent link">¶</a></h3>
+<p>O primeiro diagrama raramente sai perfeito.</p>
+<p>Ele deve ser tratado como <strong>hipotese de modelagem</strong>:</p>
+<ol>
+<li>desenhar;</li>
+<li>discutir;</li>
+<li>simplificar ou corrigir;</li>
+<li>so depois implementar.</li>
+</ol>
+<hr>
+<h2 id="7-ponte-c-python">7. Ponte C++ -&gt; Python<a class="headerlink" href="#7-ponte-c-python" title="Permanent link">¶</a></h2>
+<p>O diagrama deve preservar o conceito. A linguagem concreta muda a forma de escrever.</p>
+<h3 id="mesmo-modelo-mesma-intencao">Mesmo modelo, mesma intencao<a class="headerlink" href="#mesmo-modelo-mesma-intencao" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>classDiagram
+    class Tanque {
+        -codigo: string
+        -capacidadeLitros: double
+        -nivelAtual: double
+        +atualizarNivel(valor: double) void
+        +percentualOcupacao() double
+    }</code></pre>
+<h3 id="traducao-para-c">Traducao para C++<a class="headerlink" href="#traducao-para-c" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdexcept&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Tanque</span><span class="w"> </span><span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">codigo</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">capacidadeLitros</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">nivelAtual</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">Tanque</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">codigoTanque</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">capacidade</span><span class="p">)</span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">codigo</span><span class="p">(</span><span class="n">codigoTanque</span><span class="p">),</span><span class="w"> </span><span class="n">capacidadeLitros</span><span class="p">(</span><span class="n">capacidade</span><span class="p">),</span><span class="w"> </span><span class="n">nivelAtual</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">atualizarNivel</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">valor</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">valor</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">valor</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">capacidadeLitros</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">out_of_range</span><span class="p">(</span><span class="s">"nivel invalido"</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">nivelAtual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">valor</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">percentualOcupacao</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">nivelAtual</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">capacidadeLitros</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">100.0</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<h3 id="traducao-para-python">Traducao para Python<a class="headerlink" href="#traducao-para-python" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Tanque</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">capacidade_litros</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_codigo</span> <span class="o">=</span> <span class="n">codigo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_capacidade_litros</span> <span class="o">=</span> <span class="n">capacidade_litros</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_nivel_atual</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">atualizar_nivel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">valor</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">valor</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">valor</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_capacidade_litros</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"nivel invalido"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_nivel_atual</span> <span class="o">=</span> <span class="n">valor</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">percentual_ocupacao</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nivel_atual</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_capacidade_litros</span><span class="p">)</span> <span class="o">*</span> <span class="mf">100.0</span>
+</code></pre></div>
+<h3 id="o-que-destacar-em-aula">O que destacar em aula<a class="headerlink" href="#o-que-destacar-em-aula" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th>C++</th>
+<th>Python</th>
+<th>Impacto didatico</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Classe no codigo</td>
+<td><code>class Nome {}</code></td>
+<td><code>class Nome:</code></td>
+<td>a ideia e a mesma</td>
+</tr>
+<tr>
+<td>Visibilidade</td>
+<td><code>private</code>, <code>public</code>, <code>protected</code></td>
+<td>convencoes como <code>_atributo</code> e API publica</td>
+<td>C++ explicita mais a fronteira</td>
+</tr>
+<tr>
+<td>Operacoes</td>
+<td>assinaturas tipadas</td>
+<td>metodos mais flexiveis</td>
+<td>Python reduz ruido, mas o modelo continua</td>
+</tr>
+<tr>
+<td>Regra de negocio</td>
+<td>validacao no metodo</td>
+<td>validacao no metodo</td>
+<td>UML ajuda a ver a regra antes da sintaxe</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mensagem-principal-da-ponte">Mensagem principal da ponte<a class="headerlink" href="#mensagem-principal-da-ponte" title="Permanent link">¶</a></h3>
+<p>O conceito de POO e mais estavel do que a sintaxe da linguagem.</p>
+<p>Se o aluno entende o diagrama, ele consegue discutir o modelo em C++, Python ou outra linguagem orientada a objetos.</p>
+<hr>
+<h2 id="8-como-uml-e-usada-na-pratica-sem-virar-burocracia">8. Como UML e usada na pratica sem virar burocracia<a class="headerlink" href="#8-como-uml-e-usada-na-pratica-sem-virar-burocracia" title="Permanent link">¶</a></h2>
+<p>Em projetos reais, diagrama de classes nao deve ser tratado como decoracao de relatorio. Ele funciona melhor quando aparece em momentos de decisao.</p>
+<h3 id="uso-pratico-mais-comum">Uso pratico mais comum<a class="headerlink" href="#uso-pratico-mais-comum" title="Permanent link">¶</a></h3>
+<ol>
+<li>alinhar entendimento do problema antes de implementar;</li>
+<li>revisar responsabilidades quando uma classe esta crescendo demais;</li>
+<li>discutir composicao versus heranca em PR ou reuniao tecnica;</li>
+<li>explicar arquitetura de um modulo para novos membros da equipe;</li>
+<li>apoiar refatoracao sem depender so de conversa abstrata.</li>
+</ol>
+<h3 id="quando-o-diagrama-ajuda-muito">Quando o diagrama ajuda muito<a class="headerlink" href="#quando-o-diagrama-ajuda-muito" title="Permanent link">¶</a></h3>
+<ul>
+<li>quando o requisito ainda esta confuso;</li>
+<li>quando ha muitas classes colaborando;</li>
+<li>quando o time esta discutindo responsabilidade errada;</li>
+<li>quando o codigo existente ficou procedural demais dentro de uma classe grande.</li>
+</ul>
+<h3 id="quando-o-diagrama-atrapalha">Quando o diagrama atrapalha<a class="headerlink" href="#quando-o-diagrama-atrapalha" title="Permanent link">¶</a></h3>
+<ul>
+<li>quando tenta espelhar cada detalhe da implementacao;</li>
+<li>quando nunca e revisado apos mudanca importante;</li>
+<li>quando substitui leitura de codigo em vez de apoiar a leitura;</li>
+<li>quando vira documento morto feito apenas para entrega.</li>
+</ul>
+<h3 id="regra-pratica-para-este-curso">Regra pratica para este curso<a class="headerlink" href="#regra-pratica-para-este-curso" title="Permanent link">¶</a></h3>
+<p>Desenhe o suficiente para responder tres perguntas:</p>
+<ol>
+<li>quais classes importam;</li>
+<li>que responsabilidade cada uma assume;</li>
+<li>como elas se relacionam.</li>
+</ol>
+<p>Se o diagrama nao ajuda nisso, ele esta detalhado demais ou generico demais.</p>
+<hr>
+<h2 id="9-mini-caso-pratico-eta-com-tanque-sensor-e-bomba-dosadora">9. Mini-caso pratico: ETA com tanque, sensor e bomba dosadora<a class="headerlink" href="#9-mini-caso-pratico-eta-com-tanque-sensor-e-bomba-dosadora" title="Permanent link">¶</a></h2>
+<p>Imagine uma pequena estacao de tratamento de agua onde o software precisa monitorar o pH do tanque de mistura e acionar uma bomba dosadora quando a faixa segura e violada.</p>
+<h3 id="modelo-inicial">Modelo inicial<a class="headerlink" href="#modelo-inicial" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>classDiagram
+    class ETA {
+        -nome: string
+    }
+
+    class TanqueMistura {
+        -codigo: string
+        -volumeAtual: double
+        +receberAgua(litros: double) void
+    }
+
+    class SensorPH {
+        -tag: string
+        -valorAtual: double
+        +atualizarLeitura(valor: double) void
+        +foraDaFaixa(min: double, max: double) bool
+    }
+
+    class BombaDosadora {
+        -tag: string
+        -vazaoLh: double
+        +dosar(qtd: double) void
+        +parar() void
+    }
+
+    class ControladorQualidade {
+        +avaliarTanque() void
+        +acionarCorrecao() void
+    }
+
+    ETA "1" *-- "1..*" TanqueMistura : contem
+    TanqueMistura "1" o-- "1" SensorPH : monitora
+    ControladorQualidade --&gt; "1" SensorPH : le
+    ControladorQualidade --&gt; "1" BombaDosadora : aciona</code></pre>
+<h3 id="o-que-discutir-com-a-turma">O que discutir com a turma<a class="headerlink" href="#o-que-discutir-com-a-turma" title="Permanent link">¶</a></h3>
+<ul>
+<li>por que <code>ETA</code> e <code>TanqueMistura</code> aparecem em composicao;</li>
+<li>por que <code>SensorPH</code> foi representado como agregacao, e nao composicao forte;</li>
+<li>por que <code>ControladorQualidade</code> usa <code>SensorPH</code> e <code>BombaDosadora</code>, mas nao precisa herdar nada deles;</li>
+<li>que atributos devem ficar publicos, privados ou protegidos quando esse modelo virar codigo.</li>
+</ul>
+<h3 id="licao-de-modelagem">Licao de modelagem<a class="headerlink" href="#licao-de-modelagem" title="Permanent link">¶</a></h3>
+<p>Observe como o diagrama obriga o aluno a separar papeis:</p>
+<ul>
+<li>sensor mede;</li>
+<li>tanque armazena;</li>
+<li>bomba atua;</li>
+<li>controlador decide.</li>
+</ul>
+<p>Quando essa separacao aparece cedo no desenho, o codigo tende a nascer com mais coesao.</p>
+<hr>
+<h2 id="10-atividade-pratica-final-modelar-e-implementar-um-nucleo-minimo">10. Atividade pratica final: modelar e implementar um nucleo minimo<a class="headerlink" href="#10-atividade-pratica-final-modelar-e-implementar-um-nucleo-minimo" title="Permanent link">¶</a></h2>
+<h3 id="enunciado">Enunciado<a class="headerlink" href="#enunciado" title="Permanent link">¶</a></h3>
+<p>Modele um <strong>sistema de monitoramento de laboratorio de ensaios</strong> com pelo menos estas classes:</p>
+<ul>
+<li><code>Laboratorio</code></li>
+<li><code>Equipamento</code></li>
+<li><code>SensorTemperatura</code></li>
+<li><code>OrdemCalibracao</code></li>
+<li>uma classe adicional escolhida por voce</li>
+</ul>
+<h3 id="regras-da-atividade">Regras da atividade<a class="headerlink" href="#regras-da-atividade" title="Permanent link">¶</a></h3>
+<ul>
+<li>o diagrama deve ser feito em <code>mermaid</code>;</li>
+<li>use no minimo <code>5</code> classes;</li>
+<li>inclua pelo menos <code>1</code> relacao de generalizacao;</li>
+<li>inclua pelo menos <code>1</code> relacao de composicao ou agregacao;</li>
+<li>explicite multiplicidade em pelo menos <code>3</code> relacoes;</li>
+<li>cada classe principal deve ter ao menos <code>2</code> atributos e <code>1</code> operacao.</li>
+</ul>
+<h3 id="tarefas">Tarefas<a class="headerlink" href="#tarefas" title="Permanent link">¶</a></h3>
+<ol>
+<li>Escrever um pequeno texto de requisito com <code>5</code> a <code>8</code> linhas.</li>
+<li>Extrair as classes candidatas.</li>
+<li>Montar o diagrama de classes em <code>mermaid</code>.</li>
+<li>Justificar em comentario curto por que cada relacao foi escolhida.</li>
+<li>Implementar o esqueleto de <code>2</code> classes em C++ ou Python.</li>
+<li>Fazer <code>commit</code> com uma mensagem objetiva, por exemplo: <code>feat: modela laboratorio com diagrama UML inicial</code>.</li>
+</ol>
+<h3 id="entregaveis-esperados">Entregaveis esperados<a class="headerlink" href="#entregaveis-esperados" title="Permanent link">¶</a></h3>
+<ul>
+<li>um arquivo <code>.md</code> com o texto do problema e o bloco <code>mermaid</code>;</li>
+<li>um arquivo <code>.cpp</code> ou <code>.py</code> com pelo menos duas classes do modelo;</li>
+<li>uma justificativa curta dizendo onde houve composicao, heranca e associacao.</li>
+</ul>
+<h3 id="checklist-de-revisao">Checklist de revisao<a class="headerlink" href="#checklist-de-revisao" title="Permanent link">¶</a></h3>
+<ul>
+<li>as classes representam entidades do dominio e nao apenas telas ou menus;</li>
+<li>os nomes das operacoes indicam comportamento observavel;</li>
+<li>ha pelo menos uma decisao clara de encapsulamento;</li>
+<li>a heranca usada representa mesmo uma relacao <code>is-a</code>;</li>
+<li>o diagrama ajuda a prever a implementacao, e nao o contrario.</li>
+</ul>
+<h3 id="desafio-opcional">Desafio opcional<a class="headerlink" href="#desafio-opcional" title="Permanent link">¶</a></h3>
+<p>Transforme uma relacao inicialmente desenhada como heranca em composicao e explique qual versao ficou melhor para o dominio escolhido.</p>
+<hr>
+<h2 id="11-videos-e-materiais-complementares">11. Videos e materiais complementares<a class="headerlink" href="#11-videos-e-materiais-complementares" title="Permanent link">¶</a></h2>
+<h3 id="video-principal-desta-unidade">Video principal desta unidade<a class="headerlink" href="#video-principal-desta-unidade" title="Permanent link">¶</a></h3>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=rDidOn6KN9k">Tutorial de Diagramas de Classes UML</a></li>
+</ul>
+<h3 id="leituralaboratorio-complementar">Leitura/laboratorio complementar<a class="headerlink" href="#leituralaboratorio-complementar" title="Permanent link">¶</a></h3>
+<ul>
+<li><a href="https://squidfunk.github.io/mkdocs-material/reference/diagrams/">Material for MkDocs - Diagrams</a></li>
+<li><a href="https://mermaid.js.org/syntax/classDiagram.html">Mermaid - Class diagrams</a></li>
+<li><a href="https://docs.python.org/3/tutorial/classes.html">Python Docs - Classes</a></li>
+<li><a href="https://en.cppreference.com/w/cpp/language/classes">cppreference - Classes</a></li>
+<li><a href="https://en.cppreference.com/w/cpp/language/derived_class">cppreference - Derived classes</a></li>
+</ul>
+<h3 id="observacao-didatica">Observacao didatica<a class="headerlink" href="#observacao-didatica" title="Permanent link">¶</a></h3>
+<p>O video ajuda a visualizar o mecanismo. A consolidacao real acontece quando o aluno pega um requisito curto, desenha o modelo, debate relacoes e so depois escreve o codigo.</p>
+<hr>
+<h2 id="perguntas-de-revisao-rapida">Perguntas de revisao rapida<a class="headerlink" href="#perguntas-de-revisao-rapida" title="Permanent link">¶</a></h2>
+<ol>
+<li>Qual a diferenca entre associacao, agregacao e composicao em um diagrama de classes?</li>
+<li>Como a multiplicidade ajuda a decidir se uma classe deve guardar um objeto ou uma colecao?</li>
+<li>Em que situacoes um diagrama de classes melhora a modelagem antes da implementacao?</li>
+</ol>
+<h2 id="fontes-de-referencia">Fontes de referencia<a class="headerlink" href="#fontes-de-referencia" title="Permanent link">¶</a></h2>
+<ul>
+<li>https://www.omg.org/spec/UML/2.5.1/About-UML</li>
+<li>https://mermaid.js.org/syntax/classDiagram.html</li>
+<li>https://squidfunk.github.io/mkdocs-material/reference/diagrams/</li>
+<li>https://docs.python.org/3/tutorial/classes.html</li>
+<li>https://en.cppreference.com/w/cpp/language/classes</li>
+<li>https://en.cppreference.com/w/cpp/language/derived_class</li>
+</ul></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.expand", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
