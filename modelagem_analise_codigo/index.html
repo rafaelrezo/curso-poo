@@ -11,10 +11,8 @@
       
       
       
-        <link rel="prev" href="../fundamentos_poo_cpp_python/">
+        <link rel="prev" href="../fundamentos_poo_cpp_python/05_polimorfismo/">
       
-      
-        <link rel="next" href="../fundamentos_poo_cpp_python/03_sobrecarga_construtores/">
       
       
         
@@ -25,7 +23,7 @@
     
     
       
-        <title>03. UML e Diagrama de Classes - Curso de Programacao Orientada a Objetos</title>
+        <title>06. UML e Diagrama de Classes - Curso de Programacao Orientada a Objetos</title>
       
     
     
@@ -47,6 +45,8 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              03. UML e Diagrama de Classes
+              06. UML e Diagrama de Classes
             
           </span>
         </div>
@@ -276,6 +276,87 @@
       
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../fundamentos_poo_cpp_python/03_sobrecarga_construtores/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03. Sobrecarga de Construtores em C++
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fundamentos_poo_cpp_python/04_encapsulamento_heranca/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04. Acesso, Encapsulamento e Heranca em C++
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fundamentos_poo_cpp_python/05_polimorfismo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05. Polimorfismo em C++
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
     
   
   
@@ -295,7 +376,7 @@
   <span class="md-ellipsis">
     
   
-    03. UML e Diagrama de Classes
+    06. UML e Diagrama de Classes
   
 
     
@@ -313,7 +394,7 @@
   <span class="md-ellipsis">
     
   
-    03. UML e Diagrama de Classes
+    06. UML e Diagrama de Classes
   
 
     
@@ -353,7 +434,7 @@
   <a href="#video-da-aula" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Video da aula
+        Vídeo da aula
       
     </span>
   </a>
@@ -375,19 +456,19 @@
   <a href="#2-o-que-e-uml-e-o-que-um-diagrama-de-classes-realmente-mostra" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. O que e UML e o que um diagrama de classes realmente mostra?
+        2. O que é UML e o que um diagrama de classes realmente mostra?
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="2. O que e UML e o que um diagrama de classes realmente mostra?">
+    <nav class="md-nav" aria-label="2. O que é UML e o que um diagrama de classes realmente mostra?">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#classe-uml-mais-simples-possivel" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Classe UML mais simples possivel
+        Classe UML mais simples possível
       
     </span>
   </a>
@@ -398,7 +479,7 @@
   <a href="#classe-uml-com-atributos-e-operacoes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Classe UML com atributos e operacoes
+        Classe UML com atributos e operações
       
     </span>
   </a>
@@ -409,7 +490,7 @@
   <a href="#como-ler-esse-retangulo" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Como ler esse retangulo
+        Como ler esse retângulo
       
     </span>
   </a>
@@ -420,7 +501,7 @@
   <a href="#leitura-didatica-da-visibilidade" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Leitura didatica da visibilidade
+        Leitura didática da visibilidade
       
     </span>
   </a>
@@ -459,7 +540,7 @@
   <a href="#exemplo-curto-o-diagrama-como-ponte-para-encapsulamento-e-heranca" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Exemplo curto: o diagrama como ponte para encapsulamento e heranca
+        Exemplo curto: o diagrama como ponte para encapsulamento e herança
       
     </span>
   </a>
@@ -470,7 +551,7 @@
   <a href="#o-que-esse-desenho-ja-comunica-antes-do-codigo" class="md-nav__link">
     <span class="md-ellipsis">
       
-        O que esse desenho ja comunica antes do codigo
+        O que esse desenho já comunica antes do código
       
     </span>
   </a>
@@ -483,22 +564,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-relacionamentos-uml-quando-usar-cada-um" class="md-nav__link">
+  <a href="#4-relacionamentos-uml-como-ler-cada-tipo-corretamente" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Relacionamentos UML: quando usar cada um
+        4. Relacionamentos UML: como ler cada tipo corretamente
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="4. Relacionamentos UML: quando usar cada um">
+    <nav class="md-nav" aria-label="4. Relacionamentos UML: como ler cada tipo corretamente">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#exemplo-com-relacoes-diferentes" class="md-nav__link">
+  <a href="#primeiro-treino-de-leitura-um-diagrama-com-simbolos-diferentes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Exemplo com relacoes diferentes
+        Primeiro treino de leitura: um diagrama com símbolos diferentes
       
     </span>
   </a>
@@ -506,10 +587,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#comparacao-de-relacionamentos" class="md-nav__link">
+  <a href="#como-ler-esse-diagrama-relacao-por-relacao" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Comparacao de relacionamentos
+        Como ler esse diagrama, relação por relação
       
     </span>
   </a>
@@ -517,10 +598,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#recomendacao-pratica-por-cenario" class="md-nav__link">
+  <a href="#o-que-cada-simbolo-significa-nesse-desenho" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Recomendacao pratica por cenario
+        O que cada símbolo significa nesse desenho
       
     </span>
   </a>
@@ -528,10 +609,274 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#erro-classico-de-modelagem" class="md-nav__link">
+  <a href="#dica-de-leitura-que-evita-erro" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Erro classico de modelagem
+        Dica de leitura que evita erro
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#erros-comuns-nessa-leitura" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Erros comuns nessa leitura
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#41-generalizacao-quando-uma-classe-e-um-tipo-mais-especifico-de-outra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Generalizacao: quando uma classe e um tipo mais especifico de outra
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-ler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como ler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generalizacao-separada-e-compartilhada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generalizacao separada e compartilhada
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leitura-didatica-desse-caso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leitura didatica desse caso
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-facil-de-entender" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo facil de entender
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regra-pratica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regra pratica
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-realizacao-quando-uma-classe-concreta-cumpre-um-contrato" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Realizacao: quando uma classe concreta cumpre um contrato
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-ler_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como ler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-pratico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo pratico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-associacao-quando-uma-classe-conhece-usa-ou-colabora-com-outra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Associacao: quando uma classe conhece, usa ou colabora com outra
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-ler_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como ler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-pratico_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo pratico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-agregacao-quando-o-todo-agrupa-partes-que-podem-continuar-existindo-separadamente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Agregacao: quando o todo agrupa partes que podem continuar existindo separadamente
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-ler_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como ler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-pratico_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo pratico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-composicao-quando-a-parte-depende-fortemente-do-todo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Composicao: quando a parte depende fortemente do todo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-ler_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como ler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-pratico_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo pratico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-dependencia-quando-uma-classe-apenas-usa-outra-de-forma-pontual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Dependencia: quando uma classe apenas usa outra de forma pontual
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-ler_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como ler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-pratico_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo pratico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tabela-de-leitura-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tabela de leitura rapida
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regra-de-bolso-para-decidir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regra de bolso para decidir
       
     </span>
   </a>
@@ -544,22 +889,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-multiplicidade-quantos-objetos-podem-se-relacionar" class="md-nav__link">
+  <a href="#5-cardinalidade-multiplicidade-quantos-objetos-podem-se-relacionar" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. Multiplicidade: quantos objetos podem se relacionar?
+        5. Cardinalidade (multiplicidade): quantos objetos podem se relacionar?
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="5. Multiplicidade: quantos objetos podem se relacionar?">
+    <nav class="md-nav" aria-label="5. Cardinalidade (multiplicidade): quantos objetos podem se relacionar?">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#exemplo-com-multiplicidade" class="md-nav__link">
+  <a href="#exemplo-com-cardinalidade" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Exemplo com multiplicidade
+        Exemplo com cardinalidade
       
     </span>
   </a>
@@ -578,10 +923,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#multiplicidades-mais-frequentes" class="md-nav__link">
+  <a href="#cardinalidades-mais-frequentes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Multiplicidades mais frequentes
+        Cardinalidades mais frequentes
       
     </span>
   </a>
@@ -589,10 +934,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#impacto-pratico-no-codigo" class="md-nav__link">
+  <a href="#o-que-a-cardinalidade-ajuda-a-decidir-no-codigo" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Impacto pratico no codigo
+        O que a cardinalidade ajuda a decidir no codigo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#erros-comuns-de-leitura" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Erros comuns de leitura
       
     </span>
   </a>
@@ -871,16 +1227,126 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#10-atividade-pratica-final-modelar-e-implementar-um-nucleo-minimo" class="md-nav__link">
+  <a href="#10-atividades-praticas-mermaid-live-e-modelagem-final" class="md-nav__link">
     <span class="md-ellipsis">
       
-        10. Atividade pratica final: modelar e implementar um nucleo minimo
+        10. Atividades praticas: Mermaid Live e modelagem final
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="10. Atividade pratica final: modelar e implementar um nucleo minimo">
+    <nav class="md-nav" aria-label="10. Atividades praticas: Mermaid Live e modelagem final">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#atividade-1-primeiro-contato-com-mermaidlive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atividade 1. Primeiro contato com mermaid.live
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#objetivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ferramenta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ferramenta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#roteiro-da-atividade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Roteiro da atividade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modelo-inicial-para-colar-no-editor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modelo inicial para colar no editor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#codigo-do-modelo-inicial-para-copiar-e-colar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Código do modelo inicial para copiar e colar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregavel-da-atividade-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregavel da atividade 1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#referencias-de-apoio-rapido" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Referencias de apoio rapido
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observacao-didatica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observacao didatica
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#atividade-2-modelar-e-implementar-um-nucleo-minimo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atividade 2. Modelar e implementar um nucleo minimo
+      
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#enunciado" class="md-nav__link">
@@ -988,7 +1454,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#observacao-didatica" class="md-nav__link">
+  <a href="#observacao-didatica_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Observacao didatica
@@ -1029,87 +1495,6 @@
   
 </nav>
       
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../fundamentos_poo_cpp_python/03_sobrecarga_construtores/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    04. Sobrecarga de Construtores em C++
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../fundamentos_poo_cpp_python/04_encapsulamento_heranca/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    05. Acesso, Encapsulamento e Heranca em C++
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../fundamentos_poo_cpp_python/05_polimorfismo/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    06. Polimorfismo em C++
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -1155,7 +1540,7 @@
   <a href="#video-da-aula" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Video da aula
+        Vídeo da aula
       
     </span>
   </a>
@@ -1177,19 +1562,19 @@
   <a href="#2-o-que-e-uml-e-o-que-um-diagrama-de-classes-realmente-mostra" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. O que e UML e o que um diagrama de classes realmente mostra?
+        2. O que é UML e o que um diagrama de classes realmente mostra?
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="2. O que e UML e o que um diagrama de classes realmente mostra?">
+    <nav class="md-nav" aria-label="2. O que é UML e o que um diagrama de classes realmente mostra?">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#classe-uml-mais-simples-possivel" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Classe UML mais simples possivel
+        Classe UML mais simples possível
       
     </span>
   </a>
@@ -1200,7 +1585,7 @@
   <a href="#classe-uml-com-atributos-e-operacoes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Classe UML com atributos e operacoes
+        Classe UML com atributos e operações
       
     </span>
   </a>
@@ -1211,7 +1596,7 @@
   <a href="#como-ler-esse-retangulo" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Como ler esse retangulo
+        Como ler esse retângulo
       
     </span>
   </a>
@@ -1222,7 +1607,7 @@
   <a href="#leitura-didatica-da-visibilidade" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Leitura didatica da visibilidade
+        Leitura didática da visibilidade
       
     </span>
   </a>
@@ -1261,7 +1646,7 @@
   <a href="#exemplo-curto-o-diagrama-como-ponte-para-encapsulamento-e-heranca" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Exemplo curto: o diagrama como ponte para encapsulamento e heranca
+        Exemplo curto: o diagrama como ponte para encapsulamento e herança
       
     </span>
   </a>
@@ -1272,7 +1657,7 @@
   <a href="#o-que-esse-desenho-ja-comunica-antes-do-codigo" class="md-nav__link">
     <span class="md-ellipsis">
       
-        O que esse desenho ja comunica antes do codigo
+        O que esse desenho já comunica antes do código
       
     </span>
   </a>
@@ -1285,22 +1670,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-relacionamentos-uml-quando-usar-cada-um" class="md-nav__link">
+  <a href="#4-relacionamentos-uml-como-ler-cada-tipo-corretamente" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Relacionamentos UML: quando usar cada um
+        4. Relacionamentos UML: como ler cada tipo corretamente
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="4. Relacionamentos UML: quando usar cada um">
+    <nav class="md-nav" aria-label="4. Relacionamentos UML: como ler cada tipo corretamente">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#exemplo-com-relacoes-diferentes" class="md-nav__link">
+  <a href="#primeiro-treino-de-leitura-um-diagrama-com-simbolos-diferentes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Exemplo com relacoes diferentes
+        Primeiro treino de leitura: um diagrama com símbolos diferentes
       
     </span>
   </a>
@@ -1308,10 +1693,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#comparacao-de-relacionamentos" class="md-nav__link">
+  <a href="#como-ler-esse-diagrama-relacao-por-relacao" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Comparacao de relacionamentos
+        Como ler esse diagrama, relação por relação
       
     </span>
   </a>
@@ -1319,10 +1704,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#recomendacao-pratica-por-cenario" class="md-nav__link">
+  <a href="#o-que-cada-simbolo-significa-nesse-desenho" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Recomendacao pratica por cenario
+        O que cada símbolo significa nesse desenho
       
     </span>
   </a>
@@ -1330,10 +1715,274 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#erro-classico-de-modelagem" class="md-nav__link">
+  <a href="#dica-de-leitura-que-evita-erro" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Erro classico de modelagem
+        Dica de leitura que evita erro
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#erros-comuns-nessa-leitura" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Erros comuns nessa leitura
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#41-generalizacao-quando-uma-classe-e-um-tipo-mais-especifico-de-outra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Generalizacao: quando uma classe e um tipo mais especifico de outra
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-ler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como ler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generalizacao-separada-e-compartilhada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generalizacao separada e compartilhada
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leitura-didatica-desse-caso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leitura didatica desse caso
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-facil-de-entender" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo facil de entender
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regra-pratica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regra pratica
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-realizacao-quando-uma-classe-concreta-cumpre-um-contrato" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Realizacao: quando uma classe concreta cumpre um contrato
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-ler_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como ler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-pratico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo pratico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-associacao-quando-uma-classe-conhece-usa-ou-colabora-com-outra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Associacao: quando uma classe conhece, usa ou colabora com outra
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-ler_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como ler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-pratico_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo pratico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-agregacao-quando-o-todo-agrupa-partes-que-podem-continuar-existindo-separadamente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Agregacao: quando o todo agrupa partes que podem continuar existindo separadamente
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-ler_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como ler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-pratico_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo pratico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-composicao-quando-a-parte-depende-fortemente-do-todo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Composicao: quando a parte depende fortemente do todo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-ler_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como ler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-pratico_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo pratico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-dependencia-quando-uma-classe-apenas-usa-outra-de-forma-pontual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Dependencia: quando uma classe apenas usa outra de forma pontual
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-ler_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como ler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-pratico_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo pratico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tabela-de-leitura-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tabela de leitura rapida
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regra-de-bolso-para-decidir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regra de bolso para decidir
       
     </span>
   </a>
@@ -1346,22 +1995,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-multiplicidade-quantos-objetos-podem-se-relacionar" class="md-nav__link">
+  <a href="#5-cardinalidade-multiplicidade-quantos-objetos-podem-se-relacionar" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. Multiplicidade: quantos objetos podem se relacionar?
+        5. Cardinalidade (multiplicidade): quantos objetos podem se relacionar?
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="5. Multiplicidade: quantos objetos podem se relacionar?">
+    <nav class="md-nav" aria-label="5. Cardinalidade (multiplicidade): quantos objetos podem se relacionar?">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#exemplo-com-multiplicidade" class="md-nav__link">
+  <a href="#exemplo-com-cardinalidade" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Exemplo com multiplicidade
+        Exemplo com cardinalidade
       
     </span>
   </a>
@@ -1380,10 +2029,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#multiplicidades-mais-frequentes" class="md-nav__link">
+  <a href="#cardinalidades-mais-frequentes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Multiplicidades mais frequentes
+        Cardinalidades mais frequentes
       
     </span>
   </a>
@@ -1391,10 +2040,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#impacto-pratico-no-codigo" class="md-nav__link">
+  <a href="#o-que-a-cardinalidade-ajuda-a-decidir-no-codigo" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Impacto pratico no codigo
+        O que a cardinalidade ajuda a decidir no codigo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#erros-comuns-de-leitura" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Erros comuns de leitura
       
     </span>
   </a>
@@ -1673,16 +2333,126 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#10-atividade-pratica-final-modelar-e-implementar-um-nucleo-minimo" class="md-nav__link">
+  <a href="#10-atividades-praticas-mermaid-live-e-modelagem-final" class="md-nav__link">
     <span class="md-ellipsis">
       
-        10. Atividade pratica final: modelar e implementar um nucleo minimo
+        10. Atividades praticas: Mermaid Live e modelagem final
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="10. Atividade pratica final: modelar e implementar um nucleo minimo">
+    <nav class="md-nav" aria-label="10. Atividades praticas: Mermaid Live e modelagem final">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#atividade-1-primeiro-contato-com-mermaidlive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atividade 1. Primeiro contato com mermaid.live
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#objetivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ferramenta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ferramenta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#roteiro-da-atividade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Roteiro da atividade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modelo-inicial-para-colar-no-editor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modelo inicial para colar no editor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#codigo-do-modelo-inicial-para-copiar-e-colar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Código do modelo inicial para copiar e colar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregavel-da-atividade-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregavel da atividade 1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#referencias-de-apoio-rapido" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Referencias de apoio rapido
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observacao-didatica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observacao didatica
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#atividade-2-modelar-e-implementar-um-nucleo-minimo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atividade 2. Modelar e implementar um nucleo minimo
+      
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#enunciado" class="md-nav__link">
@@ -1790,7 +2560,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#observacao-didatica" class="md-nav__link">
+  <a href="#observacao-didatica_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Observacao didatica
@@ -1844,44 +2614,44 @@
 
 
 
-<div><h1 id="uml-e-diagrama-de-classes-modelando-objetos-antes-do-codigo">UML e Diagrama de Classes: modelando objetos antes do codigo<a class="headerlink" href="#uml-e-diagrama-de-classes-modelando-objetos-antes-do-codigo" title="Permanent link">¶</a></h1>
+<div><h1 id="uml-e-diagrama-de-classes-modelando-objetos-antes-do-codigo">UML e Diagrama de Classes: modelando objetos antes do código<a class="headerlink" href="#uml-e-diagrama-de-classes-modelando-objetos-antes-do-codigo" title="Permanent link">¶</a></h1>
 <h2 id="objetivos-de-aprendizagem">Objetivos de aprendizagem<a class="headerlink" href="#objetivos-de-aprendizagem" title="Permanent link">¶</a></h2>
 <ul>
-<li>Entender como UML ajuda a representar classes, atributos, operacoes e relacoes de forma util para POO.</li>
+<li>Entender como UML ajuda a representar classes, atributos, operações e relações de forma útil para POO.</li>
 <li>Ler e construir diagramas de classes com foco em responsabilidade, visibilidade, multiplicidade e tipo de relacionamento.</li>
-<li>Traduzir um diagrama de classes para decisoes concretas em C++ e Python sem confundir modelo com sintaxe.</li>
+<li>Traduzir um diagrama de classes para decisões concretas em C++ e Python sem confundir modelo com sintaxe.</li>
 </ul>
 <p><strong>Tempo estimado:</strong> 4h</p>
-<h2 id="video-da-aula">Video da aula<a class="headerlink" href="#video-da-aula" title="Permanent link">¶</a></h2>
+<h2 id="video-da-aula">Vídeo da aula<a class="headerlink" href="#video-da-aula" title="Permanent link">¶</a></h2>
 <p><div class="video-container"><iframe src="https://www.youtube.com/embed/rDidOn6KN9k" style="position:relative;width:100%;height:22.172vw" frameborder="0" allowfullscreen alt="type:video"></iframe></div></p>
 <hr>
 <h2 id="1-por-que-uml-entra-agora-na-trilha">1. Por que UML entra agora na trilha?<a class="headerlink" href="#1-por-que-uml-entra-agora-na-trilha" title="Permanent link">¶</a></h2>
-<p>A turma ja viu <code>classe</code>, <code>objeto</code>, <code>metodo</code>, <code>construtor</code>, encapsulamento, heranca e polimorfismo como ideias de POO. O proximo passo natural e aprender a <strong>pensar o modelo antes de escrever o codigo</strong>.</p>
+<p>A turma já viu <code>classe</code>, <code>objeto</code>, <code>método</code>, <code>construtor</code>, encapsulamento, herança e polimorfismo como ideias de POO. O próximo passo natural é aprender a <strong>pensar o modelo antes de escrever o código</strong>.</p>
 <p>E aqui entra a UML.</p>
-<p>UML nao substitui implementacao. UML tambem nao existe para produzir desenho bonito. Em um curso de POO, ela serve para um objetivo muito mais util:</p>
+<p>UML não substitui implementação. UML também não existe para produzir desenho bonito. Em um curso de POO, ela serve para um objetivo muito mais útil:</p>
 <ul>
-<li>deixar explicitas as classes importantes do dominio;</li>
+<li>deixar explícitas as classes importantes do domínio;</li>
 <li>mostrar quem conhece quem;</li>
 <li>registrar responsabilidades e limites de acesso;</li>
-<li>discutir erros de modelagem antes de gastar tempo com codigo.</li>
+<li>discutir erros de modelagem antes de gastar tempo com código.</li>
 </ul>
-<p><strong>Ideia central desta aula:</strong> diagrama de classes e uma ferramenta de raciocinio. Ele ajuda a validar a estrutura do sistema antes que a sintaxe esconda os problemas de modelagem.</p>
+<p><strong>Ideia central desta aula:</strong> diagrama de classes é uma ferramenta de raciocínio. Ele ajuda a validar a estrutura do sistema antes que a sintaxe esconda os problemas de modelagem.</p>
 <hr>
-<h2 id="2-o-que-e-uml-e-o-que-um-diagrama-de-classes-realmente-mostra">2. O que e UML e o que um diagrama de classes realmente mostra?<a class="headerlink" href="#2-o-que-e-uml-e-o-que-um-diagrama-de-classes-realmente-mostra" title="Permanent link">¶</a></h2>
-<p>A UML e uma linguagem padrao de modelagem usada para visualizar e especificar a estrutura de sistemas de software. Dentro dela, o diagrama de classes e um dos artefatos mais importantes para POO porque ele mostra a <strong>estrutura estatica</strong> do sistema:</p>
+<h2 id="2-o-que-e-uml-e-o-que-um-diagrama-de-classes-realmente-mostra">2. O que é UML e o que um diagrama de classes realmente mostra?<a class="headerlink" href="#2-o-que-e-uml-e-o-que-um-diagrama-de-classes-realmente-mostra" title="Permanent link">¶</a></h2>
+<p>A UML é uma linguagem padrão de modelagem usada para visualizar e especificar a estrutura de sistemas de software. Dentro dela, o diagrama de classes é um dos artefatos mais importantes para POO porque ele mostra a <strong>estrutura estática</strong> do sistema:</p>
 <ul>
 <li>classes;</li>
 <li>atributos;</li>
-<li>operacoes;</li>
+<li>operações;</li>
 <li>relacionamentos;</li>
 <li>multiplicidades;</li>
-<li>visibilidade e abstracao.</li>
+<li>visibilidade e abstração.</li>
 </ul>
-<h3 id="classe-uml-mais-simples-possivel">Classe UML mais simples possivel<a class="headerlink" href="#classe-uml-mais-simples-possivel" title="Permanent link">¶</a></h3>
+<h3 id="classe-uml-mais-simples-possivel">Classe UML mais simples possível<a class="headerlink" href="#classe-uml-mais-simples-possivel" title="Permanent link">¶</a></h3>
 <pre class="mermaid"><code>classDiagram
     class Sensor</code></pre>
-<p>Esse primeiro desenho quase nao diz nada. Ele apenas informa que <code>Sensor</code> e uma classe relevante no modelo.</p>
-<h3 id="classe-uml-com-atributos-e-operacoes">Classe UML com atributos e operacoes<a class="headerlink" href="#classe-uml-com-atributos-e-operacoes" title="Permanent link">¶</a></h3>
+<p>Esse primeiro desenho quase não diz nada. Ele apenas informa que <code>Sensor</code> é uma classe relevante no modelo.</p>
+<h3 id="classe-uml-com-atributos-e-operacoes">Classe UML com atributos e operações<a class="headerlink" href="#classe-uml-com-atributos-e-operacoes" title="Permanent link">¶</a></h3>
 <pre class="mermaid"><code>classDiagram
     class Sensor {
         -tag: string
@@ -1891,27 +2661,27 @@
         +foraDaFaixa(min: double, max: double) bool
         +exibirResumo() void
     }</code></pre>
-<h3 id="como-ler-esse-retangulo">Como ler esse retangulo<a class="headerlink" href="#como-ler-esse-retangulo" title="Permanent link">¶</a></h3>
+<h3 id="como-ler-esse-retangulo">Como ler esse retângulo<a class="headerlink" href="#como-ler-esse-retangulo" title="Permanent link">¶</a></h3>
 <ul>
 <li>parte superior: nome da classe;</li>
 <li>parte central: atributos ou estado;</li>
-<li>parte inferior: operacoes ou comportamento;</li>
-<li>simbolos como <code>+</code>, <code>-</code> e <code>#</code>: nivel de visibilidade.</li>
+<li>parte inferior: operações ou comportamento;</li>
+<li>símbolos como <code>+</code>, <code>-</code> e <code>#</code>: nível de visibilidade.</li>
 </ul>
-<h3 id="leitura-didatica-da-visibilidade">Leitura didatica da visibilidade<a class="headerlink" href="#leitura-didatica-da-visibilidade" title="Permanent link">¶</a></h3>
+<h3 id="leitura-didatica-da-visibilidade">Leitura didática da visibilidade<a class="headerlink" href="#leitura-didatica-da-visibilidade" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
-<th>Notacao UML</th>
+<th>Notação UML</th>
 <th>Significado</th>
-<th>Relacao com POO</th>
-<th>Pergunta pratica</th>
+<th>Relação com POO</th>
+<th>Pergunta prática</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>+</code></td>
-<td>publico</td>
+<td>público</td>
 <td>faz parte do contrato externo</td>
 <td>o restante do sistema realmente precisa chamar isso?</td>
 </tr>
@@ -1924,7 +2694,7 @@
 <tr>
 <td><code>#</code></td>
 <td>protegido</td>
-<td>extensao por heranca</td>
+<td>extensão por herança</td>
 <td>subclasses precisam mesmo enxergar isso?</td>
 </tr>
 <tr>
@@ -1936,11 +2706,11 @@
 </tbody>
 </table>
 <h3 id="ponto-importante-para-a-turma">Ponto importante para a turma<a class="headerlink" href="#ponto-importante-para-a-turma" title="Permanent link">¶</a></h3>
-<p>Diagrama de classes <strong>nao e codigo executavel</strong>. Ele simplifica.</p>
-<p>Por isso, o diagrama nao precisa listar cada getter, cada setter ou cada detalhe de biblioteca. O foco deve ficar no que ajuda a entender o modelo.</p>
+<p>Diagrama de classes <strong>não é código executável</strong>. Ele simplifica.</p>
+<p>Por isso, o diagrama não precisa listar cada getter, cada setter ou cada detalhe de biblioteca. O foco deve ficar no que ajuda a entender o modelo.</p>
 <hr>
 <h2 id="3-como-o-diagrama-de-classes-se-relaciona-com-poo">3. Como o diagrama de classes se relaciona com POO?<a class="headerlink" href="#3-como-o-diagrama-de-classes-se-relaciona-com-poo" title="Permanent link">¶</a></h2>
-<p>O diagrama de classes nao e um assunto paralelo a POO. Ele e uma forma de <strong>explicitar visualmente</strong> os mesmos conceitos que depois aparecem no codigo.</p>
+<p>O diagrama de classes não é um assunto paralelo a POO. Ele é uma forma de <strong>explicitar visualmente</strong> os mesmos conceitos que depois aparecem no código.</p>
 <table>
 <thead>
 <tr>
@@ -1962,8 +2732,8 @@
 </tr>
 <tr>
 <td>Comportamento</td>
-<td>operacoes</td>
-<td>que acoes pertencem ao objeto</td>
+<td>operações</td>
+<td>que ações pertencem ao objeto</td>
 </tr>
 <tr>
 <td>Encapsulamento</td>
@@ -1971,23 +2741,23 @@
 <td>o que fica exposto e o que fica protegido</td>
 </tr>
 <tr>
-<td>Heranca</td>
-<td>generalizacao</td>
-<td>quando uma classe realmente e um subtipo de outra</td>
+<td>Herança</td>
+<td>generalização</td>
+<td>quando uma classe realmente é um subtipo de outra</td>
 </tr>
 <tr>
-<td>Composicao/agregacao</td>
-<td>relacoes entre classes</td>
-<td>como objetos colaboram sem virar uma massa de codigo</td>
+<td>Composição/agregação</td>
+<td>relações entre classes</td>
+<td>como objetos colaboram sem virar uma massa de código</td>
 </tr>
 <tr>
 <td>Polimorfismo</td>
-<td>abstracao e especializacao</td>
+<td>abstração e especialização</td>
 <td>que contrato comum diferentes objetos podem respeitar</td>
 </tr>
 </tbody>
 </table>
-<h3 id="exemplo-curto-o-diagrama-como-ponte-para-encapsulamento-e-heranca">Exemplo curto: o diagrama como ponte para encapsulamento e heranca<a class="headerlink" href="#exemplo-curto-o-diagrama-como-ponte-para-encapsulamento-e-heranca" title="Permanent link">¶</a></h3>
+<h3 id="exemplo-curto-o-diagrama-como-ponte-para-encapsulamento-e-heranca">Exemplo curto: o diagrama como ponte para encapsulamento e herança<a class="headerlink" href="#exemplo-curto-o-diagrama-como-ponte-para-encapsulamento-e-heranca" title="Permanent link">¶</a></h3>
 <pre class="mermaid"><code>classDiagram
     class AtivoIndustrial {
         #tag: string
@@ -2008,19 +2778,20 @@
 
     AtivoIndustrial &lt;|-- SensorPressao
     AtivoIndustrial &lt;|-- BombaRecalque</code></pre>
-<h3 id="o-que-esse-desenho-ja-comunica-antes-do-codigo">O que esse desenho ja comunica antes do codigo<a class="headerlink" href="#o-que-esse-desenho-ja-comunica-antes-do-codigo" title="Permanent link">¶</a></h3>
+<h3 id="o-que-esse-desenho-ja-comunica-antes-do-codigo">O que esse desenho já comunica antes do código<a class="headerlink" href="#o-que-esse-desenho-ja-comunica-antes-do-codigo" title="Permanent link">¶</a></h3>
 <ul>
 <li><code>SensorPressao</code> e <code>BombaRecalque</code> compartilham uma base comum;</li>
-<li>a classe-base concentra identidade e informacao operacional comum;</li>
-<li>cada derivada tem estado e comportamento especificos;</li>
-<li>a estrutura sugere uma relacao <code>is-a</code>, nao apenas reaproveitamento oportunista.</li>
+<li>a classe-base concentra identidade e informação operacional comum;</li>
+<li>cada derivada tem estado e comportamento específicos;</li>
+<li>a estrutura sugere uma relação <code>is-a</code>, não apenas reaproveitamento oportunista.</li>
 </ul>
-<p><strong>Leitura critica:</strong> se a unica semelhanca entre duas classes for ter <code>tag</code>, isso ainda nao justifica heranca.</p>
+<p><strong>Leitura crítica:</strong> se a única semelhança entre duas classes for ter <code>tag</code>, isso ainda não justifica herança.</p>
 <hr>
-<h2 id="4-relacionamentos-uml-quando-usar-cada-um">4. Relacionamentos UML: quando usar cada um<a class="headerlink" href="#4-relacionamentos-uml-quando-usar-cada-um" title="Permanent link">¶</a></h2>
-<p>O maior erro dos iniciantes costuma ser este: desenhar classes isoladas, mas errar o tipo de relacao entre elas.</p>
+<h2 id="4-relacionamentos-uml-como-ler-cada-tipo-corretamente">4. Relacionamentos UML: como ler cada tipo corretamente<a class="headerlink" href="#4-relacionamentos-uml-como-ler-cada-tipo-corretamente" title="Permanent link">¶</a></h2>
+<p>O maior erro dos iniciantes costuma ser este: desenhar classes isoladas, mas errar o tipo de relação entre elas.</p>
 <p>Em POO, boa parte da qualidade da modelagem depende menos do nome das classes e mais de <strong>como elas se conectam</strong>.</p>
-<h3 id="exemplo-com-relacoes-diferentes">Exemplo com relacoes diferentes<a class="headerlink" href="#exemplo-com-relacoes-diferentes" title="Permanent link">¶</a></h3>
+<h3 id="primeiro-treino-de-leitura-um-diagrama-com-simbolos-diferentes">Primeiro treino de leitura: um diagrama com símbolos diferentes<a class="headerlink" href="#primeiro-treino-de-leitura-um-diagrama-com-simbolos-diferentes" title="Permanent link">¶</a></h3>
+<p>Antes de separar cada relação por tipo, vale treinar a leitura de um diagrama pequeno que mistura símbolos diferentes no mesmo desenho.</p>
 <pre class="mermaid"><code>classDiagram
     class Planta
     class Tanque
@@ -2028,79 +2799,298 @@
     class Controlador
     class HistoricoLeituras
 
-    Planta *-- "1..*" Tanque : contem
-    Tanque o-- "0..*" SensorNivel : agrega
+    Planta "1" *-- "1..*" Tanque : contém
+    Tanque "1" o-- "0..*" SensorNivel : agrega
     Controlador --&gt; "1" Tanque : regula
     Controlador ..&gt; HistoricoLeituras : consulta</code></pre>
-<h3 id="comparacao-de-relacionamentos">Comparacao de relacionamentos<a class="headerlink" href="#comparacao-de-relacionamentos" title="Permanent link">¶</a></h3>
+<h3 id="como-ler-esse-diagrama-relacao-por-relacao">Como ler esse diagrama, relação por relação<a class="headerlink" href="#como-ler-esse-diagrama-relacao-por-relacao" title="Permanent link">¶</a></h3>
+<ol>
+<li>
+<p><code>Planta "1" *-- "1..*" Tanque : contém</code>
+   Leitura: uma <code>Planta</code> contém um ou muitos <code>Tanque</code>.
+   Interpretação: o diamante <strong>preenchido</strong> indica <strong>composição</strong>. A <code>Planta</code> é o todo forte; <code>Tanque</code> foi modelado como parte estrutural dela.</p>
+</li>
+<li>
+<p><code>Tanque "1" o-- "0..*" SensorNivel : agrega</code>
+   Leitura: um <code>Tanque</code> agrega zero ou muitos <code>SensorNivel</code>.
+   Interpretação: o diamante <strong>vazio</strong> indica <strong>agregação</strong>. O tanque agrupa sensores, mas os sensores podem continuar existindo fora desse agrupamento.</p>
+</li>
+<li>
+<p><code>Controlador --&gt; "1" Tanque : regula</code>
+   Leitura: o <code>Controlador</code> regula um <code>Tanque</code>.
+   Interpretação: a linha <strong>contínua com seta</strong> indica <strong>associação navegável</strong>. O controlador conhece o tanque e interage com ele.</p>
+</li>
+<li>
+<p><code>Controlador ..&gt; HistoricoLeituras : consulta</code>
+   Leitura: o <code>Controlador</code> consulta <code>HistoricoLeituras</code>.
+   Interpretação: a linha <strong>tracejada com seta</strong> indica <strong>dependência</strong>. O controlador usa esse elemento pontualmente, mas isso não significa, obrigatoriamente, que ele o mantenha como parte permanente do estado interno.</p>
+</li>
+</ol>
+<h3 id="o-que-cada-simbolo-significa-nesse-desenho">O que cada símbolo significa nesse desenho<a class="headerlink" href="#o-que-cada-simbolo-significa-nesse-desenho" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
-<th>Tecnica/Padrao</th>
-<th>Melhor uso</th>
-<th>Esforco</th>
-<th>Entregavel</th>
-<th>Limitacao</th>
+<th>Símbolo</th>
+<th>Como identificar visualmente</th>
+<th>Significado</th>
+<th>Pergunta que ele responde</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Associacao</td>
-<td>quando duas classes colaboram de forma direta</td>
-<td>baixo</td>
-<td>ligacao clara entre objetos</td>
-<td>nao explica propriedade nem ciclo de vida</td>
+<td><code>*--</code></td>
+<td>diamante cheio</td>
+<td>composição</td>
+<td>"esta parte depende fortemente do todo?"</td>
 </tr>
 <tr>
-<td>Agregacao</td>
-<td>quando um objeto agrupa outros que podem existir separadamente</td>
-<td>medio</td>
-<td>nocao de conjunto ou colecao</td>
-<td>costuma ser confundida com associacao simples</td>
+<td><code>o--</code></td>
+<td>diamante vazio</td>
+<td>agregação</td>
+<td>"o todo apenas agrupa partes independentes?"</td>
 </tr>
 <tr>
-<td>Composicao</td>
-<td>quando a parte depende fortemente do todo</td>
-<td>medio</td>
-<td>relacao forte de pertencimento</td>
-<td>exige mais cuidado com ciclo de vida</td>
+<td><code>--&gt;</code></td>
+<td>linha contínua com seta</td>
+<td>associação</td>
+<td>"uma classe conhece ou usa estruturalmente a outra?"</td>
 </tr>
 <tr>
-<td>Generalizacao</td>
-<td>quando existe relacao real <code>is-a</code></td>
-<td>medio</td>
-<td>hierarquia de classes coerente</td>
-<td>vira erro estrutural se usada so para reaproveitar codigo</td>
+<td><code>..&gt;</code></td>
+<td>linha tracejada com seta</td>
+<td>dependência</td>
+<td>"uma classe apenas usa a outra de forma pontual?"</td>
 </tr>
 <tr>
-<td>Dependencia</td>
-<td>quando uma classe apenas usa outra pontualmente</td>
-<td>baixo</td>
-<td>acoplamento mais leve e temporario</td>
-<td>diz menos sobre estrutura duradoura</td>
+<td><code>"1"</code>, <code>"0..*"</code>, <code>"1..*"</code></td>
+<td>números perto da linha</td>
+<td>cardinalidade</td>
+<td>"quantos objetos podem participar da relação?"</td>
 </tr>
 </tbody>
 </table>
-<h3 id="recomendacao-pratica-por-cenario">Recomendacao pratica por cenario<a class="headerlink" href="#recomendacao-pratica-por-cenario" title="Permanent link">¶</a></h3>
+<h3 id="dica-de-leitura-que-evita-erro">Dica de leitura que evita erro<a class="headerlink" href="#dica-de-leitura-que-evita-erro" title="Permanent link">¶</a></h3>
+<p>Leia sempre em duas etapas:</p>
+<ol>
+<li>descubra <strong>o tipo do vínculo</strong> pelo símbolo da linha;</li>
+<li>descubra <strong>a quantidade</strong> pelos números perto da relação.</li>
+</ol>
+<h3 id="erros-comuns-nessa-leitura">Erros comuns nessa leitura<a class="headerlink" href="#erros-comuns-nessa-leitura" title="Permanent link">¶</a></h3>
 <ul>
-<li>use <strong>associacao</strong> quando um objeto conhece ou chama outro;</li>
-<li>use <strong>agregacao</strong> quando existe agrupamento, mas as partes podem continuar existindo fora do todo;</li>
-<li>use <strong>composicao</strong> quando a parte faz sentido apenas dentro do todo modelado;</li>
-<li>use <strong>generalizacao</strong> quando a pergunta "isso e um tipo de..." faz sentido no dominio;</li>
-<li>use <strong>dependencia</strong> para colaboracoes temporarias, parametros de metodo ou servicos auxiliares.</li>
+<li>achar que todo diamante significa a mesma coisa;</li>
+<li>ignorar o lado em que o diamante aparece;</li>
+<li>confundir seta contínua com dependência;</li>
+<li>esquecer de ler a cardinalidade junto com o tipo da relação.</li>
 </ul>
-<h3 id="erro-classico-de-modelagem">Erro classico de modelagem<a class="headerlink" href="#erro-classico-de-modelagem" title="Permanent link">¶</a></h3>
-<p>Muitos alunos tentam resolver tudo com heranca. Isso costuma produzir hierarquias artificiais.</p>
-<p>Regra de bolso:</p>
+<h3 id="41-generalizacao-quando-uma-classe-e-um-tipo-mais-especifico-de-outra">4.1 Generalizacao: quando uma classe e um tipo mais especifico de outra<a class="headerlink" href="#41-generalizacao-quando-uma-classe-e-um-tipo-mais-especifico-de-outra" title="Permanent link">¶</a></h3>
+<p>Generalizacao e a forma UML de representar heranca.</p>
+<p>A pergunta certa aqui e:</p>
+<p><strong>"a classe filha realmente e um tipo da classe pai?"</strong></p>
+<p>Se a resposta for sim, generalizacao pode fazer sentido.</p>
+<pre class="mermaid"><code>classDiagram
+    class AtivoIndustrial {
+        -tag: string
+        +exibirIdentificacao() void
+    }
+
+    class SensorTemperatura {
+        -valorAtual: double
+        +ler() double
+    }
+
+    class BombaCirculacao {
+        -ligada: bool
+        +ligar() void
+        +desligar() void
+    }
+
+    AtivoIndustrial &lt;|-- SensorTemperatura
+    AtivoIndustrial &lt;|-- BombaCirculacao</code></pre>
+<h3 id="como-ler">Como ler<a class="headerlink" href="#como-ler" title="Permanent link">¶</a></h3>
 <ul>
-<li>se a relacao e <code>tem um</code>, pense primeiro em composicao ou agregacao;</li>
-<li>se a relacao e <code>usa</code>, pense em associacao ou dependencia;</li>
-<li>se a relacao e <code>e um tipo de</code>, so entao investigue heranca.</li>
+<li><code>SensorTemperatura</code> e um tipo de <code>AtivoIndustrial</code>;</li>
+<li><code>BombaCirculacao</code> tambem e um tipo de <code>AtivoIndustrial</code>;</li>
+<li>a classe-base concentra o que e comum;</li>
+<li>as classes derivadas especializam comportamento e estado.</li>
+</ul>
+<h3 id="generalizacao-separada-e-compartilhada">Generalizacao separada e compartilhada<a class="headerlink" href="#generalizacao-separada-e-compartilhada" title="Permanent link">¶</a></h3>
+<p>Ao discutir heranca com mais cuidado, vale apresentar duas leituras possiveis para as especializacoes:</p>
+<ul>
+<li><strong>separada</strong> ou <strong>disjunta</strong>: um objeto pertence a apenas uma das subclasses;</li>
+<li><strong>compartilhada</strong> ou <strong>sobreposta</strong>: um mesmo objeto pode pertencer a mais de uma subclasse ao mesmo tempo.</li>
+</ul>
+<pre class="mermaid"><code>classDiagram
+    class Pessoa
+    class Aluno
+    class Monitor
+
+    Pessoa &lt;|-- Aluno
+    Pessoa &lt;|-- Monitor</code></pre>
+<h3 id="leitura-didatica-desse-caso">Leitura didatica desse caso<a class="headerlink" href="#leitura-didatica-desse-caso" title="Permanent link">¶</a></h3>
+<ul>
+<li>se a generalizacao for <strong>separada</strong>, uma <code>Pessoa</code> sera <code>Aluno</code> ou <code>Monitor</code>, mas nao os dois;</li>
+<li>se a generalizacao for <strong>compartilhada</strong>, a mesma <code>Pessoa</code> pode ser <code>Aluno</code> e <code>Monitor</code> ao mesmo tempo.</li>
+</ul>
+<h3 id="exemplo-facil-de-entender">Exemplo facil de entender<a class="headerlink" href="#exemplo-facil-de-entender" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>separada</strong>: <code>Veiculo</code> especializado em <code>Carro</code> e <code>Moto</code> em um cadastro simples;</li>
+<li><strong>compartilhada</strong>: <code>Pessoa</code> especializada em <code>Aluno</code> e <code>Monitor</code> em um sistema academico.</li>
+</ul>
+<h3 id="regra-pratica">Regra pratica<a class="headerlink" href="#regra-pratica" title="Permanent link">¶</a></h3>
+<p>Se voce esta usando heranca apenas porque duas classes possuem atributos parecidos, a modelagem provavelmente esta fraca.</p>
+<h3 id="42-realizacao-quando-uma-classe-concreta-cumpre-um-contrato">4.2 Realizacao: quando uma classe concreta cumpre um contrato<a class="headerlink" href="#42-realizacao-quando-uma-classe-concreta-cumpre-um-contrato" title="Permanent link">¶</a></h3>
+<p>Realizacao aparece quando uma classe concreta implementa um contrato, interface ou comportamento esperado.</p>
+<p>Em POO, a diferenca principal para a generalizacao e esta:</p>
+<ul>
+<li>generalizacao responde "e um tipo de";</li>
+<li>realizacao responde "cumpre este contrato".</li>
+</ul>
+<pre class="mermaid"><code>classDiagram
+    class Operavel {
+        +ligar() void
+        +desligar() void
+    }
+
+    class BombaCirculacao {
+        +ligar() void
+        +desligar() void
+    }
+
+    Operavel &lt;|.. BombaCirculacao</code></pre>
+<h3 id="como-ler_1">Como ler<a class="headerlink" href="#como-ler_1" title="Permanent link">¶</a></h3>
+<ul>
+<li><code>BombaCirculacao</code> realiza o contrato <code>Operavel</code>;</li>
+<li>isso comunica que a bomba oferece as operacoes exigidas por esse contrato;</li>
+<li>o foco aqui nao e compartilhar estado, e sim garantir uma interface esperada.</li>
+</ul>
+<h3 id="exemplo-pratico">Exemplo pratico<a class="headerlink" href="#exemplo-pratico" title="Permanent link">¶</a></h3>
+<p>Se o sistema precisa operar varios equipamentos por um contrato comum, a realizacao ajuda a deixar isso explicito.</p>
+<h3 id="43-associacao-quando-uma-classe-conhece-usa-ou-colabora-com-outra">4.3 Associacao: quando uma classe conhece, usa ou colabora com outra<a class="headerlink" href="#43-associacao-quando-uma-classe-conhece-usa-ou-colabora-com-outra" title="Permanent link">¶</a></h3>
+<p>Associacao e a relacao mais comum.</p>
+<p>Ela indica que existe uma ligacao estrutural entre classes, mas sem necessariamente dizer que uma controla o ciclo de vida da outra.</p>
+<pre class="mermaid"><code>classDiagram
+    class Professor
+    class Turma
+
+    Professor "1" --&gt; "1..*" Turma : leciona</code></pre>
+<h3 id="como-ler_2">Como ler<a class="headerlink" href="#como-ler_2" title="Permanent link">¶</a></h3>
+<ul>
+<li>um <code>Professor</code> leciona uma ou varias <code>Turma</code>;</li>
+<li>existe colaboracao entre as classes;</li>
+<li>a relacao e importante para o dominio, mas uma classe nao e "parte interna" da outra.</li>
+</ul>
+<h3 id="exemplo-pratico_1">Exemplo pratico<a class="headerlink" href="#exemplo-pratico_1" title="Permanent link">¶</a></h3>
+<p><code>ControladorQualidade --&gt; SensorPH</code> significa que o controlador usa o sensor para tomar decisao.</p>
+<h3 id="44-agregacao-quando-o-todo-agrupa-partes-que-podem-continuar-existindo-separadamente">4.4 Agregacao: quando o todo agrupa partes que podem continuar existindo separadamente<a class="headerlink" href="#44-agregacao-quando-o-todo-agrupa-partes-que-podem-continuar-existindo-separadamente" title="Permanent link">¶</a></h3>
+<p>Agregacao e uma associacao com ideia de agrupamento.</p>
+<p>Ela comunica que um objeto reune outros, mas as partes podem existir fora desse todo.</p>
+<pre class="mermaid"><code>classDiagram
+    class Time
+    class Jogador
+
+    Time "1" o-- "0..*" Jogador : agrega</code></pre>
+<h3 id="como-ler_3">Como ler<a class="headerlink" href="#como-ler_3" title="Permanent link">¶</a></h3>
+<ul>
+<li>um <code>Time</code> agrega zero ou muitos <code>Jogador</code>;</li>
+<li>os jogadores pertencem ao conjunto, mas ainda fazem sentido fora dele;</li>
+<li>o ciclo de vida das partes nao depende totalmente do todo.</li>
+</ul>
+<h3 id="exemplo-pratico_2">Exemplo pratico<a class="headerlink" href="#exemplo-pratico_2" title="Permanent link">¶</a></h3>
+<p>Uma <code>Bancada</code> de laboratorio pode agregar equipamentos que depois sao movidos para outra bancada.</p>
+<h3 id="45-composicao-quando-a-parte-depende-fortemente-do-todo">4.5 Composicao: quando a parte depende fortemente do todo<a class="headerlink" href="#45-composicao-quando-a-parte-depende-fortemente-do-todo" title="Permanent link">¶</a></h3>
+<p>Composicao e a relacao mais forte entre todo e parte.</p>
+<p>Ela comunica que a parte faz sentido apenas dentro do todo modelado.</p>
+<pre class="mermaid"><code>classDiagram
+    class Pedido
+    class ItemPedido
+
+    Pedido "1" *-- "1..*" ItemPedido : contem</code></pre>
+<h3 id="como-ler_4">Como ler<a class="headerlink" href="#como-ler_4" title="Permanent link">¶</a></h3>
+<ul>
+<li>um <code>Pedido</code> contem um ou muitos <code>ItemPedido</code>;</li>
+<li>os itens existem como parte daquele pedido;</li>
+<li>se o pedido deixa de existir naquele modelo, os itens perdem sentido isoladamente.</li>
+</ul>
+<h3 id="exemplo-pratico_3">Exemplo pratico<a class="headerlink" href="#exemplo-pratico_3" title="Permanent link">¶</a></h3>
+<p>Uma <code>ETA</code> pode ser modelada em composicao com <code>TanqueMistura</code> se o projeto quiser comunicar pertencimento estrutural forte.</p>
+<h3 id="46-dependencia-quando-uma-classe-apenas-usa-outra-de-forma-pontual">4.6 Dependencia: quando uma classe apenas usa outra de forma pontual<a class="headerlink" href="#46-dependencia-quando-uma-classe-apenas-usa-outra-de-forma-pontual" title="Permanent link">¶</a></h3>
+<p>Dependencia representa uma colaboracao mais leve e temporaria.</p>
+<p>Ela costuma aparecer quando uma classe usa outra em um metodo, consulta um servico ou depende de um resultado para executar uma tarefa.</p>
+<pre class="mermaid"><code>classDiagram
+    class GeradorRelatorio
+    class Medicao
+
+    GeradorRelatorio ..&gt; Medicao : usa para calcular</code></pre>
+<h3 id="como-ler_5">Como ler<a class="headerlink" href="#como-ler_5" title="Permanent link">¶</a></h3>
+<ul>
+<li><code>GeradorRelatorio</code> depende de <code>Medicao</code> para funcionar;</li>
+<li>a ligacao existe, mas nao necessariamente como atributo permanente;</li>
+<li>costuma ser mais fraca que associacao estrutural.</li>
+</ul>
+<h3 id="exemplo-pratico_4">Exemplo pratico<a class="headerlink" href="#exemplo-pratico_4" title="Permanent link">¶</a></h3>
+<p>Um exportador de resultados pode depender de <code>ResultadoEnsaio</code> apenas no momento da geracao do arquivo.</p>
+<h3 id="tabela-de-leitura-rapida">Tabela de leitura rapida<a class="headerlink" href="#tabela-de-leitura-rapida" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Relacao</th>
+<th>Notacao em Mermaid/UML</th>
+<th>Como ler</th>
+<th>Exemplo facil</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Generalizacao</td>
+<td><code>&lt;|--</code></td>
+<td>e um tipo de</td>
+<td><code>SensorTemperatura</code> e um <code>AtivoIndustrial</code></td>
+</tr>
+<tr>
+<td>Realizacao</td>
+<td><code>&lt;|..</code></td>
+<td>cumpre um contrato</td>
+<td><code>BombaCirculacao</code> realiza <code>Operavel</code></td>
+</tr>
+<tr>
+<td>Associacao</td>
+<td><code>--&gt;</code></td>
+<td>conhece, usa ou colabora com</td>
+<td><code>Professor</code> leciona <code>Turma</code></td>
+</tr>
+<tr>
+<td>Agregacao</td>
+<td><code>o--</code></td>
+<td>agrupa partes independentes</td>
+<td><code>Time</code> agrega <code>Jogador</code></td>
+</tr>
+<tr>
+<td>Composicao</td>
+<td><code>*--</code></td>
+<td>contem partes fortemente dependentes</td>
+<td><code>Pedido</code> contem <code>ItemPedido</code></td>
+</tr>
+<tr>
+<td>Dependencia</td>
+<td><code>..&gt;</code></td>
+<td>usa pontualmente</td>
+<td><code>GeradorRelatorio</code> usa <code>Medicao</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="regra-de-bolso-para-decidir">Regra de bolso para decidir<a class="headerlink" href="#regra-de-bolso-para-decidir" title="Permanent link">¶</a></h3>
+<ul>
+<li>se a relacao e <code>e um tipo de</code>, pense em <strong>generalizacao</strong>;</li>
+<li>se a relacao e <code>cumpre um contrato</code>, pense em <strong>realizacao</strong>;</li>
+<li>se a relacao e <code>conhece</code> ou <code>colabora com</code>, pense em <strong>associacao</strong>;</li>
+<li>se a relacao e <code>agrupa</code>, pense em <strong>agregacao</strong>;</li>
+<li>se a relacao e <code>contem</code> com dependencia forte, pense em <strong>composicao</strong>;</li>
+<li>se a relacao e <code>usa momentaneamente</code>, pense em <strong>dependencia</strong>.</li>
 </ul>
 <hr>
-<h2 id="5-multiplicidade-quantos-objetos-podem-se-relacionar">5. Multiplicidade: quantos objetos podem se relacionar?<a class="headerlink" href="#5-multiplicidade-quantos-objetos-podem-se-relacionar" title="Permanent link">¶</a></h2>
+<h2 id="5-cardinalidade-multiplicidade-quantos-objetos-podem-se-relacionar">5. Cardinalidade (multiplicidade): quantos objetos podem se relacionar?<a class="headerlink" href="#5-cardinalidade-multiplicidade-quantos-objetos-podem-se-relacionar" title="Permanent link">¶</a></h2>
 <p>Um bom diagrama de classes nao responde apenas "quem se conecta com quem". Ele tambem responde "em que quantidade essa relacao faz sentido?".</p>
-<h3 id="exemplo-com-multiplicidade">Exemplo com multiplicidade<a class="headerlink" href="#exemplo-com-multiplicidade" title="Permanent link">¶</a></h3>
+<h3 id="exemplo-com-cardinalidade">Exemplo com cardinalidade<a class="headerlink" href="#exemplo-com-cardinalidade" title="Permanent link">¶</a></h3>
 <pre class="mermaid"><code>classDiagram
     class Cliente
     class Pedido
@@ -2116,7 +3106,7 @@
 <li>cada <code>Pedido</code> possui um ou muitos <code>ItemPedido</code>;</li>
 <li>cada <code>ItemPedido</code> referencia exatamente um <code>Produto</code>.</li>
 </ul>
-<h3 id="multiplicidades-mais-frequentes">Multiplicidades mais frequentes<a class="headerlink" href="#multiplicidades-mais-frequentes" title="Permanent link">¶</a></h3>
+<h3 id="cardinalidades-mais-frequentes">Cardinalidades mais frequentes<a class="headerlink" href="#cardinalidades-mais-frequentes" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
@@ -2148,13 +3138,19 @@
 </tr>
 </tbody>
 </table>
-<h3 id="impacto-pratico-no-codigo">Impacto pratico no codigo<a class="headerlink" href="#impacto-pratico-no-codigo" title="Permanent link">¶</a></h3>
-<p>Multiplicidade bem pensada ajuda a decidir:</p>
+<h3 id="o-que-a-cardinalidade-ajuda-a-decidir-no-codigo">O que a cardinalidade ajuda a decidir no codigo<a class="headerlink" href="#o-que-a-cardinalidade-ajuda-a-decidir-no-codigo" title="Permanent link">¶</a></h3>
 <ul>
-<li>se um atributo deve ser singular ou colecao;</li>
+<li>se um atributo deve guardar um objeto ou uma colecao;</li>
 <li>se a ausencia da relacao e aceitavel;</li>
 <li>se o construtor deve exigir um objeto associado;</li>
-<li>se ha necessidade de validacao para evitar estado invalido.</li>
+<li>se a classe precisa validar quantidade minima ou maxima de elementos.</li>
+</ul>
+<h3 id="erros-comuns-de-leitura">Erros comuns de leitura<a class="headerlink" href="#erros-comuns-de-leitura" title="Permanent link">¶</a></h3>
+<ul>
+<li>ignorar a cardinalidade e pensar apenas no tipo da relacao;</li>
+<li>desenhar <code>*</code> em tudo por inseguranca;</li>
+<li>usar <code>1</code> quando, na pratica, a relacao pode nao existir;</li>
+<li>esquecer que cardinalidade muda a implementacao concreta.</li>
 </ul>
 <hr>
 <h2 id="6-como-sair-de-um-texto-de-requisito-para-um-diagrama-de-classes">6. Como sair de um texto de requisito para um diagrama de classes<a class="headerlink" href="#6-como-sair-de-um-texto-de-requisito-para-um-diagrama-de-classes" title="Permanent link">¶</a></h2>
@@ -2408,7 +3404,76 @@
 </ul>
 <p>Quando essa separacao aparece cedo no desenho, o codigo tende a nascer com mais coesao.</p>
 <hr>
-<h2 id="10-atividade-pratica-final-modelar-e-implementar-um-nucleo-minimo">10. Atividade pratica final: modelar e implementar um nucleo minimo<a class="headerlink" href="#10-atividade-pratica-final-modelar-e-implementar-um-nucleo-minimo" title="Permanent link">¶</a></h2>
+<h2 id="10-atividades-praticas-mermaid-live-e-modelagem-final">10. Atividades praticas: Mermaid Live e modelagem final<a class="headerlink" href="#10-atividades-praticas-mermaid-live-e-modelagem-final" title="Permanent link">¶</a></h2>
+<h3 id="atividade-1-primeiro-contato-com-mermaidlive">Atividade 1. Primeiro contato com <code>mermaid.live</code><a class="headerlink" href="#atividade-1-primeiro-contato-com-mermaidlive" title="Permanent link">¶</a></h3>
+<p>Antes da atividade principal, faca uma etapa curta de aquecimento para a turma aprender a escrever um diagrama sem depender ainda do arquivo <code>.md</code> do repositorio.</p>
+<h3 id="objetivo">Objetivo<a class="headerlink" href="#objetivo" title="Permanent link">¶</a></h3>
+<ul>
+<li>aprender o fluxo basico do editor online;</li>
+<li>entender como um bloco <code>classDiagram</code> vira um diagrama visual;</li>
+<li>validar rapidamente erros de sintaxe antes de levar o conteudo para Markdown.</li>
+</ul>
+<h3 id="ferramenta">Ferramenta<a class="headerlink" href="#ferramenta" title="Permanent link">¶</a></h3>
+<ul>
+<li>Editor online: <a href="https://mermaid.live/">Mermaid Live</a></li>
+</ul>
+<h3 id="roteiro-da-atividade">Roteiro da atividade<a class="headerlink" href="#roteiro-da-atividade" title="Permanent link">¶</a></h3>
+<ol>
+<li>Abrir o <code>https://mermaid.live/</code>.</li>
+<li>Apagar o exemplo padrao que vier carregado no editor.</li>
+<li>Colar um diagrama inicial simples.</li>
+<li>Alterar nomes de classes, atributos e relacoes.</li>
+<li>Conferir se o diagrama renderizou sem erro.</li>
+<li>Salvar o link compartilhavel ou exportar uma imagem para registrar a tentativa.</li>
+</ol>
+<h3 id="modelo-inicial-para-colar-no-editor">Modelo inicial para colar no editor<a class="headerlink" href="#modelo-inicial-para-colar-no-editor" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>classDiagram
+    class Equipamento {
+        -tag: string
+        -ativo: bool
+        +ligar() void
+        +desligar() void
+    }
+
+    class SensorTemperatura {
+        -valorAtual: double
+        +atualizarLeitura(valor: double) void
+    }
+
+    Equipamento &lt;|-- SensorTemperatura</code></pre>
+<h3 id="codigo-do-modelo-inicial-para-copiar-e-colar">Código do modelo inicial para copiar e colar<a class="headerlink" href="#codigo-do-modelo-inicial-para-copiar-e-colar" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>classDiagram
+    class Equipamento {
+        -tag: string
+        -ativo: bool
+        +ligar() void
+        +desligar() void
+    }
+
+    class SensorTemperatura {
+        -valorAtual: double
+        +atualizarLeitura(valor: double) void
+    }
+
+    Equipamento &lt;|-- SensorTemperatura
+</code></pre></div>
+<h3 id="entregavel-da-atividade-1">Entregavel da atividade 1<a class="headerlink" href="#entregavel-da-atividade-1" title="Permanent link">¶</a></h3>
+<ul>
+<li>link do diagrama salvo no <code>mermaid.live</code> ou exportacao em imagem;</li>
+<li>pequeno texto com <code>3</code> frases explicando:</li>
+<li>quais classes foram desenhadas;</li>
+<li>qual relacao foi usada;</li>
+<li>que duvida de sintaxe apareceu durante o teste.</li>
+</ul>
+<h3 id="referencias-de-apoio-rapido">Referencias de apoio rapido<a class="headerlink" href="#referencias-de-apoio-rapido" title="Permanent link">¶</a></h3>
+<ul>
+<li><a href="https://mermaid.live/">Mermaid Live Editor</a></li>
+<li><a href="https://mermaid.js.org/syntax/classDiagram.html">Mermaid - Class diagrams</a></li>
+<li><a href="https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax">GitHub Docs - Basic writing and formatting syntax</a></li>
+</ul>
+<h3 id="observacao-didatica">Observacao didatica<a class="headerlink" href="#observacao-didatica" title="Permanent link">¶</a></h3>
+<p>Se a turma ainda nao domina Markdown, esta atividade deve vir antes da atividade principal. O foco aqui nao e modelar um sistema completo, e sim aprender o ciclo: escrever -&gt; renderizar -&gt; corrigir.</p>
+<h3 id="atividade-2-modelar-e-implementar-um-nucleo-minimo">Atividade 2. Modelar e implementar um nucleo minimo<a class="headerlink" href="#atividade-2-modelar-e-implementar-um-nucleo-minimo" title="Permanent link">¶</a></h3>
 <h3 id="enunciado">Enunciado<a class="headerlink" href="#enunciado" title="Permanent link">¶</a></h3>
 <p>Modele um <strong>sistema de monitoramento de laboratorio de ensaios</strong> com pelo menos estas classes:</p>
 <ul>
@@ -2420,6 +3485,7 @@
 </ul>
 <h3 id="regras-da-atividade">Regras da atividade<a class="headerlink" href="#regras-da-atividade" title="Permanent link">¶</a></h3>
 <ul>
+<li>se possivel, comecar o rascunho no <code>mermaid.live</code> e so depois migrar para o <code>.md</code>;</li>
 <li>o diagrama deve ser feito em <code>mermaid</code>;</li>
 <li>use no minimo <code>5</code> classes;</li>
 <li>inclua pelo menos <code>1</code> relacao de generalizacao;</li>
@@ -2431,19 +3497,22 @@
 <ol>
 <li>Escrever um pequeno texto de requisito com <code>5</code> a <code>8</code> linhas.</li>
 <li>Extrair as classes candidatas.</li>
-<li>Montar o diagrama de classes em <code>mermaid</code>.</li>
+<li>Montar um primeiro rascunho no <code>mermaid.live</code>.</li>
+<li>Migrar o diagrama validado para um arquivo <code>.md</code> no repositorio.</li>
 <li>Justificar em comentario curto por que cada relacao foi escolhida.</li>
 <li>Implementar o esqueleto de <code>2</code> classes em C++ ou Python.</li>
 <li>Fazer <code>commit</code> com uma mensagem objetiva, por exemplo: <code>feat: modela laboratorio com diagrama UML inicial</code>.</li>
 </ol>
 <h3 id="entregaveis-esperados">Entregaveis esperados<a class="headerlink" href="#entregaveis-esperados" title="Permanent link">¶</a></h3>
 <ul>
+<li>um link ou exportacao da versao inicial feita no <code>mermaid.live</code>;</li>
 <li>um arquivo <code>.md</code> com o texto do problema e o bloco <code>mermaid</code>;</li>
 <li>um arquivo <code>.cpp</code> ou <code>.py</code> com pelo menos duas classes do modelo;</li>
 <li>uma justificativa curta dizendo onde houve composicao, heranca e associacao.</li>
 </ul>
 <h3 id="checklist-de-revisao">Checklist de revisao<a class="headerlink" href="#checklist-de-revisao" title="Permanent link">¶</a></h3>
 <ul>
+<li>o rascunho inicial foi testado no <code>mermaid.live</code>;</li>
 <li>as classes representam entidades do dominio e nao apenas telas ou menus;</li>
 <li>os nomes das operacoes indicam comportamento observavel;</li>
 <li>ha pelo menos uma decisao clara de encapsulamento;</li>
@@ -2460,13 +3529,15 @@
 </ul>
 <h3 id="leituralaboratorio-complementar">Leitura/laboratorio complementar<a class="headerlink" href="#leituralaboratorio-complementar" title="Permanent link">¶</a></h3>
 <ul>
+<li><a href="https://mermaid.live/">Mermaid Live Editor</a></li>
 <li><a href="https://squidfunk.github.io/mkdocs-material/reference/diagrams/">Material for MkDocs - Diagrams</a></li>
 <li><a href="https://mermaid.js.org/syntax/classDiagram.html">Mermaid - Class diagrams</a></li>
+<li><a href="https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax">GitHub Docs - Basic writing and formatting syntax</a></li>
 <li><a href="https://docs.python.org/3/tutorial/classes.html">Python Docs - Classes</a></li>
 <li><a href="https://en.cppreference.com/w/cpp/language/classes">cppreference - Classes</a></li>
 <li><a href="https://en.cppreference.com/w/cpp/language/derived_class">cppreference - Derived classes</a></li>
 </ul>
-<h3 id="observacao-didatica">Observacao didatica<a class="headerlink" href="#observacao-didatica" title="Permanent link">¶</a></h3>
+<h3 id="observacao-didatica_1">Observacao didatica<a class="headerlink" href="#observacao-didatica_1" title="Permanent link">¶</a></h3>
 <p>O video ajuda a visualizar o mecanismo. A consolidacao real acontece quando o aluno pega um requisito curto, desenha o modelo, debate relacoes e so depois escreve o codigo.</p>
 <hr>
 <h2 id="perguntas-de-revisao-rapida">Perguntas de revisao rapida<a class="headerlink" href="#perguntas-de-revisao-rapida" title="Permanent link">¶</a></h2>
@@ -2478,8 +3549,10 @@
 <h2 id="fontes-de-referencia">Fontes de referencia<a class="headerlink" href="#fontes-de-referencia" title="Permanent link">¶</a></h2>
 <ul>
 <li>https://www.omg.org/spec/UML/2.5.1/About-UML</li>
+<li>https://mermaid.live/</li>
 <li>https://mermaid.js.org/syntax/classDiagram.html</li>
 <li>https://squidfunk.github.io/mkdocs-material/reference/diagrams/</li>
+<li>https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax</li>
 <li>https://docs.python.org/3/tutorial/classes.html</li>
 <li>https://en.cppreference.com/w/cpp/language/classes</li>
 <li>https://en.cppreference.com/w/cpp/language/derived_class</li>

@@ -1,0 +1,41 @@
+@media screen and (min-width: 76.25em) {
+  .md-grid {
+    max-width: 100%;
+  }
+
+  .md-main__inner {
+    grid-template-columns: 15.2rem minmax(0, 1fr);
+  }
+
+  .md-sidebar--secondary {
+    display: none;
+  }
+
+  .md-content,
+  .md-content__inner {
+    max-width: none;
+  }
+
+  .md-content__inner {
+    margin-right: 0;
+  }
+}
+
+@media screen and (min-width: 60em) and (max-width: 76.234375em) {
+  .md-grid {
+    max-width: 100%;
+  }
+
+  .md-sidebar--secondary {
+    display: none;
+  }
+
+  .md-content,
+  .md-content__inner {
+    max-width: none;
+  }
+
+  .md-content__inner {
+    margin-right: 0;
+  }
+}
