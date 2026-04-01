@@ -221,6 +221,31 @@ Se a atividade usar `feedback pull requests`, o professor pode comentar em um `p
 
 Em repositorios privados, esse feedback fica visivel apenas para as pessoas autorizadas na atividade.
 
+### 7.4 Se aparecer `Repository Access Issue`
+
+Em algumas turmas, o GitHub Classroom pode criar o repositorio da atividade, mas redirecionar voce para a tela:
+
+```text
+Repository Access Issue
+You no longer have access to your assignment repository.
+```
+
+Quando isso acontecer:
+
+1. confirme que voce esta logado na conta correta do `GitHub`;
+2. abra `https://github.com/settings/organizations`;
+3. procure convite pendente relacionado a organizacao da disciplina;
+4. aceite o convite;
+5. volte ao link do assignment ou abra novamente o repositorio da atividade.
+
+Se nao houver convite pendente ou se o erro continuar, envie ao professor:
+
+- seu `@usuario` do GitHub;
+- o link do assignment;
+- um print da tela de erro.
+
+Esse procedimento costuma resolver o problema sem precisar recriar a atividade.
+
 ---
 
 ## 8. Ponte C++ -> Python
@@ -285,6 +310,7 @@ Revisado em `1 de abril de 2026`.
 - https://docs.github.com/pt/education/manage-coursework-with-github-classroom/teach-with-github-classroom/create-an-individual-assignment
 - https://docs.github.com/pt/education/manage-coursework-with-github-classroom/learn-with-github-classroom/view-autograding-results
 - https://docs.github.com/pt/education/manage-coursework-with-github-classroom/learn-with-github-classroom/viewing-your-assignments-deadline
+- https://github.com/orgs/community/discussions/72283
 - https://docs.github.com/pt/repositories/creating-and-managing-repositories/cloning-a-repository
 - https://docs.github.com/pt/get-started/getting-started-with-git/about-remote-repositories
 - https://classroom.github.com/videos
