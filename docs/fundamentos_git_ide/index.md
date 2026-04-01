@@ -255,3 +255,13 @@ Uma equipe precisa ajustar rapidamente um programa de monitoramento. Cada membro
 - https://code.visualstudio.com/docs
 - https://code.visualstudio.com/docs/languages/cpp
 - https://code.visualstudio.com/docs/python/python-tutorial
+
+---
+
+## 5. Guia publico para entregas no GitHub Classroom
+
+As atividades praticas da disciplina sao entregues em repositorios individuais do GitHub Classroom.
+
+Se voce ainda nao entendeu como aceitar uma atividade, clonar o repositorio, fazer `commit`, `push`, consultar prazo e ler o feedback do professor, use este guia:
+
+- [Como receber e entregar atividades no GitHub Classroom](02_github_classroom_estudantes/index.md)
