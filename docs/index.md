@@ -18,10 +18,12 @@
 
 - `01. Fundamentos Git e IDE`: preparar ambiente, criar repositorio, sincronizar e colaborar.
 - `02. Fundamentos de POO em C++ e Python`: iniciar classes, objetos, metodos e construtores com exemplos guiados.
-- `03. UML e Diagrama de Classes`: modelar a estrutura do sistema antes de codificar e relacionar UML com encapsulamento, composicao e heranca.
-- `04. Sobrecarga de construtores em C++`: modelar diferentes formas de nascimento do objeto com foco em automacao industrial.
-- `05. Acesso, encapsulamento e heranca em C++`: proteger estado interno, discutir `friend` com criterio e reutilizar comportamento com hierarquias simples.
-- `06. Polimorfismo em C++`: comandar diferentes ativos por uma interface comum, com `virtual` e `override`.
+- `03. Sobrecarga de construtores em C++`: modelar diferentes formas de nascimento do objeto com foco em automacao industrial.
+- `04. Acesso, encapsulamento e heranca em C++`: proteger estado interno, discutir `friend` com criterio e reutilizar comportamento com hierarquias simples.
+- `05. Polimorfismo em C++`: comandar diferentes ativos por uma interface comum, com `virtual` e `override`.
+- `06. Arquivos e JSON para integracao`: gravar telemetria em C++ e consumir os dados em Python com Streamlit.
+- `07. Datas, horarios e timestamps`: representar instantes, duracoes e horarios em JSON com UTC.
+- `08. UML e Diagrama de Classes`: modelar a estrutura do sistema antes de codificar e relacionar UML com encapsulamento, composicao e heranca.
 - As demais unidades continuam no repositorio, mas seguem ocultadas enquanto a trilha inicial e consolidada.
 
 ## 2. Trilha inicial do curso
@@ -30,29 +32,33 @@
 2. Fundamentos de Git e GitHub no fluxo pratico.
 3. Criacao do repositorio e sincronizacao com remoto.
 4. Introducao a classes, objetos, metodos e construtores em C++.
-5. UML e diagrama de classes para representar estrutura, responsabilidade e relacoes antes da implementacao.
-6. Sobrecarga de construtores em C++ com comparacao didatica com Python.
-7. Encapsulamento, `friend` e heranca em C++ para proteger invariantes e especializar ativos do dominio.
-8. Polimorfismo em C++ para tratar diferentes equipamentos por um contrato unico.
+5. Sobrecarga de construtores em C++ com comparacao didatica com Python.
+6. Encapsulamento, `friend` e heranca em C++ para proteger invariantes e especializar ativos do dominio.
+7. Polimorfismo em C++ para tratar diferentes equipamentos por um contrato unico.
+8. Manipulacao de arquivos e JSON para integrar C++ e Python.
+9. Datas, horarios e timestamps para telemetria, logs e ordenacao de eventos.
+10. UML e diagrama de classes para representar estrutura, responsabilidade e relacoes antes da implementacao.
 
 ## 3. Resultado esperado nesta virada de unidade
 
 - Cada aluno com repositorio funcional no GitHub.
 - Autonomia minima para clonar, versionar e sincronizar alteracoes.
-- Base conceitual suficiente para ler codigo orientado a objetos, representar a estrutura do dominio em UML, entender diferentes formas de inicializacao, proteger estado e reconhecer quando um mesmo comando deve acionar comportamentos distintos.
+- Base conceitual suficiente para ler codigo orientado a objetos, representar a estrutura do dominio em UML, entender diferentes formas de inicializacao, proteger estado, reconhecer quando um mesmo comando deve acionar comportamentos distintos e integrar dados entre C++ e Python por JSON.
 
 ## Mini-caso pratico
 
-Um aluno cria e sincroniza seu repositorio; na sequencia, le e adapta exemplos de `Sensor`, `Valvula`, `Controlador` e `AtuadorMalha` em C++, transforma esse entendimento em um diagrama de classes UML e usa esse modelo para discutir responsabilidades, relacoes e implementacao.
+Um aluno cria e sincroniza seu repositorio; na sequencia, le e adapta exemplos de `Sensor`, `Valvula`, `Controlador` e `AtuadorMalha` em C++, transforma esse entendimento em um diagrama de classes UML, gera telemetria em JSON e consome esses dados em um painel Python simples.
 
 ## Perguntas de revisao rapida
 
 1. Qual a diferenca entre `commit` e `push`?
 2. O que muda quando passamos de variaveis soltas para um objeto com estado e comportamento?
-3. Como um diagrama de classes ajuda a decidir responsabilidades antes da implementacao?
+3. Por que JSON ajuda a integrar programas escritos em linguagens diferentes?
 
 ## Fontes de referencia
 
 - https://docs.github.com/en/get-started/start-your-journey/hello-world
 - https://code.visualstudio.com/docs
 - https://docs.github.com/en/education/manage-coursework-with-github-classroom
+- https://docs.python.org/3/library/json.html
+- https://docs.streamlit.io/get-started/installation

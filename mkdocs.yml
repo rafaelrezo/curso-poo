@@ -47,4 +47,6 @@ nav:
   - 03. Sobrecarga de Construtores em C++: fundamentos_poo_cpp_python/03_sobrecarga_construtores/index.md
   - 04. Acesso, Encapsulamento e Heranca em C++: fundamentos_poo_cpp_python/04_encapsulamento_heranca/index.md
   - 05. Polimorfismo em C++: fundamentos_poo_cpp_python/05_polimorfismo/index.md
-  - 06. UML e Diagrama de Classes: modelagem_analise_codigo/index.md
+  - 06. Arquivos e JSON para Integracao: fundamentos_poo_cpp_python/06_arquivos_json/index.md
+  - 07. Datas, Horarios e Timestamps: fundamentos_poo_cpp_python/07_data_timestamp/index.md
+  - 08. UML e Diagrama de Classes: modelagem_analise_codigo/index.md
