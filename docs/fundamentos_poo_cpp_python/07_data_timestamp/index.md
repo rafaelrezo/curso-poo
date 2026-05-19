@@ -2,13 +2,13 @@
 
 ## Objetivos de aprendizagem
 
-- Diferenciar data/hora de calendario, timestamp Unix e duracao medida por relogio monotono.
+- Diferenciar data/hora de calendário, timestamp Unix e duração medida por relogio monotono.
 - Representar instantes em JSON de forma consistente usando UTC e formato ISO 8601.
-- Comparar as APIs de tempo em C++ e Python em problemas de telemetria, logs e integracao.
+- Comparar as APIs de tempo em C++ e Python em problemas de telemetria, logs e integração.
 
 **Tempo estimado:** 2h
 
-## Video da aula
+## Vídeo da aula
 
 ![type:video](https://www.youtube.com/embed/oIwRnMT6A6o)
 
@@ -16,39 +16,39 @@
 
 ## 1. Por que tempo e um problema de software?
 
-Datas e horarios parecem simples ate entrarem em uma aplicacao real:
+Datas e horarios parecem simples ate entrarem em uma aplicação real:
 
 - um sensor registra uma leitura a cada minuto;
 - um log precisa mostrar quando uma falha ocorreu;
 - um dashboard ordena eventos vindos de maquinas diferentes;
-- uma API envia dados para outro sistema em outro fuso horario;
-- um teste mede quanto tempo uma operacao demorou.
+- uma API envia dados para outro sistema em outro fuso horário;
+- um teste mede quanto tempo uma operação demorou.
 
-Nesses casos, errar tempo gera erro de analise. Uma leitura pode parecer fora de ordem, um alarme pode ser interpretado no dia errado e uma duracao pode ser calculada com o relogio errado.
+Nesses casos, errar tempo gera erro de análise. Uma leitura pode parecer fora de ordem, um alarme pode ser interpretado no dia errado e uma duração pode ser calculada com o relogio errado.
 
-**Ideia central desta aula:** antes de programar datas, decida se voce esta representando um instante, uma data de calendario ou uma duracao.
+**Ideia central desta aula:** antes de programar datas, decida se você está representando um instante, uma data de calendário ou uma duração.
 
 ---
 
-## 2. Tres ideias que nao devem ser misturadas
+## 2. Tres ideias que não devem ser misturadas
 
 | Conceito | O que representa | Exemplo | Uso recomendado |
 |---|---|---|---|
-| Data/hora de calendario | uma representacao humana | `29/04/2026 09:00` | telas, relatorios e agendas |
-| Timestamp Unix | segundos desde `1970-01-01T00:00:00Z` | `1777464000` | armazenamento, ordenacao e comparacao |
+| Data/hora de calendário | uma representacao humana | `29/04/2026 09:00` | telas, relatorios e agendas |
+| Timestamp Unix | segundos desde `1970-01-01T00:00:00Z` | `1777464000` | armazenamento, ordenacao e comparação |
 | Duracao | intervalo entre dois eventos | `250 ms` | medir desempenho, timeout e tempo de ciclo |
 
-### Acao recomendada
+### Ação recomendada
 
-- Para integracao entre sistemas, prefira instantes em UTC.
+- Para integração entre sistemas, prefira instantes em UTC.
 - Para JSON, use string ISO 8601, como `"2026-04-29T12:00:00Z"`.
-- Para medir duracao de codigo, use relogio monotono, nao calendario.
+- Para medir duração de código, use relogio monotono, não calendário.
 
 ---
 
 ## 3. Timestamp em JSON
 
-JSON nao tem tipo nativo de data. Por isso, datas costumam ser representadas como string.
+JSON não tem tipo nativo de data. Por isso, datas costumam ser representadas como string.
 
 ```json
 {
@@ -61,7 +61,7 @@ Neste exemplo:
 
 - `2026-04-29` e a data;
 - `T` separa data e hora;
-- `12:00:00` e o horario;
+- `12:00:00` e o horário;
 - `Z` indica UTC.
 
 ### Por que UTC?
@@ -72,7 +72,7 @@ Para o aluno, a regra inicial pode ser:
 
 1. grave no JSON em UTC;
 2. processe internamente em UTC;
-3. converta para horario local apenas na interface, quando necessario.
+3. converta para horário local apenas na interface, quando necessário.
 
 ---
 
@@ -80,10 +80,10 @@ Para o aluno, a regra inicial pode ser:
 
 Em C++, a biblioteca `<chrono>` separa bem duas necessidades:
 
-- `system_clock`: representa o relogio do sistema, util para data e hora de calendario;
-- `steady_clock`: relogio monotono, util para medir duracoes sem sofrer ajuste manual do horario do computador.
+- `system_clock`: representa o relogio do sistema, útil para data e hora de calendário;
+- `steady_clock`: relogio monotono, útil para medir duracoes sem sofrer ajuste manual do horário do computador.
 
-O exemplo completo esta em:
+O exemplo completo está em:
 
 - [exemplo_datas_timestamps.cpp](./exemplo_datas_timestamps.cpp)
 
@@ -110,15 +110,15 @@ g++ -std=c++17 docs/fundamentos_poo_cpp_python/07_data_timestamp/exemplo_datas_t
 - `system_clock::now()` serve para dizer "quando aconteceu".
 - `steady_clock::now()` serve para medir "quanto demorou".
 - `duration_cast` converte duracoes para a unidade desejada.
-- `put_time` formata o calendario como texto.
+- `put_time` formata o calendário como texto.
 
 ---
 
 ## 5. Python: `datetime`, `timezone`, `timedelta` e `perf_counter`
 
-Python tambem separa os conceitos.
+Python também separa os conceitos.
 
-O exemplo completo esta em:
+O exemplo completo está em:
 
 - [exemplo_datas_timestamps.py](./exemplo_datas_timestamps.py)
 
@@ -132,7 +132,7 @@ proxima_leitura = agora + timedelta(minutes=15)
 timestamp_segundos = agora.timestamp()
 ```
 
-Para medir duracao de execucao:
+Para medir duração de execução:
 
 ```python
 from time import perf_counter
@@ -158,7 +158,7 @@ python docs/fundamentos_poo_cpp_python/07_data_timestamp/exemplo_datas_timestamp
 | Instante atual | `chrono::system_clock::now()` | `datetime.now(timezone.utc)` | registrar em UTC |
 | Somar intervalo | `agora + chrono::minutes(15)` | `agora + timedelta(minutes=15)` | unidade clara |
 | Timestamp Unix | `time_since_epoch()` | `.timestamp()` | segundos vs milissegundos |
-| Medir duracao | `chrono::steady_clock` | `time.perf_counter()` | nao usar relogio de calendario |
+| Medir duração | `chrono::steady_clock` | `time.perf_counter()` | não usar relogio de calendário |
 | Formatar para JSON | `put_time(..., "%Y-%m-%dT%H:%M:%SZ")` | `.isoformat()` com UTC | manter formato consistente |
 
 ### Exemplo de contrato entre linguagens
@@ -181,26 +181,26 @@ texto = "2026-04-29T12:00:00Z"
 instante = datetime.fromisoformat(texto.replace("Z", "+00:00"))
 ```
 
-O contrato nao e "Python entende qualquer data". O contrato e: o campo `timestamp` sera uma string ISO 8601 em UTC.
+O contrato não e "Python entende qualquer data". O contrato e: o campo `timestamp` será uma string ISO 8601 em UTC.
 
 ---
 
-## 7. Mini-caso pratico: ordenar eventos de uma maquina
+## 7. Mini-caso prático: ordenar eventos de uma maquina
 
-Uma maquina gera eventos de supervisao:
+Uma maquina gera eventos de supervisão:
 
-- inicio de ciclo;
+- início de ciclo;
 - leitura de temperatura;
 - alerta de vibracao;
 - fim de ciclo.
 
 Cada evento precisa ter um `timestamp`.
 
-Se os eventos forem gravados como texto local, por exemplo `"29/04/2026 09:00"`, outro sistema pode nao saber:
+Se os eventos forem gravados como texto local, por exemplo `"29/04/2026 09:00"`, outro sistema pode não saber:
 
-- se o formato e dia/mes/ano ou mes/dia/ano;
-- qual fuso horario foi usado;
-- se houve horario de verao ou ajuste manual do relogio.
+- se o formato é dia/mes/ano ou mes/dia/ano;
+- qual fuso horário foi usado;
+- se houve horário de verao ou ajuste manual do relogio.
 
 Com ISO 8601 em UTC:
 
@@ -223,30 +223,30 @@ O sistema Python consegue ordenar, filtrar e calcular intervalos com menor ambig
 Altere o JSON da aula anterior para incluir:
 
 - `timestamp` em cada leitura;
-- `duracao_ciclo_ms` como duracao numerica;
+- `duracao_ciclo_ms` como duração numérica;
 - `proxima_manutencao` como data planejada em UTC.
 
 ### Regras
 
 1. `timestamp` deve usar formato ISO 8601 em UTC.
-2. `duracao_ciclo_ms` deve ser numero, nao string.
+2. `duracao_ciclo_ms` deve ser número, não string.
 3. O app Python deve converter `timestamp` para `datetime`.
 4. A tabela final deve aparecer ordenada pelo timestamp.
-5. O aluno deve explicar a diferenca entre instante e duracao.
+5. O aluno deve explicar a diferença entre instante e duração.
 
 ### Pergunta de projeto
 
-Se a aplicacao for executada em computadores com fuso horario diferente, o que ainda funciona corretamente e o que precisa ser convertido apenas na interface?
+Se a aplicação for executada em computadores com fuso horário diferente, o que ainda funciona corretamente e o que precisa ser convertido apenas na interface?
 
 ---
 
-## Perguntas de revisao rapida
+## Perguntas de revisão rápida
 
-1. Qual a diferenca entre timestamp Unix e uma data formatada para humanos?
-2. Por que `steady_clock` em C++ e `perf_counter()` em Python sao melhores para medir duracao?
-3. Por que JSON precisa representar data como string ou numero, e nao como um tipo proprio de data?
+1. Qual a diferença entre timestamp Unix e uma data formatada para humanos?
+2. Por que `steady_clock` em C++ e `perf_counter()` em Python são melhores para medir duração?
+3. Por que JSON precisa representar data como string ou número, e não como um tipo próprio de data?
 
-## Fontes de referencia
+## Fontes de referência
 
 - https://en.cppreference.com/w/cpp/chrono
 - https://en.cppreference.com/w/cpp/chrono/system_clock

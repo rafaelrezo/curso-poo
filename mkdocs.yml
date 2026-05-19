@@ -1,4 +1,4 @@
-site_name: Curso de Programacao Orientada a Objetos
+site_name: Curso de Programação Orientada a Objetos
 site_description: Trilha de POO para Engenharia com C++ e Python
 site_url: ""
 repo_url: ""
@@ -32,21 +32,39 @@ markdown_extensions:
   - toc:
       permalink: true
 
+# Materiais avaliativos e operacionais podem ficar versionados no repositório,
+# mas não devem entrar no site publicado no GitHub Pages.
 exclude_docs: |
   plano_de_implementacao.md
   referencias.md
   avaliacoes/
   guias_operacionais/
   projeto_integrador/
+  parte-2-projeto/especificacao-projeto-final.md
+  parte-2-projeto/especificacao-projeto-final.html
+  parte-2-projeto/especificacao-projeto-final.pdf
 
 nav:
-  - Inicio: index.md
+  - Início: index.md
   - 01. Fundamentos Git e IDE: fundamentos_git_ide/index.md
   - 01A. GitHub Classroom para Estudantes: fundamentos_git_ide/02_github_classroom_estudantes/index.md
   - 02. Fundamentos de POO em C++ e Python: fundamentos_poo_cpp_python/index.md
   - 03. Sobrecarga de Construtores em C++: fundamentos_poo_cpp_python/03_sobrecarga_construtores/index.md
-  - 04. Acesso, Encapsulamento e Heranca em C++: fundamentos_poo_cpp_python/04_encapsulamento_heranca/index.md
+  - 04. Acesso, Encapsulamento e Herança em C++: fundamentos_poo_cpp_python/04_encapsulamento_heranca/index.md
   - 05. Polimorfismo em C++: fundamentos_poo_cpp_python/05_polimorfismo/index.md
-  - 06. Arquivos e JSON para Integracao: fundamentos_poo_cpp_python/06_arquivos_json/index.md
-  - 07. Datas, Horarios e Timestamps: fundamentos_poo_cpp_python/07_data_timestamp/index.md
+  - 06. Arquivos e JSON para Integração: fundamentos_poo_cpp_python/06_arquivos_json/index.md
+  - 07. Datas, Horários e Timestamps: fundamentos_poo_cpp_python/07_data_timestamp/index.md
   - 08. UML e Diagrama de Classes: modelagem_analise_codigo/index.md
+  - 09. Parte 2 - Projeto Integrador:
+      - Visão geral: parte-2-projeto/index.md
+      - 01. Cenário e Modelagem: parte-2-projeto/01-cenario-e-modelagem.md
+      - 02. Aula integrada - Listas dinâmicas: parte-2-projeto/02-heranca-e-polimorfismo.md
+      - 03. Aula integrada - Estado dos objetos: parte-2-projeto/03-encapsulamento-e-validacao.md
+      - 04. Aula integrada - Atividade prática: parte-2-projeto/04-regras-de-controle.md
+      # Aulas 5 a 9 temporariamente ocultas do menu para publicação gradual.
+      # - 05. Strategy e Command: parte-2-projeto/05-strategy-e-command.md
+      # - 06. Observer e Alarmes: parte-2-projeto/06-observer-e-alarmes.md
+      # - 07. Persistência: parte-2-projeto/07-persistencia.md
+      # - 08. Comunicação TCP: parte-2-projeto/08-comunicacao-tcp.md
+      # - 09. Testes e Validação: parte-2-projeto/09-testes-e-validacao.md
+      - 10. Projeto Final: parte-2-projeto/10-projeto-final.md

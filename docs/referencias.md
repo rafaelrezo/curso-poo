@@ -1,4 +1,4 @@
-# Referencias
+# Referências
 
 ## Fontes oficiais e recomendadas
 

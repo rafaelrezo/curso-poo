@@ -2,13 +2,13 @@
 
 ## Objetivos de aprendizagem
 
-- Usar IA como apoio de engenharia, nao como substituto de entendimento.
+- Usar IA como apoio de engenharia, não como substituto de entendimento.
 - Registrar rastreabilidade do que foi produzido com agentes.
-- Revisar criticamente codigo sugerido por IA.
+- Revisar criticamente código sugerido por IA.
 
 **Tempo estimado:** 2h
 
-## Video de contexto
+## Vídeo de contexto
 
 ![type:video](https://www.youtube.com/embed/JTxsNm9IdYU)
 
@@ -16,34 +16,34 @@
 
 ## 1. Politica de uso
 
-- Permitido: brainstorming, explicacao, testes, melhorias de legibilidade.
-- Obrigatorio: registro de prompts e decisoes tecnicas (`AI_LOG.md`).
-- Nao permitido: entregar codigo sem compreender.
+- Permitido: brainstorming, explicação, testes, melhorias de legibilidade.
+- Obrigatório: registro de prompts e decisões técnicas (`AI_LOG.md`).
+- Não permitido: entregar código sem compreender.
 
-## 2. Roteiro de revisao critica
+## 2. Roteiro de revisão critica
 
 1. Validar requisitos.
 2. Revisar nomes e responsabilidades.
-3. Testar cenarios normais e de erro.
-4. Verificar complexidade e manutencao.
-5. Justificar porque a solucao foi aceita.
+3. Testar cenários normais e de erro.
+4. Verificar complexidade e manutenção.
+5. Justificar porque a solução foi aceita.
 
 ## 3. Skills e produtividade
 
-- Skills podem padronizar tarefas repetitivas (template, revisao, automacao).
-- O uso deve ser transparente e documentado no repositorio.
+- Skills podem padronizar tarefas repetitivas (template, revisão, automação).
+- O uso deve ser transparente e documentado no repositório.
 
-## Mini-caso pratico
+## Mini-caso prático
 
-Comparar duas solucoes geradas por IA para o mesmo requisito, escolher uma e registrar criterios tecnicos de decisao.
+Comparar duas soluções geradas por IA para o mesmo requisito, escolher uma e registrar critérios técnicos de decisão.
 
-## Perguntas de revisao rapida
+## Perguntas de revisão rápida
 
 1. O que torna o uso de IA tecnicamente responsavel?
 2. Como provar que o aluno entende o que entregou?
-3. Qual o risco de aceitar codigo sem revisao?
+3. Qual o risco de aceitar código sem revisão?
 
-## Fontes de referencia
+## Fontes de referência
 
 - https://docs.github.com/en/copilot
 - https://docs.github.com/en/get-started/learning-about-github/github-glossary

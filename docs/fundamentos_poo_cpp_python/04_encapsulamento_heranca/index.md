@@ -1,14 +1,14 @@
-# Especificadores de acesso, encapsulamento, friend e heranca em C++: protegendo ativos industriais
+# Especificadores de acesso, encapsulamento, friend e herança em C++: protegendo ativos industriais
 
 ## Objetivos de aprendizagem
 
-- Diferenciar `public`, `private` e `protected` como decisoes de modelagem, e nao apenas de sintaxe.
-- Entender como o encapsulamento protege regras do objeto e por que `friend` deve ser tratado como excecao controlada.
-- Reconhecer quando heranca publica representa uma relacao `is-a` valida em C++ e como esse raciocinio aparece em Python.
+- Diferenciar `public`, `private` e `protected` como decisões de modelagem, e não apenas de sintaxe.
+- Entender como o encapsulamento protege regras do objeto e por que `friend` deve ser tratado como exceção controlada.
+- Reconhecer quando herança pública representa uma relacao `is-a` válida em C++ e como esse raciocinio aparece em Python.
 
 **Tempo estimado:** 4h
 
-## Video da aula
+## Vídeo da aula
 
 ![type:video](https://www.youtube.com/embed/hYp2Ki1u3ms)
 
@@ -16,23 +16,23 @@
 
 ## 1. Problema de modelagem: quando tudo e publico, qualquer parte do sistema pode quebrar o objeto
 
-Na aula 2, atributos publicos ajudaram a visualizar o que uma classe guarda. Para aprender o conceito, isso funciona. Para manter software real, isso vira risco rapidamente.
+Na aula 2, atributos públicos ajudaram a visualizar o que uma classe guarda. Para aprender o conceito, isso funciona. Para manter software real, isso vira risco rapidamente.
 
-Imagine um `SensorPressao` em uma estacao de bombeamento:
+Imagine um `SensorPressao` em uma estação de bombeamento:
 
 - se `valorAtual` for publico, qualquer trecho do programa pode escrever `-50.0`;
-- se `limiteAlarme` for publico, alguem pode zerar o limite sem criterio;
-- se o estado de bloqueio for publico, o objeto deixa de proteger a propria operacao.
+- se `limiteAlarme` for publico, alguem pode zerar o limite sem critério;
+- se o estado de bloqueio for publico, o objeto deixa de proteger a própria operação.
 
-O problema nao e "esconder por esconder". O problema e garantir que o objeto continue coerente ao longo da vida do programa.
+O problema não e "esconder por esconder". O problema é garantir que o objeto continue coerente ao longo da vida do programa.
 
-| Situacao | Se tudo for publico | Impacto pratico |
+| Situacao | Se tudo for publico | Impacto prático |
 |---|---|---|
-| Atualizar leitura do sensor | qualquer funcao escreve qualquer valor | leitura invalida entra no sistema |
-| Alterar limite de alarme | qualquer modulo muda o limite | alarmes falsos ou alarmes omitidos |
-| Mudar area do equipamento | qualquer trecho reclassifica o ativo | rastreabilidade e manutencao ficam confusas |
+| Atualizar leitura do sensor | qualquer função escreve qualquer valor | leitura inválida entra no sistema |
+| Alterár limite de alarme | qualquer modulo muda o limite | alarmes falsos ou alarmes omitidos |
+| Mudar area do equipamento | qualquer trecho reclassifica o ativo | rastreabilidade e manutenção ficam confusas |
 
-**Ideia central desta aula:** especificador de acesso nao e decoracao. Ele define quem pode tocar em cada parte do modelo e em quais condicoes.
+**Ideia central desta aula:** especificador de acesso não e decoracao. Ele define quem pode tocar em cada parte do modelo e em quais condicoes.
 
 ---
 
@@ -43,52 +43,52 @@ Os quatro links abaixo formam o trilho principal desta unidade. Eles organizam a
 | Secao | Leitura base | Link direto para testar | O que observar |
 |---|---|---|---|
 | Especificadores de acesso | [Access Specifiers](https://www.w3schools.com/cpp/cpp_access_specifiers.asp) | [Try: acesso publico](https://www.w3schools.com/cpp/trycpp.asp?filename=demo_access_public) | `public`, `private` e `protected` controlam quem pode tocar no estado |
-| Encapsulamento | [Encapsulation](https://www.w3schools.com/cpp/cpp_encapsulation.asp) | [Try: encapsulamento com getter/setter](https://www.w3schools.com/cpp/trycpp.asp?filename=demo_encapsulation) | esconder dados sensiveis e expor uma API publica coerente |
-| `friend` | [Friend Functions](https://www.w3schools.com/cpp/cpp_friend_function.asp) | [Try: friend function](https://www.w3schools.com/cpp/trycpp.asp?filename=demo_friend_function) | `friend` abre uma excecao pontual ao encapsulamento |
-| Heranca | [Inheritance](https://www.w3schools.com/cpp/cpp_inheritance.asp) | [Try: heranca simples](https://www.w3schools.com/cpp/trycpp.asp?filename=demo_inheritance) | a classe derivada reaproveita comportamento da base quando existe relacao `is-a` |
+| Encapsulamento | [Encapsulation](https://www.w3schools.com/cpp/cpp_encapsulation.asp) | [Try: encapsulamento com getter/setter](https://www.w3schools.com/cpp/trycpp.asp?filename=demo_encapsulation) | esconder dados sensiveis e expor uma API pública coerente |
+| `friend` | [Friend Functions](https://www.w3schools.com/cpp/cpp_friend_function.asp) | [Try: friend function](https://www.w3schools.com/cpp/trycpp.asp?filename=demo_friend_function) | `friend` abre uma exceção pontual ao encapsulamento |
+| Herança | [Inheritance](https://www.w3schools.com/cpp/cpp_inheritance.asp) | [Try: herança simples](https://www.w3schools.com/cpp/trycpp.asp?filename=demo_inheritance) | a classe derivada reaproveita comportamento da base quando existe relacao `is-a` |
 
 ### Como usar esta trilha
 
-1. Rode cada exemplo exatamente como esta.
+1. Rode cada exemplo exatamente como está.
 2. Identifique quem pode acessar cada membro e por qual caminho.
-3. Troque o exemplo generico por um ativo de engenharia, automacao ou servicos.
-4. Pergunte: "estou protegendo uma regra de negocio ou so escondendo dado sem criterio?"
+3. Troque o exemplo genérico por um ativo de engenharia, automação ou servicos.
+4. Pergunte: "estou protegendo uma regra de negócio ou so escondendo dado sem critério?"
 
 ---
 
 ## 3. Especificadores de acesso e encapsulamento: quem pode fazer o que com o objeto?
 
-Na W3Schools, a primeira mensagem importante e direta: C++ trabalha com tres especificadores de acesso.
+Na W3Schools, a primeira mensagem importante e direta: C++ trabalha com três especificadores de acesso.
 
-### Leitura rapida dos tres niveis
+### Leitura rápida dos três níveis
 
 | Especificador | Quem acessa | Melhor uso | Risco se abusar |
 |---|---|---|---|
-| `public` | qualquer codigo que tenha acesso ao objeto | operacoes que fazem parte do contrato publico da classe | expor demais e perder controle do estado |
-| `private` | apenas a propria classe | dados internos e regras que nao devem ser manipuladas por fora | criar getters/setters cosmeticos sem criterio |
-| `protected` | a propria classe e classes derivadas | pontos de extensao pensados para heranca | virar um "atalho" para fugir de encapsulamento |
+| `public` | qualquer código que tenha acesso ao objeto | operações que fazem parte do contrato publico da classe | expor demais e perder controle do estado |
+| `private` | apenas a própria classe | dados internos e regras que não devem ser manipuladas por fora | criar getters/setters cosmeticos sem critério |
+| `protected` | a própria classe e classes derivadas | pontos de extensão pensados para herança | virar um "atalho" para fugir de encapsulamento |
 
-### O que isso significa na pratica
+### O que isso significa na prática
 
 - `public` deve expor comportamento observavel: ligar bomba, atualizar leitura, consultar estado.
 - `private` deve guardar o que sustenta o contrato do objeto: limites, flags, valores internos, detalhes de calibracao.
-- `protected` deve ser usado com parcimonia quando a classe-base precisa permitir extensao por subclasses.
+- `protected` deve ser usado com parcimonia quando a classe-base precisa permitir extensão por subclasses.
 
-### Ponto tecnico importante
+### Ponto técnico importante
 
-Segundo a documentacao do `cppreference`, classes declaradas com `class` possuem membros `private` por padrao, enquanto `struct` usa `public` por padrao. Isso e detalhe de linguagem, mas ajuda a lembrar que C++ trata encapsulamento como parte do modelo, nao como detalhe opcional.
+Segundo a documentação do `cppreference`, classes declaradas com `class` possuem membros `private` por padrão, enquanto `struct` usa `public` por padrão. Isso e detalhe de linguagem, mas ajuda a lembrar que C++ trata encapsulamento como parte do modelo, não como detalhe opcional.
 
 ### Entao o que e encapsulamento?
 
-Na formulacao da W3Schools, encapsulamento significa esconder dados sensiveis e expor formas controladas de leitura e alteracao.
+Na formulacao da W3Schools, encapsulamento significa esconder dados sensiveis e expor formas controladas de leitura é alteração.
 
 Em sala, vale traduzir isso para uma regra mais operacional:
 
-**Conceito -> impacto -> acao recomendada**
+**Conceito -> impacto -> ação recomendada**
 
 - conceito: nem todo atributo deve ficar disponivel para escrita externa;
-- impacto: o objeto pode garantir estado coerente e reduzir efeitos colaterais;
-- acao recomendada: exponha metodos publicos que representem intencoes do dominio, nao apenas campos abertos.
+- impacto: o objeto pode garantir estado coerente e reduzir efeitos colateráis;
+- ação recomendada: exponha métodos públicos que representem intenções do domínio, não apenas campos abertos.
 
 ### Exemplo curto em C++
 
@@ -120,46 +120,46 @@ public:
 };
 ```
 
-Aqui, a classe nao expoe o atributo diretamente. Ela expoe uma acao publica que preserva a faixa de operacao.
+Aqui, a classe não expoe o atributo diretamente. Ela expoe uma ação pública que preserva a faixa de operação.
 
-### Erros comuns nesta virada de nivel
+### Erros comuns nesta virada de nível
 
 - transformar todo atributo em `public` por comodidade;
 - criar `get` e `set` para tudo, sem regra alguma;
 - usar `protected` em qualquer campo porque "talvez uma subclasse precise";
-- esquecer que o objetivo nao e esconder nomes, e sim proteger invariantes.
+- esquecer que o objetivo não e esconder nomes, e sim proteger invariantes.
 
 ---
 
-## 4. `friend`: excecao controlada, nao padrao de modelagem
+## 4. `friend`: exceção controlada, não padrão de modelagem
 
-Depois de estudar encapsulamento, o aluno costuma perguntar: "entao nunca mais posso acessar dado privado de fora?"
+Depois de estudar encapsulamento, o aluno costuma perguntar: "então nunca mais posso acessar dado privado de fora?"
 
-Em C++, a resposta e: **normalmente nao, mas existe a palavra-chave `friend` para casos bem especificos**.
+Em C++, a resposta e: **normalmente não, mas existe a palavra-chave `friend` para casos bem específicos**.
 
 ### O que `friend` faz
 
-- uma funcao `friend` nao e metodo da classe;
+- uma função `friend` não e método da classe;
 - mesmo assim, ela pode acessar membros `private` e `protected`;
 - esse acesso precisa ser declarado explicitamente pela classe.
 
 ### Quando faz sentido em exemplos didaticos e projetos reais
 
-- funcoes de exibicao fortemente acopladas ao objeto, como `operator<<`;
-- adaptadores de integracao que precisam montar uma visao interna controlada;
-- relatorios de diagnostico ou manutencao que nao justificam abrir toda a API publica.
+- funções de exibicao fortemente acopladas ao objeto, como `operator<<`;
+- adaptadores de integração que precisam montar uma visão interna controlada;
+- relatorios de diagnóstico ou manutenção que não justificam abrir toda a API pública.
 
 ### Quando comeca a ficar ruim
 
-- quando varias funcoes externas so funcionam porque viraram `friend`;
-- quando `friend` substitui uma API publica mal pensada;
+- quando várias funções externas so funcionam porque viraram `friend`;
+- quando `friend` substitui uma API pública mal pensada;
 - quando a classe precisa de "amigos demais" para ser usada.
 
 ### Regra de bolso
 
 Se `friend` aparece como recurso excepcional, pode ser justificavel.
 
-Se `friend` virou estrategia padrao de acesso, o encapsulamento provavelmente esta fraco.
+Se `friend` virou estratégia padrão de acesso, o encapsulamento provavelmente está fraco.
 
 ### Exemplo de ideia
 
@@ -179,27 +179,27 @@ void auditar(const SensorPressao& sensor) {
 }
 ```
 
-O ponto didatico nao e "como burlar o `private`". O ponto e entender que a propria classe escolhe conceder um acesso excepcional e delimitado.
+O ponto didatico não e "como burlar o `private`". O ponto e entender que a própria classe escolhe conceder um acesso excepcional e delimitado.
 
 ---
 
-## 5. Heranca: reutilizar comportamento sem copiar classe inteira
+## 5. Herança: reutilizar comportamento sem copiar classe inteira
 
-Na W3Schools, heranca aparece como reuso de atributos e metodos entre uma classe-base e uma classe derivada. Isso esta correto, mas ainda incompleto para um curso de engenharia.
+Na W3Schools, herança aparece como reuso de atributos e métodos entre uma classe-base e uma classe derivada. Isso está correto, mas ainda incompleto para um curso de engenharia.
 
-### A pergunta certa nao e "da para herdar?"
+### A pergunta certa não e "da para herdar?"
 
 A pergunta certa e:
 
-**"a classe derivada realmente e um tipo mais especifico da classe-base?"**
+**"a classe derivada realmente e um tipo mais específico da classe-base?"**
 
-Se a resposta for sim, heranca publica pode fazer sentido.
+Se a resposta for sim, herança pública pode fazer sentido.
 
-Se a resposta for nao, provavelmente voce precisa de composicao, e nao de heranca.
+Se a resposta for não, provavelmente você precisa de composição, e não de herança.
 
-### Leitura pratica da heranca publica
+### Leitura prática da herança pública
 
-O `cppreference` resume a ideia central assim: em heranca publica, o objeto derivado deve se comportar como um objeto da base. Em linguagem de modelagem, a relacao e `is-a`.
+O `cppreference` resume a ideia central assim: em herança pública, o objeto derivado deve se comportar como um objeto da base. Em linguagem de modelagem, a relacao e `is-a`.
 
 Exemplos que costumam funcionar:
 
@@ -211,38 +211,38 @@ Exemplo que costuma dar problema:
 
 - `SalaDeControle` herdar de `Sensor`, so porque ambos tem `tag`.
 
-### O que a classe derivada herda, e o que ela nao herda
+### O que a classe derivada herda, e o que ela não herda
 
-- membros `public` da base continuam acessiveis como `public` na derivada, se a heranca for publica;
+- membros `public` da base continuam acessiveis como `public` na derivada, se a herança for pública;
 - membros `protected` continuam acessiveis para a derivada;
-- membros `private` da base nao ficam acessiveis diretamente na derivada.
+- membros `private` da base não ficam acessiveis diretamente na derivada.
 
-Isso e importante: a subclasse reaproveita a base, mas nao ganha direito automatico de mexer em todos os detalhes internos.
+Isso e importante: a subclasse reaproveita a base, mas não ganha direito automático de mexer em todos os detalhes internos.
 
-### Comparacao de tecnicas de reutilizacao e controle
+### Comparação de técnicas de reutilizacao e controle
 
-| Tecnica/Padrao | Melhor uso | Esforco | Entregavel | Limitacao |
+| Técnica/Padrão | Melhor uso | Esforço | Entregável | Limitação |
 |---|---|---|---|---|
-| Encapsulamento com `private` + API publica | proteger estado e validar regras do objeto | medio | classe mais segura e legivel | adiciona metodos e exige intencao de projeto |
-| `protected` como ponto de extensao | classe-base feita para derivacao | medio | reaproveitamento com algum controle | aumenta acoplamento entre base e derivadas |
-| `friend` controlado | diagnostico, impressao ou integracao muito proxima da classe | medio | acesso excepcional sem abrir tudo | pode corroer encapsulamento se usado em excesso |
-| Heranca publica | relacao `is-a` real entre base e derivada | medio | subtipo reutilizavel e coerente | hierarquia ruim espalha erro por varias classes |
-| Composicao | relacao `has-a` ou colaboracao entre objetos | medio | modelo mais desacoplado | exige delegacao explicita e menos "atalho" sintatico |
+| Encapsulamento com `private` + API pública | proteger estado e validar regras do objeto | médio | classe mais segura e legivel | adiciona métodos e exige intencao de projeto |
+| `protected` como ponto de extensão | classe-base feita para derivacao | médio | reaproveitamento com algum controle | aumenta acoplamento entre base e derivadas |
+| `friend` controlado | diagnóstico, impressao ou integração muito próxima da classe | médio | acesso excepcional sem abrir tudo | pode corroer encapsulamento se usado em excesso |
+| Herança pública | relacao `is-a` real entre base e derivada | médio | subtipo reutilizavel e coerente | hierarquia ruim espalha erro por várias classes |
+| Composição | relacao `has-a` ou colaboracao entre objetos | médio | modelo mais desacoplado | exige delegacao explícita e menos "atalho" sintatico |
 
 ### Foco didatico desta aula
 
-Para a trilha inicial do curso, a recomendacao pratica e:
+Para a trilha inicial do curso, a recomendacao prática e:
 
-- priorize heranca publica quando houver `is-a`;
+- priorize herança pública quando houver `is-a`;
 - use `protected` com moderacao;
 - evite `private inheritance` e `protected inheritance` como primeira escolha em exemplos iniciais;
-- compare sempre com a alternativa de composicao.
+- compare sempre com a alternativa de composição.
 
 ---
 
-## 6. Exemplo aplicado: estacao de bombeamento com sensor, bomba e auditoria de calibracao
+## 6. Exemplo aplicado: estação de bombeamento com sensor, bomba e auditoria de calibracao
 
-No repositorio, o exemplo compilavel desta aula esta em:
+No repositório, o exemplo compilável desta aula está em:
 
 - [exemplo_estacao_bombeamento.cpp](./exemplo_estacao_bombeamento.cpp)
 
@@ -250,8 +250,8 @@ No repositorio, o exemplo compilavel desta aula esta em:
 
 - `AtivoIndustrial` encapsula `tag` e estado de bloqueio;
 - `SensorPressao` e `BombaRecalque` herdam publicamente da classe-base;
-- a area operacional fica disponivel para extensao controlada na hierarquia;
-- uma funcao `friend` gera relatorio de calibracao sem abrir todo o estado interno.
+- a area operacional fica disponivel para extensão controlada na hierarquia;
+- uma função `friend` gera relatório de calibracao sem abrir todo o estado interno.
 
 ### Trecho central em C++
 
@@ -282,19 +282,19 @@ public:
 
 ### Por que esse exemplo e didatico
 
-- `tag` nao pode ser alterada livremente por qualquer codigo;
+- `tag` não pode ser alteráda livremente por qualquer código;
 - a subclasse usa o que a base oferece sem violar o `private`;
-- `friend` aparece como excecao localizada, e nao como porta geral de acesso;
-- o dominio continua proximo de sistemas industriais reais.
+- `friend` aparece como exceção localizada, e não como porta geral de acesso;
+- o domínio contínua próximo de sistemas industriais reais.
 
-### Leitura guiada da saida
+### Leitura guiada da saída
 
 Ao executar, discuta com a turma:
 
 1. quais dados ficaram protegidos na base;
-2. quais operacoes a subclasse reaproveitou;
-3. por que o relatorio de calibracao nao foi implementado como acesso publico geral;
-4. em que ponto heranca economizou duplicacao de codigo.
+2. quais operações a subclasse reaproveitou;
+3. por que o relatório de calibracao não foi implementado como acesso publico geral;
+4. em que ponto herança economizou duplicacao de código.
 
 ### Como compilar em sala
 
@@ -307,22 +307,22 @@ g++ -std=c++17 docs/fundamentos_poo_cpp_python/04_encapsulamento_heranca/exemplo
 
 ## 7. Ponte C++ -> Python
 
-O conceito de encapsulamento e heranca existe nas duas linguagens, mas o mecanismo nao e identico.
+O conceito de encapsulamento e herança existe nas duas linguagens, mas o mecanismo não e identico.
 
 ### Em C++
 
-- `private`, `protected` e `public` sao parte formal da linguagem;
-- `friend` permite uma excecao declarada explicitamente;
-- heranca publica comunica relacao `is-a` e preserva acesso conforme a base.
+- `private`, `protected` e `public` são parte formal da linguagem;
+- `friend` permite uma exceção declarada explicitamente;
+- herança pública comunica relacao `is-a` e preserva acesso conforme a base.
 
 ### Em Python
 
-- nao existe "privado real" no mesmo sentido de C++;
-- o tutorial oficial recomenda tratar nomes com `_` como nao publicos por convencao;
-- heranca usa `class Derivada(Base):` e `super()`;
-- nao existe equivalente direto a `friend`, entao a saida usual e expor um metodo/propriedade publica bem pensada.
+- não existe "privado real" no mesmo sentido de C++;
+- o tutorial oficial recomenda tratar nomes com `_` como não públicos por convenção;
+- herança usa `class Derivada(Base):` e `super()`;
+- não existe equivalente direto a `friend`, então a saída usual e expor um método/propriedade pública bem pensada.
 
-### Espelho em Python no repositorio
+### Espelho em Python no repositório
 
 - [exemplo_python_encapsulamento_heranca.py](./exemplo_python_encapsulamento_heranca.py)
 
@@ -338,35 +338,35 @@ class AtivoIndustrial:
         return self._tag
 ```
 
-### Comparacao rapida
+### Comparação rápida
 
 | Aspecto | C++ | Python | Impacto didatico |
 |---|---|---|---|
-| Controle de acesso | formal na linguagem | convencional na maior parte dos casos | C++ torna a fronteira mais explicita |
-| Encapsulamento | `private` + API publica | `_atributo`, `@property` e disciplina de projeto | Python depende mais de convencao |
-| Heranca | `class Derivada : public Base` | `class Derivada(Base)` | a ideia de especializacao continua |
-| Sobrescrita | precisa respeitar a interface da base | o tutorial oficial lembra que metodos sao efetivamente `virtual` | Python torna polimorfismo mais flexivel |
-| `friend` | existe | nao ha equivalente direto | em Python, prefira API publica clara |
+| Controle de acesso | formal na linguagem | convencional na maior parte dos casos | C++ torna a fronteira mais explícita |
+| Encapsulamento | `private` + API pública | `_atributo`, `@property` e disciplina de projeto | Python depende mais de convenção |
+| Herança | `class Derivada : public Base` | `class Derivada(Base)` | a ideia de especializacao contínua |
+| Sobrescrita | precisa respeitar a interface da base | o tutorial oficial lembra que métodos são efetivamente `virtual` | Python torna polimorfismo mais flexivel |
+| `friend` | existe | não ha equivalente direto | em Python, prefira API pública clara |
 
-### Recomendacao pratica por cenario
+### Recomendação prática por cenário
 
 - em C++, use encapsulamento para defender invariantes e reduzir mutacao acidental;
 - em Python, use convencoes e `@property` quando a leitura/escrita precisar de regra;
-- nas duas linguagens, so use heranca quando a especializacao fizer sentido no dominio.
+- nas duas linguagens, so use herança quando a especializacao fizer sentido no domínio.
 
 ---
 
-## 8. Mini-caso pratico: monitoramento de uma estacao de tratamento
+## 8. Mini-caso prático: monitoramento de uma estação de tratamento
 
-Imagine uma estacao com estes ativos:
+Imagine uma estação com estes ativos:
 
 - um `SensorPressao` na linha de recalque;
-- uma `BombaRecalque` que envia agua ao reservatorio elevado;
-- um servico de manutencao que precisa auditar calibracao.
+- uma `BombaRecalque` que envia agua ao reservatório elevado;
+- um serviço de manutenção que precisa auditar calibracao.
 
 ### Situacao 1. Leitura operacional
 
-O sistema atualiza a pressao por um metodo controlado:
+O sistema atualiza a pressão por um método controlado:
 
 ```cpp
 sensor.atualizarValor(6.8);
@@ -376,31 +376,31 @@ Em vez de escrever no atributo diretamente, a classe decide como aceitar esse va
 
 ### Situacao 2. Especializacao
 
-`SensorPressao` e `BombaRecalque` compartilham identidade, area e estado de bloqueio porque ambos sao `AtivoIndustrial`.
+`SensorPressao` e `BombaRecalque` compartilham identidade, area e estado de bloqueio porque ambos são `AtivoIndustrial`.
 
 ### Situacao 3. Diagnostico excepcional
 
-A manutencao precisa enxergar um `offsetCalibracao` interno.
+A manutenção precisa enxergar um `offsetCalibracao` interno.
 
-Em vez de abrir esse campo para todo o sistema, a classe libera acesso pontual a uma funcao `friend`.
+Em vez de abrir esse campo para todo o sistema, a classe libera acesso pontual a uma função `friend`.
 
-**Licao didatica:** encapsular nao significa impedir trabalho. Significa decidir com clareza quais portas existem, quem pode usa-las e por que elas existem.
+**Licao didatica:** encapsular não significa impedir trabalho. Significa decidir com clareza quais portas existem, quem pode usa-las e por que elas existem.
 
 ---
 
-## 9. Exercicios para casa: atividade guiada de encapsulamento e heranca
+## 9. Exercícios para casa: atividade guiada de encapsulamento e herança
 
-No repositorio, ha um arquivo-base para a atividade:
+No repositório, ha um arquivo-base para a atividade:
 
 - [projeto_estacao_bombeamento_base.cpp](./projeto_estacao_bombeamento_base.cpp)
 
-Se quiser manter uma referencia pronta para revisao posterior, use tambem:
+Se quiser manter uma referência pronta para revisão posterior, use também:
 
 - [projeto_estacao_bombeamento.cpp](./projeto_estacao_bombeamento.cpp)
 
 ### Enunciado
 
-Modele uma pequena estacao com:
+Modele uma pequena estação com:
 
 - `AtivoCampo` como classe-base;
 - `SensorNivel` como classe derivada;
@@ -409,24 +409,24 @@ Modele uma pequena estacao com:
 ### Regras da atividade
 
 - a base deve encapsular `tag` e estado de bloqueio;
-- as derivadas nao devem acessar diretamente membros `private` da base;
-- `protected` deve aparecer apenas onde realmente ajuda a extensao;
-- o `friend` de `SensorNivel` deve ser usado apenas para inspecao tecnica.
+- as derivadas não devem acessar diretamente membros `private` da base;
+- `protected` deve aparecer apenas onde realmente ajuda a extensão;
+- o `friend` de `SensorNivel` deve ser usado apenas para inspecao técnica.
 
 ### Tarefas
 
 1. Implementar os construtores das derivadas reaproveitando a classe-base.
-2. Criar metodos publicos que validem alteracoes de nivel e vazao.
-3. Declarar e definir a funcao `friend` de inspecao do sensor.
+2. Criar métodos públicos que validem alterações de nível e vazão.
+3. Declarar e definir a função `friend` de inspecao do sensor.
 4. Exibir no terminal um resumo dos objetos criados.
 5. Justificar, em comentario curto, por que cada membro ficou `public`, `private` ou `protected`.
 
 ### Checklist de entrega
 
-- o codigo compila;
+- o código compila;
 - o estado importante ficou protegido;
 - as derivadas reutilizam a base sem duplicacao desnecessaria;
-- a funcao `friend` ficou localizada e justificavel;
+- a função `friend` ficou localizada e justificavel;
 - o terminal mostra um resumo legivel dos ativos.
 
 ### Comando sugerido para o aluno testar
@@ -440,13 +440,13 @@ g++ -std=c++17 docs/fundamentos_poo_cpp_python/04_encapsulamento_heranca/projeto
 
 ## 10. Videos e materiais complementares
 
-### Video principal desta unidade
+### Vídeo principal desta unidade
 
 - [Curso de C++ #65 - POO, Encapsulamento - P7 (CFB Cursos)](https://www.youtube.com/watch?v=hYp2Ki1u3ms)
 
-### Video complementar para heranca
+### Vídeo complementar para herança
 
-- [Curso de C++ #47 - POO, Classes, Heranca - P4 (CFB Cursos)](https://www.youtube.com/watch?v=TLQzg0b-AY4)
+- [Curso de C++ #47 - POO, Classes, Herança - P4 (CFB Cursos)](https://www.youtube.com/watch?v=TLQzg0b-AY4)
 
 ### Laboratorio complementar
 
@@ -455,19 +455,19 @@ g++ -std=c++17 docs/fundamentos_poo_cpp_python/04_encapsulamento_heranca/projeto
 - [W3Schools - Friend Functions](https://www.w3schools.com/cpp/cpp_friend_function.asp)
 - [W3Schools - Inheritance](https://www.w3schools.com/cpp/cpp_inheritance.asp)
 
-### Observacao didatica
+### Observação didatica
 
-O video principal ajuda a abrir o assunto. A compreensao melhora quando o aluno alterna entre leitura, execucao no navegador e adaptacao do exemplo para um dominio de engenharia.
+O vídeo principal ajuda a abrir o assunto. A compreensao melhora quando o aluno alterna entre leitura, execução no navegador e adaptacao do exemplo para um domínio de engenharia.
 
 ---
 
-## Perguntas de revisao rapida
+## Perguntas de revisão rápida
 
-1. Qual a diferenca pratica entre `private` e `protected` em uma hierarquia de classes?
+1. Qual a diferença prática entre `private` e `protected` em uma hierarquia de classes?
 2. Em que situacoes `friend` pode ser justificavel sem enfraquecer demais o encapsulamento?
-3. Como decidir se uma relacao deve usar heranca publica ou composicao?
+3. Como decidir se uma relacao deve usar herança pública ou composição?
 
-## Fontes de referencia
+## Fontes de referência
 
 - https://www.w3schools.com/cpp/cpp_access_specifiers.asp
 - https://www.w3schools.com/cpp/cpp_encapsulation.asp

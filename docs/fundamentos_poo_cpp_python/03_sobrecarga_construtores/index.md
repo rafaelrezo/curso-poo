@@ -1,4 +1,4 @@
-# Sobrecarga de construtores em C++: modelando gemeos digitais na piramide de automacao
+# Sobrecarga de construtores em C++: modelando gemeos digitais na piramide de automação
 
 ## Objetivos de aprendizagem
 
@@ -8,35 +8,35 @@
 
 **Tempo estimado:** 4h
 
-## Video da aula
+## Vídeo da aula
 
 ![type:video](https://www.youtube.com/embed/lkaDJMwwGXw)
 
 ---
 
-## 1. Problema de modelagem: o mesmo equipamento pode nascer com informacoes diferentes
+## 1. Problema de modelagem: o mesmo equipamento pode nascer com informações diferentes
 
-Na piramide de automacao, o mesmo elemento da planta pode ser conhecido em niveis diferentes de detalhe:
+Na piramide de automação, o mesmo elemento da planta pode ser conhecido em níveis diferentes de detalhe:
 
 - na camada de campo, um `Sensor` pode ser descoberto apenas pela `tag`;
-- na camada de supervisao, esse mesmo sensor pode receber unidade, faixa e valor atual;
-- na camada de controle ou engenharia, o objeto pode nascer com dados mais completos, como limites, endereco e descricao funcional.
+- na camada de supervisão, esse mesmo sensor pode receber unidade, faixa e valor atual;
+- na camada de controle ou engenharia, o objeto pode nascer com dados mais completos, como limites, endereco e descrição funcional.
 
 Se a classe tiver apenas um construtor, o desenvolvedor pode ser forcado a:
 
 - criar objetos incompletos e "remendar" depois;
-- repetir atribuicoes em varios pontos do codigo;
-- perder clareza sobre quais dados sao realmente obrigatorios.
+- repetir atribuicoes em vários pontos do código;
+- perder clareza sobre quais dados são realmente obrigatórios.
 
-Sobrecarga de construtores resolve isso quando diferentes formas de criacao representam situacoes legitimas do dominio.
+Sobrecarga de construtores resolve isso quando diferentes formas de criação representam situacoes legitimas do domínio.
 
-**Ideia central desta aula:** nao se trata de "ter varios jeitos de escrever o mesmo codigo". Trata-se de explicitar, no proprio modelo, diferentes formas validas de um objeto nascer.
+**Ideia central desta aula:** não se trata de "ter vários jeitos de escrever o mesmo código". Trata-se de explicitar, no próprio modelo, diferentes formas validas de um objeto nascer.
 
-| Camada da piramide | Informacao disponivel | Exemplo de criacao | Decisao didatica |
+| Camada da piramide | Informacao disponivel | Exemplo de criação | Decisao didatica |
 |---|---|---|---|
-| Campo | apenas `tag` e tipo do ativo | `SensorAnalogico("LT-101")` | construtor minimo |
+| Campo | apenas `tag` e tipo do ativo | `SensorAnalogico("LT-101")` | construtor mínimo |
 | Engenharia | `tag`, unidade e faixa | `SensorAnalogico("LT-101", "%", 0.0, 100.0)` | construtor intermediario |
-| Supervisao/execucao | `tag`, faixa e valor atual | `SensorAnalogico("LT-101", "%", 0.0, 100.0, 63.8)` | construtor completo |
+| Supervisao/execução | `tag`, faixa e valor atual | `SensorAnalogico("LT-101", "%", 0.0, 100.0, 63.8)` | construtor completo |
 
 ---
 
@@ -46,74 +46,74 @@ Os exemplos da W3Schools continuam sendo uma boa porta de entrada para o assunto
 
 | Secao | Leitura base | Link direto para testar | O que observar |
 |---|---|---|---|
-| Construtores | [Constructors](https://www.w3schools.com/cpp/cpp_constructors.asp) | [Try: construtor com parametros](https://www.w3schools.com/cpp/trycpp.asp?filename=demo_constructor_param) | um objeto pode nascer pronto |
+| Construtores | [Constructors](https://www.w3schools.com/cpp/cpp_constructors.asp) | [Try: construtor com parâmetros](https://www.w3schools.com/cpp/trycpp.asp?filename=demo_constructor_param) | um objeto pode nascer pronto |
 | Sobrecarga de construtores | [Constructor Overloading](https://www.w3schools.com/cpp/cpp_constructors_overloading.asp) | [Try: constructor overloading](https://www.w3schools.com/cpp/trycpp.asp?filename=demo_constructor_overloading) | a mesma classe pode ter mais de um construtor |
-| Sobrecarga em geral | [Function Overloading](https://www.w3schools.com/cpp/cpp_function_overloading.asp) | [Try: overload de funcao](https://www.w3schools.com/cpp/trycpp.asp?filename=demo_function_overloading) | a regra central e assinatura diferente |
+| Sobrecarga em geral | [Function Overloading](https://www.w3schools.com/cpp/cpp_function_overloading.asp) | [Try: overload de função](https://www.w3schools.com/cpp/trycpp.asp?filename=demo_function_overloading) | a regra central e assinatura diferente |
 
 ### Como usar esta trilha
 
 1. Rode primeiro o exemplo pronto sem alterar nada.
 2. Identifique quais construtores existem e quais argumentos cada um recebe.
-3. Pergunte: "cada forma de criacao corresponde a uma situacao real do dominio?"
-4. Troque o exemplo generico por um elemento da automacao industrial.
+3. Pergunte: "cada forma de criação corresponde a uma situação real do domínio?"
+4. Troque o exemplo genérico por um elemento da automação industrial.
 
 ---
 
-## 3. Fundamentacao teorica: o que e sobrecarga de construtor?
+## 3. Fundamentacao teórica: o que e sobrecarga de construtor?
 
-Em C++, uma classe pode declarar mais de um construtor, desde que as assinaturas sejam diferentes em numero e/ou tipos de parametros.
+Em C++, uma classe pode declarar mais de um construtor, desde que as assinaturas sejam diferentes em número e/ou tipos de parâmetros.
 
-### O que isso significa na pratica
+### O que isso significa na prática
 
 - todos os construtores tem o mesmo nome da classe;
 - o compilador escolhe qual usar com base nos argumentos fornecidos;
 - essa escolha segue as regras de `overload resolution`;
-- a sobrecarga nao existe para esconder ambiguidade, e sim para modelar formas validas de inicializacao.
+- a sobrecarga não existe para esconder ambiguidade, e sim para modelar formas validas de inicializacao.
 
 ### Quando faz sentido usar
 
-- quando o objeto pode nascer com configuracao minima ou completa;
-- quando existe um valor padrao coerente para parte dos dados;
-- quando o dominio possui mais de um fluxo legitimo de criacao.
+- quando o objeto pode nascer com configuração mínima ou completa;
+- quando existe um valor padrão coerente para parte dos dados;
+- quando o domínio possui mais de um fluxo legitimo de criação.
 
-### Quando nao faz sentido usar
+### Quando não faz sentido usar
 
-- quando os construtores fazem a mesma coisa com pequenas variacoes cosmeticas;
+- quando os construtores fazem a mesma coisa com pequenas variações cosmeticas;
 - quando comecam a surgir muitas assinaturas parecidas e ambiguas;
-- quando um metodo de fabrica ou uma classe auxiliar comunicaria melhor a intencao.
+- quando um método de fabrica ou uma classe auxiliar comunicaria melhor a intencao.
 
 ### Leitura didatica no contexto da piramide
 
-Um gemeo digital simples de um `SensorAnalogico` pode nascer de tres maneiras:
+Um gemeo digital simples de um `SensorAnalogico` pode nascer de três maneiras:
 
-1. apenas com `tag`, porque o ativo foi detectado mas ainda nao parametrizado;
+1. apenas com `tag`, porque o ativo foi detectado mas ainda não parametrizado;
 2. com `tag`, `unidade` e faixa, porque veio da engenharia;
-3. com tudo isso mais o `valorAtual`, porque veio da supervisao em tempo de execucao.
+3. com tudo isso mais o `valorAtual`, porque veio da supervisão em tempo de execução.
 
-Se essas tres situacoes sao reais, a classe pode comunicar isso diretamente pelos construtores.
+Se essas três situacoes são reais, a classe pode comunicar isso diretamente pelos construtores.
 
 ### Regra de bolso para o aluno
 
-Use sobrecarga quando cada assinatura contar uma historia diferente sobre a criacao do objeto.
+Use sobrecarga quando cada assinatura contar uma historia diferente sobre a criação do objeto.
 
 Evite sobrecarga quando:
 
-- a diferenca for apenas "comodidade de quem escreve";
+- a diferença for apenas "comodidade de quem escreve";
 - a classe passar a aceitar combinacoes demais e perder clareza;
-- um construtor com parametros opcionais ou um metodo nomeado comunicar melhor a intencao.
+- um construtor com parâmetros opcionais ou um método nomeado comunicar melhor a intencao.
 
 ---
 
 ## 4. Como C++ suporta isso formalmente
 
-O suporte em C++ e direto: construtores sao funcoes especiais da classe e participam do mecanismo de sobrecarga da linguagem.
+O suporte em C++ e direto: construtores são funções especiais da classe e participam do mecanismo de sobrecarga da linguagem.
 
 ### Regras importantes
 
-- construtor nao tem tipo de retorno;
-- a diferenca entre construtores vem da assinatura, nao do nome;
-- o compilador escolhe o construtor mais adequado na criacao do objeto;
-- listas de inicializacao (`: membro(valor)`) sao a forma idiomatica de inicializar atributos;
+- construtor não tem tipo de retorno;
+- a diferença entre construtores vem da assinatura, não do nome;
+- o compilador escolhe o construtor mais adequado na criação do objeto;
+- listas de inicializacao (`: membro(valor)`) são a forma idiomatica de inicializar atributos;
 - desde C++11, um construtor pode delegar para outro da mesma classe.
 
 ### Exemplo curto de ideia
@@ -127,9 +127,9 @@ public:
 };
 ```
 
-Aqui nao ha tres classes diferentes. Ha tres formas reconhecidas de criar o mesmo tipo de objeto.
+Aqui não ha três classes diferentes. Há três formas reconhecidas de criar o mesmo tipo de objeto.
 
-### Ponto tecnico importante
+### Ponto técnico importante
 
 Se dois construtores ficarem parecidos demais, a chamada pode virar ambigua. Exemplo comum:
 
@@ -140,12 +140,12 @@ Sensor(std::string tag, int valor);
 
 Uma chamada mal planejada pode exigir conversoes e confundir o iniciante. Por isso, sobrecarga boa precisa de intencao clara.
 
-### Boas praticas minimas em C++
+### Boas práticas mínimas em C++
 
 - prefira listas de inicializacao em vez de criar o objeto vazio e atribuir depois;
-- concentre a validacao no construtor mais completo;
-- use delegacao para evitar repetir logica em varios construtores;
-- considere `explicit` em construtores de um parametro para evitar conversoes implicitas acidentais.
+- concentre a validação no construtor mais completo;
+- use delegacao para evitar repetir logica em vários construtores;
+- considere `explicit` em construtores de um parâmetro para evitar conversoes implicitas acidentais.
 
 ```cpp
 class SensorAnalogico {
@@ -163,25 +163,25 @@ public:
 
 ### Erros comuns em sala
 
-- criar um construtor "gigante" com parametros demais sem nome claro;
-- repetir a mesma validacao em todos os construtores;
-- deixar o objeto nascer em estado invalido e tentar consertar depois;
-- usar sobrecarga onde um metodo nomeado deixaria o fluxo mais legivel.
+- criar um construtor "gigante" com parâmetros demais sem nome claro;
+- repetir a mesma validação em todos os construtores;
+- deixar o objeto nascer em estado inválido e tentar consertar depois;
+- usar sobrecarga onde um método nomeado deixaria o fluxo mais legivel.
 
 ---
 
 ## 5. Exemplo aplicado: gemeos digitais de sensores, atuadores e controladores
 
-No repositorio, o exemplo compilavel desta aula esta em:
+No repositório, o exemplo compilável desta aula está em:
 
 - [exemplo_piramide_automacao.cpp](./exemplo_piramide_automacao.cpp)
 
 ### O que esse exemplo mostra
 
-- `SensorAnalogico` com construtor minimo, intermediario e completo;
-- `ValvulaControle` com construtor padrao e com abertura inicial;
+- `SensorAnalogico` com construtor mínimo, intermediario e completo;
+- `ValvulaControle` com construtor padrão e com abertura inicial;
 - `ControladorPID` com construtor completo e construtor delegado;
-- objetos nascendo em estados diferentes, mas coerentes com o dominio.
+- objetos nascendo em estados diferentes, mas coerentes com o domínio.
 
 ### Trecho central em C++
 
@@ -200,18 +200,18 @@ ControladorPID controladorCompleto("TIC-201", 2.0, 0.5, 0.1);
 ### Por que esse exemplo e didatico
 
 - a `tag` comunica identidade do ativo;
-- a sobrecarga mostra diferentes niveis de detalhamento do mesmo ativo;
-- o aluno percebe que o construtor nao e "enfeite sintatico", mas uma decisao de modelagem;
-- o dominio de automacao ajuda a visualizar o objeto como representacao de equipamento real.
+- a sobrecarga mostra diferentes níveis de detalhamento do mesmo ativo;
+- o aluno percebe que o construtor não e "enfeite sintatico", mas uma decisão de modelagem;
+- o domínio de automação ajuda a visualizar o objeto como representacao de equipamento real.
 
-### Leitura guiada da saida
+### Leitura guiada da saída
 
 Ao executar, discuta com a turma:
 
-- qual objeto nasceu com dados minimos;
-- qual objeto representa um ativo ja parametrizado pela engenharia;
-- qual objeto representa um ativo com dado de processo ja conhecido;
-- onde a delegacao evitou repeticao no codigo.
+- qual objeto nasceu com dados mínimos;
+- qual objeto representa um ativo já parametrizado pela engenharia;
+- qual objeto representa um ativo com dado de processo já conhecido;
+- onde a delegacao evitou repeticao no código.
 
 ### Como compilar em sala
 
@@ -224,11 +224,11 @@ g++ -std=c++17 docs/fundamentos_poo_cpp_python/03_sobrecarga_construtores/exempl
 
 ## 6. Ponte C++ -> Python
 
-O conceito de inicializacao existe nas duas linguagens, mas o mecanismo nao e o mesmo.
+O conceito de inicializacao existe nas duas linguagens, mas o mecanismo não e o mesmo.
 
 ### Em C++
 
-Ha suporte nativo a multiplos construtores na mesma classe.
+Há suporte nativo a múltiplos construtores na mesma classe.
 
 ```cpp
 class SensorAnalogico {
@@ -241,7 +241,7 @@ public:
 
 ### Em Python
 
-Python nao oferece sobrecarga real de `__init__` como em C++. Se voce escrever dois `__init__`, o ultimo sobrescreve o anterior.
+Python não oferece sobrecarga real de `__init__` como em C++. Se você escrever dois `__init__`, o ultimo sobrescreve o anterior.
 
 ```python
 class SensorAnalogico:
@@ -253,21 +253,21 @@ class SensorAnalogico:
         self.valor = valor
 ```
 
-### Entao Python nao suporta?
+### Entao Python não suporta?
 
-**Resposta didatica:** nao do mesmo jeito que C++.
+**Resposta didatica:** não do mesmo jeito que C++.
 
 Python costuma resolver o problema com:
 
-- parametros opcionais em um unico `__init__`;
+- parâmetros opcionais em um único `__init__`;
 - argumentos nomeados;
-- metodos de fabrica com `@classmethod`;
-- em alguns casos, `dataclasses` para reduzir codigo repetitivo.
-- em projetos maiores, funcoes de fabrica ou classes auxiliares para manter a criacao legivel.
+- métodos de fabrica com `@classmethod`;
+- em alguns casos, `dataclasses` para reduzir código repetitivo.
+- em projetos maiores, funções de fabrica ou classes auxiliares para manter a criação legivel.
 
 ### Exemplo de construtor alternativo em Python
 
-No repositorio, o espelho em Python esta em:
+No repositório, o espelho em Python está em:
 
 - [exemplo_python_init_flexivel.py](./exemplo_python_init_flexivel.py)
 
@@ -293,37 +293,37 @@ class SensorAnalogico:
         return cls(tag, unidade, minimo, maximo, valor)
 ```
 
-### Comparacao rapida
+### Comparação rápida
 
 | Aspecto | C++ | Python | Impacto didatico |
 |---|---|---|---|
-| Multiplos construtores | sim, nativamente | nao, no mesmo formato | C++ torna a diferenca de assinatura parte da modelagem |
+| Multiplos construtores | sim, nativamente | não, no mesmo formato | C++ torna a diferença de assinatura parte da modelagem |
 | Inicializacao flexivel | sobrecarga e delegacao | defaults e `@classmethod` | Python favorece flexibilidade sintatica |
 | Risco para o iniciante | ambiguidade de sobrecarga | objetos excessivamente permissivos | em ambos os casos, a modelagem precisa ser intencional |
 
-### Comparacao de tecnicas de inicializacao
+### Comparação de técnicas de inicializacao
 
-| Tecnica/Padrao | Melhor uso | Esforco | Entregavel | Limitacao |
+| Técnica/Padrão | Melhor uso | Esforço | Entregável | Limitação |
 |---|---|---|---|---|
-| Sobrecarga de construtores em C++ | estados iniciais bem distintos e tipados | baixo a medio | objeto coerente ja na criacao | pode gerar ambiguidade se as assinaturas forem parecidas |
-| `__init__` com parametros opcionais em Python | classes pequenas com poucas variacoes | baixo | inicializacao curta e flexivel | aceita combinacoes ruins com facilidade |
-| `@classmethod` nomeado em Python | fluxos de criacao com nomes claros | medio | codigo mais legivel para quem le | aumenta a quantidade de metodos |
-| Metodo de fabrica/classe auxiliar | regra de criacao mais rica ou com validacoes externas | medio a alto | construcao mais explicita e organizada | adiciona mais camadas ao exemplo |
+| Sobrecarga de construtores em C++ | estados iniciais bem distintos e tipados | baixo a médio | objeto coerente já na criação | pode gerar ambiguidade se as assinaturas forem parecidas |
+| `__init__` com parâmetros opcionais em Python | classes pequenas com poucas variações | baixo | inicializacao curta e flexivel | aceita combinacoes ruins com facilidade |
+| `@classmethod` nomeado em Python | fluxos de criação com nomes claros | médio | código mais legivel para quem le | aumenta a quantidade de métodos |
+| Método de fabrica/classe auxiliar | regra de criação mais rica ou com validacoes externas | médio a alto | construcao mais explícita e organizada | adiciona mais camadas ao exemplo |
 
-### Recomendacao pratica por cenario
+### Recomendação prática por cenário
 
-- use sobrecarga em C++ quando o tipo e as assinaturas ajudarem a contar a historia do dominio;
-- use `@classmethod` em Python quando quiser nomes claros para diferentes fluxos de criacao;
-- evite "um unico construtor faz tudo" quando a inicializacao comecar a exigir muitos `if`s.
+- use sobrecarga em C++ quando o tipo e as assinaturas ajudarem a contar a historia do domínio;
+- use `@classmethod` em Python quando quiser nomes claros para diferentes fluxos de criação;
+- evite "um único construtor faz tudo" quando a inicializacao começar a exigir muitos `if`s.
 
 ---
 
-## 7. Mini-caso pratico: um gemeo digital ao longo da piramide
+## 7. Mini-caso prático: um gemeo digital ao longo da piramide
 
 Imagine a linha abaixo:
 
-- um transmissor de nivel `LT-101` na camada de campo;
-- uma valvula `XV-101` comandada pelo CLP;
+- um transmissor de nível `LT-101` na camada de campo;
+- uma válvula `XV-101` comandada pelo CLP;
 - um controlador `LIC-101` na camada de controle.
 
 ### Situacao 1. Cadastro inicial
@@ -336,7 +336,7 @@ SensorAnalogico lt101("LT-101");
 
 ### Situacao 2. Parametrizacao
 
-Agora o sistema recebe unidade e faixa de operacao.
+Agora o sistema recebe unidade e faixa de operação.
 
 ```cpp
 SensorAnalogico lt101("LT-101", "%", 0.0, 100.0);
@@ -344,69 +344,69 @@ SensorAnalogico lt101("LT-101", "%", 0.0, 100.0);
 
 ### Situacao 3. Execucao em planta
 
-O supervisorio passa a leitura atual do processo.
+O supervisório passa a leitura atual do processo.
 
 ```cpp
 SensorAnalogico lt101("LT-101", "%", 0.0, 100.0, 63.8);
 ```
 
-**Licao didatica:** o objeto continua sendo `SensorAnalogico`. O que muda e a quantidade de informacao confiavel disponivel no momento da criacao.
+**Licao didatica:** o objeto contínua sendo `SensorAnalogico`. O que muda e a quantidade de informacao confiável disponivel no momento da criação.
 
 ---
 
 ## 8. Projeto exemplo para seguir em sala
 
-### Cenario
+### Cenário
 
-Voce vai representar um pequeno trecho de uma estacao automatizada de mistura:
+Você vai representar um pequeno trecho de uma estação automatizada de mistura:
 
-- um sensor de nivel;
-- uma valvula de entrada;
+- um sensor de nível;
+- uma válvula de entrada;
 - um controlador PID simples.
 
-### Objetivo de demonstracao
+### Objetivo de demonstração
 
 1. Mostrar mais de um construtor por classe.
-2. Criar objetos com diferentes niveis de configuracao.
+2. Criar objetos com diferentes níveis de configuração.
 3. Exibir no terminal o estado inicial de cada gemeo digital.
 
 ### Roteiro de conducao em sala
 
 1. Compile e execute o arquivo base.
-2. Mostre qual construtor foi chamado em cada criacao.
-3. Peca aos alunos para prever a saida antes de rodar.
-4. Troque valores e acrescente um novo ativo com outra forma de criacao.
+2. Mostre qual construtor foi chamado em cada criação.
+3. Peca aos alunos para prever a saída antes de rodar.
+4. Troque valores e acrescente um novo ativo com outra forma de criação.
 5. Discuta qual construtor representa melhor cada etapa da planta.
 
 ### Saida esperada da discussao
 
-- quando usar construtor minimo;
-- quando exigir mais parametros;
+- quando usar construtor mínimo;
+- quando exigir mais parâmetros;
 - quando a flexibilidade melhora o modelo;
 - quando a flexibilidade piora a clareza.
 
 ### Perguntas que valem a pena fazer em sala
 
-1. Este construtor realmente representa um estado inicial valido?
-2. Ha alguma sobrecarga que esta sobrando?
+1. Este construtor realmente representa um estado inicial válido?
+2. Há alguma sobrecarga que está sobrando?
 3. A leitura da chamada deixa claro o que o objeto sabe ao nascer?
-4. Em Python, eu preferiria defaults ou um metodo nomeado?
+4. Em Python, eu preferiria defaults ou um método nomeado?
 
 ---
 
-## 9. Exercicios para casa: projeto basico de pratica
+## 9. Exercícios para casa: projeto básico de prática
 
-No repositorio, ha um arquivo-base para a atividade:
+No repositório, ha um arquivo-base para a atividade:
 
 - [projeto_casa_automacao_base.cpp](./projeto_casa_automacao_base.cpp)
 
-Se quiser levar uma referencia pronta para revisao posterior, mantenha tambem:
+Se quiser levar uma referência pronta para revisão posterior, mantenha também:
 
 - [projeto_casa_automacao.cpp](./projeto_casa_automacao.cpp)
 
 ### Enunciado
 
-Modele tres gemeos digitais simples:
+Modele três gemeos digitais simples:
 
 - `SensorNivel`
 - `Bomba`
@@ -416,35 +416,35 @@ Modele tres gemeos digitais simples:
 
 Cada classe deve ter:
 
-- um construtor minimo, com identidade basica;
-- um construtor mais completo, com parametros de operacao;
-- um metodo `exibirResumo()`.
+- um construtor mínimo, com identidade básica;
+- um construtor mais completo, com parâmetros de operação;
+- um método `exibirResumo()`.
 
 ### Tarefas
 
 1. Criar pelo menos dois objetos de cada classe usando construtores diferentes.
 2. Mostrar no terminal como cada objeto nasceu.
-3. Explicar, em comentario curto, por que cada sobrecarga faz sentido no dominio.
+3. Explicar, em comentario curto, por que cada sobrecarga faz sentido no domínio.
 4. Evitar criar construtores que deixem o objeto em estado absurdo.
 
 ### Checklist de entrega
 
-- o codigo compila;
-- cada classe possui ao menos duas formas validas de criacao;
-- o nome dos parametros ajuda a entender a intencao;
-- o metodo `exibirResumo()` mostra claramente o estado inicial do objeto;
+- o código compila;
+- cada classe possui ao menos duas formas validas de criação;
+- o nome dos parâmetros ajuda a entender a intencao;
+- o método `exibirResumo()` mostra claramente o estado inicial do objeto;
 - ha um comentario curto justificando cada sobrecarga criada.
 
 ### Resultado esperado
 
-Um programa pequeno, legivel e compilavel, cujo foco seja apenas reforcar o conceito de sobrecarga de construtores.
+Um programa pequeno, legivel e compilável, cujo foco seja apenas reforcar o conceito de sobrecarga de construtores.
 
 ### Desafio opcional
 
-Adicione validacao simples:
+Adicione validação simples:
 
 - bomba com velocidade entre `0` e `100`;
-- sensor com faixa minima menor que maxima;
+- sensor com faixa mínima menor que máxima;
 - controlador com ganho proporcional positivo.
 
 ### Comando sugerido para o aluno testar
@@ -458,28 +458,28 @@ g++ -std=c++17 docs/fundamentos_poo_cpp_python/03_sobrecarga_construtores/projet
 
 ## 10. Videos e materiais complementares
 
-### Video principal desta unidade
+### Vídeo principal desta unidade
 
 - [Tutorial C++ - Construtores (MrAppleBR)](https://www.youtube.com/watch?v=lkaDJMwwGXw)
 
-### Video/laboratorio complementar
+### Vídeo/laboratorio complementar
 
 - [W3Schools - Constructor Overloading](https://www.w3schools.com/cpp/cpp_constructors_overloading.asp)
 - [W3Schools - Try it Yourself: constructor overloading](https://www.w3schools.com/cpp/trycpp.asp?filename=demo_constructor_overloading)
 
-### Observacao didatica
+### Observação didatica
 
-O video principal e curto e funciona bem como aquecimento. A parte especifica de sobrecarga fica mais forte quando o aluno le, roda e modifica o exemplo interativo da W3Schools e, na sequencia, traduz o dominio para automacao.
+O vídeo principal e curto e funciona bem como aquecimento. A parte específica de sobrecarga fica mais forte quando o aluno le, roda e modifica o exemplo interátivo da W3Schools e, na sequência, traduz o domínio para automação.
 
 ---
 
-## Perguntas de revisao rapida
+## Perguntas de revisão rápida
 
 1. Quando a sobrecarga de construtores melhora a modelagem de um objeto?
 2. Como o compilador de C++ decide qual construtor chamar?
 3. Por que Python resolve esse problema de forma diferente de C++?
 
-## Fontes de referencia
+## Fontes de referência
 
 - https://www.w3schools.com/cpp/cpp_constructors.asp
 - https://www.w3schools.com/cpp/cpp_constructors_overloading.asp

@@ -3,20 +3,20 @@
 ## Objetivos de aprendizagem
 
 - Configurar e usar o VS Code para criar, compilar e executar programas em C++ e Python.
-- Aplicar o fluxo pratico de versionamento com Git e GitHub.
+- Aplicar o fluxo prático de versionamento com Git e GitHub.
 - Colaborar com colegas usando branch, fork e pull request.
 
 **Tempo estimado:** 8h
 
-## Video da aula
+## Vídeo da aula
 
 ![type:video](https://www.youtube.com/embed/h96Z38oMJZA)
 
 ---
 
-## 1. VS Code na pratica (antes do Git)
+## 1. VS Code na prática (antes do Git)
 
-### 1.1 Preparacao minima
+### 1.1 Preparacao mínima
 
 - Instalar `VS Code`.
 - Instalar `g++` (toolchain C++).
@@ -75,9 +75,9 @@ python3 main.py
 
 ### 1.5 Recursos didaticos visuais (docente)
 
-As capturas de tela e videos curtos desta aula sao recursos de apoio preparados pelo professor.
+As capturas de tela e videos curtos desta aula são recursos de apoio preparados pelo professor.
 
-- Os alunos **nao** precisam gerar screenshots para entrega.
+- Os alunos **não** precisam gerar screenshots para entrega.
 
 Guias com capturas oficiais:
 
@@ -89,21 +89,21 @@ Guias com capturas oficiais:
 
 ---
 
-## 2. Git e GitHub na pratica
+## 2. Git e GitHub na prática
 
-### Video da aula (Git)
+### Vídeo da aula (Git)
 
 ![type:video](https://www.youtube.com/embed/4hpUALY4Rrk)
 
 ### 2.1 Conceitos principais
 
-| Conceito | O que e | Exemplo pratico |
+| Conceito | O que e | Exemplo prático |
 |---|---|---|
-| Repositorio | Historico do projeto | pasta do trabalho no GitHub |
-| Commit | Registro de uma mudanca | `feat: adiciona leitura de sensor` |
-| Branch | Linha de desenvolvimento | `feature/ajuste-saida` |
+| Repositorio | Histórico do projeto | pasta do trabalho no GitHub |
+| Commit | Registro de uma mudança | `feat: adiciona leitura de sensor` |
+| Branch | Linha de desenvolvimento | `feature/ajuste-saída` |
 | Push | Enviar commits para remoto | `git push origin main` |
-| Pull Request | Proposta de integracao | revisao de codigo entre colegas |
+| Pull Request | Proposta de integração | revisão de código entre colegas |
 
 ### 2.2 Fluxo essencial
 
@@ -117,25 +117,25 @@ Guias com capturas oficiais:
 ### 2.3 Convencoes basicas
 
 - Commits curtos e objetivos.
-- Uma mudanca logica por commit.
-- Descrever o motivo da alteracao na mensagem.
+- Uma mudança logica por commit.
+- Descrever o motivo da alteração na mensagem.
 
 ---
 
 ## 3. Colaboracao: fork e pull request
 
-### Video complementar (Fork e PR)
+### Vídeo complementar (Fork e PR)
 
 ![type:video](https://www.youtube.com/embed/OlArEishhQg)
 
 ### 3.1 O que e fork
 
-- `Fork` cria uma copia do repositorio de outra pessoa na sua conta.
-- Ideal para contribuir em repositorios que voce nao controla diretamente.
+- `Fork` cria uma cópia do repositório de outra pessoa na sua conta.
+- Ideal para contribuir em repositórios que você não controla diretamente.
 
-### 3.2 Fluxo pratico de fork
+### 3.2 Fluxo prático de fork
 
-1. Fazer fork do repositorio do colega no GitHub.
+1. Fazer fork do repositório do colega no GitHub.
 2. Clonar o fork:
 
 ```bash
@@ -143,7 +143,7 @@ git clone <url-do-seu-fork>
 cd <repo>
 ```
 
-3. Adicionar o repositorio original como `upstream`:
+3. Adicionar o repositório original como `upstream`:
 
 ```bash
 git remote add upstream <url-repo-original>
@@ -164,23 +164,23 @@ git commit -m "docs: melhora instrucoes de execucao"
 git push -u origin feature/melhoria-readme
 ```
 
-6. Abrir PR do seu fork para o repositorio original.
+6. Abrir PR do seu fork para o repositório original.
 
 ---
 
-## 4. Atividade pratica guiada (hoje)
+## 4. Atividade prática guiada (hoje)
 
-### 4.1 Cenario
+### 4.1 Cenário
 
-Voce vai criar um pequeno programa de leitura de sensores em C++ e Python, versionar em etapas e integrar uma contribuicao de um colega.
+Você vai criar um pequeno programa de leitura de sensores em C++ e Python, versionar em etapas e integrar uma contribuicao de um colega.
 
-### 4.2 Codigo base sugerido
+### 4.2 Código base sugerido
 
 Arquivos prontos para download:
 
 - [sensor.cpp](atividade_base/sensor.cpp)
 - [sensor.py](atividade_base/sensor.py)
-- [Instrucoes da atividade](atividade_base/instrucoes.txt)
+- [Instruções da atividade](atividade_base/instrucoes.txt)
 
 `sensor.cpp`:
 
@@ -218,35 +218,35 @@ if __name__ == "__main__":
 ### 4.3 Etapas de versionamento
 
 1. Commit 1: adicionar arquivos base (`sensor.cpp`, `sensor.py`).
-2. Commit 2: incluir validacao para lista vazia e ajuste de mensagem de saida.
-3. Commit 3: criar `README.md` com instrucoes de compilacao/execucao.
-4. Criar branch `feature/log-saida` e adicionar log de data/hora no resultado.
-5. Abrir PR para `main` e pedir revisao de um colega.
+2. Commit 2: incluir validação para lista vazia e ajuste de mensagem de saída.
+3. Commit 3: criar `README.md` com instruções de compilação/execução.
+4. Criar branch `feature/log-saída` e adicionar log de data/hora no resultado.
+5. Abrir PR para `main` e pedir revisão de um colega.
 
 ### 4.4 Etapa de colaboracao entre colegas
 
-1. Fazer fork do repositorio do colega.
+1. Fazer fork do repositório do colega.
 2. Propor uma melhoria pequena (ex.: padronizar nomes, melhorar README).
-3. Abrir PR no repositorio original do colega.
+3. Abrir PR no repositório original do colega.
 4. Colega revisa, comenta e integra.
 
 ### 4.5 Entregaveis
 
-- Link do repositorio no GitHub.
-- Historico com commits separados por etapa.
-- 1 PR no proprio repositorio e 1 PR em fork/colega.
+- Link do repositório no GitHub.
+- Histórico com commits separados por etapa.
+- 1 PR no próprio repositório e 1 PR em fork/colega.
 
-## Mini-caso pratico
+## Mini-caso prático
 
-Uma equipe precisa ajustar rapidamente um programa de monitoramento. Cada membro faz uma parte, versiona em branch separada e integra por PR apos revisao tecnica.
+Uma equipe precisa ajustar rapidamente um programa de monitoramento. Cada membro faz uma parte, versiona em branch separada e integra por PR apos revisão técnica.
 
-## Perguntas de revisao rapida
+## Perguntas de revisão rápida
 
-1. Qual a diferenca pratica entre trabalhar por branch e por fork?
-2. Por que dividir o trabalho em varios commits pequenos?
-3. Qual informacao minima um PR deve conter para facilitar revisao?
+1. Qual a diferença prática entre trabalhar por branch e por fork?
+2. Por que dividir o trabalho em vários commits pequenos?
+3. Qual informacao mínima um PR deve conter para facilitar revisão?
 
-## Fontes de referencia
+## Fontes de referência
 
 - https://git-scm.com/book/en/v2
 - https://docs.github.com/en/get-started/start-your-journey/hello-world
@@ -260,8 +260,8 @@ Uma equipe precisa ajustar rapidamente um programa de monitoramento. Cada membro
 
 ## 5. Guia publico para entregas no GitHub Classroom
 
-As atividades praticas da disciplina sao entregues em repositorios individuais do GitHub Classroom.
+As atividades práticas da disciplina são entregues em repositórios individuais do GitHub Classroom.
 
-Se voce ainda nao entendeu como aceitar uma atividade, clonar o repositorio, fazer `commit`, `push`, consultar prazo e ler o feedback do professor, use este guia:
+Se você ainda não entendeu como aceitar uma atividade, clonar o repositório, fazer `commit`, `push`, consultar prazo e ler o feedback do professor, use este guia:
 
 - [Como receber e entregar atividades no GitHub Classroom](02_github_classroom_estudantes/index.md)

@@ -95,7 +95,7 @@ O diagrama de classes não é um assunto paralelo a POO. Ele é uma forma de **e
 
 | Conceito de POO | Como aparece no diagrama | O que isso ajuda a decidir |
 |---|---|---|
-| Classe | retangulo com nome | quais entidades sao centrais no dominio |
+| Classe | retangulo com nome | quais entidades são centrais no domínio |
 | Estado | atributos | o que cada objeto precisa guardar |
 | Comportamento | operações | que ações pertencem ao objeto |
 | Encapsulamento | visibilidade `+`, `-`, `#` | o que fica exposto e o que fica protegido |
@@ -175,7 +175,7 @@ classDiagram
 
 3. `Controlador --> "1" Tanque : regula`
    Leitura: o `Controlador` regula um `Tanque`.
-   Interpretação: a linha **contínua com seta** indica **associação navegável**. O controlador conhece o tanque e interage com ele.
+   Interpretação: a linha **contínua com seta** indica **associação navegável**. O controlador conhece o tanque e interáge com ele.
 
 4. `Controlador ..> HistoricoLeituras : consulta`
    Leitura: o `Controlador` consulta `HistoricoLeituras`.
@@ -205,15 +205,15 @@ Leia sempre em duas etapas:
 - confundir seta contínua com dependência;
 - esquecer de ler a cardinalidade junto com o tipo da relação.
 
-### 4.1 Generalizacao: quando uma classe e um tipo mais especifico de outra
+### 4.1 Generalizacao: quando uma classe e um tipo mais específico de outra
 
-Generalizacao e a forma UML de representar heranca.
+Generalizacao e a forma UML de representar herança.
 
 A pergunta certa aqui e:
 
 **"a classe filha realmente e um tipo da classe pai?"**
 
-Se a resposta for sim, generalizacao pode fazer sentido.
+Se a resposta for sim, generalização pode fazer sentido.
 
 ``` mermaid
 classDiagram
@@ -240,13 +240,13 @@ classDiagram
 ### Como ler
 
 - `SensorTemperatura` e um tipo de `AtivoIndustrial`;
-- `BombaCirculacao` tambem e um tipo de `AtivoIndustrial`;
+- `BombaCirculacao` também e um tipo de `AtivoIndustrial`;
 - a classe-base concentra o que e comum;
 - as classes derivadas especializam comportamento e estado.
 
 ### Generalizacao separada e compartilhada
 
-Ao discutir heranca com mais cuidado, vale apresentar duas leituras possiveis para as especializacoes:
+Ao discutir herança com mais cuidado, vale apresentar duas leituras possíveis para as especializacoes:
 
 - **separada** ou **disjunta**: um objeto pertence a apenas uma das subclasses;
 - **compartilhada** ou **sobreposta**: um mesmo objeto pode pertencer a mais de uma subclasse ao mesmo tempo.
@@ -263,25 +263,25 @@ classDiagram
 
 ### Leitura didatica desse caso
 
-- se a generalizacao for **separada**, uma `Pessoa` sera `Aluno` ou `Monitor`, mas nao os dois;
-- se a generalizacao for **compartilhada**, a mesma `Pessoa` pode ser `Aluno` e `Monitor` ao mesmo tempo.
+- se a generalização for **separada**, uma `Pessoa` será `Aluno` ou `Monitor`, mas não os dois;
+- se a generalização for **compartilhada**, a mesma `Pessoa` pode ser `Aluno` e `Monitor` ao mesmo tempo.
 
-### Exemplo facil de entender
+### Exemplo fácil de entender
 
 - **separada**: `Veiculo` especializado em `Carro` e `Moto` em um cadastro simples;
 - **compartilhada**: `Pessoa` especializada em `Aluno` e `Monitor` em um sistema academico.
 
-### Regra pratica
+### Regra prática
 
-Se voce esta usando heranca apenas porque duas classes possuem atributos parecidos, a modelagem provavelmente esta fraca.
+Se você está usando herança apenas porque duas classes possuem atributos parecidos, a modelagem provavelmente esta fraca.
 
 ### 4.2 Realizacao: quando uma classe concreta cumpre um contrato
 
 Realizacao aparece quando uma classe concreta implementa um contrato, interface ou comportamento esperado.
 
-Em POO, a diferenca principal para a generalizacao e esta:
+Em POO, a diferença principal para a generalização e esta:
 
-- generalizacao responde "e um tipo de";
+- generalização responde "e um tipo de";
 - realizacao responde "cumpre este contrato".
 
 ``` mermaid
@@ -302,16 +302,16 @@ classDiagram
 ### Como ler
 
 - `BombaCirculacao` realiza o contrato `Operavel`;
-- isso comunica que a bomba oferece as operacoes exigidas por esse contrato;
-- o foco aqui nao e compartilhar estado, e sim garantir uma interface esperada.
+- isso comunica que a bomba oferece as operações exigidas por esse contrato;
+- o foco aqui não e compartilhar estado, e sim garantir uma interface esperada.
 
-### Exemplo pratico
+### Exemplo prático
 
-Se o sistema precisa operar varios equipamentos por um contrato comum, a realizacao ajuda a deixar isso explicito.
+Se o sistema precisa operar vários equipamentos por um contrato comum, a realizacao ajuda a deixar isso explícito.
 
-### 4.3 Associacao: quando uma classe conhece, usa ou colabora com outra
+### 4.3 Associação: quando uma classe conhece, usa ou colabora com outra
 
-Associacao e a relacao mais comum.
+Associação e a relacao mais comum.
 
 Ela indica que existe uma ligacao estrutural entre classes, mas sem necessariamente dizer que uma controla o ciclo de vida da outra.
 
@@ -325,17 +325,17 @@ classDiagram
 
 ### Como ler
 
-- um `Professor` leciona uma ou varias `Turma`;
+- um `Professor` leciona uma ou várias `Turma`;
 - existe colaboracao entre as classes;
-- a relacao e importante para o dominio, mas uma classe nao e "parte interna" da outra.
+- a relacao e importante para o domínio, mas uma classe não e "parte interna" da outra.
 
-### Exemplo pratico
+### Exemplo prático
 
-`ControladorQualidade --> SensorPH` significa que o controlador usa o sensor para tomar decisao.
+`ControladorQualidade --> SensorPH` significa que o controlador usa o sensor para tomar decisão.
 
 ### 4.4 Agregacao: quando o todo agrupa partes que podem continuar existindo separadamente
 
-Agregacao e uma associacao com ideia de agrupamento.
+Agregacao e uma associação com ideia de agrupamento.
 
 Ela comunica que um objeto reune outros, mas as partes podem existir fora desse todo.
 
@@ -351,15 +351,15 @@ classDiagram
 
 - um `Time` agrega zero ou muitos `Jogador`;
 - os jogadores pertencem ao conjunto, mas ainda fazem sentido fora dele;
-- o ciclo de vida das partes nao depende totalmente do todo.
+- o ciclo de vida das partes não depende totalmente do todo.
 
-### Exemplo pratico
+### Exemplo prático
 
-Uma `Bancada` de laboratorio pode agregar equipamentos que depois sao movidos para outra bancada.
+Uma `Bancada` de laboratorio pode agregar equipamentos que depois são movidos para outra bancada.
 
-### 4.5 Composicao: quando a parte depende fortemente do todo
+### 4.5 Composição: quando a parte depende fortemente do todo
 
-Composicao e a relacao mais forte entre todo e parte.
+Composição e a relacao mais forte entre todo e parte.
 
 Ela comunica que a parte faz sentido apenas dentro do todo modelado.
 
@@ -377,15 +377,15 @@ classDiagram
 - os itens existem como parte daquele pedido;
 - se o pedido deixa de existir naquele modelo, os itens perdem sentido isoladamente.
 
-### Exemplo pratico
+### Exemplo prático
 
-Uma `ETA` pode ser modelada em composicao com `TanqueMistura` se o projeto quiser comunicar pertencimento estrutural forte.
+Uma `ETA` pode ser modelada em composição com `TanqueMistura` se o projeto quiser comunicar pertencimento estrutural forte.
 
 ### 4.6 Dependencia: quando uma classe apenas usa outra de forma pontual
 
 Dependencia representa uma colaboracao mais leve e temporaria.
 
-Ela costuma aparecer quando uma classe usa outra em um metodo, consulta um servico ou depende de um resultado para executar uma tarefa.
+Ela costuma aparecer quando uma classe usa outra em um método, consulta um serviço ou depende de um resultado para executar uma tarefa.
 
 ``` mermaid
 classDiagram
@@ -398,38 +398,38 @@ classDiagram
 ### Como ler
 
 - `GeradorRelatorio` depende de `Medicao` para funcionar;
-- a ligacao existe, mas nao necessariamente como atributo permanente;
-- costuma ser mais fraca que associacao estrutural.
+- a ligacao existe, mas não necessariamente como atributo permanente;
+- costuma ser mais fraca que associação estrutural.
 
-### Exemplo pratico
+### Exemplo prático
 
-Um exportador de resultados pode depender de `ResultadoEnsaio` apenas no momento da geracao do arquivo.
+Um exportador de resultados pode depender de `ResultadoEnsaio` apenas no momento da geração do arquivo.
 
-### Tabela de leitura rapida
+### Tabela de leitura rápida
 
-| Relacao | Notacao em Mermaid/UML | Como ler | Exemplo facil |
+| Relacao | Notacao em Mermaid/UML | Como ler | Exemplo fácil |
 |---|---|---|---|
 | Generalizacao | `<|--` | e um tipo de | `SensorTemperatura` e um `AtivoIndustrial` |
 | Realizacao | `<|..` | cumpre um contrato | `BombaCirculacao` realiza `Operavel` |
-| Associacao | `-->` | conhece, usa ou colabora com | `Professor` leciona `Turma` |
+| Associação | `-->` | conhece, usa ou colabora com | `Professor` leciona `Turma` |
 | Agregacao | `o--` | agrupa partes independentes | `Time` agrega `Jogador` |
-| Composicao | `*--` | contem partes fortemente dependentes | `Pedido` contem `ItemPedido` |
+| Composição | `*--` | contem partes fortemente dependentes | `Pedido` contem `ItemPedido` |
 | Dependencia | `..>` | usa pontualmente | `GeradorRelatorio` usa `Medicao` |
 
 ### Regra de bolso para decidir
 
-- se a relacao e `e um tipo de`, pense em **generalizacao**;
+- se a relacao e `e um tipo de`, pense em **generalização**;
 - se a relacao e `cumpre um contrato`, pense em **realizacao**;
-- se a relacao e `conhece` ou `colabora com`, pense em **associacao**;
-- se a relacao e `agrupa`, pense em **agregacao**;
-- se a relacao e `contem` com dependencia forte, pense em **composicao**;
+- se a relacao e `conhece` ou `colabora com`, pense em **associação**;
+- se a relacao e `agrupa`, pense em **agregação**;
+- se a relacao e `contem` com dependencia forte, pense em **composição**;
 - se a relacao e `usa momentaneamente`, pense em **dependencia**.
 
 ---
 
 ## 5. Cardinalidade (multiplicidade): quantos objetos podem se relacionar?
 
-Um bom diagrama de classes nao responde apenas "quem se conecta com quem". Ele tambem responde "em que quantidade essa relacao faz sentido?".
+Um bom diagrama de classes não responde apenas "quem se conecta com quem". Ele também responde "em que quantidade essa relacao faz sentido?".
 
 ### Exemplo com cardinalidade
 
@@ -442,67 +442,67 @@ classDiagram
 
     Cliente "1" --> "0..*" Pedido : cria
     Pedido "1" *-- "1..*" ItemPedido : possui
-    ItemPedido "*" --> "1" Produto : referencia
+    ItemPedido "*" --> "1" Produto : referência
 ```
 
 ### Como interpretar
 
 - um `Cliente` pode criar zero ou muitos `Pedido`;
 - cada `Pedido` possui um ou muitos `ItemPedido`;
-- cada `ItemPedido` referencia exatamente um `Produto`.
+- cada `ItemPedido` referência exatamente um `Produto`.
 
 ### Cardinalidades mais frequentes
 
 | Notacao | Leitura | Exemplo de interpretacao |
 |---|---|---|
-| `1` | exatamente um | cada pedido tem um codigo |
-| `0..1` | zero ou um | um equipamento pode ter ou nao um controlador associado |
-| `1..*` | um ou muitos | um tanque possui uma ou varias medicoes ao longo do tempo |
+| `1` | exatamente um | cada pedido tem um código |
+| `0..1` | zero ou um | um equipamento pode ter ou não um controlador associado |
+| `1..*` | um ou muitos | um tanque possui uma ou várias medicoes ao longo do tempo |
 | `*` | muitos | um operador pode consultar muitos alarmes |
 
-### O que a cardinalidade ajuda a decidir no codigo
+### O que a cardinalidade ajuda a decidir no código
 
-- se um atributo deve guardar um objeto ou uma colecao;
+- se um atributo deve guardar um objeto ou uma coleção;
 - se a ausencia da relacao e aceitavel;
 - se o construtor deve exigir um objeto associado;
-- se a classe precisa validar quantidade minima ou maxima de elementos.
+- se a classe precisa validar quantidade mínima ou máxima de elementos.
 
 ### Erros comuns de leitura
 
 - ignorar a cardinalidade e pensar apenas no tipo da relacao;
 - desenhar `*` em tudo por inseguranca;
-- usar `1` quando, na pratica, a relacao pode nao existir;
-- esquecer que cardinalidade muda a implementacao concreta.
+- usar `1` quando, na prática, a relacao pode não existir;
+- esquecer que cardinalidade muda a implementação concreta.
 
 ---
 
 ## 6. Como sair de um texto de requisito para um diagrama de classes
 
-Em sala, o aluno precisa aprender um metodo, nao apenas decorar simbolos.
+Em sala, o aluno precisa aprender um método, não apenas decorar simbolos.
 
 ### Texto inicial
 
-> Uma estacao de monitoramento possui reservatorios. Cada reservatorio recebe leituras de sensores. Um controlador analisa as leituras e pode gerar alarmes quando a faixa segura e violada.
+> Uma estação de monitoramento possui reservatórios. Cada reservatório recebe leituras de sensores. Um controlador analisa as leituras e pode gerar alarmes quando a faixa segura e violada.
 
 ### Passo 1. Destacar entidades candidatas
 
-- estacao de monitoramento;
-- reservatorio;
+- estação de monitoramento;
+- reservatório;
 - sensor;
 - controlador;
 - alarme.
 
 ### Passo 2. Perguntar qual responsabilidade pertence a cada classe
 
-- `Reservatorio` guarda capacidade e nivel atual?
+- `Reservatorio` guarda capacidade e nível atual?
 - `SensorNivel` mede e atualiza leitura?
-- `ControladorNivel` avalia faixa segura e decide acao?
+- `ControladorNivel` avalia faixa segura e decide ação?
 - `Alarme` representa um evento ou apenas uma mensagem solta?
 
-### Passo 3. Decidir relacoes
+### Passo 3. Decidir relações
 
-- a estacao contem reservatorios;
-- um reservatorio recebe leituras de sensores;
+- a estação contem reservatórios;
+- um reservatório recebe leituras de sensores;
 - o controlador usa sensores e pode emitir alarmes.
 
 ### Resultado inicial em Mermaid
@@ -624,10 +624,10 @@ class Tanque:
 
 | Aspecto | C++ | Python | Impacto didatico |
 |---|---|---|---|
-| Classe no codigo | `class Nome {}` | `class Nome:` | a ideia e a mesma |
-| Visibilidade | `private`, `public`, `protected` | convencoes como `_atributo` e API publica | C++ explicita mais a fronteira |
-| Operacoes | assinaturas tipadas | metodos mais flexiveis | Python reduz ruido, mas o modelo continua |
-| Regra de negocio | validacao no metodo | validacao no metodo | UML ajuda a ver a regra antes da sintaxe |
+| Classe no código | `class Nome {}` | `class Nome:` | a ideia e a mesma |
+| Visibilidade | `private`, `public`, `protected` | convencoes como `_atributo` e API pública | C++ explícita mais a fronteira |
+| Operacoes | assinaturas tipadas | métodos mais flexiveis | Python reduz ruido, mas o modelo contínua |
+| Regra de negócio | validação no método | validação no método | UML ajuda a ver a regra antes da sintaxe |
 
 ### Mensagem principal da ponte
 
@@ -637,47 +637,47 @@ Se o aluno entende o diagrama, ele consegue discutir o modelo em C++, Python ou 
 
 ---
 
-## 8. Como UML e usada na pratica sem virar burocracia
+## 8. Como UML e usada na prática sem virar burocracia
 
-Em projetos reais, diagrama de classes nao deve ser tratado como decoracao de relatorio. Ele funciona melhor quando aparece em momentos de decisao.
+Em projetos reais, diagrama de classes não deve ser tratado como decoracao de relatório. Ele funciona melhor quando aparece em momentos de decisão.
 
-### Uso pratico mais comum
+### Uso prático mais comum
 
 1. alinhar entendimento do problema antes de implementar;
-2. revisar responsabilidades quando uma classe esta crescendo demais;
-3. discutir composicao versus heranca em PR ou reuniao tecnica;
+2. revisar responsabilidades quando uma classe está crescendo demais;
+3. discutir composição versus herança em PR ou reuniao técnica;
 4. explicar arquitetura de um modulo para novos membros da equipe;
 5. apoiar refatoracao sem depender so de conversa abstrata.
 
 ### Quando o diagrama ajuda muito
 
-- quando o requisito ainda esta confuso;
+- quando o requisito ainda está confuso;
 - quando ha muitas classes colaborando;
-- quando o time esta discutindo responsabilidade errada;
-- quando o codigo existente ficou procedural demais dentro de uma classe grande.
+- quando o time está discutindo responsabilidade errada;
+- quando o código existente ficou procedural demais dentro de uma classe grande.
 
 ### Quando o diagrama atrapalha
 
-- quando tenta espelhar cada detalhe da implementacao;
-- quando nunca e revisado apos mudanca importante;
-- quando substitui leitura de codigo em vez de apoiar a leitura;
+- quando tenta espelhar cada detalhe da implementação;
+- quando nunca e revisado apos mudança importante;
+- quando substitui leitura de código em vez de apoiar a leitura;
 - quando vira documento morto feito apenas para entrega.
 
-### Regra pratica para este curso
+### Regra prática para este curso
 
-Desenhe o suficiente para responder tres perguntas:
+Desenhe o suficiente para responder três perguntas:
 
 1. quais classes importam;
 2. que responsabilidade cada uma assume;
 3. como elas se relacionam.
 
-Se o diagrama nao ajuda nisso, ele esta detalhado demais ou generico demais.
+Se o diagrama não ajuda nisso, ele está detalhado demais ou genérico demais.
 
 ---
 
-## 9. Mini-caso pratico: ETA com tanque, sensor e bomba dosadora
+## 9. Mini-caso prático: ETA com tanque, sensor e bomba dosadora
 
-Imagine uma pequena estacao de tratamento de agua onde o software precisa monitorar o pH do tanque de mistura e acionar uma bomba dosadora quando a faixa segura e violada.
+Imagine uma pequena estação de tratamento de agua onde o software precisa monitorar o pH do tanque de mistura e acionar uma bomba dosadora quando a faixa segura e violada.
 
 ### Modelo inicial
 
@@ -720,10 +720,10 @@ classDiagram
 
 ### O que discutir com a turma
 
-- por que `ETA` e `TanqueMistura` aparecem em composicao;
-- por que `SensorPH` foi representado como agregacao, e nao composicao forte;
-- por que `ControladorQualidade` usa `SensorPH` e `BombaDosadora`, mas nao precisa herdar nada deles;
-- que atributos devem ficar publicos, privados ou protegidos quando esse modelo virar codigo.
+- por que `ETA` e `TanqueMistura` aparecem em composição;
+- por que `SensorPH` foi representado como agregação, e não composição forte;
+- por que `ControladorQualidade` usa `SensorPH` e `BombaDosadora`, mas não precisa herdar nada deles;
+- que atributos devem ficar públicos, privados ou protegidos quando esse modelo virar código.
 
 ### Licao de modelagem
 
@@ -734,42 +734,42 @@ Observe como o diagrama obriga o aluno a separar papeis:
 - bomba atua;
 - controlador decide.
 
-Quando essa separacao aparece cedo no desenho, o codigo tende a nascer com mais coesao.
+Quando essa separação aparece cedo no desenho, o código tende a nascer com mais coesao.
 
 ---
 
 ## 10. Atividade da unidade: via GitHub Classroom
 
-Nesta unidade, a atividade principal saiu do material do site e passou a existir como um **repositorio starter independente**, proprio para uso no GitHub Classroom.
+Nesta unidade, a atividade principal saiu do material do site e passou a existir como um **repositório starter independente**, próprio para uso no GitHub Classroom.
 
-### Onde esta a atividade
+### Onde está a atividade
 
-- Starter repo: [RafaelEmerick-POO/poo-20261-cenario-04-modelagem-uml](https://github.com/RafaelEmerick-POO/poo-20261-cenario-04-modelagem-uml)
+- Starter repo: [RafaelEmerick-POO/poo-20261-cenário-04-modelagem-uml](https://github.com/RafaelEmerick-POO/poo-20261-cenário-04-modelagem-uml)
 
 ### Por que a atividade foi movida
 
 - para ensinar fluxo real com `assignment`, branch, issue, commit e pull request;
-- para separar claramente **conteudo de estudo** e **repositorio de entrega**;
-- para permitir que cada aluno ou equipe receba sua propria copia pelo GitHub Classroom.
+- para separar claramente **conteúdo de estudo** e **repositório de entrega**;
+- para permitir que cada aluno ou equipe receba sua própria cópia pelo GitHub Classroom.
 
 ### O que o aluno vai encontrar no starter
 
 - `README.md` com o enunciado completo;
-- arquivos-base para o diagrama e para a implementacao inicial;
+- arquivos-base para o diagrama e para a implementação inicial;
 - `AI_LOG.md`;
 - template de issue;
 - template de pull request;
-- referencias oficiais para Mermaid, Markdown e modelagem.
+- referências oficiais para Mermaid, Markdown e modelagem.
 
-### Recomendacao para o docente
+### Recomendação para o docente
 
-Use esse starter como `assigned repository` no GitHub Classroom e mantenha esta pagina apenas como referencia conceitual da aula.
+Use esse starter como `assigned repository` no GitHub Classroom e mantenha esta página apenas como referência conceitual da aula.
 
 ---
 
 ## 11. Videos e materiais complementares
 
-### Video principal desta unidade
+### Vídeo principal desta unidade
 
 - [Tutorial de Diagramas de Classes UML](https://www.youtube.com/watch?v=rDidOn6KN9k)
 
@@ -783,19 +783,19 @@ Use esse starter como `assigned repository` no GitHub Classroom e mantenha esta 
 - [cppreference - Classes](https://en.cppreference.com/w/cpp/language/classes)
 - [cppreference - Derived classes](https://en.cppreference.com/w/cpp/language/derived_class)
 
-### Observacao didatica
+### Observação didatica
 
-O video ajuda a visualizar o mecanismo. A consolidacao real acontece quando o aluno pega um requisito curto, desenha o modelo, debate relacoes e so depois escreve o codigo.
+O vídeo ajuda a visualizar o mecanismo. A consolidacao real acontece quando o aluno pega um requisito curto, desenha o modelo, debate relações e so depois escreve o código.
 
 ---
 
-## Perguntas de revisao rapida
+## Perguntas de revisão rápida
 
-1. Qual a diferenca entre associacao, agregacao e composicao em um diagrama de classes?
-2. Como a multiplicidade ajuda a decidir se uma classe deve guardar um objeto ou uma colecao?
-3. Em que situacoes um diagrama de classes melhora a modelagem antes da implementacao?
+1. Qual a diferença entre associação, agregação e composição em um diagrama de classes?
+2. Como a multiplicidade ajuda a decidir se uma classe deve guardar um objeto ou uma coleção?
+3. Em que situacoes um diagrama de classes melhora a modelagem antes da implementação?
 
-## Fontes de referencia
+## Fontes de referência
 
 - https://www.omg.org/spec/UML/2.5.1/About-UML
 - https://mermaid.live/
