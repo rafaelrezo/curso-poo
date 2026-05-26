@@ -68,12 +68,13 @@ O primeiro contrato entre o dispositivo e o supervisor será um objeto JSON simp
 | 2 | Aula integrada: listas dinâmicas em C++ e Python | `vector<unique_ptr<Sensor>>`, `push_back`, `const auto&`, `list` e `append` |
 | 3 | Aula integrada: objetos da lista com estado protegido | validação de leituras e organização dos dados recebidos |
 | 4 | Aula integrada: atividade prática | exercício único com sensores, lista de objetos e supervisor |
-| 5 | Strategy e Command | regras e comandos intercambiáveis |
-| 6 | Observer e alarmes | notificações desacopladas |
-| 7 | Persistência | histórico em CSV e evolução para SQLite |
-| 8 | Comunicação TCP | JSON por linha em cliente-servidor simples |
-| 9 | Testes e validação | testes de contrato, regras e integração |
-| 10 | Projeto final | mini-SCADA e defesa arquitetural |
+| 5 | Bancos de dados no supervisório | dados transacionais, séries temporais, SQLite e estatísticas |
+| 6 | Strategy e Command | regras e comandos intercambiáveis |
+| 7 | Observer e alarmes | notificações desacopladas |
+| 8 | Persistência | histórico em CSV e evolução para SQLite |
+| 9 | Comunicação TCP | JSON por linha em cliente-servidor simples |
+| 10 | Testes e validação | testes de contrato, regras e integração |
+| 11 | Projeto final | mini-SCADA e defesa arquitetural |
 
 ---
 
