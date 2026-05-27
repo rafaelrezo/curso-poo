@@ -4,7 +4,7 @@
 
 - Explicar por que um sistema supervisório precisa de memória operacional.
 - Diferenciar cadastro, evento transacional, série temporal e estatística.
-- Construir um primeiro modelo relacional com tabelas, chaves primárias, chaves estrangeiras e consultas SQL básicas.
+- Relacionar um cenário com SQLite ao modelo de classes, ao diagrama ER, aos comandos SQL e ao código Python.
 
 **Tempo estimado:** 3h.
 
@@ -260,6 +260,14 @@ Nesta disciplina, vamos armazenar séries temporais em SQLite para aprender o de
 O sensor é relativamente estável. A leitura muda a cada medição.
 
 Por isso, não faz sentido guardar tudo como se fosse a mesma coisa.
+
+Legenda do diagrama:
+
+| Sigla | Significado | Leitura no modelo |
+|---|---|---|
+| `PK` | chave primária | identifica uma linha da tabela |
+| `UK` | chave única | não permite repetição do valor |
+| `FK` | chave estrangeira | aponta para uma linha de outra tabela |
 
 ```mermaid
 erDiagram
@@ -739,31 +747,55 @@ Legenda usada no diagrama:
 | `UK` | Unique Key ou chave única | impede repetição de um valor importante |
 | `FK` | Foreign Key ou chave estrangeira | liga uma tabela a outra |
 
-Para a prática desta aula, o modelo relacional mínimo será:
+Para este cenário, usaremos `instrumentos` como entidade persistente principal. Um instrumento pode ser sensor de nível, pressão, vazão ou outro ponto monitorado pelo supervisório.
+
+O modelo relacional mínimo será:
 
 ```mermaid
 erDiagram
-    SENSORES ||--o{ LEITURAS : gera
-    SENSORES ||--o{ ESTATISTICAS_SENSORES : resume
+    INSTRUMENTOS ||--o{ LEITURAS : gera
+    INSTRUMENTOS ||--o{ COMANDOS : recebe
+    INSTRUMENTOS ||--o{ EVENTOS_OPERACIONAIS : registra
+    INSTRUMENTOS ||--o{ ESTATISTICAS_INSTRUMENTOS : resume
 
-    SENSORES {
+    INSTRUMENTOS {
         integer id PK
         text tag UK
         text tipo
         text unidade
+        integer ativo
     }
 
     LEITURAS {
         integer id PK
-        integer sensor_id FK
+        integer instrumento_id FK
         text timestamp
         real valor
         text status
     }
 
-    ESTATISTICAS_SENSORES {
+    COMANDOS {
         integer id PK
-        integer sensor_id FK
+        integer instrumento_id FK
+        text timestamp
+        text operador
+        text acao
+        text payload_json
+        text resultado
+    }
+
+    EVENTOS_OPERACIONAIS {
+        integer id PK
+        integer instrumento_id FK
+        text timestamp
+        text categoria
+        text descricao
+        text severidade
+    }
+
+    ESTATISTICAS_INSTRUMENTOS {
+        integer id PK
+        integer instrumento_id FK
         text janela_inicio
         text janela_fim
         integer quantidade
@@ -773,31 +805,33 @@ erDiagram
         integer alertas
         text criada_em
     }
-
-    COMANDOS {
-        integer id PK
-        text timestamp
-        text origem
-        text comando
-        integer executado
-    }
-
-    EVENTOS_OPERACIONAIS {
-        integer id PK
-        text timestamp
-        text categoria
-        text descricao
-        text severidade
-    }
 ```
 
 ### Como ler o modelo
 
-- `sensores` é cadastro: define os sensores conhecidos pelo supervisor.
+- `instrumentos` é cadastro: define os pontos conhecidos pelo supervisor e se estão ativos.
 - `leituras` é série temporal: guarda medições associadas ao tempo.
-- `estatisticas_sensores` é dado derivado: guarda resumo calculado a partir das leituras.
-- `comandos` é transacional: registra ações discretas solicitadas ao sistema.
-- `eventos_operacionais` é transacional: registra fatos como falha, manutenção e reconhecimento.
+- `comandos` é transacional: registra ações solicitadas por operador ou regra automática.
+- `eventos_operacionais` é transacional: registra fatos como alarme, manutenção, reconhecimento e desligamento.
+- `estatisticas_instrumentos` é dado derivado: guarda resumo calculado a partir das leituras.
+
+Exemplo de comando de desligamento recebido pelo supervisório:
+
+```json
+{
+  "timestamp": "2026-05-26T10:06:00-03:00",
+  "operador": "ana.silva",
+  "instrumento_tag": "FT-301",
+  "acao": "desligar",
+  "motivo": "Manutencao preventiva solicitada pelo supervisorio"
+}
+```
+
+Esse comando não é leitura de sensor. Ele é uma transação. Ao processá-lo, o supervisor deve:
+
+1. gravar uma linha em `comandos`;
+2. atualizar `instrumentos.ativo` para `0`;
+3. gravar um evento operacional com quem desligou, qual instrumento foi desligado e quando.
 
 ### Como construir o diagrama ER
 
@@ -815,10 +849,10 @@ Aplicando no caso:
 
 | Pergunta | Decisão |
 |---|---|
-| O sensor precisa ser identificado? | tabela `sensores` |
-| Uma leitura pertence a um sensor? | `leituras.sensor_id` como chave estrangeira |
-| Um sensor pode ter muitas leituras? | relação `SENSORES ||--o{ LEITURAS` |
-| Um comando depende de sensor específico? | nesta versão, não obrigatoriamente |
+| O instrumento precisa ser identificado? | tabela `instrumentos` |
+| Uma leitura pertence a um instrumento? | `leituras.instrumento_id` como chave estrangeira |
+| Um instrumento pode ter muitas leituras? | relação `INSTRUMENTOS ||--o{ LEITURAS` |
+| Um comando de desligamento afeta um instrumento? | `comandos.instrumento_id` como chave estrangeira |
 | Estatística é dado bruto? | não, é resumo derivado do histórico |
 
 ---
@@ -862,10 +896,10 @@ Para esta disciplina, não precisamos memorizar SQL inteiro. Precisamos reconhec
 
 | Grupo | Para que serve | Comandos comuns | Exemplo na atividade |
 |---|---|---|---|
-| Definição de dados | criar ou alterar estrutura | `CREATE TABLE`, `ALTER TABLE`, `DROP TABLE` | criar `sensores` e `leituras` |
+| Definição de dados | criar ou alterar estrutura | `CREATE TABLE`, `ALTER TABLE`, `DROP TABLE` | criar `instrumentos` e `leituras` |
 | Manipulação de dados | inserir, alterar ou remover linhas | `INSERT`, `UPDATE`, `DELETE` | salvar uma nova leitura |
 | Consulta de dados | buscar linhas e calcular resultados | `SELECT`, `WHERE`, `ORDER BY`, `GROUP BY` | listar histórico de `LT-101` |
-| Integridade | proteger relações e regras | `PRIMARY KEY`, `FOREIGN KEY`, `NOT NULL`, `UNIQUE` | impedir sensor duplicado |
+| Integridade | proteger relações e regras | `PRIMARY KEY`, `FOREIGN KEY`, `NOT NULL`, `UNIQUE` | impedir instrumento duplicado |
 
 Nesta aula, o foco está em `CREATE TABLE`, `INSERT` e `SELECT`.
 
@@ -874,10 +908,10 @@ Nesta aula, o foco está em `CREATE TABLE`, `INSERT` e `SELECT`.
 Uma consulta SQL pode ser lida como uma pergunta estruturada.
 
 ```sql
-SELECT s.tag, l.timestamp, l.valor
+SELECT i.tag, l.timestamp, l.valor
 FROM leituras l
-JOIN sensores s ON s.id = l.sensor_id
-WHERE s.tag = 'LT-101'
+JOIN instrumentos i ON i.id = l.instrumento_id
+WHERE i.tag = 'LT-101'
 ORDER BY l.timestamp;
 ```
 
@@ -922,9 +956,9 @@ Além do tipo, uma coluna pode ter restrições:
 | `AUTOINCREMENT` | gera ids automaticamente | `id INTEGER PRIMARY KEY AUTOINCREMENT` |
 | `NOT NULL` | campo obrigatório | `tag TEXT NOT NULL` |
 | `UNIQUE` | não permite repetição | `tag TEXT UNIQUE` |
-| `FOREIGN KEY` | aponta para outra tabela | `sensor_id REFERENCES sensores(id)` |
+| `FOREIGN KEY` | aponta para outra tabela | `instrumento_id REFERENCES instrumentos(id)` |
 
-Essas regras reduzem erros. Se `tag` é obrigatória no domínio, ela também deve ser obrigatória no banco. Se uma leitura precisa pertencer a um sensor, isso deve aparecer como chave estrangeira.
+Essas regras reduzem erros. Se `tag` é obrigatória no domínio, ela também deve ser obrigatória no banco. Se uma leitura precisa pertencer a um instrumento, isso deve aparecer como chave estrangeira.
 
 ### 9.5 Esquema visual dos comandos
 
@@ -943,11 +977,12 @@ flowchart LR
 ### 9.6 Criar tabela
 
 ```sql
-CREATE TABLE sensores (
+CREATE TABLE instrumentos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     tag TEXT NOT NULL UNIQUE,
     tipo TEXT NOT NULL,
-    unidade TEXT NOT NULL
+    unidade TEXT NOT NULL,
+    ativo INTEGER NOT NULL DEFAULT 1
 );
 ```
 
@@ -955,18 +990,19 @@ Leitura:
 
 - `id` identifica a linha;
 - `tag` não pode ser vazia e não pode repetir;
-- `tipo` e `unidade` são atributos do sensor.
+- `tipo` e `unidade` são atributos do instrumento;
+- `ativo` indica se o instrumento está disponível para operação.
 
 ### 9.7 Inserir cadastro
 
 ```sql
-INSERT INTO sensores (tag, tipo, unidade)
+INSERT INTO instrumentos (tag, tipo, unidade)
 VALUES ('LT-101', 'nivel', '%');
 ```
 
 Leitura:
 
-- `INSERT INTO sensores` informa a tabela de destino;
+- `INSERT INTO instrumentos` informa a tabela de destino;
 - `(tag, tipo, unidade)` informa as colunas preenchidas;
 - `VALUES (...)` informa os valores da nova linha.
 
@@ -975,33 +1011,33 @@ Leitura:
 ```sql
 CREATE TABLE leituras (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    sensor_id INTEGER NOT NULL,
+    instrumento_id INTEGER NOT NULL,
     timestamp TEXT NOT NULL,
     valor REAL NOT NULL,
     status TEXT NOT NULL,
-    FOREIGN KEY (sensor_id) REFERENCES sensores(id)
+    FOREIGN KEY (instrumento_id) REFERENCES instrumentos(id)
 );
 ```
 
 Leitura:
 
 - cada leitura tem seu próprio `id`;
-- `sensor_id` informa a qual sensor a leitura pertence;
+- `instrumento_id` informa a qual instrumento a leitura pertence;
 - `FOREIGN KEY` impede que a leitura fique sem referência válida.
 
 ### 9.9 Consultar série temporal
 
 ```sql
-SELECT s.tag, l.timestamp, l.valor, l.status
+SELECT i.tag, l.timestamp, l.valor, l.status
 FROM leituras l
-JOIN sensores s ON s.id = l.sensor_id
-WHERE s.tag = 'LT-101'
+JOIN instrumentos i ON i.id = l.instrumento_id
+WHERE i.tag = 'LT-101'
 ORDER BY l.timestamp;
 ```
 
 Leitura:
 
-- `JOIN` junta `leituras` com `sensores`;
+- `JOIN` junta `leituras` com `instrumentos`;
 - `WHERE` filtra apenas o sensor desejado;
 - `ORDER BY` organiza a série temporal.
 
@@ -1015,8 +1051,8 @@ SELECT
     AVG(valor) AS media,
     SUM(CASE WHEN status <> 'operando' THEN 1 ELSE 0 END) AS alertas
 FROM leituras l
-JOIN sensores s ON s.id = l.sensor_id
-WHERE s.tag = 'LT-101';
+JOIN instrumentos i ON i.id = l.instrumento_id
+WHERE i.tag = 'LT-101';
 ```
 
 Leitura:
@@ -1031,54 +1067,52 @@ Leitura:
 
 ## 10. Mini-caso prático
 
-A estação de bombeamento já envia leituras de sensores para o supervisor Python. Agora o supervisor precisa:
+A estação de bombeamento já envia leituras em JSON para o supervisor Python. Agora o supervisor precisa deixar de responder apenas ao estado atual e passar a reconstruir o histórico da operação.
+
+Neste cenário, o supervisor precisa:
 
 1. criar um banco SQLite local;
-2. cadastrar sensores automaticamente;
+2. cadastrar instrumentos automaticamente a partir das leituras JSON;
 3. salvar leituras como série temporal;
-4. registrar comandos e eventos como dados transacionais;
-5. calcular estatísticas por sensor;
-6. responder consultas usadas no dashboard.
+4. consultar múltiplas visões dos instrumentos usando dados do banco;
+5. receber um comando JSON para desligar um instrumento;
+6. registrar quem desligou, quando desligou e qual instrumento foi afetado;
+7. gerar um evento operacional de auditoria;
+8. calcular estatísticas por instrumento.
 
 O aluno deve conseguir explicar:
 
 - a leitura `LT-101 em 2026-05-26T10:00:00-03:00` é um ponto de série temporal;
-- o comando `ligar_bomba` enviado pelo operador é uma transação;
+- o comando `desligar` enviado pelo operador é uma transação;
 - a média de nível no período é uma estatística derivada;
 - salvar a leitura e o comando é uso OLTP;
 - calcular média, máximo, mínimo e quantidade de alertas é uso OLAP;
 - o banco ajuda o supervisor a reconstruir o histórico do processo.
 
----
+### Visões esperadas a partir do banco
 
-## 11. Atividade didática
+A aplicação não deve montar o dashboard apenas a partir de uma lista em memória. Ela deve consultar o SQLite.
 
-A atividade prática correspondente está no starter:
+Exemplos de visões:
 
-```text
-classroom_starters/cenario_06_banco_supervisorio/
-```
-
-Entrega esperada:
-
-- implementação de `src_python/banco_supervisorio.py`;
-- criação das tabelas SQLite;
-- importação de leituras de exemplo;
-- registro de comandos e eventos;
-- consulta de série temporal por sensor;
-- cálculo e armazenamento de estatísticas;
-- testes automáticos passando com `pytest`;
-- `AI_LOG.md` preenchido se houver uso de agente de IA.
+| Visão | Pergunta respondida | Dados usados |
+|---|---|---|
+| Série temporal | como o valor de `LT-101` variou? | `instrumentos` + `leituras` |
+| Estado dos instrumentos | quais instrumentos estão ativos? | `instrumentos` |
+| Última leitura | qual foi o último valor conhecido? | `leituras` ordenadas por tempo |
+| Estatísticas | mínimo, máximo, média e alertas | agregações em `leituras` |
+| Auditoria de comandos | quem desligou `FT-301` e quando? | `comandos` + `eventos_operacionais` |
 
 ---
 
-## 12. Perguntas de revisão rápida
+## 11. Perguntas de revisão rápida
 
 1. Qual é a diferença entre guardar o valor atual de um sensor e guardar o histórico de leituras?
 2. Por que uma leitura de sensor é melhor modelada como série temporal do que como dado transacional?
-3. Qual problema a chave estrangeira `leituras.sensor_id` resolve?
-4. Por que estatísticas como média e máximo podem ser calculadas por SQL em vez de percorrer tudo manualmente em Python?
-5. Em que ponto da atividade aparece OLTP e em que ponto aparece OLAP?
+3. Qual problema a chave estrangeira `leituras.instrumento_id` resolve?
+4. Por que o comando `desligar` deve registrar operador e timestamp?
+5. Por que estatísticas como média e máximo podem ser calculadas por SQL em vez de percorrer tudo manualmente em Python?
+6. Em que ponto da atividade aparece OLTP e em que ponto aparece OLAP?
 
 ---
 
