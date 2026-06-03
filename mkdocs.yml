@@ -62,6 +62,7 @@ nav:
       - 03. Aula integrada - Estado dos objetos: parte-2-projeto/03-encapsulamento-e-validacao.md
       - 04. Aula integrada - Atividade prática: parte-2-projeto/04-regras-de-controle.md
       - 05. Bancos de dados no supervisório: parte-2-projeto/05-bancos-de-dados-supervisorio.md
+      - 06. Tratamento de Erros e Exceções: parte-2-projeto/06-tratamento-erros-excecoes.md
       # Aulas seguintes temporariamente ocultas do menu para publicação gradual.
       # - 05. Strategy e Command: parte-2-projeto/05-strategy-e-command.md
       # - 06. Observer e Alarmes: parte-2-projeto/06-observer-e-alarmes.md

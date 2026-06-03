@@ -3,7 +3,7 @@
 ## Objetivos de aprendizagem
 
 - Integrar os conceitos de POO estudados na primeira parte em um projeto único e progressivo.
-- Separar responsabilidades entre um dispositivo simulado em C++ e um supervisor em Python/Streamlit.
+- Separar responsabilidades entre um controlador/dispositivo simulado em C++ e um mini-SCADA em Python/Streamlit.
 - Evoluir uma solução simples com JSON para persistência, comunicação TCP, testes e padrões de projeto.
 
 **Tempo estimado:** 15h, organizadas em 10 aulas de 1h30.
@@ -20,8 +20,8 @@ Nesta etapa, você construirá um projeto progressivo chamado **Estação de Bom
 
 O sistema será dividido em duas partes:
 
-- **dispositivo C++:** simula sensores, bomba, regras locais e geração de leituras;
-- **supervisor Python/Streamlit:** recebe os dados, apresenta tabela, gráfico, resumo, alarmes e histórico.
+- **controlador/dispositivo C++:** simula sensores, bomba, regras locais e geração de leituras;
+- **mini-SCADA Python/Streamlit:** recebe os dados, apresenta tabela, gráfico, resumo, alarmes e histórico.
 
 A automação industrial aparece como contexto. O objetivo principal continua sendo Programação Orientada a Objetos: classes, objetos, encapsulamento, herança, polimorfismo, composição, associação, tratamento de exceções, coleções, testes e organização de código.
 
@@ -29,7 +29,7 @@ A automação industrial aparece como contexto. O objetivo principal continua se
 
 ## 2. Contrato JSON inicial
 
-O primeiro contrato entre o dispositivo e o supervisor será um objeto JSON simples:
+O primeiro contrato entre o controlador C++ e o mini-SCADA Python será um objeto JSON simples:
 
 ```json
 {
@@ -43,11 +43,11 @@ O primeiro contrato entre o dispositivo e o supervisor será um objeto JSON simp
 
 | Campo | Significado | Exemplo | Observação |
 |---|---|---|---|
-| `tag` | identificador do dispositivo | `LT-101` | deve ser único no sistema |
+| `tag` | identificador do instrumento no controlador | `LT-101` | deve ser único no sistema |
 | `valor` | leitura simulada | `58.4` | usa ponto decimal |
 | `unidade` | unidade de grandeza | `%` | ajuda a interpretar o valor |
 | `timestamp` | instante da leitura | `2026-03-25T10:30:00-03:00` | formato textual ISO 8601 |
-| `status` | estado operacional | `operando` | usado pelo supervisor e pelas regras |
+| `status` | estado operacional | `operando` | usado pelo mini-SCADA e pelas regras |
 
 ### Ponte C++ -> Python
 
@@ -67,13 +67,13 @@ O primeiro contrato entre o dispositivo e o supervisor será um objeto JSON simp
 | 1 | Cenário e modelagem | diagrama inicial, contrato JSON e esqueleto de repositório |
 | 2 | Aula integrada: listas dinâmicas em C++ e Python | `vector<unique_ptr<Sensor>>`, `push_back`, `const auto&`, `list` e `append` |
 | 3 | Aula integrada: objetos da lista com estado protegido | validação de leituras e organização dos dados recebidos |
-| 4 | Aula integrada: atividade prática | exercício único com sensores, lista de objetos e supervisor |
+| 4 | Aula integrada: atividade prática | exercício único com sensores, lista de objetos e mini-SCADA Python |
 | 5 | Bancos de dados no supervisório | dados transacionais, séries temporais, SQLite e estatísticas |
-| 6 | Strategy e Command | regras e comandos intercambiáveis |
-| 7 | Observer e alarmes | notificações desacopladas |
-| 8 | Persistência | histórico em CSV e evolução para SQLite |
-| 9 | Comunicação TCP | JSON por linha em cliente-servidor simples |
-| 10 | Testes e validação | testes de contrato, regras e integração |
+| 6 | Tratamento de erros e exceções | falhas controladas no controlador C++ e validação robusta no mini-SCADA Python |
+| 7 | Testes e validação | testes de contrato, regras e integração |
+| 8 | Strategy e Command | regras e comandos intercambiáveis |
+| 9 | Observer e alarmes | notificações desacopladas |
+| 10 | Persistência e comunicação | histórico em CSV/SQLite e JSON por linha |
 | 11 | Projeto final | mini-SCADA e defesa arquitetural |
 
 ---
@@ -128,8 +128,8 @@ Esse problema é pequeno, mas permite discutir várias decisões de POO:
 - `SensorNivel` e `SensorPressao` devem herdar de `Sensor`?
 - Como guardar vários sensores diferentes em uma lista dinâmica?
 - `EstacaoBombeamento` deve conter uma `Bomba`?
-- Quem conhece as regras: a bomba, o sensor, o supervisor ou um controlador?
-- O supervisor deve alterar o estado interno do dispositivo diretamente?
+- Quem conhece as regras: a bomba, o sensor, o mini-SCADA ou um controlador?
+- O mini-SCADA deve alterar o estado interno do controlador diretamente?
 
 ---
 
@@ -145,7 +145,7 @@ Esse problema é pequeno, mas permite discutir várias decisões de POO:
 
 ## 7. Checklist de entrega da parte 2
 
-- [ ] O projeto tem dispositivo C++ e supervisor Python/Streamlit.
+- [ ] O projeto tem controlador/dispositivo C++ e mini-SCADA Python/Streamlit.
 - [ ] O contrato JSON está documentado no `README.md`.
 - [ ] A assinatura operacional da dupla está documentada.
 - [ ] O projeto final possui pelo menos 4 tipos de sensores.
@@ -154,7 +154,7 @@ Esse problema é pequeno, mas permite discutir várias decisões de POO:
 - [ ] Existem templates de issue e pull request.
 - [ ] O código usa herança, polimorfismo e encapsulamento de forma explícita.
 - [ ] O projeto usa pelo menos dois padrões de projeto.
-- [ ] O supervisor apresenta tabela, gráfico e resumo.
+- [ ] O mini-SCADA apresenta tabela, gráfico e resumo.
 - [ ] O histórico é salvo em CSV e em SQLite.
 - [ ] Há testes para regras de negócio e contrato JSON.
 - [ ] Há testes cobrindo parâmetros específicos da dupla.
@@ -164,9 +164,9 @@ Esse problema é pequeno, mas permite discutir várias decisões de POO:
 
 ## 8. Perguntas de revisão rápida
 
-1. Por que separar o dispositivo C++ do supervisor Python?
+1. Por que separar o controlador C++ do mini-SCADA Python?
 2. O que transforma um JSON válido em um contrato útil para integração?
-3. Qual é o risco de deixar o supervisor alterar diretamente atributos internos do dispositivo?
+3. Qual é o risco de deixar o mini-SCADA alterar diretamente atributos internos do controlador?
 
 ---
 

@@ -24,7 +24,8 @@
 - `06. Arquivos e JSON para integração`: gravar telemetria em C++ e consumir os dados em Python com Streamlit.
 - `07. Datas, horarios e timestamps`: representar instantes, duracoes e horarios em JSON com UTC.
 - `08. UML e Diagrama de Classes`: modelar a estrutura do sistema antes de codificar e relacionar UML com encapsulamento, composição e herança.
-- As demais unidades continuam no repositório, mas seguem ocultadas enquanto a trilha inicial e consolidada.
+- `09. Parte 2 - Projeto Integrador`: evoluir a integração entre controlador C++ e mini-SCADA Python com modelagem, listas dinâmicas, validação, banco de dados e tratamento de exceções.
+- As demais unidades avançadas continuam no repositório, mas seguem ocultadas enquanto a trilha publicada é consolidada.
 
 ## 2. Trilha inicial do curso
 
@@ -38,6 +39,7 @@
 8. Manipulacao de arquivos e JSON para integrar C++ e Python.
 9. Datas, horarios e timestamps para telemetria, logs e ordenacao de eventos.
 10. UML e diagrama de classes para representar estrutura, responsabilidade e relações antes da implementação.
+11. Evolucao da integração entre controlador C++ e mini-SCADA Python com listas dinâmicas, banco de dados e tratamento controlado de erros.
 
 ## 3. Resultado esperado nesta virada de unidade
 
