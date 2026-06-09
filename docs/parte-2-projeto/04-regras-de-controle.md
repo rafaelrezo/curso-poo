@@ -74,6 +74,14 @@ O programa deve:
 6. chamar `simularLeitura()` em cada sensor;
 7. imprimir `tag`, `tipo`, `valor`, `unidade` e `status`.
 
+Use uma saída simples com separador `|` para facilitar leitura, comparação e testes:
+
+```text
+LT-101|nivel|42|%|operando
+PT-201|pressao|2.7|bar|operando
+FT-301|vazao|18|m3/h|operando
+```
+
 ### Requisitos em Python
 
 Crie uma estrutura equivalente para representar leituras recebidas pelo supervisor.
@@ -86,6 +94,26 @@ O programa deve:
 4. guardar esses objetos em uma lista;
 5. separar leituras válidas e leituras inválidas;
 6. imprimir uma tabela simples no terminal ou preparar um `DataFrame`.
+
+No Python, organize o supervisor com esta API mínima:
+
+```python
+def validar_leitura(leitura: dict) -> None:
+    ...
+
+
+class LeituraSupervisor:
+    def como_linha(self) -> dict:
+        ...
+
+
+def criar_leituras_supervisor(dados: list[dict]) -> tuple[list[LeituraSupervisor], list[dict]]:
+    ...
+
+
+def avaliar_operacao(leituras: list[LeituraSupervisor]) -> str:
+    ...
+```
 
 ---
 
@@ -135,6 +163,13 @@ Depois de montar a lista, aplique uma regra simples apenas para praticar o uso d
 | nenhuma condição crítica | `operacao_normal` |
 
 Essa regra pode aparecer como uma função separada. Ela não deve ficar dentro do código de tela.
+
+Use a seguinte prioridade quando mais de uma condição aparecer ao mesmo tempo:
+
+1. `nivel_baixo`;
+2. `nivel_alto`;
+3. `pressao_alta`;
+4. `operacao_normal`.
 
 Exemplo de saída conceitual:
 
@@ -205,8 +240,6 @@ A entrega deve conter:
 - exemplo de saída com pelo menos três sensores;
 - uma leitura inválida tratada sem encerrar o programa;
 - resposta curta no README explicando `vector`, `unique_ptr`, `push_back`, `const auto&`, `list` e `append`.
-
----
 
 ## Fontes de referência
 

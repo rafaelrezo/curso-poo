@@ -1,8 +1,8 @@
 site_name: Curso de Programação Orientada a Objetos
 site_description: Trilha de POO para Engenharia com C++ e Python
 site_url: ""
-repo_url: ""
-repo_name: ""
+repo_url: "https://github.com/rafaelrezo/curso-poo"
+repo_name: "rafaelrezo/curso-poo"
 
 theme:
   name: material
@@ -43,6 +43,8 @@ exclude_docs: |
   parte-2-projeto/especificacao-projeto-final.md
   parte-2-projeto/especificacao-projeto-final.html
   parte-2-projeto/especificacao-projeto-final.pdf
+  parte-2-projeto/07-persistencia.md
+  parte-2-projeto/08-comunicacao-tcp.md
 
 nav:
   - Início: index.md
@@ -63,10 +65,7 @@ nav:
       - 04. Aula integrada - Atividade prática: parte-2-projeto/04-regras-de-controle.md
       - 05. Bancos de dados no supervisório: parte-2-projeto/05-bancos-de-dados-supervisorio.md
       - 06. Tratamento de Erros e Exceções: parte-2-projeto/06-tratamento-erros-excecoes.md
-      # Aulas seguintes temporariamente ocultas do menu para publicação gradual.
-      # - 05. Strategy e Command: parte-2-projeto/05-strategy-e-command.md
-      # - 06. Observer e Alarmes: parte-2-projeto/06-observer-e-alarmes.md
-      # - 07. Persistência: parte-2-projeto/07-persistencia.md
-      # - 08. Comunicação TCP: parte-2-projeto/08-comunicacao-tcp.md
-      # - 09. Testes e Validação: parte-2-projeto/09-testes-e-validacao.md
+      - 07. Padrões I - Strategy, Command e Repository: parte-2-projeto/05-strategy-e-command.md
+      - 08. Padrões II - Observer, Eventos e Alarmes: parte-2-projeto/06-observer-e-alarmes.md
+      - 09. Testes e Validação: parte-2-projeto/09-testes-e-validacao.md
       - 10. Projeto Final: parte-2-projeto/10-projeto-final.md

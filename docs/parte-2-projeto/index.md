@@ -70,11 +70,10 @@ O primeiro contrato entre o controlador C++ e o mini-SCADA Python será um objet
 | 4 | Aula integrada: atividade prática | exercício único com sensores, lista de objetos e mini-SCADA Python |
 | 5 | Bancos de dados no supervisório | dados transacionais, séries temporais, SQLite e estatísticas |
 | 6 | Tratamento de erros e exceções | falhas controladas no controlador C++ e validação robusta no mini-SCADA Python |
-| 7 | Testes e validação | testes de contrato, regras e integração |
-| 8 | Strategy e Command | regras e comandos intercambiáveis |
-| 9 | Observer e alarmes | notificações desacopladas |
-| 10 | Persistência e comunicação | histórico em CSV/SQLite e JSON por linha |
-| 11 | Projeto final | mini-SCADA e defesa arquitetural |
+| 7 | Padrões I: Strategy, Command e Repository | regras de controle, comandos rastreáveis e acesso organizado a dados |
+| 8 | Padrões II: Observer, eventos e alarmes | notificações desacopladas e alarmes operacionais |
+| 9 | Testes e validação | testes de regras, comandos, contrato JSON, alarmes, persistência e integração |
+| 10 | Projeto final | mini-SCADA e defesa arquitetural |
 
 ---
 
