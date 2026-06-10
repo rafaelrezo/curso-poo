@@ -165,6 +165,8 @@ padroes_ii_observer/
   sem_observer/
     dispositivo_cpp/
       main.cpp
+    supervisor_python/
+      app_sem_observer.py
   dispositivo_cpp/
     include/
       evento_operacional.hpp
@@ -175,6 +177,11 @@ padroes_ii_observer/
       estacao_bombeamento.hpp
     src/
       main.cpp
+  supervisor_python/
+    modelos.py
+    observadores.py
+    monitor_eventos.py
+    app_demo.py
 ```
 
 Essa estrutura mostra a organização do padrão:
@@ -189,13 +196,15 @@ Essa estrutura mostra a organização do padrão:
 | `registrador_eventos.hpp` | simula gravação de histórico |
 | `estacao_bombeamento.hpp` | detecta condições e publica eventos |
 | `main.cpp` | monta a estação e registra observadores |
+| `supervisor_python/` | aplica `Observer` no mini-SCADA Python |
 
 Leitura recomendada:
 
 1. Comece por `sem_observer/dispositivo_cpp/main.cpp`.
-2. Observe que a estação cria alarme, imprime log e salva histórico.
-3. Depois leia `evento_operacional.hpp` e `observador_evento.hpp`.
-4. Compare como as reações foram movidas para observadores separados.
+2. Compare com `sem_observer/supervisor_python/app_sem_observer.py`.
+3. Observe que a estação ou o supervisor criam alarme, imprimem log e salvam histórico no mesmo fluxo.
+4. Depois leia `evento_operacional.hpp`, `observador_evento.hpp` e `supervisor_python/observadores.py`.
+5. Compare como as reações foram movidas para observadores separados.
 
 ---
 
@@ -383,7 +392,7 @@ git clone https://github.com/rafaelrezo/curso-poo-exemplos.git
 cd curso-poo-exemplos/padroes_ii_observer
 ```
 
-Compile e execute:
+Compile e execute a versão C++ com `Observer`:
 
 ```bash
 g++ -std=c++17 -Wall -Wextra -pedantic \
@@ -394,9 +403,132 @@ g++ -std=c++17 -Wall -Wextra -pedantic \
 /tmp/padroes_ii_observer_cpp
 ```
 
+Execute o contraexemplo Python sem `Observer`:
+
+```bash
+python3 sem_observer/supervisor_python/app_sem_observer.py
+```
+
+Execute a versão Python com `Observer`:
+
+```bash
+python3 supervisor_python/app_demo.py
+```
+
 ---
 
-## 12. Ponte C++ -> Python: alarmes no supervisor
+## 12. Observer no supervisório Python
+
+O `Observer` é especialmente útil no supervisório, porque é nele que normalmente aparecem:
+
+- lista de alarmes;
+- histórico de eventos;
+- mensagens de diagnóstico;
+- filtros por severidade;
+- notificações visuais;
+- persistência em CSV ou SQLite.
+
+Sem `Observer`, uma função do supervisor tende a fazer tudo ao mesmo tempo: validar leitura, criar alarme, imprimir log e salvar histórico.
+
+Contraexemplo:
+
+- [Python sem `Observer` - `app_sem_observer.py`](https://github.com/rafaelrezo/curso-poo-exemplos/blob/main/padroes_ii_observer/sem_observer/supervisor_python/app_sem_observer.py)
+
+Na versão organizada, o exemplo Python está em:
+
+- [Modelos - `modelos.py`](https://github.com/rafaelrezo/curso-poo-exemplos/blob/main/padroes_ii_observer/supervisor_python/modelos.py)
+- [Observadores - `observadores.py`](https://github.com/rafaelrezo/curso-poo-exemplos/blob/main/padroes_ii_observer/supervisor_python/observadores.py)
+- [Monitor de eventos - `monitor_eventos.py`](https://github.com/rafaelrezo/curso-poo-exemplos/blob/main/padroes_ii_observer/supervisor_python/monitor_eventos.py)
+- [Demonstração - `app_demo.py`](https://github.com/rafaelrezo/curso-poo-exemplos/blob/main/padroes_ii_observer/supervisor_python/app_demo.py)
+
+### Modelos do supervisório
+
+O arquivo `modelos.py` separa dados de leitura, evento e alarme:
+
+```python
+@dataclass
+class EventoOperacional:
+    timestamp: str
+    origem: str
+    tipo: str
+    mensagem: str
+    severidade: str
+```
+
+O evento é o objeto publicado pelo monitor. Ele não sabe se será exibido, salvo ou contado.
+
+### Observadores no Python
+
+O arquivo `observadores.py` define o contrato:
+
+```python
+class ObservadorEvento(Protocol):
+    def notificar(self, evento: EventoOperacional) -> None:
+        ...
+```
+
+E define reações separadas:
+
+| Observador | Responsabilidade |
+|---|---|
+| `GerenciadorAlarmes` | transforma eventos relevantes em alarmes ativos |
+| `LoggerConsole` | imprime mensagens de diagnóstico |
+| `RepositorioEventosMemoria` | guarda eventos como histórico em memória |
+
+### Monitor de eventos
+
+O arquivo `monitor_eventos.py` é o sujeito observado no supervisório:
+
+```python
+class MonitorEventos:
+    def adicionar_observador(self, observador: ObservadorEvento) -> None:
+        self._observadores.append(observador)
+
+    def publicar(self, evento: EventoOperacional) -> None:
+        for observador in self._observadores:
+            observador.notificar(evento)
+```
+
+O monitor avalia leituras e publica eventos. Ele não precisa saber se o evento vai virar tabela, log ou histórico.
+
+### Fluxo no supervisor
+
+O arquivo `app_demo.py` monta o fluxo:
+
+```python
+monitor = MonitorEventos()
+alarmes = GerenciadorAlarmes()
+logger = LoggerConsole()
+repositorio_eventos = RepositorioEventosMemoria()
+
+monitor.adicionar_observador(alarmes)
+monitor.adicionar_observador(logger)
+monitor.adicionar_observador(repositorio_eventos)
+```
+
+Leitura do fluxo:
+
+```text
+Leitura recebida pelo supervisório
+        |
+        v
+MonitorEventos avalia a leitura
+        |
+        v
+publica EventoOperacional
+        |
+        +--> GerenciadorAlarmes atualiza alarmes ativos
+        |
+        +--> LoggerConsole registra diagnóstico
+        |
+        +--> RepositorioEventosMemoria guarda histórico
+```
+
+Esse desenho é próximo do projeto final: o supervisor pode trocar `RepositorioEventosMemoria` por SQLite sem misturar essa decisão com a regra de alarme.
+
+---
+
+## 13. Ponte C++ -> Python: alarmes no supervisor
 
 No supervisor, os alarmes podem ser representados como dados.
 
@@ -423,7 +555,7 @@ No projeto final, o supervisor pode carregar alarmes de JSON, CSV ou SQLite e ap
 
 ---
 
-## 13. Alarmes mínimos para o projeto final
+## 14. Alarmes mínimos para o projeto final
 
 O projeto final deve possuir pelo menos três tipos de alarme.
 
@@ -446,7 +578,7 @@ Recomendação prática:
 
 ---
 
-## 14. JSON para eventos e alarmes
+## 15. JSON para eventos e alarmes
 
 Forma simples: um alarme por linha.
 
@@ -483,7 +615,7 @@ Use a forma simples se a equipe ainda estiver consolidando o fluxo. Use a forma 
 
 ---
 
-## 15. Comparação final
+## 16. Comparação final
 
 | Técnica/Padrão | Melhor uso | Esforço | Entregável | Limitação |
 |---|---|---|---|---|
@@ -501,7 +633,7 @@ Recomendação prática:
 
 ---
 
-## 16. Mini-caso prático
+## 17. Mini-caso prático
 
 Durante um ciclo, `PT-201` mede `7.2 bar`. O limite seguro é `6.0 bar`.
 
@@ -526,35 +658,38 @@ Os observadores reagem:
 
 ---
 
-## 17. Exercícios práticos
+## 18. Exercícios práticos
 
 1. Abrir o exemplo `padroes_ii_observer`.
-2. Executar primeiro o contraexemplo em `sem_observer/`.
-3. Identificar o arquivo que define o evento.
-4. Identificar o arquivo que define a interface dos observadores.
-5. Explicar por que `EstacaoBombeamento` não precisa conhecer `LoggerConsole` em detalhes.
-6. Criar um novo observador chamado `ContadorEventos`.
-7. Documentar no README do projeto final quais arquivos representam o `Observer`.
+2. Executar primeiro os contraexemplos em `sem_observer/`.
+3. Executar o exemplo C++ com `Observer`.
+4. Executar o exemplo Python com `Observer`.
+5. Identificar o arquivo que define o evento.
+6. Identificar o arquivo que define a interface dos observadores em C++ e em Python.
+7. Explicar por que `EstacaoBombeamento` e `MonitorEventos` não precisam conhecer todos os detalhes das reações.
+8. Criar um novo observador chamado `ContadorEventos`.
+9. Documentar no README do projeto final quais arquivos representam o `Observer`.
 
 ---
 
-## 18. Checklist de entrega
+## 19. Checklist de entrega
 
 - [ ] O README diferencia leitura, evento e alarme.
 - [ ] Existe estrutura para evento operacional.
 - [ ] Existe pelo menos um observador.
 - [ ] A estação publica eventos sem conhecer a tela.
+- [ ] O supervisório trata alarmes sem concentrar todas as reações em uma única função.
 - [ ] Existem pelo menos três tipos de alarme.
 - [ ] O supervisor mostra alarmes de forma tabular.
 - [ ] A equipe consegue explicar o ganho do `Observer`.
 
 ---
 
-## 19. Perguntas de revisão rápida
+## 20. Perguntas de revisão rápida
 
 1. Qual é a diferença entre leitura, evento e alarme?
 2. Por que a estação não deve salvar banco, imprimir log e atualizar tela ao mesmo tempo?
-3. Como a organização em arquivos ajuda a explicar o `Observer` na defesa técnica?
+3. Por que o supervisório também se beneficia do `Observer`?
 
 ---
 
