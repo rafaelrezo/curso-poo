@@ -1,4 +1,4 @@
-# Aula 10 - Projeto Final: Mini-SCADA da Estação de Bombeamento
+# Aula 12 - Projeto Final: Mini-SCADA da Estação de Bombeamento
 
 ## Objetivos de aprendizagem
 
@@ -115,6 +115,8 @@ O projeto final deve possuir:
 - supervisor em Streamlit;
 - histórico salvo em CSV e em SQLite;
 - testes cobrindo regras principais e parâmetros da dupla;
+- matriz de testes no `README.md`;
+- evidência de execução local e, quando aplicável, do workflow de CI;
 - `README.md` atualizado;
 - `AI_LOG.md` preenchido;
 - histórico de issues, commits ou pull requests mostrando divisão de trabalho;

@@ -4,9 +4,9 @@
 
 - Integrar os conceitos de POO estudados na primeira parte em um projeto único e progressivo.
 - Separar responsabilidades entre um controlador/dispositivo simulado em C++ e um mini-SCADA em Python/Streamlit.
-- Evoluir uma solução simples com JSON para persistência, comunicação TCP, testes e padrões de projeto.
+- Evoluir uma solução simples com JSON para persistência, comunicação TCP, testes, integração contínua e padrões de projeto.
 
-**Tempo estimado:** 15h, organizadas em 10 aulas de 1h30.
+**Tempo estimado:** 18h, organizadas em 12 aulas de 1h30.
 
 ## Vídeo de contexto
 
@@ -72,8 +72,10 @@ O primeiro contrato entre o controlador C++ e o mini-SCADA Python será um objet
 | 6 | Tratamento de erros e exceções | falhas controladas no controlador C++ e validação robusta no mini-SCADA Python |
 | 7 | Padrões I: Strategy, Command e Repository | regras de controle, comandos rastreáveis e acesso organizado a dados |
 | 8 | Padrões II: Observer, eventos e alarmes | notificações desacopladas e alarmes operacionais |
-| 9 | Testes e validação | testes de regras, comandos, contrato JSON, alarmes, persistência e integração |
-| 10 | Projeto final | mini-SCADA e defesa arquitetural |
+| 9 | Fundamentos de testes, qualidade e risco | tipos de testes, pirâmide, matriz de risco e testabilidade |
+| 10 | Testes automatizados em C++ e Python | testes de regras, comandos, contrato JSON, alarmes, persistência e integração |
+| 11 | Execução local, CI e validação em ambiente real | GitHub Actions, smoke test, PR e evidências de entrega |
+| 12 | Projeto final | mini-SCADA e defesa arquitetural |
 
 ---
 
@@ -97,6 +99,7 @@ estacao-bombeamento/
     alarmes.csv
   .github/
     ISSUE_TEMPLATE/
+    workflows/
     pull_request_template.md
   README.md
   AI_LOG.md
@@ -108,6 +111,7 @@ estacao-bombeamento/
 - `AI_LOG.md`: registra uso de agentes de IA.
 - `.github/ISSUE_TEMPLATE/atividade.md`: descreve problemas, tarefas e critérios.
 - `.github/pull_request_template.md`: orienta revisão, testes e rastreabilidade.
+- `.github/workflows/testes.yml`: executa testes C++ e Python no pull request, quando a equipe chegar à aula de CI.
 
 ---
 
@@ -157,6 +161,8 @@ Esse problema é pequeno, mas permite discutir várias decisões de POO:
 - [ ] O histórico é salvo em CSV e em SQLite.
 - [ ] Há testes para regras de negócio e contrato JSON.
 - [ ] Há testes cobrindo parâmetros específicos da dupla.
+- [ ] Há matriz de testes no `README.md`.
+- [ ] Há workflow de CI ou evidência equivalente de execução automatizada.
 - [ ] A equipe apresenta uma defesa técnica final.
 
 ---

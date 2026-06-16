@@ -1,434 +1,266 @@
-# Aula 9 - Testes e Validação da Arquitetura
+# Aula 9 - Fundamentos de Testes, Qualidade e Risco
 
 ## Objetivos de aprendizagem
 
-- Criar testes pequenos para regras, comandos, contrato JSON e persistência.
-- Diferenciar teste unitário, teste de contrato e teste de integração simples.
-- Usar testes para preparar a entrega e a defesa técnica do projeto final.
+- Diferenciar testes unitários, de integração, de contrato, de sistema, regressão, aceitação, carga e fumaça.
+- Relacionar cada tipo de teste com o risco que ele reduz no projeto da estação.
+- Conectar testes com qualidade de código, revisão por pull request e defesa técnica.
 
-**Tempo estimado:** 2h
+**Tempo estimado:** 1h30.
 
 ## Vídeo da aula
 
-![type:video](https://www.youtube.com/embed/H2jDPK3HVzw)
+![type:video](https://www.youtube.com/embed/5HBS5M97wXo)
 
 ---
 
-## 1. Por que testar antes do projeto final?
+## 1. Por que testar no projeto integrador?
 
-Quando o sistema ainda é pequeno, parece suficiente executar o programa e olhar a saída. No projeto final, isso deixa de ser confiável.
+No início do projeto, parece suficiente executar o programa e olhar a saída. Essa estratégia falha quando o sistema passa a ter regras, persistência, alarmes e duas linguagens conversando entre si.
 
 Uma alteração pequena pode quebrar:
 
-- a regra de ligar a bomba;
+- a regra que liga ou desliga a bomba;
 - o bloqueio por pressão alta;
-- a geração de comando;
-- o formato do JSON;
-- a separação entre leituras válidas e inválidas;
-- a gravação no banco;
-- a lista de alarmes exibida no supervisor.
+- a geração de comandos;
+- o formato do JSON enviado pelo controlador;
+- a separação entre leitura válida e inválida;
+- a gravação e consulta no SQLite;
+- a lista de alarmes exibida no mini-SCADA.
 
-Teste é uma forma de transformar uma expectativa em verificação automática.
+Teste transforma expectativa em verificação repetível.
 
-Exemplo de expectativa:
+Exemplo de expectativa operacional:
 
 ```text
 Se o nível estiver abaixo de 30% e a pressão estiver normal,
 a regra deve gerar LIGAR_BOMBA.
 ```
 
-Essa frase pode virar teste.
+Essa frase deve virar teste antes da apresentação final.
 
 ---
 
-## 2. O que testar neste projeto
+## 2. Vocabulário essencial
 
-O projeto possui duas partes principais:
+| Tipo de teste | Pergunta principal | Exemplo no projeto | Custo típico | Limitação |
+|---|---|---|---|---|
+| Unitário | uma unidade isolada funciona? | `ControleNormal.decidir(25, 2)` gera `LIGAR_BOMBA` | baixo | não prova integração |
+| Integração | duas ou mais partes conversam? | Repository salva e consulta no SQLite | médio | pode ser mais lento |
+| Contrato | o formato combinado foi respeitado? | JSON tem `tag`, `valor`, `unidade`, `timestamp`, `status` | baixo/médio | não valida a tela |
+| Sistema | o fluxo completo funciona? | C++ gera JSON, Python lê, salva e exibe | alto | mais difícil de diagnosticar |
+| Regressão | um erro corrigido continua corrigido? | leitura inválida não derruba o supervisor | baixo/médio | depende de histórico de falhas |
+| Aceitação | o usuário consegue validar o requisito? | checklist da demonstração no Streamlit | médio | pode envolver avaliação manual |
+| Carga | o sistema suporta volume esperado? | importar 10.000 leituras sem travar | médio/alto | pode ser exagero para o curso |
+| Fumaça | o sistema básico subiu? | app abre, banco inicializa e há rota/tela principal | baixo | cobre pouco comportamento |
 
-- controlador/dispositivo em `C++`;
-- supervisor em `Python/Streamlit`.
+### Recomendação prática por cenário
 
-Os testes não precisam cobrir tudo com a mesma profundidade. O foco é proteger os pontos que definem o comportamento do sistema.
-
-| Camada | O que testar | Exemplo |
+| Cenário | Teste prioritário | Por quê |
 |---|---|---|
-| Regra de controle | entrada operacional gera decisão correta | nível baixo gera `LIGAR_BOMBA` |
-| Comando | ação altera estado esperado | `BloquearPartida` bloqueia bomba |
-| Contrato JSON | campos obrigatórios e tipos | `tag`, `valor`, `unidade`, `timestamp`, `status` |
-| Alarmes | condição crítica gera alarme | pressão alta gera `PRESSAO_ALTA` |
-| Persistência | dado salvo pode ser consultado | leitura salva aparece em `listar_por_tag` |
-| Integração simples | saída de uma parte entra na outra | JSON do C++ é aceito pelo Python |
+| Regra de controle | unitário | regra deve ser rápida de verificar e fácil de explicar |
+| JSON entre C++ e Python | contrato | evita quebra silenciosa entre as camadas |
+| SQLite | integração | o risco está na conversa com o banco |
+| Streamlit | fumaça e aceitação | parte visual precisa de evidência de funcionamento |
+| Falha já encontrada | regressão | impede que o erro volte antes da entrega |
+| Demonstração final | sistema e checklist | comprova fluxo visível para a banca |
 
 ---
 
-## 3. Tipos de teste
+## 3. Pirâmide de testes aplicada
 
-| Tipo | Pergunta principal | Exemplo | Ferramenta simples |
-|---|---|---|---|
-| Unitário | uma função ou classe isolada funciona? | `ControlePorFaixa` decide corretamente | `assert` em C++ ou `pytest` em Python |
-| Contrato | o formato combinado está sendo respeitado? | JSON contém campos obrigatórios | `pytest` |
-| Integração simples | duas partes conversam corretamente? | C++ gera JSON que Python valida | `pytest` + arquivo de exemplo |
-| Regressão | um erro corrigido continua corrigido? | leitura inválida não derruba importação | teste específico |
-| Validação manual | a tela ajuda a entender o sistema? | gráfico, tabela e alarmes aparecem | checklist de demonstração |
-
-Teste manual ainda é útil, principalmente para Streamlit. Mas ele não substitui testes automáticos das regras principais.
-
----
-
-## 4. Teste unitário de Strategy em C++
-
-Para começar com baixa complexidade, use `assert`.
-
-```cpp
-#include <cassert>
-
-void deve_ligar_bomba_quando_nivel_baixo() {
-    ControlePorFaixa regra;
-
-    TipoComando comando = regra.decidir(25.0, 2.0);
-
-    assert(comando == TipoComando::LigarBomba);
-}
-
-void deve_desligar_bomba_quando_nivel_alto() {
-    ControlePorFaixa regra;
-
-    TipoComando comando = regra.decidir(85.0, 2.0);
-
-    assert(comando == TipoComando::DesligarBomba);
-}
-
-void deve_bloquear_partida_quando_pressao_alta() {
-    ControlePorFaixa regra;
-
-    TipoComando comando = regra.decidir(25.0, 7.0);
-
-    assert(comando == TipoComando::BloquearPartida);
-}
-
-int main() {
-    deve_ligar_bomba_quando_nivel_baixo();
-    deve_desligar_bomba_quando_nivel_alto();
-    deve_bloquear_partida_quando_pressao_alta();
-    return 0;
-}
-```
-
-Compilação sugerida:
-
-```bash
-g++ -std=c++17 -Wall -Wextra -pedantic tests/test_controle.cpp -o test_controle
-./test_controle
-```
-
-Se o programa termina sem mensagem, os `asserts` passaram. Se algum `assert` falhar, o programa encerra indicando o ponto do erro.
-
----
-
-## 5. Teste unitário de Command em C++
-
-Command deve ser testado pelo efeito que causa.
-
-```cpp
-#include <cassert>
-
-void deve_bloquear_bomba() {
-    Bomba bomba;
-    BloquearPartida comando;
-
-    comando.executar(bomba);
-
-    assert(bomba.estaBloqueada());
-    assert(!bomba.estaLigada());
-}
-
-void deve_ligar_bomba_quando_nao_estiver_bloqueada() {
-    Bomba bomba;
-    LigarBomba comando;
-
-    comando.executar(bomba);
-
-    assert(bomba.estaLigada());
-}
-```
-
-Para isso, a classe `Bomba` precisa expor métodos de consulta seguros, por exemplo:
-
-```cpp
-bool estaLigada() const {
-    return ligada;
-}
-
-bool estaBloqueada() const {
-    return bloqueada;
-}
-```
-
-Esses métodos não quebram encapsulamento porque apenas consultam estado. Eles não permitem alterar atributos diretamente.
-
----
-
-## 6. Teste de contrato JSON em Python
-
-Contrato JSON é o combinado entre controlador e supervisor. Validar contrato não é apenas verificar se o JSON abre.
-
-Um JSON pode ser sintaticamente válido e mesmo assim não servir para o projeto.
-
-```json
-{"tag": "LT-101", "valor": "alto"}
-```
-
-Esse JSON abre, mas está incompleto e usa tipo errado para `valor`.
-
-### Função de validação
-
-```python
-def validar_leitura(leitura: dict) -> None:
-    obrigatorios = {"tag", "valor", "unidade", "timestamp", "status"}
-    faltantes = obrigatorios - set(leitura)
-
-    if faltantes:
-        raise ValueError(f"Campos ausentes: {sorted(faltantes)}")
-
-    if not isinstance(leitura["tag"], str):
-        raise TypeError("tag deve ser texto")
-
-    if not isinstance(leitura["unidade"], str):
-        raise TypeError("unidade deve ser texto")
-
-    if not isinstance(leitura["timestamp"], str):
-        raise TypeError("timestamp deve ser texto")
-
-    if not isinstance(leitura["status"], str):
-        raise TypeError("status deve ser texto")
-
-    if leitura["status"] != "falha" and not isinstance(leitura["valor"], int | float):
-        raise TypeError("valor deve ser numerico quando status nao e falha")
-```
-
-### Testes com `pytest`
-
-```python
-import pytest
-
-
-def test_leitura_valida_deve_passar():
-    leitura = {
-        "tag": "LT-101",
-        "valor": 58.4,
-        "unidade": "%",
-        "timestamp": "2026-06-09T10:30:00-03:00",
-        "status": "operando",
-    }
-
-    validar_leitura(leitura)
-
-
-def test_leitura_sem_tag_deve_falhar():
-    leitura = {
-        "valor": 58.4,
-        "unidade": "%",
-        "timestamp": "2026-06-09T10:30:00-03:00",
-        "status": "operando",
-    }
-
-    with pytest.raises(ValueError):
-        validar_leitura(leitura)
-
-
-def test_valor_textual_deve_falhar_quando_status_operando():
-    leitura = {
-        "tag": "LT-101",
-        "valor": "alto",
-        "unidade": "%",
-        "timestamp": "2026-06-09T10:30:00-03:00",
-        "status": "operando",
-    }
-
-    with pytest.raises(TypeError):
-        validar_leitura(leitura)
-```
-
-Execução:
-
-```bash
-python3 -m pytest -q
-```
-
----
-
-## 7. Teste de alarmes
-
-Alarmes devem ser testados por condição.
-
-```python
-def gerar_alarmes(leitura: dict) -> list[dict]:
-    alarmes = []
-
-    if leitura["tag"].startswith("PT") and leitura["valor"] > 6.0:
-        alarmes.append({
-            "origem": leitura["tag"],
-            "alarme": "PRESSAO_ALTA",
-            "severidade": "alta",
-        })
-
-    if leitura["tag"].startswith("LT") and leitura["valor"] > 90.0:
-        alarmes.append({
-            "origem": leitura["tag"],
-            "alarme": "NIVEL_CRITICO",
-            "severidade": "alta",
-        })
-
-    return alarmes
-```
-
-Teste:
-
-```python
-def test_pressao_alta_deve_gerar_alarme():
-    leitura = {
-        "tag": "PT-201",
-        "valor": 7.2,
-        "unidade": "bar",
-        "timestamp": "2026-06-09T10:30:00-03:00",
-        "status": "alerta",
-    }
-
-    alarmes = gerar_alarmes(leitura)
-
-    assert len(alarmes) == 1
-    assert alarmes[0]["alarme"] == "PRESSAO_ALTA"
-    assert alarmes[0]["severidade"] == "alta"
-```
-
-Esse teste protege uma regra importante do projeto final.
-
----
-
-## 8. Teste de Repository sem depender do SQLite
-
-Antes de testar banco, é útil testar a lógica usando um repositório em memória.
-
-```python
-def test_repositorio_memoria_lista_por_tag():
-    repositorio = RepositorioLeiturasMemoria()
-
-    repositorio.salvar(Leitura(
-        timestamp="2026-06-09T10:00:00-03:00",
-        tag="LT-101",
-        valor=40.0,
-        unidade="%",
-        status="operando",
-    ))
-
-    repositorio.salvar(Leitura(
-        timestamp="2026-06-09T10:01:00-03:00",
-        tag="PT-201",
-        valor=2.7,
-        unidade="bar",
-        status="operando",
-    ))
-
-    leituras = repositorio.listar_por_tag("LT-101")
-
-    assert len(leituras) == 1
-    assert leituras[0].valor == 40.0
-```
-
-Esse teste é rápido e não depende de arquivo. Depois, a equipe pode criar um teste específico para SQLite usando um banco temporário.
-
----
-
-## 9. Teste simples de integração
-
-Integração simples verifica se uma parte consegue alimentar a outra.
-
-Fluxo mínimo:
+Uma forma prática de pensar testes é separar quantidade e custo.
 
 ```text
-controlador C++ -> arquivo JSON Lines -> validador Python
+          poucos testes de sistema
+        alguns testes de integração
+      muitos testes unitários e de contrato
 ```
 
-Arquivo `dados/leituras_jsonl_exemplo.txt`:
+No projeto da estação, a base deve ser:
 
-```json
-{"tag":"LT-101","valor":42.0,"unidade":"%","timestamp":"2026-06-09T10:00:00-03:00","status":"operando"}
-{"tag":"PT-201","valor":2.7,"unidade":"bar","timestamp":"2026-06-09T10:00:01-03:00","status":"operando"}
-```
+- muitos testes de regras, comandos e validação de JSON;
+- alguns testes de Repository com SQLite temporário;
+- poucos testes de fluxo completo;
+- uma validação manual objetiva da interface.
 
-Teste:
-
-```python
-import json
-from pathlib import Path
-
-
-def test_arquivo_jsonl_do_controlador_respeita_contrato():
-    caminho = Path("dados/leituras_jsonl_exemplo.txt")
-    linhas = caminho.read_text(encoding="utf-8").splitlines()
-
-    assert linhas
-
-    for linha in linhas:
-        leitura = json.loads(linha)
-        validar_leitura(leitura)
-```
-
-Esse teste não garante que todo o sistema está perfeito, mas protege o contrato entre as duas partes.
+Impacto prático: quando um teste unitário falha, a causa costuma estar perto. Quando um teste de sistema falha, o problema pode estar em regra, JSON, arquivo, banco, tempo de execução ou interface.
 
 ---
 
-## 10. Validação manual do Streamlit
+## 4. O que testar neste projeto
 
-Algumas coisas são melhor verificadas olhando a aplicação.
+| Parte do projeto | Risco | Teste recomendado | Evidência esperada |
+|---|---|---|---|
+| `Strategy` | regra errada liga bomba em condição insegura | unitário | casos de nível baixo, nível alto e pressão alta |
+| `Command` | comando altera estado indevido | unitário | bomba ligada, desligada ou bloqueada |
+| `Observer` | alarme crítico não é registrado | unitário ou integração leve | evento gera alarme esperado |
+| Contrato JSON | Python não entende saída do C++ | contrato | arquivo JSON Lines validado |
+| Repository | dado some ou volta incorreto | integração | salvar e listar leitura |
+| Streamlit | tela quebra durante a apresentação | fumaça/app test | app executa sem exceção |
+| Projeto final | fluxo real da dupla funciona | sistema + aceitação | roteiro de demonstração reproduzível |
 
-Checklist mínimo:
+!!! tip "Referência opcional"
 
-- [ ] tabela de leituras aparece;
-- [ ] gráfico histórico mostra pelo menos duas variáveis;
-- [ ] resumo de bombas ou atuadores aparece;
-- [ ] lista de comandos aparece;
-- [ ] lista de alarmes aparece;
-- [ ] leitura inválida não derruba a aplicação;
-- [ ] dados persistidos continuam disponíveis após reiniciar o supervisor.
-
-Durante a apresentação, essa validação manual deve ser rápida e objetiva.
+    Para visualizar uma base pequena e executável com testes C++ e Python, consulte o repositório de apoio [`testes_ci_estacao`](https://github.com/rafaelrezo/curso-poo-exemplos/tree/main/testes_ci_estacao). Ele não é modelo de entrega final; é uma referência para estudar organização, testes e evidências.
 
 ---
 
-## 11. Matriz mínima de testes para o projeto final
+## 5. Ponte C++ -> Python
 
-Cada equipe deve ter uma matriz simples no README.
+O conceito de teste é o mesmo nas duas linguagens: preparar entrada, executar comportamento e verificar saída ou efeito.
 
-| Item testado | Tipo de teste | Evidência |
+| Conceito | C++ | Python |
 |---|---|---|
-| regra de nível baixo | unitário | `test_controle` ou `pytest` |
-| regra de pressão alta | unitário | `test_controle` ou `pytest` |
-| comando de bloqueio | unitário | teste de `Command` |
-| contrato JSON | contrato | `pytest` |
-| alarme crítico | unitário | `pytest` |
-| persistência | integração simples | salvar e consultar leitura |
-| fluxo C++ -> Python | integração simples | JSON Lines validado |
-| tela Streamlit | manual | checklist na apresentação |
+| Verificação simples | `assert(condicao)` | `assert condicao` |
+| Falha esperada | testar exceção ou retorno de erro | `pytest.raises(...)` |
+| Dados temporários | arquivo em pasta de teste | `tmp_path` do `pytest` |
+| Regra de negócio | classe `Strategy` | função, classe ou serviço |
+| Integração com banco | SQLite temporário | SQLite temporário |
+| Interface | execução manual ou framework externo | `streamlit.testing.v1.AppTest` |
 
-Essa tabela ajuda a organizar a defesa técnica. O aluno deve conseguir explicar o que cada teste prova e o que ele não prova.
+Para este curso, a recomendação é começar simples:
+
+- C++: `assert` em arquivos de teste pequenos;
+- Python: `pytest`;
+- Streamlit: primeiro separar lógica da tela, depois testar a tela quando fizer sentido;
+- CI: executar os mesmos comandos locais em GitHub Actions.
 
 ---
 
-## 12. Erros comuns
+## 6. Estrutura de um bom teste
 
-| Erro | Consequência | Ação recomendada |
+Um teste legível costuma seguir o padrão AAA.
+
+| Etapa | Pergunta | Exemplo |
 |---|---|---|
-| testar apenas a tela | falhas internas passam despercebidas | testar regras e contrato separadamente |
-| aceitar qualquer JSON | supervisor quebra depois | validar campos e tipos |
-| teste depender de dado manual | resultado instável | criar dados de teste controlados |
-| colocar SQL dentro da tela toda | difícil testar persistência | usar `Repository` |
-| testar só caso feliz | falhas reais não aparecem | incluir leitura inválida e pressão alta |
-| não documentar como rodar | professor não consegue reproduzir | colocar comandos no README |
+| Arrange | quais dados e objetos preparo? | criar `ControleNormal` e leituras de entrada |
+| Act | qual ação executo? | chamar `decidir(nivel, pressao)` |
+| Assert | o que precisa ser verdadeiro? | comparar com `TipoComando::LigarBomba` |
+
+Exemplo em pseudocódigo:
+
+```text
+preparar regra de controle
+executar decisão com nível baixo e pressão normal
+verificar se o comando é LIGAR_BOMBA
+```
+
+Características esperadas:
+
+- nome descreve comportamento, não implementação;
+- entrada é controlada;
+- não depende de horário real, arquivo manual ou ordem aleatória;
+- falha aponta para uma causa compreensível;
+- roda rápido o bastante para ser executado antes de cada pull request.
 
 ---
 
-## 13. Mini-caso prático
+## 7. Dublês de teste: fake, stub e mock
+
+Em projetos reais, nem sempre é desejável chamar banco, rede ou serviço externo em todo teste. Dublês de teste substituem dependências para reduzir custo e instabilidade.
+
+| Técnica/Padrão | Melhor uso | Esforço | Entregável | Limitação |
+|---|---|---|---|---|
+| Fake | substituir dependência por implementação simples | baixo | `RepositorioLeiturasMemoria` | pode esconder problema do banco real |
+| Stub | devolver resposta fixa para um cenário | baixo | sensor simulado com valor constante | não verifica interação |
+| Mock | verificar chamada ou interação esperada | médio | objeto que registra chamada de alarme | pode prender o teste à implementação |
+| Fixture | preparar dados repetíveis | baixo | leitura válida padrão | fixture ruim vira acoplamento |
+| Banco temporário | testar persistência real sem sujar dados | médio | SQLite em arquivo temporário | mais lento que teste unitário |
+
+Recomendação prática: use fake para regra e fluxo interno; use banco temporário para provar que o Repository real funciona; use mock apenas quando a interação for o comportamento principal.
+
+---
+
+## 8. Testabilidade e POO
+
+Código orientado a objetos fica mais testável quando as responsabilidades estão separadas.
+
+| Decisão de projeto | Impacto no teste |
+|---|---|
+| `Strategy` para regra de controle | permite testar a regra sem ligar Streamlit ou banco |
+| `Command` para atuação | permite testar efeito no estado da bomba |
+| `Repository` para persistência | permite trocar SQLite por repositório em memória |
+| `Observer` para alarmes | permite testar reação a eventos separadamente |
+| validação de JSON fora da tela | permite testar contrato sem abrir o app |
+| lógica fora de callbacks Streamlit | reduz teste manual e aumenta teste automático |
+
+Ação recomendada: se uma parte importante só pode ser testada abrindo a interface, provavelmente há lógica demais dentro da tela.
+
+---
+
+## 9. Qualidade de código: visão geral
+
+Teste não é a única evidência de qualidade. Um teste pode passar em um código difícil de entender, duplicado ou acoplado demais. Qualidade de código, neste curso, significa facilidade de entender, testar, alterar e defender tecnicamente a solução.
+
+| Critério | Pergunta de revisão | Relação com POO |
+|---|---|---|
+| Responsabilidade | esta classe tem um motivo claro para existir? | classe representa conceito do domínio |
+| Encapsulamento | o estado interno pode ficar inválido por acesso externo? | atributos críticos devem ser protegidos |
+| Coesão | os métodos da classe trabalham para o mesmo propósito? | comportamento fica perto do dado que governa |
+| Acoplamento | uma mudança pequena obriga alterar muitos arquivos? | abstrações reduzem dependência direta |
+| Legibilidade | outro aluno entende o fluxo sem adivinhar intenção? | nomes e interfaces comunicam modelo |
+| Testabilidade | a regra pode ser testada sem abrir a tela? | responsabilidades separadas permitem teste menor |
+
+### Sinais de alerta
+
+| Sinal | Risco | Ação recomendada |
+|---|---|---|
+| classe com muitas responsabilidades | teste fica grande e frágil | separar regra, persistência e interface |
+| muitos `if` verificando tipo | mudança espalhada | avaliar polimorfismo ou Strategy |
+| atributos públicos em objetos centrais | estado inválido | encapsular e criar métodos de consulta |
+| SQL dentro da tela inteira | persistência difícil de testar | usar Repository |
+| JSON aceito sem validação | erro aparece tarde | criar teste de contrato |
+| função longa misturando leitura, regra e saída | revisão difícil | quebrar por intenção |
+
+Qualidade de código não é estética. É reduzir o custo de mudança. No projeto final, o aluno deve conseguir apontar uma decisão de modelagem, mostrar o teste correspondente e explicar por que aquela organização facilita manutenção.
+
+---
+
+## 10. Revisão por PR e Definition of Done
+
+Antes de considerar uma tarefa pronta, a dupla deve verificar se existe evidência suficiente.
+
+| Item | Evidência mínima |
+|---|---|
+| requisito implementado | issue ou descrição do PR |
+| regra importante testada | teste unitário ou de contrato |
+| integração validada | teste de Repository, JSON Lines ou checklist |
+| README atualizado | comandos de execução e contrato |
+| IA rastreada | `AI_LOG.md`, quando aplicável |
+| risco declarado | observação no PR ou na defesa |
+
+Um pull request deve responder três perguntas:
+
+1. o que mudou?
+2. como foi testado?
+3. o que ainda pode falhar?
+
+Esse processo é parte da qualidade. Ele obriga a equipe a transformar "acho que funciona" em evidência revisável.
+
+!!! note "Guia operacional"
+
+    Para aplicar esse processo em atividades e projeto final, use o [Checklist Profissional de Entrega](../guias_operacionais/checklist_entrega_profissional.md).
+
+---
+
+## 11. Teste local, CI e ambiente real
+
+Testes são executados em momentos diferentes.
+
+| Momento | Quem executa | Objetivo |
+|---|---|---|
+| Local, antes do commit | aluno | detectar erro rápido |
+| Local, antes do push | dupla | evitar subir código quebrado |
+| Pull request | GitHub Actions | impedir integração de mudança problemática |
+| Antes da demonstração | equipe | validar roteiro completo |
+| Ambiente produtivo real | equipe ou pipeline | checar configuração, dependências, saúde e regressões críticas |
+
+Em um ambiente produtivo real, os testes não substituem monitoramento. Depois de publicar, a equipe precisa observar logs, erros, tempo de resposta, conexão com banco e funcionamento mínimo da tela. Para o curso, isso entra como simulação profissional: CI antes do merge, smoke test depois de subir e checklist de aceitação para a entrega.
+
+---
+
+## 12. Mini-caso prático
 
 A dupla definiu uma regra própria:
 
@@ -445,47 +277,33 @@ Testes mínimos para essa regra:
 4. o JSON do alarme possui `origem`, `alarme`, `severidade` e `timestamp`;
 5. o supervisor exibe o alarme no histórico.
 
-Esse mini-caso mostra como transformar uma regra específica em evidência técnica.
+Esse mini-caso mostra como transformar requisito operacional em evidência técnica e revisão de qualidade.
+
+Checklist de qualidade para esse mini-caso:
+
+- a regra de vazão não deve ficar misturada com a tela;
+- o bloqueio da partida deve preservar o estado válido da bomba;
+- o alarme deve ter contrato JSON documentado;
+- o teste deve cobrir o primeiro ciclo baixo, o segundo ciclo baixo e a recuperação;
+- o PR deve declarar qual risco ainda não foi automatizado.
 
 ---
 
-## 14. Exercícios práticos
+## 13. Perguntas de revisão rápida
 
-1. Criar três testes para a estratégia de controle.
-2. Criar dois testes para comandos de atuação.
-3. Criar três testes de contrato JSON.
-4. Criar um teste de alarme.
-5. Criar um teste simples para repositório.
-6. Criar uma matriz de testes no README.
-7. Executar os testes antes de abrir o pull request final.
-
----
-
-## 15. Checklist de entrega
-
-- [ ] Há testes das regras principais.
-- [ ] Há teste para pelo menos um comando.
-- [ ] Há validação do contrato JSON.
-- [ ] Há teste de alarme.
-- [ ] Há teste simples de persistência ou repositório.
-- [ ] Há teste ou evidência do fluxo C++ -> Python.
-- [ ] O README explica como rodar os testes.
-- [ ] A matriz de testes está documentada.
-
----
-
-## 16. Perguntas de revisão rápida
-
-1. Qual é a diferença entre validar JSON e testar contrato JSON?
-2. Por que um repositório em memória ajuda nos testes?
-3. O que um teste de integração simples prova no fluxo C++ -> Python?
+1. Por que teste de contrato é diferente de apenas verificar se o JSON abre?
+2. Qual é o risco de testar somente pela tela do Streamlit?
+3. Por que qualidade de código não é apenas estética?
+4. Em que situação um teste de regressão deve ser criado?
 
 ---
 
 ## Fontes de referência
 
-- [cppreference - assert](https://en.cppreference.com/w/cpp/error/assert)
-- [Python Docs - unittest](https://docs.python.org/3/library/unittest.html)
-- [pytest Docs](https://docs.pytest.org/)
-- [Python Docs - json](https://docs.python.org/3/library/json.html)
-- [GitHub Docs - GitHub Actions](https://docs.github.com/en/actions)
+- [cppreference - `assert`](https://en.cppreference.com/w/cpp/error/assert)
+- [GoogleTest - Primer](https://google.github.io/googletest/primer.html)
+- [pytest Docs - Get Started](https://docs.pytest.org/en/stable/getting-started.html)
+- [pytest Docs - Good Integration Practices](https://docs.pytest.org/en/stable/explanation/goodpractices.html)
+- [Streamlit Docs - App testing](https://docs.streamlit.io/develop/concepts/app-testing)
+- [GitHub Docs - Guia Rápido do GitHub Actions](https://docs.github.com/pt/actions/get-started/quickstart)
+- [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)

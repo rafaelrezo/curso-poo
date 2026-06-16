@@ -38,7 +38,8 @@ exclude_docs: |
   plano_de_implementacao.md
   referencias.md
   avaliacoes/
-  guias_operacionais/
+  guias_operacionais/github_classroom_pages.md
+  guias_operacionais/uso_ia_skills.md
   projeto_integrador/
   parte-2-projeto/especificacao-projeto-final.md
   parte-2-projeto/especificacao-projeto-final.html
@@ -67,5 +68,8 @@ nav:
       - 06. Tratamento de Erros e Exceções: parte-2-projeto/06-tratamento-erros-excecoes.md
       - 07. Padrões I - Strategy, Command e Repository: parte-2-projeto/05-strategy-e-command.md
       - 08. Padrões II - Observer, Eventos e Alarmes: parte-2-projeto/06-observer-e-alarmes.md
-      - 09. Testes e Validação: parte-2-projeto/09-testes-e-validacao.md
-      - 10. Projeto Final: parte-2-projeto/10-projeto-final.md
+      - 09. Fundamentos de Testes e Qualidade: parte-2-projeto/09-testes-e-validacao.md
+      - 10. Testes Automatizados em C++ e Python: parte-2-projeto/10-testes-automatizados-cpp-python.md
+      - 11. Execução Local, CI e Validação Real: parte-2-projeto/11-ci-validacao-producao.md
+      - 12. Projeto Final: parte-2-projeto/10-projeto-final.md
+  - 10. Checklist Profissional de Entrega: guias_operacionais/checklist_entrega_profissional.md
