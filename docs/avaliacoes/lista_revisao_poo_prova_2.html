@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lista de Revisão para Prova 2 - Projeto Integrador, Testes e Qualidade</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 18mm 16mm 18mm 16mm;
+    }
+
+    :root {
+      color-scheme: light;
+      --text: #17212b;
+      --muted: #51606f;
+      --line: #d5dde6;
+      --panel: #f7f9fb;
+      --panel-strong: #eef3f8;
+      --accent: #0f5f8c;
+      --code: #142433;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0 auto;
+      max-width: 190mm;
+      font-family: "Liberation Serif", Georgia, serif;
+      color: var(--text);
+      background: white;
+      line-height: 1.5;
+      font-size: 11pt;
+    }
+
+    h1, h2, h3 {
+      color: #0d2940;
+      line-height: 1.2;
+      break-after: avoid-page;
+    }
+
+    h1 {
+      margin: 0 0 10mm;
+      font-size: 24pt;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 4mm;
+    }
+
+    h2 {
+      margin: 9mm 0 4mm;
+      font-size: 15pt;
+      padding: 2mm 0 2mm 3mm;
+      border-left: 4px solid var(--accent);
+      background: linear-gradient(90deg, var(--panel-strong), transparent);
+    }
+
+    h3 {
+      margin: 6mm 0 3mm;
+      font-size: 12.5pt;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 3mm 3.5mm;
+    }
+
+    p {
+      margin: 0 0 3.2mm;
+      orphans: 3;
+      widows: 3;
+    }
+
+    ul, ol {
+      margin: 0 0 4mm 6mm;
+      padding-left: 5mm;
+    }
+
+    li {
+      margin-bottom: 1.8mm;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 6mm 0;
+    }
+
+    blockquote {
+      margin: 4mm 0;
+      padding: 2mm 4mm;
+      border-left: 4px solid #8fb4cb;
+      background: #f8fbfd;
+      color: var(--muted);
+    }
+
+    code {
+      font-family: "Liberation Mono", "DejaVu Sans Mono", monospace;
+      font-size: 0.92em;
+      color: var(--code);
+      background: #f3f6f9;
+      padding: 0.2em 0.35em;
+      border-radius: 4px;
+    }
+
+    pre {
+      margin: 3mm 0 5mm;
+      padding: 4mm;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fafc;
+      break-inside: avoid;
+    }
+
+    pre code {
+      padding: 0;
+      background: transparent;
+      border-radius: 0;
+      color: #0d2033;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 4mm 0 5mm;
+      break-inside: avoid;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 2.4mm;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--panel-strong);
+    }
+
+    strong {
+      color: #0d2940;
+    }
+  </style>
+</head>
+<body>
+<h1>Lista de Revisão para Prova 2 - Projeto Integrador, Testes e Qualidade</h1>
+<h2>Objetivos de aprendizagem</h2>
+<ul>
+<li>Revisar os conceitos da Parte 2 do curso, conectando POO, integração, banco de dados, exceções, padrões de projeto, testes e CI.</li>
+<li>Exercitar leitura crítica de arquitetura e código em <code>C++</code> e <code>Python</code> no contexto do mini-SCADA da estação de bombeamento.</li>
+<li>Preparar o aluno para responder questões introdutórias, médias e avançadas com argumentação técnica, não apenas memorização.</li>
+</ul>
+<p><strong>Tempo estimado:</strong> 4h</p>
+<h2>Vídeo de contexto</h2>
+<p>Antes de resolver esta lista, revise especialmente as aulas da Parte 2: cenário e modelagem, listas dinâmicas, validação de estado, bancos de dados, tratamento de erros, padrões de projeto, testes, CI e checklist profissional de entrega.</p>
+<hr />
+<h2>1. Como usar esta lista</h2>
+<ul>
+<li>Esta lista prepara para a <strong>Prova 2</strong>, mas não é a prova.</li>
+<li>O foco é demonstrar entendimento técnico por meio de explicação, análise de código, modelagem e decisões de projeto.</li>
+<li>Em todas as respostas, priorize a estrutura <code>conceito -&gt; impacto -&gt; ação recomendada</code>.</li>
+<li>Quando houver código, explique o problema antes de sugerir correção.</li>
+<li>Quando houver arquitetura, conecte a decisão a POO, manutenção, testes e execução real.</li>
+<li>Quando houver banco de dados, diferencie dado atual, histórico, transação e série temporal.</li>
+<li>Quando houver testes, diga o que o teste prova e o que ele não prova.</li>
+</ul>
+<hr />
+<h2>2. Mapa de revisão da Parte 2</h2>
+<table>
+<thead>
+<tr>
+<th>Tema</th>
+<th>O que revisar</th>
+<th>Evidência esperada na resposta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Modelagem do mini-SCADA</td>
+<td>separação entre controlador C++ e supervisor Python</td>
+<td>responsabilidade de cada camada</td>
+</tr>
+<tr>
+<td>Contrato JSON</td>
+<td>campos obrigatórios, tipos e validação</td>
+<td>diferença entre JSON válido e contrato válido</td>
+</tr>
+<tr>
+<td>Listas dinâmicas</td>
+<td><code>vector&lt;unique_ptr&lt;Sensor&gt;&gt;</code>, listas Python, objetos heterogêneos</td>
+<td>relação com polimorfismo</td>
+</tr>
+<tr>
+<td>Encapsulamento e validação</td>
+<td>estado protegido e leitura inválida</td>
+<td>invariantes e exceções</td>
+</tr>
+<tr>
+<td>Banco de dados</td>
+<td>CSV, SQLite, tabelas, séries temporais</td>
+<td>histórico consultável e rastreável</td>
+</tr>
+<tr>
+<td>Exceções</td>
+<td><code>throw</code>, <code>try</code>, <code>catch</code>, <code>ValueError</code>, falha controlada</td>
+<td>erro tratado sem derrubar o sistema</td>
+</tr>
+<tr>
+<td>Padrões de projeto</td>
+<td>Strategy, Command, Repository, Observer</td>
+<td>problema que cada padrão reduz</td>
+</tr>
+<tr>
+<td>Testes</td>
+<td>unitário, contrato, integração, regressão, fumaça</td>
+<td>matriz de testes e risco</td>
+</tr>
+<tr>
+<td>CI e entrega</td>
+<td>GitHub Actions, PR, README, AI_LOG</td>
+<td>evidência reproduzível</td>
+</tr>
+<tr>
+<td>Qualidade de código</td>
+<td>coesão, acoplamento, responsabilidade, testabilidade</td>
+<td>decisão técnica defensável</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>3. Questões introdutórias</h2>
+<h3>Questão 1. Separação entre controlador e supervisor</h3>
+<p>No projeto da estação de bombeamento, o sistema foi dividido em:</p>
+<ul>
+<li>controlador/dispositivo em <code>C++</code>;</li>
+<li>mini-SCADA em <code>Python/Streamlit</code>.</li>
+</ul>
+<p>Explique:</p>
+<ol>
+<li>qual é a responsabilidade principal de cada parte;</li>
+<li>por que essa separação ajuda a entender o sistema;</li>
+<li>qual risco aparece se o supervisor passar a alterar diretamente o estado interno do controlador;</li>
+<li>como o contrato JSON reduz o acoplamento entre as linguagens.</li>
+</ol>
+<h3>Questão 2. Contrato JSON além da sintaxe</h3>
+<p>Considere o JSON abaixo.</p>
+<pre><code class="language-json">{&quot;tag&quot;: &quot;LT-101&quot;, &quot;valor&quot;: &quot;alto&quot;}
+</code></pre>
+<p>Responda:</p>
+<ol>
+<li>esse texto pode ser JSON válido? Justifique;</li>
+<li>por que ele não é suficiente como contrato para o mini-SCADA;</li>
+<li>quais campos mínimos deveriam existir em uma leitura;</li>
+<li>que tipo de teste deveria rejeitar esse exemplo.</li>
+</ol>
+<h3>Questão 3. Listas dinâmicas e polimorfismo</h3>
+<p>Explique por que uma estação com sensores de nível, pressão, vazão e temperatura se beneficia de uma lista dinâmica de sensores.</p>
+<p>Na sua resposta, discuta:</p>
+<ol>
+<li>por que <code>vector&lt;unique_ptr&lt;Sensor&gt;&gt;</code> faz sentido em <code>C++</code>;</li>
+<li>como a mesma ideia aparece em uma lista de objetos em <code>Python</code>;</li>
+<li>qual é a relação entre essa estrutura e polimorfismo;</li>
+<li>qual erro conceitual ocorre quando a lista vira apenas um conjunto de strings e <code>if</code>.</li>
+</ol>
+<h3>Questão 4. Dados atuais, históricos e séries temporais</h3>
+<p>No mini-SCADA, a tela mostra o valor atual dos sensores, mas o projeto também exige histórico.</p>
+<p>Explique:</p>
+<ol>
+<li>a diferença entre valor atual e histórico;</li>
+<li>por que leituras de sensores formam uma série temporal;</li>
+<li>por que <code>timestamp</code> é parte essencial do contrato;</li>
+<li>por que SQLite é suficiente para o projeto, mesmo não sendo um banco temporal especializado.</li>
+</ol>
+<h3>Questão 5. Exceção como falha controlada</h3>
+<p>Explique a diferença entre:</p>
+<ul>
+<li>erro ignorado;</li>
+<li>erro que derruba o programa;</li>
+<li>erro tratado de forma controlada.</li>
+</ul>
+<p>Use como exemplo uma leitura de sensor fora da faixa esperada. Na resposta, conecte <code>throw</code>/<code>catch</code> em <code>C++</code> com <code>raise</code>/<code>except</code> em <code>Python</code>.</p>
+<h3>Questão 6. Teste unitário, contrato e integração</h3>
+<p>Compare os três testes abaixo no contexto do projeto.</p>
+<table>
+<thead>
+<tr>
+<th>Teste</th>
+<th>Exemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unitário</td>
+<td>regra de nível baixo gera <code>LIGAR_BOMBA</code></td>
+</tr>
+<tr>
+<td>Contrato</td>
+<td>JSON possui <code>tag</code>, <code>valor</code>, <code>unidade</code>, <code>timestamp</code>, <code>status</code></td>
+</tr>
+<tr>
+<td>Integração</td>
+<td>Repository salva leitura no SQLite e consulta depois</td>
+</tr>
+</tbody>
+</table>
+<p>Explique o que cada teste prova e qual limitação cada um possui.</p>
+<hr />
+<h2>4. Questões médias: análise crítica de código e projeto</h2>
+<h3>Questão 7. Revisão de código em C++: lista sem polimorfismo</h3>
+<p>Analise o código.</p>
+<pre><code class="language-cpp">std::vector&lt;std::string&gt; sensores = {&quot;nivel&quot;, &quot;pressao&quot;, &quot;vazao&quot;};
+
+for (const auto&amp; tipo : sensores) {
+    if (tipo == &quot;nivel&quot;) {
+        std::cout &lt;&lt; &quot;Lendo nivel\n&quot;;
+    } else if (tipo == &quot;pressao&quot;) {
+        std::cout &lt;&lt; &quot;Lendo pressao\n&quot;;
+    } else if (tipo == &quot;vazao&quot;) {
+        std::cout &lt;&lt; &quot;Lendo vazao\n&quot;;
+    }
+}
+</code></pre>
+<p>Responda:</p>
+<ol>
+<li>por que esse código é limitado do ponto de vista de POO;</li>
+<li>qual problema de manutenção aparece quando novos sensores são adicionados;</li>
+<li>como uma classe-base <code>Sensor</code> com método virtual poderia melhorar o desenho;</li>
+<li>que tipo de teste ficaria mais simples depois da refatoração.</li>
+</ol>
+<h3>Questão 8. Revisão de código em Python: validação fraca do contrato</h3>
+<p>Analise o código.</p>
+<pre><code class="language-python">def processar_leitura(dados):
+    tag = dados[&quot;tag&quot;]
+    valor = dados[&quot;valor&quot;]
+    print(f&quot;{tag}: {valor}&quot;)
+</code></pre>
+<p>Responda:</p>
+<ol>
+<li>quais falhas podem ocorrer se o JSON vier incompleto ou com tipo errado;</li>
+<li>por que esse código mistura processamento com confiança excessiva na entrada;</li>
+<li>como separar validação de contrato e uso da leitura;</li>
+<li>escreva, em alto nível, três casos de teste para essa função ou para uma função de validação associada.</li>
+</ol>
+<h3>Questão 9. Strategy aplicado à regra de controle</h3>
+<p>Uma equipe implementou a regra de controle assim:</p>
+<pre><code class="language-cpp">if (modo == &quot;normal&quot;) {
+    if (nivel &lt; 30.0) ligarBomba();
+} else if (modo == &quot;economico&quot;) {
+    if (nivel &lt; 20.0) ligarBomba();
+} else if (modo == &quot;emergencia&quot;) {
+    bloquearPartida();
+}
+</code></pre>
+<p>Responda:</p>
+<ol>
+<li>qual problema de acoplamento aparece nesse desenho;</li>
+<li>por que <code>Strategy</code> pode ser uma solução melhor;</li>
+<li>como o uso de <code>Strategy</code> facilita testes unitários;</li>
+<li>em que situação essa refatoração seria exagerada.</li>
+</ol>
+<h3>Questão 10. Command e rastreabilidade de atuação</h3>
+<p>No projeto, comandos como <code>LIGAR_BOMBA</code>, <code>DESLIGAR_BOMBA</code> e <code>BLOQUEAR_PARTIDA</code> podem ser modelados como objetos.</p>
+<p>Explique:</p>
+<ol>
+<li>qual problema o padrão <code>Command</code> resolve;</li>
+<li>por que ele ajuda a registrar histórico de atuação;</li>
+<li>como testar um comando pelo efeito causado na bomba;</li>
+<li>por que um comando deve preservar estado válido, por exemplo impedindo <code>ligada = true</code> e <code>bloqueada = true</code> ao mesmo tempo.</li>
+</ol>
+<h3>Questão 11. Repository e persistência testável</h3>
+<p>Analise o trecho.</p>
+<pre><code class="language-python">def mostrar_tela():
+    conexao = sqlite3.connect(&quot;leituras.db&quot;)
+    cursor = conexao.execute(&quot;SELECT * FROM leituras&quot;)
+    linhas = cursor.fetchall()
+    st.table(linhas)
+</code></pre>
+<p>Responda:</p>
+<ol>
+<li>por que misturar Streamlit, SQL e regra de apresentação dificulta manutenção;</li>
+<li>como o padrão <code>Repository</code> melhora esse desenho;</li>
+<li>por que um repositório em memória é útil nos testes;</li>
+<li>qual teste ainda precisa usar SQLite real, mesmo existindo repositório em memória.</li>
+</ol>
+<h3>Questão 12. Observer, eventos e alarmes</h3>
+<p>Explique a diferença entre leitura, evento e alarme no projeto da estação.</p>
+<p>Depois, responda:</p>
+<ol>
+<li>por que <code>Observer</code> reduz acoplamento entre quem detecta uma condição e quem reage a ela;</li>
+<li>dê dois observadores possíveis para um evento de pressão alta;</li>
+<li>qual risco aparece se a própria classe <code>SensorPressao</code> começar a gravar banco, mostrar tela e enviar notificação;</li>
+<li>que teste poderia provar que pressão alta gera alarme.</li>
+</ol>
+<h3>Questão 13. Tratamento de erro e contrato entre C++ e Python</h3>
+<p>Considere que o controlador C++ encontrou uma falha em um sensor. Duas equipes propuseram saídas diferentes:</p>
+<p>Equipe A:</p>
+<pre><code class="language-text">programa encerra com erro no terminal
+</code></pre>
+<p>Equipe B:</p>
+<pre><code class="language-json">{&quot;tag&quot;:&quot;PT-201&quot;,&quot;valor&quot;:null,&quot;unidade&quot;:&quot;bar&quot;,&quot;timestamp&quot;:&quot;2026-06-09T10:30:00-03:00&quot;,&quot;status&quot;:&quot;falha&quot;,&quot;erro&quot;:&quot;leitura fora da faixa&quot;}
+</code></pre>
+<p>Compare as duas soluções e responda:</p>
+<ol>
+<li>qual delas é mais adequada para integração com o supervisor;</li>
+<li>quais cuidados o Python precisa ter ao consumir esse pacote;</li>
+<li>por que <code>valor = null</code> pode ser aceitável apenas quando o contrato define essa regra;</li>
+<li>que teste de contrato deveria existir para esse caso.</li>
+</ol>
+<hr />
+<h2>5. Questões avançadas: arquitetura, testes e entrega profissional</h2>
+<h3>Questão 14. UML do mini-SCADA com padrões de projeto</h3>
+<p>Modele, em UML, uma versão simplificada do projeto final com as seguintes classes ou equivalentes:</p>
+<ul>
+<li><code>Sensor</code>;</li>
+<li><code>SensorNivel</code>;</li>
+<li><code>SensorPressao</code>;</li>
+<li><code>Bomba</code>;</li>
+<li><code>EstrategiaControle</code>;</li>
+<li><code>ControleNormal</code>;</li>
+<li><code>Comando</code>;</li>
+<li><code>LigarBomba</code>;</li>
+<li><code>RepositorioLeituras</code>;</li>
+<li><code>GerenciadorAlarmes</code>;</li>
+<li><code>Supervisor</code>.</li>
+</ul>
+<p>Seu diagrama deve indicar:</p>
+<ol>
+<li>pelo menos uma generalização;</li>
+<li>pelo menos uma realização/interface ou classe abstrata;</li>
+<li>pelo menos uma associação;</li>
+<li>multiplicidades quando fizer sentido;</li>
+<li>quais partes representam <code>Strategy</code>, <code>Command</code> e <code>Repository</code>.</li>
+</ol>
+<p>Ao final, justifique duas decisões de modelagem.</p>
+<h3>Questão 15. Matriz de testes para o projeto final</h3>
+<p>Monte uma matriz mínima de testes para uma dupla cujo projeto possui:</p>
+<ul>
+<li>regra de nível baixo;</li>
+<li>regra de pressão alta;</li>
+<li>alarme de vazão baixa;</li>
+<li>contrato JSON;</li>
+<li>histórico em SQLite;</li>
+<li>tela Streamlit.</li>
+</ul>
+<p>Para cada item, indique:</p>
+<ol>
+<li>tipo de teste;</li>
+<li>entrada ou cenário;</li>
+<li>resultado esperado;</li>
+<li>se deve rodar localmente, no CI ou manualmente.</li>
+</ol>
+<p>Depois, explique por que não basta testar apenas a interface.</p>
+<h3>Questão 16. Qualidade de código e Definition of Done</h3>
+<p>Uma dupla abriu um pull request com a seguinte descrição:</p>
+<pre><code class="language-markdown">Arrumei a parte da bomba.
+</code></pre>
+<p>O PR não informa testes, não atualiza README, não registra uso de IA e altera arquivos do controlador, do supervisor e do banco ao mesmo tempo.</p>
+<p>Produza uma revisão técnica explicando:</p>
+<ol>
+<li>por que esse PR é difícil de revisar;</li>
+<li>quais evidências mínimas deveriam aparecer;</li>
+<li>como a dupla poderia dividir melhor o trabalho;</li>
+<li>como a <code>Definition of Done</code> da disciplina ajuda a evitar esse problema.</li>
+</ol>
+<h3>Questão 17. Decisão arquitetural: arquivo JSON Lines ou TCP</h3>
+<p>O projeto permite que o controlador C++ entregue leituras ao supervisor por arquivo JSON Lines ou por TCP.</p>
+<p>Compare as duas abordagens considerando:</p>
+<ol>
+<li>simplicidade de implementação;</li>
+<li>facilidade de teste;</li>
+<li>proximidade com sistemas reais;</li>
+<li>tratamento de falhas;</li>
+<li>adequação para uma entrega de disciplina.</li>
+</ol>
+<p>Feche com uma recomendação prática para uma dupla que ainda está com dificuldade em testes e persistência.</p>
+<h3>Questão 18. Questão-síntese: diagnóstico de um projeto quase pronto</h3>
+<p>Você recebeu o seguinte relato de uma equipe:</p>
+<blockquote>
+<p>"Nosso mini-SCADA já mostra gráfico no Streamlit. O C++ gera um arquivo com leituras. Ainda não temos testes. O JSON às vezes muda de formato quando há erro. A regra de ligar a bomba está dentro do <code>main.cpp</code>. O SQLite é acessado diretamente no arquivo da tela. Os alarmes são uma lista global em Python. O README tem prints, mas não tem comandos para executar."</p>
+</blockquote>
+<p>Escreva uma resposta dissertativa estruturada que:</p>
+<ol>
+<li>identifique os principais riscos técnicos;</li>
+<li>conecte cada risco a um conceito da Parte 2;</li>
+<li>proponha um plano de correção em etapas;</li>
+<li>indique quais testes devem ser criados primeiro;</li>
+<li>explique como a equipe deveria preparar a defesa técnica.</li>
+</ol>
+<hr />
+<h2>6. Questões extras de fixação rápida</h2>
+<p>Estas questões são curtas e ajudam a revisar vocabulário antes da prova.</p>
+<ol>
+<li>Qual é a diferença entre <code>status = "alerta"</code> e um alarme registrado?</li>
+<li>Por que <code>timestamp</code> em UTC reduz ambiguidade em dados históricos?</li>
+<li>O que um teste de regressão protege?</li>
+<li>Por que <code>Repository</code> não é apenas "uma classe para SQL"?</li>
+<li>Qual é o risco de aceitar qualquer JSON porque <code>json.loads()</code> não falhou?</li>
+<li>Em que momento uma exceção deve ser capturada no controlador C++?</li>
+<li>Por que <code>Observer</code> combina bem com alarmes?</li>
+<li>O que significa dizer que CI não é produção?</li>
+<li>Por que uma tela bonita não prova boa arquitetura?</li>
+<li>Qual evidência mostra que uma dupla trabalhou de forma colaborativa?</li>
+</ol>
+<hr />
+<h2>7. Fontes de referência</h2>
+<ul>
+<li><a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines">C++ Core Guidelines</a></li>
+<li><a href="https://en.cppreference.com/w/cpp/language/classes">cppreference - Classes</a></li>
+<li><a href="https://en.cppreference.com/w/cpp/language/virtual">cppreference - Virtual functions</a></li>
+<li><a href="https://docs.python.org/3/tutorial/classes.html">Python Docs - Classes</a></li>
+<li><a href="https://docs.python.org/3/tutorial/errors.html">Python Docs - Errors and Exceptions</a></li>
+<li><a href="https://docs.python.org/3/library/sqlite3.html">Python Docs - sqlite3</a></li>
+<li><a href="https://docs.python.org/3/library/json.html">Python Docs - json</a></li>
+<li><a href="https://www.sqlite.org/docs.html">SQLite Docs</a></li>
+<li><a href="https://docs.pytest.org/">pytest Docs</a></li>
+<li><a href="https://docs.streamlit.io/develop/concepts/app-testing">Streamlit Docs - App testing</a></li>
+<li><a href="https://docs.github.com/en/pull-requests">GitHub Docs - About pull requests</a></li>
+<li><a href="https://docs.github.com/en/actions">GitHub Docs - GitHub Actions</a></li>
+</ul>
+</body>
+</html>

@@ -5,12 +5,20 @@ repo_url: "https://github.com/rafaelrezo/curso-poo"
 repo_name: "rafaelrezo/curso-poo"
 
 theme:
-  name: material
-  language: pt-BR
-  features:
-    - navigation.sections
-    - navigation.expand
-    - content.code.copy
+  name: readthedocs
+  locale: pt_BR
+  include_homepage_in_sidebar: true
+  navigation_depth: 6
+  titles_only: false
+  sticky_navigation: true
+  collapse_navigation: false
+  prev_next_buttons_location: bottom
+  highlightjs: true
+  hljs_languages:
+    - cpp
+    - python
+    - json
+    - yaml
 
 plugins:
   - search
@@ -18,6 +26,7 @@ plugins:
 
 extra_css:
   - stylesheets/extra.css
+  - stylesheets/readthedocs-responsive.css
 
 markdown_extensions:
   - admonition
