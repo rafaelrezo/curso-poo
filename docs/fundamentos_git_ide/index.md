@@ -10,9 +10,9 @@
 
 ## Vídeo de contexto
 
-O vídeo apresenta, em português e desde o início, o problema que Git e GitHub resolvem. Ele pertence ao Curso em Vídeo, projeto educacional consolidado, e serve como visão geral. Os procedimentos atualizados estão detalhados nesta página.
+O vídeo **Git: mini curso para você sair do zero**, do canal Código Fonte TV, apresenta em português os conceitos e o fluxo inicial de versionamento. Ele serve como visão geral; os procedimentos atualizados e as explicações passo a passo estão detalhados nesta página.
 
-![type:video](https://www.youtube.com/embed/hcZ0qtwvN1w)
+![type:video](https://www.youtube.com/embed/ts-H3W1uLMM)
 
 ---
 
