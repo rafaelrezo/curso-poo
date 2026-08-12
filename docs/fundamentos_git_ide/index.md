@@ -433,9 +433,28 @@ Vídeo de apoio em português: [Git + GitHub + SSH (básico), de Otávio Miranda
 
 O repositório local já existe e possui commits. Agora será criado um repositório vazio na internet e estabelecida uma ligação entre eles.
 
+### 9.1 Escolher a visibilidade do repositório
+
+A **visibilidade** define quem pode encontrar e ler o conteúdo hospedado no GitHub. Ela não altera os arquivos nem os commits que já estão no computador.
+
+| Visibilidade | Quem pode ver | Melhor uso | Limitação |
+|---|---|---|---|
+| Público | qualquer pessoa na internet | portfólio, material aberto e projetos que podem ser compartilhados | código, histórico, issues e logs públicos não devem conter dados pessoais ou segredos |
+| Privado | proprietário e pessoas autorizadas | exercícios, trabalhos em preparação e projetos com acesso controlado | colegas precisam ser convidados antes de visualizar ou clonar |
+| Interno | membros de uma empresa no GitHub Enterprise | projetos compartilhados dentro de uma instituição ou empresa | não aparece normalmente em contas pessoais comuns |
+
+Para o primeiro exercício, use a visibilidade indicada pelo professor. Na ausência de uma orientação, escolha **privado** enquanto o trabalho estiver em desenvolvimento. Um repositório poderá ser tornado público posteriormente, depois de conferir se o histórico inteiro pode ser divulgado.
+
+!!! danger
+    Visibilidade privada não transforma o GitHub em local para guardar senha, token ou chave privada. Se um segredo entrar em um commit, removê-lo apenas do arquivo atual não o apaga dos commits anteriores. Revogue o segredo exposto e peça orientação para limpar o histórico.
+
+Alterar a visibilidade depois da criação pode afetar forks, estrelas, regras e recursos de segurança. Antes de fazer isso, leia os avisos apresentados em **Settings > General > Danger Zone > Change repository visibility**.
+
+### 9.2 Criar o repositório remoto e enviar os commits
+
 1. No GitHub, clique em **New repository**.
 2. Use o nome `primeiro-projeto-poo`.
-3. Escolha a visibilidade indicada pelo professor.
+3. Escolha `Public` ou `Private` conforme a decisão anterior.
 4. Não marque a criação de `README`, `.gitignore` ou licença, pois o projeto local já possui conteúdo.
 5. Clique em **Create repository**.
 6. Na página seguinte, selecione **SSH** e copie o endereço semelhante a `git@github.com:usuario/primeiro-projeto-poo.git`.
@@ -452,7 +471,7 @@ Um **remote** é um nome local para o endereço de outro repositório. Por conve
 
 Atualize a página do GitHub. Os três arquivos e os dois commits devem aparecer. O GitHub não substituiu o Git local: passou a hospedar uma cópia sincronizável.
 
-### 9.1 O ciclo cotidiano
+### 9.3 O ciclo cotidiano
 
 Depois da primeira publicação, o ciclo básico é:
 
@@ -520,13 +539,51 @@ flowchart LR
 
 | Técnica | Melhor uso | Esforço | Entregável | Limitação |
 |---|---|---|---|---|
-| Branch no mesmo repositório | equipe com acesso de escrita | baixo | branch e PR internos | exige permissão no repositório |
+| Colaborador + branch | equipe de confiança com acesso de escrita | baixo | branch e PR no mesmo repositório | colaborador pode enviar alterações ao repositório |
 | Fork | contribuição sem acesso de escrita | médio | repositório derivado, branch e PR | requer manter a cópia sincronizada |
 | Edição direta na `main` | mudança individual muito simples | baixo | commit na linha principal | reduz a oportunidade de revisão antes da integração |
 
 Use branch no mesmo repositório para uma equipe interna autorizada. Use fork quando a contribuição parte de alguém sem acesso de escrita, como nesta primeira colaboração entre colegas.
 
-### 11.2 Atividade em dupla: preparar a contribuição
+### 11.2 Adicionar um colega como colaborador
+
+Adicionar um **colaborador** concede acesso direto ao repositório. Em um repositório pessoal, a pessoa convidada pode ler o conteúdo e enviar mudanças. Em um repositório privado, ela também passa a poder visualizá-lo. Portanto, convide somente integrantes da equipe que realmente precisam trabalhar no projeto.
+
+A pessoa proprietária deve:
+
+1. pedir o nome de usuário do colega no GitHub;
+2. abrir a página principal do repositório;
+3. selecionar **Settings**;
+4. na seção **Access**, abrir **Collaborators**;
+5. selecionar **Add people**;
+6. pesquisar e conferir o nome de usuário;
+7. confirmar **Add NOME to REPOSITÓRIO**.
+
+O acesso permanece pendente até o colega aceitar o convite recebido por e-mail ou pelo GitHub. Não compartilhe senha, token nem chave SSH: cada integrante entra com a própria conta e usa a própria chave.
+
+Depois de aceitar, o colaborador copia o endereço SSH do repositório original e cria sua cópia de trabalho:
+
+```bash
+cd ~/curso-poo
+git clone git@github.com:autor/primeiro-projeto-poo.git
+cd primeiro-projeto-poo
+git switch -c docs/instrucoes-colega
+```
+
+Após modificar e testar os arquivos:
+
+```bash
+git status
+git add README.md
+git commit -m "Melhora instruções de execução"
+git push -u origin docs/instrucoes-colega
+```
+
+Como o colega tem acesso de escrita, a branch é enviada diretamente ao repositório original. Ainda assim, a alteração deve ser integrada por pull request: acesso de colaborador não significa trabalhar diretamente na `main`.
+
+Para remover o acesso, a pessoa proprietária volta a **Settings > Collaborators** e seleciona **Remove** ao lado do usuário. Remover o colaborador impede novos acessos ao repositório privado, mas não apaga cópias locais que já tenham sido obtidas.
+
+### 11.3 Atividade em dupla: preparar uma contribuição por fork
 
 Cada estudante já deve ter publicado `primeiro-projeto-poo`. Formem uma dupla e definam quem começa como pessoa autora e quem começa como pessoa colaboradora; depois invertam os papéis.
 
@@ -554,7 +611,7 @@ git remote -v
 
 Por convenção, `upstream` significa o projeto de onde o fork se originou. Confira os endereços antes de prosseguir: `origin` deve ser o fork e `upstream`, o repositório da pessoa autora.
 
-### 11.3 Produzir uma mudança pequena e explicável
+### 11.4 Produzir uma mudança pequena e explicável
 
 Crie uma branch antes de editar:
 
@@ -573,7 +630,7 @@ git commit -m "Documenta execução dos exemplos"
 git push -u origin docs/melhora-instrucoes
 ```
 
-### 11.4 Abrir e revisar o pull request
+### 11.5 Abrir e revisar o pull request
 
 No GitHub, abra o fork. A plataforma normalmente oferece o botão **Compare & pull request**. Confirme:
 
@@ -595,7 +652,7 @@ A pessoa autora deve abrir **Files changed**, ler cada linha e verificar se os c
 
 Após a aprovação, a pessoa autora integra a mudança com **Merge pull request**. Revisar não é procurar culpados: é confirmar propósito, funcionamento e clareza antes de incorporar a mudança ao histórico compartilhado.
 
-### 11.5 Trazer a integração de volta ao computador
+### 11.6 Trazer a integração de volta ao computador
 
 No clone da pessoa autora:
 
@@ -665,6 +722,8 @@ Se uma etapa falhar, execute `pwd`, `git status`, `git branch --show-current` e 
 - [GitHub Docs: criar uma conta](https://docs.github.com/pt/get-started/start-your-journey/creating-an-account-on-github)
 - [GitHub Docs: conectar-se com SSH](https://docs.github.com/pt/authentication/connecting-to-github-with-ssh)
 - [GitHub Docs: criar um repositório](https://docs.github.com/pt/repositories/creating-and-managing-repositories/creating-a-new-repository)
+- [GitHub Docs: definir a visibilidade do repositório](https://docs.github.com/pt/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/setting-repository-visibility)
+- [GitHub Docs: convidar colaboradores para um repositório pessoal](https://docs.github.com/pt/repositories/managing-your-repositorys-settings-and-features/repository-access-and-collaboration/inviting-collaborators-to-a-personal-repository)
 - [GitHub Docs: trabalhar com forks](https://docs.github.com/pt/pull-requests/collaborating-with-pull-requests/working-with-forks)
 - [GitHub Docs: criar um pull request a partir de um fork](https://docs.github.com/pt/pull-requests/collaborating-with-pull-requests/working-with-forks/creating-a-pull-request-from-a-fork)
 - [Documentação Python: usar Python em plataformas Unix](https://docs.python.org/pt-br/3/using/unix.html)
