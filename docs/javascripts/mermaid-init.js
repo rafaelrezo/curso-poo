@@ -8,8 +8,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     startOnLoad: false,
     securityLevel: "strict",
     theme: "neutral",
+    htmlLabels: false,
     flowchart: {
-      htmlLabels: true,
+      htmlLabels: false,
       useMaxWidth: true,
     },
   });
