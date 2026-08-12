@@ -14,6 +14,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     },
   });
 
+  document.querySelectorAll(".mermaid").forEach((diagram) => {
+    const code = diagram.querySelector(":scope > code");
+
+    if (code) {
+      diagram.textContent = code.textContent;
+    }
+  });
+
   await mermaid.run({
     querySelector: ".mermaid",
   });
