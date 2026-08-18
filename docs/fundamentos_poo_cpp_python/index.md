@@ -16,9 +16,9 @@
 
 ## 1. Antes de falar de sintaxe: por que POO importa aqui?
 
-Quem veio de C já sabe escrever passos. O novo desafio agora e organizar o programa em partes que facam sentido no domínio.
+Na programação procedural em C, funções organizam sequências de operações. A orientação a objetos acrescenta uma forma de organizar estado e comportamento em componentes que representam responsabilidades do domínio.
 
-Para alunos de engenharia de controle e automação, isso aparece o tempo todo:
+Em sistemas de engenharia, isso aparece em elementos como:
 
 - um `Sensor` tem estado: tag, unidade, valor lido;
 - uma `Valvula` tem comportamento: abrir, fechar, limitar abertura;
@@ -28,11 +28,67 @@ Em vez de espalhar dados e funções pelo programa inteiro, a POO aproxima o có
 
 **Ideia central desta aula:** classe não existe para "deixar o código mais bonito". Classe existe para concentrar responsabilidade.
 
+### 1.1 Ponte com C: uma `struct` pública não protege seus campos
+
+Considere uma estrutura C que agrupa as leituras de um sensor:
+
+```c
+typedef struct {
+    char tag[16];
+    double leituras[10];
+    size_t quantidade;
+} Sensor;
+```
+
+Uma função pode oferecer o caminho correto para inserir dados:
+
+```c
+bool sensor_adicionar_leitura(Sensor *sensor, double valor);
+```
+
+Entretanto, quem possui acesso à variável também pode ignorar essa função:
+
+```c
+sensor.leituras[0] = 900.0;
+sensor.quantidade = 30;
+```
+
+Os campos são públicos e o compilador C aceita as atribuições. A regra existe na função, mas não protege todas as formas de alterar o estado.
+
+Em C++, uma classe pode controlar esse acesso:
+
+```cpp
+#include <cstddef>
+
+class Sensor {
+public:
+    bool adicionarLeitura(double valor) {
+        if (valor < -40.0 || valor > 125.0 || quantidade_ >= 10) {
+            return false;
+        }
+
+        leituras_[quantidade_++] = valor;
+        return true;
+    }
+
+private:
+    double leituras_[10]{};
+    std::size_t quantidade_{0};
+};
+```
+
+Agora `leituras_` e `quantidade_` só podem ser alterados pelo código da própria classe. O método público apresenta a operação permitida; os atributos privados escondem a representação que precisa ser protegida.
+
+Essa proteção é chamada **encapsulamento**. Ela ajuda a preservar um **invariante**: uma regra que deve continuar verdadeira durante a vida do objeto. Neste exemplo, `quantidade_` nunca deve superar a capacidade e toda leitura armazenada deve pertencer à faixa aceita.
+
+!!! note
+    C também pode ocultar representação por meio de módulos e tipos opacos. A comparação aqui é entre uma `struct` pública e uma classe C++ com membros privados.
+
 ---
 
 ## 2. Roteiro base com W3Schools
 
-Você já usou em sala os links da W3Schools. Nesta unidade eles viram o trilho principal de leitura é experimentacao.
+Os exemplos interativos da W3Schools formam uma trilha curta de leitura e experimentação.
 
 | Secao | Leitura base | Link direto para testar | O que observar |
 |---|---|---|---|

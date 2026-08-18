@@ -125,8 +125,96 @@ Fechar com recomendação prática por cenário.
 ## 12) Escopo prioritário em `docs/`
 
 - `fundamentos_git_ide/`
+- `revisao_programacao_algoritmos/`
 - `fundamentos_poo_cpp_python/`
 - `modelagem_analise_codigo/`
 - `projeto_integrador/`
 - `avaliacoes/`
 - `guias_operacionais/` (GitHub Classroom, GitHub Pages, fluxo de entrega)
+
+## 13) Padrão didático validado em sala
+
+Ao criar ou revisar uma trilha, preservar o estilo validado na seção `01. Fundamentos Git e IDE`:
+
+1. partir do que o estudante vê, já conhece ou consegue executar;
+2. apresentar um problema concreto antes do conceito ou da ferramenta que o resolve;
+3. introduzir uma ideia nova por vez e explicar `conceito -> necessidade -> ação -> resultado observável`;
+4. manter um mesmo mini-domínio de engenharia ao longo da aula para reduzir trocas de contexto;
+5. alternar explicações curtas com execução imediata, sem concentrar toda a prática no final;
+6. fornecer comandos e código reproduzíveis, saída esperada e diagnóstico de erros comuns;
+7. usar checkpoints cumulativos nos quais cada etapa reaproveita e melhora a anterior;
+8. encerrar com uma entrega verificável, checklist de evidências e perguntas de revisão;
+9. incorporar o fluxo profissional de `branch`, commits pequenos, `push` e pull request quando houver entrega;
+10. nas transições entre linguagens ou paradigmas, fixar primeiro o conceito comum e só depois comparar a sintaxe.
+
+### Critério de sequenciamento
+
+Cada bloco deve responder, nesta ordem:
+
+- **De onde partimos?** conhecimento prévio e estado atual do artefato;
+- **Qual problema apareceu?** limitação que o aluno consegue observar;
+- **Qual ideia resolve?** conceito apresentado sem antecipação desnecessária;
+- **Como aplicar agora?** modificação curta, executável e guiada;
+- **Como confirmar?** saída esperada, teste ou inspeção;
+- **O que isso prepara?** ligação explícita com o bloco ou capítulo seguinte.
+
+Evitar páginas organizadas como catálogos extensos de sintaxe. A progressão deve formar uma narrativa prática e cumulativa.
+
+## 14) Padrão de aula conceitual com prática profissional
+
+As novas aulas e revisões devem associar fundamentos conceituais a procedimentos atuais de engenharia de software. A complexidade operacional pode ser avançada, desde que seja introduzida de forma guiada, cumulativa e compatível com o tempo da aula.
+
+### Estrutura recomendada
+
+1. apresentar um problema observável do domínio;
+2. explicitar o conceito necessário para resolver uma parte desse problema;
+3. aplicar imediatamente o conceito em um artefato executável;
+4. trabalhar em repositório real, preferencialmente distribuído por fork;
+5. isolar cada incremento em uma branch com nome definido;
+6. fornecer validação local reproduzível;
+7. executar validação remota por CI a cada push;
+8. usar a falha de compilação ou teste como feedback formativo;
+9. integrar a branch somente depois de obter evidência de funcionamento;
+10. encerrar mostrando limites da solução atual e a necessidade do conceito seguinte.
+
+### Práticas modernas a incorporar quando pertinentes
+
+- fork, clone, remotos `origin` e `upstream`;
+- branches curtas e cumulativas;
+- commits pequenos, intencionais e verificáveis;
+- build automatizado com avisos habilitados;
+- testes de contrato, casos comuns, fronteiras e erros;
+- GitHub Actions com permissões mínimas e sem segredos desnecessários;
+- feedback de CI associado ao commit;
+- prevenção de regressões por testes cumulativos;
+- pull request e revisão quando contribuírem para o objetivo da aula;
+- documentação da decisão técnica e rastreabilidade do uso de IA.
+
+Essas práticas não devem aparecer como uma lista desconectada de ferramentas. Cada procedimento precisa resolver uma necessidade percebida durante a atividade e produzir uma evidência que o estudante consiga interpretar.
+
+### Critérios para repositórios de atividade
+
+Quando a aula usar um repositório-base:
+
+- manter um `README.md` com requisitos, fluxo, branches e comandos;
+- separar contrato, implementação e testes quando isso favorecer a aprendizagem;
+- fazer o código inicial compilar, ainda que os testes funcionais falhem de forma intencional;
+- apresentar mensagens de teste específicas e acionáveis;
+- repetir testes anteriores nas etapas seguintes para detectar regressões;
+- validar a solução de referência antes da publicação, sem publicá-la junto ao exercício;
+- documentar limites da automação, especialmente quando testes e workflows forem visíveis no fork;
+- incluir orientações separadas para estudantes e docente quando houver operação de CI;
+- restringir workflows ao menor conjunto de permissões necessário;
+- garantir que a atividade possa ser concluída no tempo declarado.
+
+### Equilíbrio pedagógico
+
+O conteúdo deve preservar três camadas conectadas:
+
+| Camada | Pergunta orientadora | Evidência |
+|---|---|---|
+| Conceito | por que essa ideia existe? | explicação do problema e da regra |
+| Implementação | como a ideia aparece no código? | programa compilável e legível |
+| Engenharia | como verificar e integrar com segurança? | testes, CI, histórico e revisão |
+
+Uma camada não deve substituir as outras. A automação confirma comportamentos observáveis, mas o estudante ainda deve explicar o conceito, ler o código e justificar as decisões tomadas.

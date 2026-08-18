@@ -63,14 +63,15 @@ exclude_docs: |
 nav:
   - Início: index.md
   - 01. Fundamentos Git e IDE: fundamentos_git_ide/index.md
-  - 02. Fundamentos de POO em C++ e Python: fundamentos_poo_cpp_python/index.md
-  - 03. Sobrecarga de Construtores em C++: fundamentos_poo_cpp_python/03_sobrecarga_construtores/index.md
-  - 04. Acesso, Encapsulamento e Herança em C++: fundamentos_poo_cpp_python/04_encapsulamento_heranca/index.md
-  - 05. Polimorfismo em C++: fundamentos_poo_cpp_python/05_polimorfismo/index.md
-  - 06. Arquivos e JSON para Integração: fundamentos_poo_cpp_python/06_arquivos_json/index.md
-  - 07. Datas, Horários e Timestamps: fundamentos_poo_cpp_python/07_data_timestamp/index.md
-  - 08. UML e Diagrama de Classes: modelagem_analise_codigo/index.md
-  - 09. Parte 2 - Projeto Integrador:
+  - 02. Revisão de Programação e Algoritmos: revisao_programacao_algoritmos/index.md
+  - 03. Fundamentos de POO em C++ e Python: fundamentos_poo_cpp_python/index.md
+  - 04. Sobrecarga de Construtores em C++: fundamentos_poo_cpp_python/03_sobrecarga_construtores/index.md
+  - 05. Acesso, Encapsulamento e Herança em C++: fundamentos_poo_cpp_python/04_encapsulamento_heranca/index.md
+  - 06. Polimorfismo em C++: fundamentos_poo_cpp_python/05_polimorfismo/index.md
+  - 07. Arquivos e JSON para Integração: fundamentos_poo_cpp_python/06_arquivos_json/index.md
+  - 08. Datas, Horários e Timestamps: fundamentos_poo_cpp_python/07_data_timestamp/index.md
+  - 09. UML e Diagrama de Classes: modelagem_analise_codigo/index.md
+  - 10. Parte 2 - Projeto Integrador:
       - Visão geral: parte-2-projeto/index.md
       - 01. Cenário e Modelagem: parte-2-projeto/01-cenario-e-modelagem.md
       - 02. Aula integrada - Listas dinâmicas: parte-2-projeto/02-heranca-e-polimorfismo.md
@@ -84,4 +85,4 @@ nav:
       - 10. Testes Automatizados em C++ e Python: parte-2-projeto/10-testes-automatizados-cpp-python.md
       - 11. Execução Local, CI e Validação Real: parte-2-projeto/11-ci-validacao-producao.md
       - 12. Projeto Final: parte-2-projeto/10-projeto-final.md
-  - 10. Checklist Profissional de Entrega: guias_operacionais/checklist_entrega_profissional.md
+  - 11. Checklist Profissional de Entrega: guias_operacionais/checklist_entrega_profissional.md
