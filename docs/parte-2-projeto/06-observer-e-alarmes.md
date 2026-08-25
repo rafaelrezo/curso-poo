@@ -1,4 +1,4 @@
-# Aula 8 - Padrões de Projeto II: Observer, Eventos e Alarmes
+# Padrões II: Observer, eventos e alarmes
 
 ## Objetivos de aprendizagem
 

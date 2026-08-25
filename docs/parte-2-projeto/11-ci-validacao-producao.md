@@ -1,4 +1,4 @@
-# Aula 11 - Execução Local, CI e Validação em Ambiente Real
+# Execução local, CI e validação em ambiente real
 
 ## Objetivos de aprendizagem
 

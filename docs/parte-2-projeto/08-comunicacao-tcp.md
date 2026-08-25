@@ -1,4 +1,4 @@
-# Aula 8 - Comunicação TCP com JSON por Linha
+# Comunicação TCP com JSON por linha
 
 ## Objetivos de aprendizagem
 

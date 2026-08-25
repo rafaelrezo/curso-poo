@@ -207,6 +207,23 @@ Quando a aula usar um repositório-base:
 - restringir workflows ao menor conjunto de permissões necessário;
 - garantir que a atividade possa ser concluída no tempo declarado.
 
+### Padrão obrigatório de prática cumulativa com fork e CI
+
+Quando uma aula introduzir ou ampliar um artefato de programação, preservar o padrão validado nos capítulos de Git e de revisão de C:
+
+1. publicar um repositório-base do docente e orientar o estudante a trabalhar em um fork;
+2. fazer o código inicial compilar e executar, com marcadores claros de comportamento ainda incompleto;
+3. usar o GitHub Pages como guia para o estudante completar o primeiro incremento, sem publicar a solução pronta no repositório-base;
+4. reservar a prática seguinte para uma extensão do exemplo, exigindo decisão e adaptação do estudante em vez de simples cópia;
+5. criar uma branch nomeada para cada etapa e integrar somente depois da validação;
+6. oferecer um único comando local explícito, preferencialmente `make test ETAPA=NN`, e executar exatamente o mesmo contrato na CI após o push;
+7. tornar os testes cumulativos: cada nova etapa repete as anteriores para detectar regressões;
+8. fazer mensagens de falha e saídas esperadas indicarem ao estudante o comportamento que precisa ser corrigido;
+9. executar o workflow em pushes das branches previstas, com permissões mínimas e associação inequívoca entre branch e etapa;
+10. exigir no pull request evidências da validação local e remota, explicação técnica e rastreabilidade do uso de IA.
+
+Os testes devem privilegiar comportamento observável e contratos, não buscas superficiais por palavras-chave. Como workflows e testes ficam visíveis no fork, a automação deve ser complementada por inspeção do diff, justificativa no pull request e, em avaliações, defesa oral curta.
+
 ### Equilíbrio pedagógico
 
 O conteúdo deve preservar três camadas conectadas:

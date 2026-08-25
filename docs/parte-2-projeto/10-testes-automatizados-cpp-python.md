@@ -1,4 +1,4 @@
-# Aula 10 - Testes Automatizados em C++ e Python
+# Testes automatizados em C++ e Python
 
 ## Objetivos de aprendizagem
 

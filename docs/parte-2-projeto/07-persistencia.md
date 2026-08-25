@@ -1,4 +1,4 @@
-# Aula 7 - Persistência em CSV e SQLite
+# Persistência em CSV e SQLite
 
 ## Objetivos de aprendizagem
 

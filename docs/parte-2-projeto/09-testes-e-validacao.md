@@ -1,4 +1,4 @@
-# Aula 9 - Fundamentos de Testes, Qualidade e Risco
+# Fundamentos de testes, qualidade e risco
 
 ## Objetivos de aprendizagem
 

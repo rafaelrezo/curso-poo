@@ -1,4 +1,4 @@
-# Aula 7 - Padrões de Projeto I: Strategy, Command e Repository
+# Padrões I: Strategy, Command e Repository
 
 ## Objetivos de aprendizagem
 

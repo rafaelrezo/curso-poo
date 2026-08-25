@@ -1,4 +1,4 @@
-# Aula 1 - Cenário e Modelagem da Estação de Bombeamento
+# Arquitetura e contrato versionado da estação de bombeamento
 
 ## Objetivos de aprendizagem
 
@@ -6,7 +6,7 @@
 - Documentar o contrato JSON entre dispositivo C++ e supervisor Python.
 - Diferenciar associação, agregação e composição no modelo do projeto.
 
-**Tempo estimado:** 1h30.
+**Tempo estimado:** 2h.
 
 ## Vídeo da aula
 
@@ -15,6 +15,8 @@
 ---
 
 ## 1. Contextualização do problema
+
+Esta aula parte do checkpoint integrado do capítulo 09. Classes, coleções, JSONL, timestamps e tratamento básico de exceções são pré-requisitos, não novos conteúdos. O novo problema é fazer esses building blocks formarem uma arquitetura que possa evoluir sem misturar responsabilidades.
 
 Uma estação de bombeamento move fluido de um reservatório para outro ponto do processo. Em uma planta real, haveria sensores, atuadores, painéis, intertravamentos, alarmes e redes industriais.
 

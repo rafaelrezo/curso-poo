@@ -48,6 +48,17 @@ markdown_extensions:
 # Materiais avaliativos e operacionais podem ficar versionados no repositório,
 # mas não devem entrar no site publicado no GitHub Pages.
 exclude_docs: |
+  fundamentos_poo_cpp_python/index.md
+  fundamentos_poo_cpp_python/03_sobrecarga_construtores/index.md
+  fundamentos_poo_cpp_python/04_encapsulamento_heranca/index.md
+  fundamentos_poo_cpp_python/05_polimorfismo/index.md
+  fundamentos_poo_cpp_python/06_arquivos_json/index.md
+  fundamentos_poo_cpp_python/07_data_timestamp/index.md
+  modelagem_analise_codigo/index.md
+  parte-2-projeto/02-heranca-e-polimorfismo.md
+  parte-2-projeto/03-encapsulamento-e-validacao.md
+  parte-2-projeto/04-regras-de-controle.md
+  parte-2-projeto/06-tratamento-erros-excecoes.md
   plano_de_implementacao.md
   referencias.md
   avaliacoes/
@@ -57,32 +68,34 @@ exclude_docs: |
   parte-2-projeto/especificacao-projeto-final.md
   parte-2-projeto/especificacao-projeto-final.html
   parte-2-projeto/especificacao-projeto-final.pdf
-  parte-2-projeto/07-persistencia.md
-  parte-2-projeto/08-comunicacao-tcp.md
+  parte-2-projeto/especificacao-projeto-recuperacao.md
+  parte-2-projeto/especificacao-projeto-recuperacao.html
+  parte-2-projeto/especificacao-projeto-recuperacao.pdf
+  parte-2-projeto/guia-avaliacao-projeto-recuperacao.md
+  parte-2-projeto/guia-avaliacao-projeto-recuperacao.html
+  parte-2-projeto/guia-avaliacao-projeto-recuperacao.pdf
 
 nav:
   - Início: index.md
   - 01. Fundamentos Git e IDE: fundamentos_git_ide/index.md
   - 02. Revisão de Programação e Algoritmos: revisao_programacao_algoritmos/index.md
-  - 03. Fundamentos de POO em C++ e Python: fundamentos_poo_cpp_python/index.md
-  - 04. Sobrecarga de Construtores em C++: fundamentos_poo_cpp_python/03_sobrecarga_construtores/index.md
-  - 05. Acesso, Encapsulamento e Herança em C++: fundamentos_poo_cpp_python/04_encapsulamento_heranca/index.md
-  - 06. Polimorfismo em C++: fundamentos_poo_cpp_python/05_polimorfismo/index.md
-  - 07. Arquivos e JSON para Integração: fundamentos_poo_cpp_python/06_arquivos_json/index.md
-  - 08. Datas, Horários e Timestamps: fundamentos_poo_cpp_python/07_data_timestamp/index.md
-  - 09. UML e Diagrama de Classes: modelagem_analise_codigo/index.md
+  - 03. Do C aos Objetos: fundamentos_poo_cpp_python/03_transicao_objetos/index.md
+  - 04. Objetos Válidos: fundamentos_poo_cpp_python/04_objetos_validos/index.md
+  - 05. Composição e Responsabilidades: fundamentos_poo_cpp_python/05_composicao/index.md
+  - 06. Herança e Polimorfismo: fundamentos_poo_cpp_python/06_heranca_polimorfismo/index.md
+  - 07. Coleções Dinâmicas: fundamentos_poo_cpp_python/07_colecoes_dinamicas/index.md
+  - 08. Contrato JSON e Integração: fundamentos_poo_cpp_python/08_integracao_json/index.md
+  - 09. Exceções e Consolidação: fundamentos_poo_cpp_python/09_excecoes_consolidacao/index.md
   - 10. Parte 2 - Projeto Integrador:
       - Visão geral: parte-2-projeto/index.md
-      - 01. Cenário e Modelagem: parte-2-projeto/01-cenario-e-modelagem.md
-      - 02. Aula integrada - Listas dinâmicas: parte-2-projeto/02-heranca-e-polimorfismo.md
-      - 03. Aula integrada - Estado dos objetos: parte-2-projeto/03-encapsulamento-e-validacao.md
-      - 04. Aula integrada - Atividade prática: parte-2-projeto/04-regras-de-controle.md
-      - 05. Bancos de dados no supervisório: parte-2-projeto/05-bancos-de-dados-supervisorio.md
-      - 06. Tratamento de Erros e Exceções: parte-2-projeto/06-tratamento-erros-excecoes.md
-      - 07. Padrões I - Strategy, Command e Repository: parte-2-projeto/05-strategy-e-command.md
-      - 08. Padrões II - Observer, Eventos e Alarmes: parte-2-projeto/06-observer-e-alarmes.md
-      - 09. Fundamentos de Testes e Qualidade: parte-2-projeto/09-testes-e-validacao.md
-      - 10. Testes Automatizados em C++ e Python: parte-2-projeto/10-testes-automatizados-cpp-python.md
-      - 11. Execução Local, CI e Validação Real: parte-2-projeto/11-ci-validacao-producao.md
-      - 12. Projeto Final: parte-2-projeto/10-projeto-final.md
+      - 01. Arquitetura e Contrato: parte-2-projeto/01-cenario-e-modelagem.md
+      - 02. Strategy, Command e Repository: parte-2-projeto/05-strategy-e-command.md
+      - 03. Observer, Eventos e Alarmes: parte-2-projeto/06-observer-e-alarmes.md
+      - 04. Banco de Dados no Supervisório: parte-2-projeto/05-bancos-de-dados-supervisorio.md
+      - 05. Persistência e Repository: parte-2-projeto/07-persistencia.md
+      - 06. Comunicação TCP: parte-2-projeto/08-comunicacao-tcp.md
+      - 07. Testes e Qualidade: parte-2-projeto/09-testes-e-validacao.md
+      - 08. Testes Automatizados: parte-2-projeto/10-testes-automatizados-cpp-python.md
+      - 09. CI e Validação: parte-2-projeto/11-ci-validacao-producao.md
+      - 10. Projeto Final: parte-2-projeto/10-projeto-final.md
   - 11. Checklist Profissional de Entrega: guias_operacionais/checklist_entrega_profissional.md

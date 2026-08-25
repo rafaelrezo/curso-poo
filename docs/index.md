@@ -14,42 +14,42 @@
 
 ---
 
-## 1. Conteudo liberado hoje
+## 1. Conteúdo da trilha
 
 - `01. Fundamentos Git e IDE`: preparar ambiente, criar repositório, sincronizar e colaborar.
-- `02. Fundamentos de POO em C++ e Python`: iniciar classes, objetos, métodos e construtores com exemplos guiados.
-- `03. Sobrecarga de construtores em C++`: modelar diferentes formas de nascimento do objeto com foco em automação industrial.
-- `04. Acesso, encapsulamento e herança em C++`: proteger estado interno, discutir `friend` com critério e reutilizar comportamento com hierarquias simples.
-- `05. Polimorfismo em C++`: comandar diferentes ativos por uma interface comum, com `virtual` e `override`.
-- `06. Arquivos e JSON para integração`: gravar telemetria em C++ e consumir os dados em Python com Streamlit.
-- `07. Datas, horarios e timestamps`: representar instantes, duracoes e horarios em JSON com UTC.
-- `08. UML e Diagrama de Classes`: modelar a estrutura do sistema antes de codificar e relacionar UML com encapsulamento, composição e herança.
-- `09. Parte 2 - Projeto Integrador`: evoluir a integração entre controlador C++ e mini-SCADA Python com modelagem, listas dinâmicas, validação, banco de dados e tratamento de exceções.
-- As demais unidades avançadas continuam no repositório, mas seguem ocultadas enquanto a trilha publicada é consolidada.
+- `02. Revisão de Programação em C`: recuperar estruturas, funções, ponteiros, listas e arquivos em uma atividade cumulativa.
+- `03. Do C aos objetos`: compreender a transição histórica, comparar os fluxos de execução e criar a primeira classe em C++ e Python.
+- `04. Objetos válidos`: proteger invariantes com construtores, encapsulamento e testes de fronteira.
+- `05. Composição e responsabilidades`: fazer sensor, bomba e controlador colaborarem sem concentrar funções.
+- `06. Herança e polimorfismo`: representar diferentes sensores por um contrato comum.
+- `07. Coleções dinâmicas`: evoluir da lista manual de C para `vector`, `unique_ptr` e `list`.
+- `08. Contrato JSON e integração`: gerar telemetria em C++ e consumi-la primeiro no terminal e depois no Streamlit.
+- `09. Exceções e consolidação`: manter o lote em execução, separar falhas e concluir o checkpoint integrado.
+- `Parte 2 — Projeto Integrador`: aplicar padrões, banco de dados, comunicação, testes, qualidade e CI aos building blocks já funcionais.
 
 ## 2. Trilha inicial do curso
 
 1. Uso do VS Code para C++ e Python (criar, compilar e executar).
 2. Fundamentos de Git e GitHub no fluxo prático.
 3. Criação do repositório e sincronizacao com remoto.
-4. Introducao a classes, objetos, métodos e construtores em C++.
-5. Sobrecarga de construtores em C++ com comparação didatica com Python.
-6. Encapsulamento, `friend` e herança em C++ para proteger invariantes e especializar ativos do domínio.
-7. Polimorfismo em C++ para tratar diferentes equipamentos por um contrato único.
-8. Manipulacao de arquivos e JSON para integrar C++ e Python.
-9. Datas, horarios e timestamps para telemetria, logs e ordenacao de eventos.
-10. UML e diagrama de classes para representar estrutura, responsabilidade e relações antes da implementação.
-11. Evolucao da integração entre controlador C++ e mini-SCADA Python com listas dinâmicas, banco de dados e tratamento controlado de erros.
+4. Transição da `struct` para classes e objetos equivalentes em C++ e Python.
+5. Encapsulamento e invariantes para fazer o objeto nascer e permanecer válido.
+6. Composição e UML mínimo para distribuir responsabilidades.
+7. Herança e polimorfismo apenas quando aparece uma família de dispositivos.
+8. Coleções dinâmicas e responsabilidade sobre memória.
+9. Contrato JSONL, timestamp e primeira integração C++ → Python.
+10. Exceções nas fronteiras e checkpoint integrado da Parte 1.
+11. Padrões, persistência, comunicação, testes, qualidade e CI na Parte 2.
 
 ## 3. Resultado esperado nesta virada de unidade
 
 - Cada aluno com repositório funcional no GitHub.
 - Autonomia mínima para clonar, versionar e sincronizar alterações.
-- Base conceitual suficiente para ler código orientado a objetos, representar a estrutura do domínio em UML, entender diferentes formas de inicializacao, proteger estado, reconhecer quando um mesmo comando deve acionar comportamentos distintos e integrar dados entre C++ e Python por JSON.
+- Base conceitual suficiente para modelar objetos válidos, compor responsabilidades, usar polimorfismo e coleções com segurança e integrar C++ e Python por um contrato testado.
 
 ## Mini-caso prático
 
-Um aluno cria e sincroniza seu repositório; na sequência, le e adapta exemplos de `Sensor`, `Valvula`, `Controlador` e `AtuadorMalha` em C++, transforma esse entendimento em um diagrama de classes UML, gera telemetria em JSON e consome esses dados em um painel Python simples.
+Um aluno cria e sincroniza seu repositório; depois evolui o mesmo sistema desde um `SensorNivel` até um controlador virtual simplificado em C++ que produz telemetria JSONL para um supervisório didático em Python.
 
 ## Perguntas de revisão rápida
 

@@ -1,4 +1,4 @@
-# Aula 12 - Projeto Final: Mini-SCADA da Estação de Bombeamento
+# Projeto final: controlador e supervisório da estação de bombeamento
 
 ## Objetivos de aprendizagem
 
