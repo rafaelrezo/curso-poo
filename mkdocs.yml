@@ -80,7 +80,7 @@ nav:
   - 01. Fundamentos Git e IDE: fundamentos_git_ide/index.md
   - 02. Revisão de Programação e Algoritmos: revisao_programacao_algoritmos/index.md
   - 03. Do C aos Objetos: fundamentos_poo_cpp_python/03_transicao_objetos/index.md
-  - 04. Objetos Válidos: fundamentos_poo_cpp_python/04_objetos_validos/index.md
+  - 04. Encapsulamento e Interface Pública: fundamentos_poo_cpp_python/04_objetos_validos/index.md
   - 05. Composição e Responsabilidades: fundamentos_poo_cpp_python/05_composicao/index.md
   - 06. Herança e Polimorfismo: fundamentos_poo_cpp_python/06_heranca_polimorfismo/index.md
   - 07. Coleções Dinâmicas: fundamentos_poo_cpp_python/07_colecoes_dinamicas/index.md

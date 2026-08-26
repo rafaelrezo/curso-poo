@@ -1,4 +1,4 @@
-# Protegendo o estado: acesso, atualização e primeira invariante
+# Encapsulamento: estado interno e interface pública
 
 ## Objetivos de aprendizagem
 
