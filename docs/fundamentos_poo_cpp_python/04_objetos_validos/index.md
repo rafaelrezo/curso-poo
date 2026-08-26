@@ -440,14 +440,15 @@ Depois de abrir o repositório-base:
 1. faça o fork;
 2. habilite os workflows no fork, se solicitado;
 3. clone substituindo `SEU_USUARIO`;
-4. configure `upstream` e confira os remotos.
+4. confira se `origin` aponta para o seu próprio fork.
 
 ```bash
 git clone https://github.com/SEU_USUARIO/poo-objetos-validos.git
 cd poo-objetos-validos
-git remote add upstream https://github.com/rafaelrezo/poo-objetos-validos.git
 git remote -v
 ```
+
+O resultado deve mostrar somente o remoto `origin` com o endereço do seu fork. Não configure `upstream`: a entrega não será enviada ao repositório-base.
 
 Execute o código inicial:
 
@@ -638,7 +639,13 @@ git commit -m "Estende sensor com estado e registro de leituras"
 git push -u origin pratica/01-estender-sensor
 ```
 
-Confira **Actions → Validação do capítulo 04** e abra o pull request somente depois da CI verde. Inclua:
+Confira **Actions → Validação do capítulo 04** no seu fork. Depois da CI verde, abra o pull request dentro do próprio fork:
+
+- origem: `pratica/01-estender-sensor` do seu fork;
+- destino: `main` do mesmo fork;
+- não selecione `rafaelrezo/poo-objetos-validos` como repositório de destino.
+
+Inclua no pull request:
 
 - saída de `make run` com as transições esperadas;
 - resultado de `make test ETAPA=02`;
