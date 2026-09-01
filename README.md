@@ -9,17 +9,17 @@ Ensinar POO com `C++` como referência inicial e `Python` como espelho de aplica
 ## Uso no curso
 
 - `GitHub Pages` pública o conteúdo didatico.
-- `GitHub Classroom` hospeda os repositórios de entrega, os cards de issue e os PRs.
-- `Google Classroom` fica como canal de comunicação da turma.
-- Cada cenário prático vira um repositório starter privado e independente na organização do curso.
-- `classroom_starters/` espelha localmente esses repositórios privados para manutenção.
+- Repositórios-base públicos na namespace `rafaelrezo` fornecem starters, testes e workflows.
+- Cada estudante trabalha em seu fork; o Google Classroom pode comunicar prazos e receber o link da PR.
+- Cada cenário prático vira um repositório-base público e independente na namespace `rafaelrezo`.
+- Diretórios locais `repositorio-*-capNN/` mantêm os starters antes da publicação em seus repositórios próprios.
 
 ## Padrão de entrega
 
 Cada repositório de atividade deve conter, no mínimo:
 
 - `README.md` com contexto, escopo, arquitetura, comandos e critérios de aceite.
-- Cards de issue para orientar o trabalho por etapas.
+- Checkpoints e branches nomeadas para orientar o trabalho por etapas.
 - `AI_LOG.md` com o que foi pedido ao agente, o que foi aceito, o que foi rejeitado e a justificativa.
 - Branch por card e `pull request` para revisão.
 
@@ -44,18 +44,21 @@ No GitHub:
 2. Em `Build and deployment`, selecione `Source: GitHub Actions`.
 3. Garanta que a branch padrão do repositório seja `main`.
 
-## Uso com GitHub Classroom
+## Fluxo das atividades no GitHub
 
 Modelo recomendado:
 
 1. Este repositório funciona como base pública de conteúdo (GitHub Pages).
-2. Atividades são distribuidas via GitHub Classroom (repos por aluno ou por grupo).
-3. Conteudo e roteiros ficam centralizados aqui, e entregas em repos de tarefas.
+2. Atividades são distribuídas por repositórios-base públicos na namespace `rafaelrezo`.
+3. O estudante faz fork, clona o próprio fork e trabalha em uma branch indicada.
+4. Testes locais e GitHub Actions validam o mesmo contrato.
+5. A entrega é uma PR da branch para a `main` do próprio fork; o repositório-base não recebe PRs dos estudantes.
+6. Conteúdo e roteiros ficam centralizados aqui; código e evidências permanecem nos forks das atividades.
 
 ## Estrutura
 
 - `docs/`: conteúdo do curso
 - `mkdocs.yml`: navegacao e configuração do site
 - `AGENTS.md`: diretrizes editoriais e operacionais para agentes
-- `classroom_starters/`: espelho local dos repositórios starter privados por cenário
+- `repositorio-*-capNN/`: fontes locais dos repositórios-base públicos por cenário
 - `.github/workflows/pages.yml`: deploy do site

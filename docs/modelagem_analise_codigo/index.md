@@ -738,9 +738,9 @@ Quando essa separação aparece cedo no desenho, o código tende a nascer com ma
 
 ---
 
-## 10. Atividade da unidade: via GitHub Classroom
+## 10. Atividade da unidade: repositório-base e fork
 
-Nesta unidade, a atividade principal saiu do material do site e passou a existir como um **repositório starter independente**, próprio para uso no GitHub Classroom.
+Nesta unidade, a atividade principal saiu do material do site e passou a existir como um **repositório-base público independente**, usado por fork.
 
 ### Onde está a atividade
 
@@ -750,7 +750,7 @@ Nesta unidade, a atividade principal saiu do material do site e passou a existir
 
 - para ensinar fluxo real com `assignment`, branch, issue, commit e pull request;
 - para separar claramente **conteúdo de estudo** e **repositório de entrega**;
-- para permitir que cada aluno ou equipe receba sua própria cópia pelo GitHub Classroom.
+- para permitir que cada aluno ou equipe trabalhe em seu próprio fork.
 
 ### O que o aluno vai encontrar no starter
 
@@ -763,7 +763,7 @@ Nesta unidade, a atividade principal saiu do material do site e passou a existir
 
 ### Recomendação para o docente
 
-Use esse starter como `assigned repository` no GitHub Classroom e mantenha esta página apenas como referência conceitual da aula.
+Publique o starter na namespace `rafaelrezo`; o estudante faz fork, valida localmente e no GitHub Actions e abre PR para a `main` do próprio fork. Mantenha esta página como referência conceitual.
 
 ---
 

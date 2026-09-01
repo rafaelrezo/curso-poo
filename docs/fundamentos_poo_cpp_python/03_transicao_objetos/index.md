@@ -254,11 +254,10 @@ A partir daqui, o exemplo deixa de ser um arquivo isolado. Você receberá um re
 cd ~/curso-poo
 git clone https://github.com/SEU_USUARIO/poo-primeiros-objetos.git
 cd poo-primeiros-objetos
-git remote add upstream https://github.com/rafaelrezo/poo-primeiros-objetos.git
 git remote -v
 ```
 
-Você deve ver `origin` apontando para o seu fork e `upstream` para o repositório do professor. Confirme também que o terminal está dentro da cópia clonada:
+Você deve ver somente `origin`, apontando para o seu fork. Não configure `upstream`: a entrega será integrada na `main` do próprio fork e não será enviada ao repositório-base. Confirme também que o terminal está dentro da cópia clonada:
 
 ```bash
 pwd
@@ -811,7 +810,7 @@ Execute cada comando pelo menos uma vez para compreender o que está sendo medid
 !!! warning "O que esta medição permite concluir"
     Este experimento compara **a inicialização e a execução destes dois programas pequenos neste computador**. No caso de Python, a inicialização do interpretador faz parte da medida; no caso de C++, o executável já estava compilado. O resultado não prova que uma linguagem será sempre mais rápida que a outra. Uma comparação de desempenho rigorosa exigiria implementações equivalentes, uma carga de trabalho significativa, várias repetições e controle do ambiente.
 
-### 7.5 Gerar a evidência para o Classroom
+### 7.5 Gerar a evidência para o pull request
 
 O comando final executa novamente os testes, mede cada programa três vezes e solicita sete respostas. Execute no terminal da raiz do repositório:
 
@@ -833,7 +832,7 @@ Se algum teste falhar, o arquivo não será criado. Corrija o código e execute 
 
 ```text
 4/4 Evidência gerada em evidencia.md
-Revise o arquivo antes de fazer commit e enviar ao Classroom.
+Revise o arquivo antes de fazer commit e anexar à entrega no fork.
 ```
 
 Abra o arquivo gerado:
@@ -849,7 +848,7 @@ Ele deve conter:
 - três tempos de C++ e três tempos de Python;
 - as sete respostas escritas pelo aluno.
 
-Revise texto e valores. O arquivo `evidencia.md` é o artefato que deverá ser submetido no Classroom da atividade.
+Revise texto e valores. O arquivo `evidencia.md` deve ser commitado na branch e apresentado no pull request do próprio fork.
 
 ### 7.6 Enviar a branch e validar na CI
 
@@ -862,7 +861,7 @@ git commit -m "Adiciona unidade sem quebrar o contrato inicial"
 git push -u origin pratica/02-extensao-unidade
 ```
 
-Confirme a execução verde em **Actions** e abra o pull request. Na descrição, inclua:
+Confirme a execução verde em **Actions** e abra o pull request da branch para a `main` do próprio fork. Não abra PR contra `rafaelrezo/poo-primeiros-objetos`. Na descrição, inclua:
 
 - o comando local executado e o resultado;
 - o link da execução da CI;
@@ -898,11 +897,11 @@ A estação de bombeamento agora possui representações para nível e pressão,
 
 ## Evidências de conclusão
 
-- [ ] o fork possui `origin` e `upstream` corretos;
+- [ ] o fork possui somente `origin`, apontando para a conta do estudante;
 - [ ] `make test ETAPA=01` passou antes da primeira integração;
 - [ ] `make test ETAPA=02` repetiu as duas etapas sem regressão;
 - [ ] as duas branches produziram execuções verdes no GitHub Actions;
-- [ ] `make evidencia` gerou `evidencia.md`, que foi revisado e submetido no Classroom;
+- [ ] `make evidencia` gerou `evidencia.md`, revisado e incluído na PR do fork;
 - [ ] o pull request explica a equivalência conceitual entre C++ e Python;
 - [ ] o uso de IA, quando ocorreu, foi registrado em `AI_LOG.md`.
 

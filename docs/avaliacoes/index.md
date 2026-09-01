@@ -16,7 +16,7 @@
 
 ## 1. Formato recomendado
 
-- As atividades abaixo são entregues em repositórios do GitHub Classroom, não no GitHub Pages publico.
+- As atividades abaixo são entregues em forks dos repositórios-base públicos, não no GitHub Pages público.
 - A sequência prática segue a ordem `corrigir` -> `completar` -> `construir`.
 - Cada cenário vive em um repositório starter próprio, com README, card e critérios de aceite do próprio exercicio.
 

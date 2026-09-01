@@ -9,7 +9,8 @@
 - Streamlit: https://docs.streamlit.io/
 - SQLite: https://www.sqlite.org/docs.html
 - Git (Pro Git Book): https://git-scm.com/book/en/v2
-- GitHub Classroom: https://docs.github.com/en/education/manage-coursework-with-github-classroom
+- GitHub Docs — criar um fork: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo
+- GitHub Docs — GitHub Actions: https://docs.github.com/en/actions
 - GitHub Pages: https://docs.github.com/en/pages
 - MkDocs: https://www.mkdocs.org/
 - W3Schools C++ OOP: https://www.w3schools.com/cpp/cpp_oop.asp

@@ -139,7 +139,6 @@ No terminal, substitua `SEU_USUARIO`:
 cd ~/curso-poo
 git clone git@github.com:SEU_USUARIO/revisao-programacao-c.git
 cd revisao-programacao-c
-git remote add upstream git@github.com:rafaelrezo/revisao-programacao-c.git
 git remote -v
 make build
 make run
@@ -148,7 +147,7 @@ make run
 Confira os remotos:
 
 - `origin`: seu fork, onde você pode enviar commits;
-- `upstream`: repositório original da atividade.
+- o clone da atividade mantém somente `origin`, apontando para o fork do estudante.
 
 O código inicial compila, mas ainda apresenta resultados incompletos. Isso é intencional: cada etapa substituirá um pequeno conjunto de funções.
 

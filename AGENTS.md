@@ -16,7 +16,7 @@ Distribuição macro da carga horária:
 - `45%` (~`27h`): fundamentos e conceitos de POO (C++ como referência + paralelo em Python).
 - `4% a 10%` (`2.4h` a `6h`): avaliações e checkpoints.
 - `35%` (`21h`): projeto integrador em equipe (frontend, backend, dados e padrões de projeto).
-- Horas restantes: nivelamento operacional (Git, IDE, fluxo com GitHub Classroom, uso de IA com responsabilidade).
+- Horas restantes: nivelamento operacional (Git, IDE, fork e fluxo com GitHub, uso de IA com responsabilidade).
 
 ## 3) Estrutura padrão de página
 
@@ -53,7 +53,7 @@ Toda página nova ou revisada deve seguir, preferencialmente, esta ordem:
 - Garantir coerência conceitual entre as aulas da trilha.
 - Priorizar fontes primárias e oficiais para conteúdos técnicos:
   - `cppreference`, `C++ Core Guidelines`, `Python Docs`, `GitHub Docs`, `git-scm`, `SQLite Docs`, `Streamlit Docs`.
-- Quando houver afirmações operacionais sujeitas a mudança (GitHub Classroom, Codespaces, Pages), validar em documentação oficial atual.
+- Quando houver afirmações operacionais sujeitas a mudança (GitHub, Codespaces, Actions, Pages), validar em documentação oficial atual.
 - Traduzir teoria para impacto prático em modelagem e manutenção de software.
 
 ## 6) Diretrizes de linguagem (C++ e Python)
@@ -72,17 +72,17 @@ Toda página nova ou revisada deve seguir, preferencialmente, esta ordem:
 - Preferir vídeos curtos/moderados (ideal até ~20 min).
 - Evitar conteúdo sensacionalista ou sem credibilidade técnica.
 
-## 8) Atividades, avaliação e GitHub Classroom
+## 8) Atividades, avaliação e repositórios no GitHub
 
 - Todas as atividades devem privilegiar fluxo de mercado:
   - branch, commit, push, pull request e revisão.
-- Usar GitHub Classroom para:
-  - atividades individuais,
-  - atividades em grupo,
-  - prazo com cutoff,
-  - autograding quando aplicável,
-  - feedback por PR.
-- Google Classroom pode ser usado como apoio de comunicação no início, mas o repositório oficial de entregas é o GitHub Classroom.
+- O GitHub Classroom foi descontinuado e não deve ser recomendado ou usado em materiais novos ou revisados.
+- Cada atividade de programação deve possuir um repositório-base público na namespace `rafaelrezo` do GitHub.
+- O estudante deve fazer fork do repositório-base, clonar o próprio fork e manter somente `origin` apontando para ele.
+- Não configurar `upstream` nas atividades didáticas, salvo necessidade excepcional explicitamente documentada.
+- A implementação ocorre em branch nomeada; os testes são executados localmente e pelo GitHub Actions após o push.
+- A entrega é organizada por pull request da branch para a `main` do próprio fork. Nenhuma PR deve ser aberta contra o repositório-base do docente.
+- Google Classroom pode ser usado apenas para comunicação, prazos e envio do link da PR quando necessário; código, histórico, testes e revisão permanecem no fork do estudante.
 
 ## 9) Uso de agentes de IA e skills
 
@@ -130,7 +130,7 @@ Fechar com recomendação prática por cenário.
 - `modelagem_analise_codigo/`
 - `projeto_integrador/`
 - `avaliacoes/`
-- `guias_operacionais/` (GitHub Classroom, GitHub Pages, fluxo de entrega)
+- `guias_operacionais/` (fork, GitHub Actions, GitHub Pages e fluxo de entrega)
 
 ## 13) Padrão didático validado em sala
 
@@ -179,7 +179,7 @@ As novas aulas e revisões devem associar fundamentos conceituais a procedimento
 
 ### Práticas modernas a incorporar quando pertinentes
 
-- fork, clone, remotos `origin` e `upstream`;
+- fork, clone e remoto `origin` apontando para o fork do estudante;
 - branches curtas e cumulativas;
 - commits pequenos, intencionais e verificáveis;
 - build automatizado com avisos habilitados;
@@ -196,6 +196,7 @@ Essas práticas não devem aparecer como uma lista desconectada de ferramentas. 
 
 Quando a aula usar um repositório-base:
 
+- publicar o starter em um repositório público separado na namespace `rafaelrezo`;
 - manter um `README.md` com requisitos, fluxo, branches e comandos;
 - separar contrato, implementação e testes quando isso favorecer a aprendizagem;
 - fazer o código inicial compilar, ainda que os testes funcionais falhem de forma intencional;
@@ -221,6 +222,8 @@ Quando uma aula introduzir ou ampliar um artefato de programação, preservar o 
 8. fazer mensagens de falha e saídas esperadas indicarem ao estudante o comportamento que precisa ser corrigido;
 9. executar o workflow em pushes das branches previstas, com permissões mínimas e associação inequívoca entre branch e etapa;
 10. exigir no pull request evidências da validação local e remota, explicação técnica e rastreabilidade do uso de IA.
+
+O pull request deve ser aberto da branch de atividade para a `main` do próprio fork. O clone deve possuir somente o remoto `origin` apontando para o fork do estudante; não usar `upstream` nem enviar contribuições ao repositório-base como parte da entrega.
 
 Os testes devem privilegiar comportamento observável e contratos, não buscas superficiais por palavras-chave. Como workflows e testes ficam visíveis no fork, a automação deve ser complementada por inspeção do diff, justificativa no pull request e, em avaliações, defesa oral curta.
 
