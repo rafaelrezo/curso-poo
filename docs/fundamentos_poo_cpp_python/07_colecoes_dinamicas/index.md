@@ -114,7 +114,7 @@ Evite testes que somente procurem `vector` ou `unique_ptr` no arquivo. Valide qu
 
 ## 6. Prática profissional
 
-1. Crie `cap07-colecao-dispositivos`.
+1. Crie `cap08-colecao-dispositivos`.
 2. Faça primeiro um `vector<double>` funcionar.
 3. Faça commit: `Adiciona coleção simples de leituras`.
 4. Substitua a coleção fixa de sensores pela coleção polimórfica.

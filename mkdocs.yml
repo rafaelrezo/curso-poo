@@ -82,11 +82,12 @@ nav:
   - 03. Do C aos Objetos: fundamentos_poo_cpp_python/03_transicao_objetos/index.md
   - 04. Encapsulamento e Interface Pública: fundamentos_poo_cpp_python/04_objetos_validos/index.md
   - 05. Composição e Responsabilidades: fundamentos_poo_cpp_python/05_composicao/index.md
-  - 06. Herança e Polimorfismo: fundamentos_poo_cpp_python/06_heranca_polimorfismo/index.md
-  - 07. Coleções Dinâmicas: fundamentos_poo_cpp_python/07_colecoes_dinamicas/index.md
-  - 08. Contrato JSON e Integração: fundamentos_poo_cpp_python/08_integracao_json/index.md
-  - 09. Exceções e Consolidação: fundamentos_poo_cpp_python/09_excecoes_consolidacao/index.md
-  - 10. Parte 2 - Projeto Integrador:
+  - 06. Herança e Especialização: fundamentos_poo_cpp_python/06_heranca_polimorfismo/index.md
+  - 07. Polimorfismo e Contratos: fundamentos_poo_cpp_python/07_polimorfismo/index.md
+  - 08. Coleções Dinâmicas: fundamentos_poo_cpp_python/07_colecoes_dinamicas/index.md
+  - 09. Contrato JSON e Integração: fundamentos_poo_cpp_python/08_integracao_json/index.md
+  - 10. Exceções e Consolidação: fundamentos_poo_cpp_python/09_excecoes_consolidacao/index.md
+  - 11. Parte 2 - Projeto Integrador:
       - Visão geral: parte-2-projeto/index.md
       - 01. Arquitetura e Contrato: parte-2-projeto/01-cenario-e-modelagem.md
       - 02. Strategy, Command e Repository: parte-2-projeto/05-strategy-e-command.md
@@ -98,4 +99,4 @@ nav:
       - 08. Testes Automatizados: parte-2-projeto/10-testes-automatizados-cpp-python.md
       - 09. CI e Validação: parte-2-projeto/11-ci-validacao-producao.md
       - 10. Projeto Final: parte-2-projeto/10-projeto-final.md
-  - 11. Checklist Profissional de Entrega: guias_operacionais/checklist_entrega_profissional.md
+  - 12. Checklist Profissional de Entrega: guias_operacionais/checklist_entrega_profissional.md

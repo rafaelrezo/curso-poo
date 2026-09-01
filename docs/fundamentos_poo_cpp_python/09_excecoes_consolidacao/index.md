@@ -64,7 +64,7 @@ O `try` fica dentro do ciclo porque a decisão útil é registrar a falha daquel
 - prefira tipos específicos antes de `std::exception`;
 - não use `catch (...)` apenas para ignorar o problema.
 
-RAII faz com que arquivos, vetores e `unique_ptr` liberem recursos durante a saída por exceção. Isso conecta tratamento de erros à memória segura do capítulo 07.
+RAII faz com que arquivos, vetores e `unique_ptr` liberem recursos durante a saída por exceção. Isso conecta tratamento de erros à memória segura do capítulo 08.
 
 ---
 
@@ -146,7 +146,7 @@ O diagrama não deve listar detalhes de bibliotecas. Ele comunica responsabilida
 ### Fluxo de trabalho
 
 ```text
-issue -> cap09-pipeline-resiliente -> commits pequenos -> push -> CI -> PR -> revisão -> integração
+issue -> cap10-pipeline-resiliente -> commits pequenos -> push -> CI -> PR -> revisão -> integração
 ```
 
 ### Casos mínimos de autograding

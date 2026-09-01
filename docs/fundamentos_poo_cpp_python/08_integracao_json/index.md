@@ -154,7 +154,7 @@ O CI deve executar, no mínimo:
 4. validação dos seis campos e tipos;
 5. execução do consumidor Python.
 
-Branch sugerida: `cap08-contrato-telemetria`.
+Branch sugerida: `cap09-contrato-telemetria`.
 
 No PR, registre uma decisão: por que JSONL foi escolhido em vez de um array JSON único? Resposta esperada: cada evento pode ser acrescentado e processado linha a linha.
 

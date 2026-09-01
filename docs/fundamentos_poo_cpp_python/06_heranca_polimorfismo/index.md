@@ -1,164 +1,281 @@
-# Contratos e variação: herança e polimorfismo
+# Herança: especialização e contrato comum
 
 ## Objetivos de aprendizagem
 
-- Reconhecer quando diferentes dispositivos podem cumprir um mesmo contrato.
-- Aplicar herança pública e polimorfismo dinâmico em um exemplo pequeno de C++.
-- Comparar o contrato explícito de C++ com o polimorfismo por comportamento em Python.
+- Reconhecer uma relação “é um tipo de” e distingui-la de “tem um”.
+- Extrair estado e comportamento realmente comuns sem criar hierarquia artificial.
+- Representar generalização em UML e implementar especializações em C++ e Python.
 
 **Tempo estimado:** 4h, em dois encontros de 2h.
 
 ## Vídeo da aula
 
-![type:video](https://www.youtube.com/embed/wX2gozSqHfU)
+![type:video](https://www.youtube.com/embed/_PZldwo0vVo)
+
+O vídeo público **Herança (Parte 1)**, do Curso em Vídeo, introduz em português generalização e especialização. A linguagem usada na demonstração é secundária; observe o conceito visual e depois acompanhe sua implementação em C++ e Python nesta aula. Herança será estudada como ferramenta de **modelagem de tipos**, não como atalho para copiar menos código. Polimorfismo dinâmico fica para a aula 07.
 
 ---
 
-## 1. Qual problema apareceu?
+## 1. De onde partimos?
 
-O controlador precisa adquirir nível, pressão e vazão. Uma solução frágil espalha decisões pelo tipo:
+Na aula 05: `ControladorNivel tem um SensorNivel e tem uma Bomba`. Isso é composição. Agora dois sensores repetem identificação:
 
 ```cpp
-if (tipo == "nivel") { /* ... */ }
-else if (tipo == "pressao") { /* ... */ }
+class SensorNivel {
+    std::string tag_;
+    std::string unidade_{"%"};
+    double valor_;
+};
+
+class SensorTemperatura {
+    std::string tag_;
+    std::string unidade_{"C"};
+    double valor_;
+};
 ```
 
-O que existe em comum? Todo sensor deve informar uma tag, adquirir uma leitura e dizer seu tipo. O algoritmo concreto pode variar.
+Os sensores não são partes um do outro. Ambos são tipos específicos de sensor.
 
 ---
 
-## 2. Contrato em C++
+## 2. Qual problema apareceu?
+
+Copiar identificação produz regras divergentes e correções repetidas. Antes de escolher herança, aplique o teste verbal:
+
+| Frase | Resultado | Candidata |
+|---|---|---|
+| controlador **tem um** sensor | faz sentido | composição |
+| sensor de nível **é um tipo de** sensor | faz sentido | herança |
+| bomba **é um tipo de** controlador | não faz sentido | nenhuma herança |
+
+O teste é um filtro. A confirmação mais forte é a substituição: tudo que a base promete precisa continuar verdadeiro na derivada. Essa regra será observada por chamadas à base na aula 07.
+
+---
+
+## 3. Qual ideia resolve? Generalização e especialização
+
+```mermaid
+classDiagram
+    class Sensor {
+        -tag_: string
+        -unidade_: string
+        #Sensor(tag, unidade)
+        +tag() string
+        +unidade() string
+        +descricao() string
+    }
+    class SensorNivel {
+        -valor_: double
+        +atualizar(valor) bool
+        +valor() double
+    }
+    class SensorTemperatura {
+        -valor_: double
+        +atualizar(valor) bool
+        +valor() double
+    }
+    Sensor <|-- SensorNivel
+    Sensor <|-- SensorTemperatura
+```
+
+O triângulo vazio aponta para a classe mais geral. Leia: `SensorNivel` **é um** `Sensor`.
+
+### O que sobe para a base?
+
+Pergunte se todos os derivados precisam da informação, se a regra significa o mesmo para todos e se a base preserva sua própria invariante. `tag` e `unidade` passam pelo teste. A faixa válida não: nível usa `0..100`, temperatura usa `-50..80`.
+
+---
+
+## 4. UML → C++ em dois incrementos
+
+### 4.1 Classe-base
 
 ```cpp
 #include <string>
+#include <utility>
 
 class Sensor {
+    std::string tag_;
+    std::string unidade_;
+protected:
+    Sensor(std::string tag, std::string unidade)
+        : tag_(std::move(tag)), unidade_(std::move(unidade)) {}
 public:
-    virtual ~Sensor() = default;
-    virtual void adquirir() = 0;
-    virtual double valor() const = 0;
-    virtual std::string tipo() const = 0;
+    const std::string& tag() const { return tag_; }
+    const std::string& unidade() const { return unidade_; }
+    std::string descricao() const { return tag_ + " [" + unidade_ + "]"; }
 };
 ```
 
-Uma função virtual pura termina em `= 0`. A classe representa um contrato e não um sensor concreto. O destrutor virtual permite destruir corretamente objetos derivados por meio do tipo-base.
+`protected` no construtor permite que derivadas inicializem a base, mas impede criar um sensor genérico na `main`. Os atributos continuam privados: a derivada usa a interface em vez de romper a base.
+
+### 4.2 Especialização
 
 ```cpp
 class SensorNivel : public Sensor {
-private:
-    double valor_{40.0};
-
+    double valor_;
 public:
-    void adquirir() override { valor_ += 1.0; }
-    double valor() const override { return valor_; }
-    std::string tipo() const override { return "nivel"; }
-};
+    SensorNivel(std::string tag, double valorInicial)
+        : Sensor(std::move(tag), "%"), valor_(valorInicial) {}
 
-class SensorPressao : public Sensor {
-private:
-    double valor_{2.0};
-
-public:
-    void adquirir() override { valor_ += 0.1; }
-    double valor() const override { return valor_; }
-    std::string tipo() const override { return "pressao"; }
+    bool atualizar(double valor) {
+        if (valor < 0.0 || valor > 100.0) return false;
+        valor_ = valor;
+        return true;
+    }
+    double valor() const { return valor_; }
 };
 ```
 
-`override` pede ao compilador que confirme a correspondência com o contrato.
+Ordem observável de construção: parte-base, membros da derivada, corpo do construtor. `public Sensor` mantém pública a interface pública da base.
 
----
-
-## 3. Onde está o polimorfismo?
+### 4.3 Como confirmar
 
 ```cpp
-void executarAquisicao(Sensor& sensor) {
-    sensor.adquirir();
-    std::cout << sensor.tipo() << ": " << sensor.valor() << '\n';
+#include <cassert>
+
+int main() {
+    SensorNivel nivel{"LT-101", 42.0};
+    assert(nivel.tag() == "LT-101");       // herdado
+    assert(nivel.unidade() == "%");        // herdado
+    assert(nivel.valor() == 42.0);          // específico
+    assert(!nivel.atualizar(120.0));
+    assert(nivel.valor() == 42.0);
 }
 ```
 
-A função conhece apenas `Sensor&`. O objeto concreto decide qual implementação executar. Isso é polimorfismo dinâmico.
+```bash
+g++ -std=c++17 -Wall -Wextra -Wpedantic sensores.cpp -o sensores
+./sensores
+```
 
-Não use ainda uma coleção de ponteiros. Neste capítulo entra apenas uma referência por vez; a coleção será a necessidade do capítulo 07.
-
----
-
-## 4. Herança ou composição?
-
-| Técnica | Melhor uso | Esforço | Entregável | Limitação |
-|---|---|---:|---|---|
-| composição | relação “tem um” ou política substituível | médio | objetos colaboradores | exige desenhar interfaces |
-| herança pública | relação “é um” com substituição válida | médio/alto | família com contrato comum | aumenta acoplamento |
-| função parametrizada | variação pequena de cálculo | baixo | comportamento configurável | pode não representar identidade de tipo |
-
-Recomendação: mantenha `Controlador tem Sensores`; use herança apenas para dizer que `SensorNivel é um Sensor`.
+Saída esperada: nenhuma. Um `assert` interromperia a execução se o contrato falhasse.
 
 ---
 
-## 5. Ponte C++ -> Python
+## 5. Miniprojeto 1 guiado: família de sensores
+
+Complete `SensorTemperatura` sem alterar `Sensor`.
+
+| Classe | Unidade | Faixa válida | Comportamento herdado |
+|---|---|---|---|
+| `SensorNivel` | `%` | `0..100` | tag, unidade, descrição |
+| `SensorTemperatura` | `C` | `-50..80` | tag, unidade, descrição |
+
+### Passos cumulativos
+
+1. Acrescente a classe ao UML.
+2. Faça compilar antes da validação.
+3. Adicione testes `-50`, `80`, `-51` e `81`.
+4. Implemente o necessário.
+5. Repita os testes de `SensorNivel` para detectar regressão.
+
+| Erro | Observação | Correção conceitual |
+|---|---|---|
+| base não construída | erro de compilação | toda parte-base precisa ser inicializada |
+| derivada acessa `tag_` | privado inacessível | use `tag()` |
+| faixa está em `Sensor` | base conhece regra específica | valide na derivada |
+| UML sem generalização | desenho diverge | use `Base <|-- Derivada` |
+
+---
+
+## 6. Ponte C++ → Python
 
 ```python
-class SensorNivel:
-    def __init__(self) -> None:
-        self._valor = 40.0
-
-    def adquirir(self) -> None:
-        self._valor += 1.0
+class Sensor:
+    def __init__(self, tag: str, unidade: str) -> None:
+        self._tag = tag
+        self._unidade = unidade
 
     @property
-    def valor(self) -> float:
-        return self._valor
+    def tag(self) -> str:
+        return self._tag
 
-    @property
-    def tipo(self) -> str:
-        return "nivel"
+    def descricao(self) -> str:
+        return f"{self._tag} [{self._unidade}]"
 
 
-def executar_aquisicao(sensor) -> None:
-    sensor.adquirir()
-    print(f"{sensor.tipo}: {sensor.valor}")
+class SensorNivel(Sensor):
+    def __init__(self, tag: str, valor: float) -> None:
+        super().__init__(tag, "%")
+        self._valor = valor
+
+    def atualizar(self, valor: float) -> bool:
+        if not 0.0 <= valor <= 100.0:
+            return False
+        self._valor = valor
+        return True
 ```
 
-Python permite polimorfismo por comportamento: se o objeto cumpre as operações usadas, a função pode trabalhar com ele. Uma classe-base abstrata ou `Protocol` pode tornar o contrato mais explícito, mas não é necessária neste primeiro exemplo.
+| Conceito | C++ | Python |
+|---|---|---|
+| derivação | `class D : public B` | `class D(B)` |
+| construir base | lista `B(...)` | `super().__init__(...)` |
+| privacidade | compilador | convenção `_` |
+| UML | triângulo para a base | mesmo símbolo |
+
+Fixe o conceito comum: a derivada contém uma parte-base inicializada antes do estado específico.
 
 ---
 
-## 6. Validação e prática profissional
+## 7. Quando não usar herança
 
-Teste separadamente:
+| Técnica/Padrão | Melhor uso | Esforço | Entregável | Limitação |
+|---|---|---:|---|---|
+| classe independente | conceito sem relação de tipo | baixo | implementação isolada | repetição pode ser legítima |
+| composição | relação “tem um” | médio | objeto com partes | não cria substituição |
+| herança pública | relação “é um” e contrato preservado | médio/alto | família de tipos | acopla base e derivadas |
+| função auxiliar | cálculo comum sem identidade | baixo | função reutilizável | não modela entidade |
 
-1. `SensorNivel` altera sua leitura;
-2. `SensorPressao` altera sua leitura;
-3. a mesma função recebe os dois tipos;
-4. remover `override` não deve ser a “correção” de uma assinatura errada.
-
-Fluxo sugerido:
-
-```text
-issue -> cap06-contrato-sensores -> teste local -> push -> CI -> PR
-```
-
-No PR, responda: “qual operação o código cliente consegue executar sem descobrir o tipo concreto?”
+`Controlador` compõe sensores; `SensorNivel` herda de `Sensor`; conversão de unidade pode permanecer função.
 
 ---
 
-## 7. Mini-caso prático
+## 8. Miniprojeto 2: equipamentos industriais
 
-Dois sensores já podem passar pela mesma função, um por vez. O controlador ainda não consegue cadastrar uma quantidade variável deles. Essa limitação prepara coleções dinâmicas e responsabilidade sobre memória.
+Modele `Equipamento` e as especializações `Motor` e `Valvula`.
+
+- `Equipamento`: código e setor consultáveis;
+- `Motor`: rotação `0..3600 RPM`;
+- `Valvula`: abertura `0..100%`;
+- cada derivada preserva sua invariante;
+- UML vem antes do código e é revisado após os testes.
+
+Decisão obrigatória: `ligado` deve subir para `Equipamento`? Escreva o contrato e verifique se desligado significa a mesma coisa para todos. Essa decisão evita mera cópia do exemplo.
+
+Evidências: testes comuns, fronteiras e rejeições; diff do UML; justificativa do que ficou na base.
+
+---
+
+## 9. Prática profissional
+
+```bash
+git switch -c cap06-heranca
+make test ETAPA=06
+git add .
+git commit -m "modela familia de sensores por heranca"
+git push -u origin cap06-heranca
+```
+
+A CI repete `make test ETAPA=06`. O PR inclui UML, validações, decisão de modelagem e rastreabilidade de IA. Na defesa oral, explique a direção do triângulo e a ordem base→derivada.
+
+---
+
+## 10. Limite atual
+
+Ainda usamos diretamente `SensorNivel` ou `SensorTemperatura`. Herança organizou a família, mas o cliente não opera por `Sensor`. Na aula 07 perguntaremos: **como uma chamada pelo tipo-base executa respostas diferentes conforme o objeto concreto?** Só então entram `virtual`, `override`, classe abstrata e despacho dinâmico.
 
 ---
 
 ## Perguntas de revisão rápida
 
-1. Que promessa a classe-base `Sensor` faz ao código cliente?
-2. Qual é o papel de `virtual` e `override` no exemplo?
-3. Por que `Controlador` não deve herdar de `Sensor`?
+1. Que evidência justifica dizer que `SensorNivel` é um `Sensor`?
+2. Por que a faixa não foi colocada na base?
+3. Para onde aponta o triângulo vazio no UML?
 
 ## Fontes de referência
 
-- [cppreference — virtual functions](https://en.cppreference.com/w/cpp/language/virtual)
+- [cppreference — classes derivadas](https://en.cppreference.com/w/cpp/language/derived_class.html)
 - [C++ Core Guidelines — hierarquias](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#S-class)
-- [Python Docs — classes](https://docs.python.org/3/tutorial/classes.html)
-- [W3Schools — C++ Polymorphism](https://www.w3schools.com/cpp/cpp_polymorphism.asp)
-- [W3Schools — Python Inheritance](https://www.w3schools.com/python/python_inheritance.asp)
+- [Python Docs — herança](https://docs.python.org/3/tutorial/classes.html#inheritance)
+- [Mermaid — diagrama de classes](https://mermaid.js.org/syntax/classDiagram.html)
