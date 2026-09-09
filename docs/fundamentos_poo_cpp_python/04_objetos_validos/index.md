@@ -660,7 +660,7 @@ Inclua no pull request:
 
 Ao final, o sensor produzido possui identidade, unidade, leitura atual, estado operacional e contador. Sua interface permite ativar, desativar, consultar e registrar leituras; sua representação interna não é alterada diretamente pelo programa principal.
 
-Esse objeto ainda cuida apenas de si. No capítulo seguinte, uma `Bomba` terá seu próprio estado e um `Controlador` coordenará os dois objetos por composição.
+Antes de combinar objetos, precisamos oferecer diferentes formas de criá-los preservando as mesmas regras. Na [aula 05 — Construtores e Sobrecarga](../03_sobrecarga_construtores/index.md), retomaremos o sensor com inicialização usual, explícita e em manutenção. Depois, uma `Bomba` e um `Controlador` ampliarão o cenário por composição.
 
 ## Perguntas de revisão rápida
 

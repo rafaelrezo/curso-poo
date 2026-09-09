@@ -238,3 +238,29 @@ O conteúdo deve preservar três camadas conectadas:
 | Engenharia | como verificar e integrar com segurança? | testes, CI, histórico e revisão |
 
 Uma camada não deve substituir as outras. A automação confirma comportamentos observáveis, mas o estudante ainda deve explicar o conceito, ler o código e justificar as decisões tomadas.
+
+## 15) Preferência do docente: código completo e contexto visível
+
+Ao criar ou revisar aulas, evitar fragmentos isolados de código para apresentar conceitos. Preferir programas curtos e completos, com imports/includes, classe, construção dos objetos e uso no mesmo exemplo. Em C++, fechar o exemplo com `main`; em Python, preferir `main()` e a chamada protegida por `if __name__ == "__main__"`.
+
+- Apresentar problema e foco da leitura antes do programa; colocar comando de execução e saída esperada junto dele.
+- Manter o mesmo domínio e nomes ao evoluir o exemplo, introduzindo uma ideia nova por vez.
+- Mostrar contexto suficiente para o estudante relacionar declaração, implementação e chamada sem reconstruir mentalmente partes espalhadas na página.
+- Evitar corpos omitidos com `...`, pseudocódigo disfarçado de programa executável e assinaturas soltas como explicação principal.
+- Quando uma alteração se aplicar a um projeto com vários arquivos, identificar o arquivo e oferecer uma visão completa e curta do comportamento antes de pedir a adaptação. Distinguir exemplo independente de arquivo que deve ser substituído.
+- Reduzir o tamanho pelo recorte do problema, preservando a coerência do programa; não comprimir muitas instruções por linha nem despejar um projeto extenso.
+- Preservar a decisão autônoma nas atividades: o exemplo completo guia um incremento; a extensão exige adaptação, sem fornecer sua solução pronta.
+- Validar os programas apresentados e suas saídas. Trechos pontuais só devem complementar um contexto completo já visível, quando ajudarem a localizar a mudança.
+
+Esta preferência foi explicitada pelo docente na revisão da aula 05 de Construtores e Sobrecarga e deve orientar as próximas aulas e revisões neste repositório.
+
+## 16) Organização flexível: exposição antes da operação
+
+A estrutura de página é uma referência, não um roteiro obrigatório. Não impor seções chamadas “Mini-caso prático” ou “Prepare o ambiente” a toda aula. Escolher a organização pela progressão do conceito e pelas orientações do docente.
+
+- Apresentar uma limitação observável e aumentar gradualmente a complexidade, mantendo o mesmo exemplo e explicando por que cada ideia passa a ser necessária.
+- Durante a exposição, priorizar fundamentos, teoria, programas curtos completos e resultados comentados. Evitar alternar a explicação com preparação de ferramentas, comandos Git, CI ou tarefas de implementação.
+- Concentrar configuração, repositório, instruções de implementação, testes, CI e entrega na seção de prática quando houver atividade do estudante.
+- Em aula exclusivamente expositiva, omitir prática, fork, checkpoints operacionais e entrega. Código demonstrativo completo não obriga criar uma atividade ou um repositório novo.
+- As exigências de fork/CI/prática cumulativa deste arquivo aplicam-se às atividades de programação atribuídas aos alunos; não tornam obrigatória uma atividade numa aula expositiva.
+- A aula05 de Construtores e Sobrecarga é exclusivamente expositiva. Na aula08 de Polimorfismo, toda a atividade fica na seção8, como um único exemplo guiado com incrementos cumulativos.

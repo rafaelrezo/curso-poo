@@ -1,5 +1,8 @@
 # Execução local, CI e validação em ambiente real
 
+> **Aplicação no projeto:** este material retoma os testes de objetos da seção 01 da Parte 2 e o fluxo de CI já praticado. Use-o durante os marcos do projeto para ampliar testes de contrato, integração e regressão; seu tempo está incluído nos marcos, não constitui uma nova aula introdutória. No fork cumulativo, acrescente os testes do incremento a `make test-projeto`, executado localmente e pela CI nas branches `projeto/**`.
+
+
 ## Objetivos de aprendizagem
 
 - Executar localmente a mesma sequência de testes usada no pipeline.

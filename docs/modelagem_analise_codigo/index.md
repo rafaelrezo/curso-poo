@@ -1,807 +1,350 @@
-# UML e Diagrama de Classes: modelando objetos antes do código
+# 12. UML e modelagem de cenários: do requisito ao diagrama de classes
 
 ## Objetivos de aprendizagem
 
-- Entender como UML ajuda a representar classes, atributos, operações e relações de forma útil para POO.
-- Ler e construir diagramas de classes com foco em responsabilidade, visibilidade, multiplicidade e tipo de relacionamento.
-- Traduzir um diagrama de classes para decisões concretas em C++ e Python sem confundir modelo com sintaxe.
+- Extrair classes, responsabilidades e regras de um cenário de engenharia.
+- Ler e representar visibilidade, abstração, relações e multiplicidades em UML.
+- Confrontar o modelo com C++ e Python e defender uma extensão em um pull request.
 
-**Tempo estimado:** 4h
+**Tempo estimado:** 4h de estudo e prática, distribuíveis entre sala e trabalho entre encontros. Esta seção encerra a Parte 1 após Identidade, Igualdade e Coleções (capítulo 11). Princípios de projeto e testes autorais serão a abertura da Parte 2. O vídeo é preparação prévia.
 
 ## Vídeo da aula
 
 ![type:video](https://www.youtube.com/embed/rDidOn6KN9k)
 
----
-
-## 1. Por que UML entra agora na trilha?
-
-A turma já viu `classe`, `objeto`, `método`, `construtor`, encapsulamento, herança e polimorfismo como ideias de POO. O próximo passo natural é aprender a **pensar o modelo antes de escrever o código**.
-
-E aqui entra a UML.
-
-UML não substitui implementação. UML também não existe para produzir desenho bonito. Em um curso de POO, ela serve para um objetivo muito mais útil:
-
-- deixar explícitas as classes importantes do domínio;
-- mostrar quem conhece quem;
-- registrar responsabilidades e limites de acesso;
-- discutir erros de modelagem antes de gastar tempo com código.
-
-**Ideia central desta aula:** diagrama de classes é uma ferramenta de raciocínio. Ele ajuda a validar a estrutura do sistema antes que a sintaxe esconda os problemas de modelagem.
+[Tutorial de Diagramas de Classes UML](https://www.youtube.com/watch?v=rDidOn6KN9k), em português, já utilizado no material de modelagem do curso. Durante o vídeo, desenhe um exemplo de herança e um de associação; depois explique para onde aponta cada símbolo.
 
 ---
 
-## 2. O que é UML e o que um diagrama de classes realmente mostra?
+## 1. Mini-caso prático: explicar a estação antes de ampliá-la
 
-A UML é uma linguagem padrão de modelagem usada para visualizar e especificar a estrutura de sistemas de software. Dentro dela, o diagrama de classes é um dos artefatos mais importantes para POO porque ele mostra a **estrutura estática** do sistema:
+Na seção 08, um painel consultou sensores de nível, temperatura e pressão pelo contrato `Sensor`. O programa funciona, mas outra equipe precisa entender quem guarda a leitura, quem decide o alerta e quem apenas apresenta o resultado. Ler todos os arquivos antes de discutir uma mudança torna a revisão demorada.
 
-- classes;
-- atributos;
-- operações;
-- relacionamentos;
-- multiplicidades;
-- visibilidade e abstração.
+Vamos produzir um modelo que responda a essas perguntas e usá-lo para analisar este pedido:
 
-### Classe UML mais simples possível
+> A estação consulta sensores de nível, temperatura e pressão. Cada sensor possui identificação e mantém a última leitura válida. Uma atualização inválida preserva essa leitura. O painel apresenta o valor, a unidade e o alerta usando o contrato comum. Para a próxima versão, um operador poderá manter um painel ligado a um sensor instalado; trocar o painel não deve remover o sensor do cadastro.
 
-``` mermaid
-classDiagram
-    class Sensor
-```
+Esta retomada usa o recorte polimórfico da seção 08 para aprender a ler notações. Na prática final, o modelo atual será o do fork cumulativo das seções 07 e 09–11: nele `Sensor` é uma base sem operações abstratas, e `IFonteLeitura` é a interface elaborada na seção 09. Não misture as duas versões no mesmo diagrama.
 
-Esse primeiro desenho quase não diz nada. Ele apenas informa que `Sensor` é uma classe relevante no modelo.
+**Primeira ação:** destaque responsabilidades no texto. “Sensor” sugere uma classe; “última leitura” sugere estado; “apresentar” sugere uma operação. Nem todo substantivo vira classe: `unidade` pode continuar sendo um valor textual.
 
-### Classe UML com atributos e operações
+| Encontro | Atividades | Tempo |
+|---|---|---:|
+| 1 | cenário e responsabilidades; classes; herança e dependência; associação e multiplicidade; revisão do desenho | 15 + 20 + 30 + 35 + 20 min |
+| 2 | retomada; composição, agregação e realização; ponte com código; extensão autônoma; PR e defesa | 10 + 25 + 20 + 40 + 25 min |
 
-``` mermaid
+**Checkpoint inicial:** em dupla, explique por que o painel não deve guardar as regras de alerta. Isso recupera o polimorfismo e prepara a distribuição de responsabilidades.
+
+---
+
+## 2. Do texto para responsabilidades e classes
+
+UML é uma linguagem de modelagem. Nesta aula, usamos o **diagrama de classes** para representar estrutura: tipos, operações e relações. Um diagrama de sequência responderia à ordem das mensagens; um diagrama de objetos mostraria instâncias em um instante. O foco aqui é construir e ler o modelo estrutural necessário ao curso.
+
+Comece com uma tabela de responsabilidades, antes das setas:
+
+| Candidato | Responsabilidade | Estado ou operação relevante | Decisão |
+|---|---|---|---|
+| `Sensor` | definir a interface comum e a identificação | tag e consultas abstratas | classe abstrata já existente |
+| `SensorNivel` | validar nível e avaliar seu alerta | leitura, atualização, alerta | especialização existente |
+| `SensorTemperatura` | validar temperatura e avaliar seu alerta | leitura, atualização, alerta | especialização existente |
+| `SensorPressao` | validar pressão e avaliar seu alerta | leitura, atualização, alerta | especialização existente |
+| função de apresentação | formatar o resultado do sensor recebido | consulta por parâmetro | função existente; não inventar uma classe no retrato do código |
+| `PainelFixo` | manter vínculo com um sensor e apresentar suas consultas | referência ao sensor | proposta da próxima versão |
+
+**Aplique agora:** registre essa tabela em seu rascunho de leitura da seção 08. Na prática final, produza `docs/diagrama.md` no fork cumulativo. Separe o **modelo atual**, conferido no código, do **modelo proposto**, ainda sem implementação. Essa distinção permite revisar uma ideia sem afirmar que ela já funciona.
+
+**Como confirmar:** cada responsabilidade deve ter uma frase do requisito como justificativa. “Controlador herda de sensor porque lê o sensor” não passa: ler não significa ser um sensor.
+
+---
+
+## 3. Como ler a caixa de uma classe
+
+Uma classe possui compartimentos para nome, atributos e operações. Na escrita UML usual, um atributo é `nome: Tipo` e uma operação é `nome(parâmetro: Tipo): Retorno`. Mermaid usa uma sintaxe textual própria para renderizar esse desenho.
+
+```mermaid
 classDiagram
     class Sensor {
-        -tag: string
-        -unidade: string
-        -valorAtual: double
-        +atualizarLeitura(valor: double) void
-        +foraDaFaixa(min: double, max: double) bool
-        +exibirResumo() void
+        <<abstract>>
+        -string tag_
+        +tag() string
+        +valor() double
+        +unidade() string
+        +atualizar(double leitura) bool
+        +emAlerta() bool
     }
 ```
 
-### Como ler esse retângulo
+O marcador indica que `Sensor` é abstrata. No código da aula 08, `tag()` é concreta e as quatro operações seguintes são abstratas; o diagrama resumido omite detalhes do construtor e destrutor. Em UML, nomes em itálico podem indicar elementos abstratos. Sempre explique a convenção adotada quando a ferramenta usar um marcador textual.
 
-- parte superior: nome da classe;
-- parte central: atributos ou estado;
-- parte inferior: operações ou comportamento;
-- símbolos como `+`, `-` e `#`: nível de visibilidade.
-
-### Leitura didática da visibilidade
-
-| Notação UML | Significado | Relação com POO | Pergunta prática |
-|---|---|---|---|
-| `+` | público | faz parte do contrato externo | o restante do sistema realmente precisa chamar isso? |
-| `-` | privado | protege detalhe interno | esse dado precisa ser mexido de fora? |
-| `#` | protegido | extensão por herança | subclasses precisam mesmo enxergar isso? |
-| `<<abstract>>` | classe abstrata | contrato parcial | faz sentido existir objeto direto dessa classe? |
-
-### Ponto importante para a turma
-
-Diagrama de classes **não é código executável**. Ele simplifica.
-
-Por isso, o diagrama não precisa listar cada getter, cada setter ou cada detalhe de biblioteca. O foco deve ficar no que ajuda a entender o modelo.
-
----
-
-## 3. Como o diagrama de classes se relaciona com POO?
-
-O diagrama de classes não é um assunto paralelo a POO. Ele é uma forma de **explicitar visualmente** os mesmos conceitos que depois aparecem no código.
-
-| Conceito de POO | Como aparece no diagrama | O que isso ajuda a decidir |
+| Sinal | Visibilidade UML | Correspondência no curso |
 |---|---|---|
-| Classe | retangulo com nome | quais entidades são centrais no domínio |
-| Estado | atributos | o que cada objeto precisa guardar |
-| Comportamento | operações | que ações pertencem ao objeto |
-| Encapsulamento | visibilidade `+`, `-`, `#` | o que fica exposto e o que fica protegido |
-| Herança | generalização | quando uma classe realmente é um subtipo de outra |
-| Composição/agregação | relações entre classes | como objetos colaboram sem virar uma massa de código |
-| Polimorfismo | abstração e especialização | que contrato comum diferentes objetos podem respeitar |
+| `+` | pública | operação oferecida ao cliente |
+| `-` | privada | estado encapsulado |
+| `#` | protegida | acesso previsto para subclasses |
+| `~` | pacote | conhecer a notação; não equivale automaticamente a um recurso C++/Python |
 
-### Exemplo curto: o diagrama como ponte para encapsulamento e herança
+`LT-101` é uma identificação de **objeto**, não o nome de uma classe. `SensorNivel` descreve o tipo de vários objetos possíveis. Também não confunda uma operação com seu algoritmo: o desenho informa a assinatura; a regra “nível menor que 20 dispara alerta” precisa de uma nota ou de um contrato escrito.
 
-``` mermaid
-classDiagram
-    class AtivoIndustrial {
-        #tag: string
-        #area: string
-        +exibirIdentificacao() void
-    }
+**Aplique agora:** acrescente `SensorNivel`, sua leitura privada e as operações relevantes. Anote a regra de atualização: valor fora de `0..100` é rejeitado sem alterar o estado.
 
-    class SensorPressao {
-        -valorAtual: double
-        +atualizarLeitura(valor: double) void
-    }
-
-    class BombaRecalque {
-        -ligada: bool
-        +ligar() void
-        +desligar() void
-    }
-
-    AtivoIndustrial <|-- SensorPressao
-    AtivoIndustrial <|-- BombaRecalque
-```
-
-### O que esse desenho já comunica antes do código
-
-- `SensorPressao` e `BombaRecalque` compartilham uma base comum;
-- a classe-base concentra identidade e informação operacional comum;
-- cada derivada tem estado e comportamento específicos;
-- a estrutura sugere uma relação `is-a`, não apenas reaproveitamento oportunista.
-
-**Leitura crítica:** se a única semelhança entre duas classes for ter `tag`, isso ainda não justifica herança.
+**Como confirmar:** o leitor consegue diferenciar “consultar a leitura” de “alterar a leitura”? A visibilidade impede que o diagrama proponha acesso público direto ao estado? Isso prepara as relações entre as caixas.
 
 ---
 
-## 4. Relacionamentos UML: como ler cada tipo corretamente
+## 4. Herança e dependência: desenhar o que já funciona
 
-O maior erro dos iniciantes costuma ser este: desenhar classes isoladas, mas errar o tipo de relação entre elas.
+### 4.1 Generalização: “é um tipo de”
 
-Em POO, boa parte da qualidade da modelagem depende menos do nome das classes e mais de **como elas se conectam**.
-
-### Primeiro treino de leitura: um diagrama com símbolos diferentes
-
-Antes de separar cada relação por tipo, vale treinar a leitura de um diagrama pequeno que mistura símbolos diferentes no mesmo desenho.
-
-``` mermaid
+```mermaid
 classDiagram
-    class Planta
-    class Tanque
-    class SensorNivel
-    class Controlador
-    class HistoricoLeituras
-
-    Planta "1" *-- "1..*" Tanque : contém
-    Tanque "1" o-- "0..*" SensorNivel : agrega
-    Controlador --> "1" Tanque : regula
-    Controlador ..> HistoricoLeituras : consulta
-```
-
-### Como ler esse diagrama, relação por relação
-
-1. `Planta "1" *-- "1..*" Tanque : contém`
-   Leitura: uma `Planta` contém um ou muitos `Tanque`.
-   Interpretação: o diamante **preenchido** indica **composição**. A `Planta` é o todo forte; `Tanque` foi modelado como parte estrutural dela.
-
-2. `Tanque "1" o-- "0..*" SensorNivel : agrega`
-   Leitura: um `Tanque` agrega zero ou muitos `SensorNivel`.
-   Interpretação: o diamante **vazio** indica **agregação**. O tanque agrupa sensores, mas os sensores podem continuar existindo fora desse agrupamento.
-
-3. `Controlador --> "1" Tanque : regula`
-   Leitura: o `Controlador` regula um `Tanque`.
-   Interpretação: a linha **contínua com seta** indica **associação navegável**. O controlador conhece o tanque e interáge com ele.
-
-4. `Controlador ..> HistoricoLeituras : consulta`
-   Leitura: o `Controlador` consulta `HistoricoLeituras`.
-   Interpretação: a linha **tracejada com seta** indica **dependência**. O controlador usa esse elemento pontualmente, mas isso não significa, obrigatoriamente, que ele o mantenha como parte permanente do estado interno.
-
-### O que cada símbolo significa nesse desenho
-
-| Símbolo | Como identificar visualmente | Significado | Pergunta que ele responde |
-|---|---|---|---|
-| `*--` | diamante cheio | composição | "esta parte depende fortemente do todo?" |
-| `o--` | diamante vazio | agregação | "o todo apenas agrupa partes independentes?" |
-| `-->` | linha contínua com seta | associação | "uma classe conhece ou usa estruturalmente a outra?" |
-| `..>` | linha tracejada com seta | dependência | "uma classe apenas usa a outra de forma pontual?" |
-| `"1"`, `"0..*"`, `"1..*"` | números perto da linha | cardinalidade | "quantos objetos podem participar da relação?" |
-
-### Dica de leitura que evita erro
-
-Leia sempre em duas etapas:
-
-1. descubra **o tipo do vínculo** pelo símbolo da linha;
-2. descubra **a quantidade** pelos números perto da relação.
-
-### Erros comuns nessa leitura
-
-- achar que todo diamante significa a mesma coisa;
-- ignorar o lado em que o diamante aparece;
-- confundir seta contínua com dependência;
-- esquecer de ler a cardinalidade junto com o tipo da relação.
-
-### 4.1 Generalizacao: quando uma classe e um tipo mais específico de outra
-
-Generalizacao e a forma UML de representar herança.
-
-A pergunta certa aqui e:
-
-**"a classe filha realmente e um tipo da classe pai?"**
-
-Se a resposta for sim, generalização pode fazer sentido.
-
-``` mermaid
-classDiagram
-    class AtivoIndustrial {
-        -tag: string
-        +exibirIdentificacao() void
+    class Sensor {
+        <<abstract>>
     }
+    Sensor <|-- SensorNivel
+    Sensor <|-- SensorTemperatura
+    Sensor <|-- SensorPressao
+```
 
-    class SensorTemperatura {
-        -valorAtual: double
-        +ler() double
+A linha é contínua e o triângulo vazio aponta para a classe **mais geral**, `Sensor`. Leia: “SensorPressao é um Sensor”. A base fica na ponta do triângulo independentemente de estar acima, abaixo ou ao lado no desenho.
+
+A relação exige compatibilidade com o contrato: uma especialização que apaga a leitura ao rejeitar uma atualização não respeita o comportamento esperado. A seta, sozinha, não prova substituição correta.
+
+### 4.2 Dependência: “precisa desse tipo para realizar algo”
+
+A apresentação da aula 08 recebe um sensor por parâmetro e consulta suas operações; não mantém esse vínculo como estado. Isso é uma dependência de uso. Dependência também pode representar outros motivos pelos quais mudar um elemento afeta outro; não significa necessariamente “duração curta”.
+
+```mermaid
+classDiagram
+    class Apresentacao {
+        <<utility>>
+        +formatarLinha(Sensor sensor) string
     }
-
-    class BombaCirculacao {
-        -ligada: bool
-        +ligar() void
-        +desligar() void
-    }
-
-    AtivoIndustrial <|-- SensorTemperatura
-    AtivoIndustrial <|-- BombaCirculacao
+    class Sensor
+    Apresentacao ..> Sensor : consulta por parametro
 ```
 
-### Como ler
+A seta tracejada vai do **cliente** ao **elemento utilizado**. Aqui `Apresentacao` é um agrupamento visual da função, não uma classe já implementada; registre essa convenção no modelo atual.
 
-- `SensorTemperatura` e um tipo de `AtivoIndustrial`;
-- `BombaCirculacao` também e um tipo de `AtivoIndustrial`;
-- a classe-base concentra o que e comum;
-- as classes derivadas especializam comportamento e estado.
-
-### Generalizacao separada e compartilhada
-
-Ao discutir herança com mais cuidado, vale apresentar duas leituras possíveis para as especializacoes:
-
-- **separada** ou **disjunta**: um objeto pertence a apenas uma das subclasses;
-- **compartilhada** ou **sobreposta**: um mesmo objeto pode pertencer a mais de uma subclasse ao mesmo tempo.
-
-``` mermaid
-classDiagram
-    class Pessoa
-    class Aluno
-    class Monitor
-
-    Pessoa <|-- Aluno
-    Pessoa <|-- Monitor
-```
-
-### Leitura didatica desse caso
-
-- se a generalização for **separada**, uma `Pessoa` será `Aluno` ou `Monitor`, mas não os dois;
-- se a generalização for **compartilhada**, a mesma `Pessoa` pode ser `Aluno` e `Monitor` ao mesmo tempo.
-
-### Exemplo fácil de entender
-
-- **separada**: `Veiculo` especializado em `Carro` e `Moto` em um cadastro simples;
-- **compartilhada**: `Pessoa` especializada em `Aluno` e `Monitor` em um sistema academico.
-
-### Regra prática
-
-Se você está usando herança apenas porque duas classes possuem atributos parecidos, a modelagem provavelmente esta fraca.
-
-### 4.2 Realizacao: quando uma classe concreta cumpre um contrato
-
-Realizacao aparece quando uma classe concreta implementa um contrato, interface ou comportamento esperado.
-
-Em POO, a diferença principal para a generalização e esta:
-
-- generalização responde "e um tipo de";
-- realizacao responde "cumpre este contrato".
-
-``` mermaid
-classDiagram
-    class Operavel {
-        +ligar() void
-        +desligar() void
-    }
-
-    class BombaCirculacao {
-        +ligar() void
-        +desligar() void
-    }
-
-    Operavel <|.. BombaCirculacao
-```
-
-### Como ler
-
-- `BombaCirculacao` realiza o contrato `Operavel`;
-- isso comunica que a bomba oferece as operações exigidas por esse contrato;
-- o foco aqui não e compartilhar estado, e sim garantir uma interface esperada.
-
-### Exemplo prático
-
-Se o sistema precisa operar vários equipamentos por um contrato comum, a realizacao ajuda a deixar isso explícito.
-
-### 4.3 Associação: quando uma classe conhece, usa ou colabora com outra
-
-Associação e a relacao mais comum.
-
-Ela indica que existe uma ligacao estrutural entre classes, mas sem necessariamente dizer que uma controla o ciclo de vida da outra.
-
-``` mermaid
-classDiagram
-    class Professor
-    class Turma
-
-    Professor "1" --> "1..*" Turma : leciona
-```
-
-### Como ler
-
-- um `Professor` leciona uma ou várias `Turma`;
-- existe colaboracao entre as classes;
-- a relacao e importante para o domínio, mas uma classe não e "parte interna" da outra.
-
-### Exemplo prático
-
-`ControladorQualidade --> SensorPH` significa que o controlador usa o sensor para tomar decisão.
-
-### 4.4 Agregacao: quando o todo agrupa partes que podem continuar existindo separadamente
-
-Agregacao e uma associação com ideia de agrupamento.
-
-Ela comunica que um objeto reune outros, mas as partes podem existir fora desse todo.
-
-``` mermaid
-classDiagram
-    class Time
-    class Jogador
-
-    Time "1" o-- "0..*" Jogador : agrega
-```
-
-### Como ler
-
-- um `Time` agrega zero ou muitos `Jogador`;
-- os jogadores pertencem ao conjunto, mas ainda fazem sentido fora dele;
-- o ciclo de vida das partes não depende totalmente do todo.
-
-### Exemplo prático
-
-Uma `Bancada` de laboratorio pode agregar equipamentos que depois são movidos para outra bancada.
-
-### 4.5 Composição: quando a parte depende fortemente do todo
-
-Composição e a relacao mais forte entre todo e parte.
-
-Ela comunica que a parte faz sentido apenas dentro do todo modelado.
-
-``` mermaid
-classDiagram
-    class Pedido
-    class ItemPedido
-
-    Pedido "1" *-- "1..*" ItemPedido : contem
-```
-
-### Como ler
-
-- um `Pedido` contem um ou muitos `ItemPedido`;
-- os itens existem como parte daquele pedido;
-- se o pedido deixa de existir naquele modelo, os itens perdem sentido isoladamente.
-
-### Exemplo prático
-
-Uma `ETA` pode ser modelada em composição com `TanqueMistura` se o projeto quiser comunicar pertencimento estrutural forte.
-
-### 4.6 Dependencia: quando uma classe apenas usa outra de forma pontual
-
-Dependencia representa uma colaboracao mais leve e temporaria.
-
-Ela costuma aparecer quando uma classe usa outra em um método, consulta um serviço ou depende de um resultado para executar uma tarefa.
-
-``` mermaid
-classDiagram
-    class GeradorRelatorio
-    class Medicao
-
-    GeradorRelatorio ..> Medicao : usa para calcular
-```
-
-### Como ler
-
-- `GeradorRelatorio` depende de `Medicao` para funcionar;
-- a ligacao existe, mas não necessariamente como atributo permanente;
-- costuma ser mais fraca que associação estrutural.
-
-### Exemplo prático
-
-Um exportador de resultados pode depender de `ResultadoEnsaio` apenas no momento da geração do arquivo.
-
-### Tabela de leitura rápida
-
-| Relacao | Notacao em Mermaid/UML | Como ler | Exemplo fácil |
-|---|---|---|---|
-| Generalizacao | `<|--` | e um tipo de | `SensorTemperatura` e um `AtivoIndustrial` |
-| Realizacao | `<|..` | cumpre um contrato | `BombaCirculacao` realiza `Operavel` |
-| Associação | `-->` | conhece, usa ou colabora com | `Professor` leciona `Turma` |
-| Agregacao | `o--` | agrupa partes independentes | `Time` agrega `Jogador` |
-| Composição | `*--` | contem partes fortemente dependentes | `Pedido` contem `ItemPedido` |
-| Dependencia | `..>` | usa pontualmente | `GeradorRelatorio` usa `Medicao` |
-
-### Regra de bolso para decidir
-
-- se a relacao e `e um tipo de`, pense em **generalização**;
-- se a relacao e `cumpre um contrato`, pense em **realizacao**;
-- se a relacao e `conhece` ou `colabora com`, pense em **associação**;
-- se a relacao e `agrupa`, pense em **agregação**;
-- se a relacao e `contem` com dependencia forte, pense em **composição**;
-- se a relacao e `usa momentaneamente`, pense em **dependencia**.
+**Checkpoint:** o painel depende de `Sensor` ou de cada especialização? Desenhe a dependência do contrato comum e explique por que incluir `SensorPressao` não exigiu editar o cliente. Agora podemos modelar um vínculo que permanece entre chamadas.
 
 ---
 
-## 5. Cardinalidade (multiplicidade): quantos objetos podem se relacionar?
+## 5. Associação e multiplicidade: quem conhece quem e quantos?
 
-Um bom diagrama de classes não responde apenas "quem se conecta com quem". Ele também responde "em que quantidade essa relacao faz sentido?".
+O pedido da próxima versão diz que `PainelFixo` mantém um sensor associado. Essa referência persistente motiva uma **associação**, representada por linha contínua. Uma seta aberta de navegabilidade informa que o painel consegue alcançar o sensor; uma linha sem setas não permite concluir automaticamente que o código navega nos dois sentidos.
 
-### Exemplo com cardinalidade
-
-``` mermaid
+```mermaid
 classDiagram
-    class Cliente
-    class Pedido
-    class ItemPedido
-    class Produto
-
-    Cliente "1" --> "0..*" Pedido : cria
-    Pedido "1" *-- "1..*" ItemPedido : possui
-    ItemPedido "*" --> "1" Produto : referência
+    class PainelFixo {
+        +mostrar() string
+    }
+    class Sensor
+    PainelFixo "0..*" --> "1" Sensor : consulta
 ```
 
-### Como interpretar
+Leia cada extremidade a partir de **um objeto da outra ponta**:
 
-- um `Cliente` pode criar zero ou muitos `Pedido`;
-- cada `Pedido` possui um ou muitos `ItemPedido`;
-- cada `ItemPedido` referência exatamente um `Produto`.
+- para **um PainelFixo**, existe exatamente **um Sensor**, pois `1` está junto a `Sensor`;
+- para **um Sensor**, podem existir **zero ou vários PainelFixo**, pois `0..*` está junto a `PainelFixo`.
 
-### Cardinalidades mais frequentes
+O enunciado exige o primeiro limite; o segundo é uma **hipótese de projeto**: permitir vários painéis para o mesmo sensor. Registre-a e peça que o colega tente contradizê-la com um requisito.
 
-| Notacao | Leitura | Exemplo de interpretacao |
+| Multiplicidade | Leitura | Pergunta de validação |
 |---|---|---|
-| `1` | exatamente um | cada pedido tem um código |
-| `0..1` | zero ou um | um equipamento pode ter ou não um controlador associado |
-| `1..*` | um ou muitos | um tanque possui uma ou várias medicoes ao longo do tempo |
-| `*` | muitos | um operador pode consultar muitos alarmes |
+| `1` | exatamente um | pode faltar? |
+| `0..1` | nenhum ou um | como representar ausência? |
+| `0..*` ou `*` | zero ou mais | o caso vazio é permitido? |
+| `1..*` | um ou mais | quem garante o mínimo? |
+| `2..4` | entre dois e quatro | onde o limite será validado? |
 
-### O que a cardinalidade ajuda a decidir no código
+Multiplicidades descrevem instâncias permitidas; não são colocadas nas setas de generalização. Uma associação obrigatória exige uma decisão de construção/validação. Uma relação “muitos” retoma as coleções estudadas na seção 11, mas não escolhe automaticamente `vector`, `list` ou uma estratégia de posse.
 
-- se um atributo deve guardar um objeto ou uma coleção;
-- se a ausencia da relacao e aceitavel;
-- se o construtor deve exigir um objeto associado;
-- se a classe precisa validar quantidade mínima ou máxima de elementos.
-
-### Erros comuns de leitura
-
-- ignorar a cardinalidade e pensar apenas no tipo da relacao;
-- desenhar `*` em tudo por inseguranca;
-- usar `1` quando, na prática, a relacao pode não existir;
-- esquecer que cardinalidade muda a implementação concreta.
+**Aplique agora:** desenhe dois painéis ligados ao mesmo sensor em um rascunho de objetos. Depois tente desenhar um painel sem sensor. O primeiro caso satisfaz o modelo; o segundo o viola. Se a manutenção precisar permitir painel desconectado, altere conscientemente `1` para `0..1` e documente a mudança de regra.
 
 ---
 
-## 6. Como sair de um texto de requisito para um diagrama de classes
+## 6. Todo e parte: composição e agregação
 
-Em sala, o aluno precisa aprender um método, não apenas decorar simbolos.
+Ter um atributo com outro objeto não determina, sozinho, a relação UML. Pergunte quem é responsável pela parte e se ela pode pertencer simultaneamente a outro todo.
 
-### Texto inicial
+### 6.1 Composição: posse exclusiva no modelo
 
-> Uma estação de monitoramento possui reservatórios. Cada reservatório recebe leituras de sensores. Um controlador analisa as leituras e pode gerar alarmes quando a faixa segura e violada.
+Para esta simulação, suponha que cada painel crie sua própria configuração de exibição e seja responsável por sua existência. A configuração não é compartilhada entre painéis.
 
-### Passo 1. Destacar entidades candidatas
-
-- estação de monitoramento;
-- reservatório;
-- sensor;
-- controlador;
-- alarme.
-
-### Passo 2. Perguntar qual responsabilidade pertence a cada classe
-
-- `Reservatorio` guarda capacidade e nível atual?
-- `SensorNivel` mede e atualiza leitura?
-- `ControladorNivel` avalia faixa segura e decide ação?
-- `Alarme` representa um evento ou apenas uma mensagem solta?
-
-### Passo 3. Decidir relações
-
-- a estação contem reservatórios;
-- um reservatório recebe leituras de sensores;
-- o controlador usa sensores e pode emitir alarmes.
-
-### Resultado inicial em Mermaid
-
-``` mermaid
+```mermaid
 classDiagram
-    class EstacaoMonitoramento {
-        -nome: string
-        +adicionarReservatorio() void
-    }
-
-    class Reservatorio {
-        -codigo: string
-        -capacidadeLitros: double
-        -nivelAtual: double
-        +atualizarNivel(valor: double) void
-    }
-
-    class SensorNivel {
-        -tag: string
-        -valorAtual: double
-        +coletar() double
-    }
-
-    class ControladorNivel {
-        +avaliarFaixa() bool
-        +gerarAlarme() void
-    }
-
-    class Alarme {
-        -mensagem: string
-        -severidade: int
-    }
-
-    EstacaoMonitoramento "1" *-- "1..*" Reservatorio : contem
-    Reservatorio "1" o-- "1..*" SensorNivel : monitora
-    ControladorNivel --> "1..*" SensorNivel : le
-    ControladorNivel --> "0..*" Alarme : gera
+    PainelFixo "1" *-- "1" ConfiguracaoPainel : possui
 ```
 
-### Licao didatica importante
+O losango **preenchido fica no todo**, `PainelFixo`. Na composição, uma parte pertence a no máximo um todo composto por vez; a destruição do todo envolve as partes que ainda lhe pertencem. O modelo pode admitir remover ou transferir uma parte antes disso, se houver regras explícitas.
 
-O primeiro diagrama raramente sai perfeito.
+Essa relação trata de objetos do software: encerrar o cadastro de uma estação não destrói fisicamente sensores. Não use a palavra “possui” do enunciado como prova suficiente de composição.
 
-Ele deve ser tratado como **hipotese de modelagem**:
+### 6.2 Agregação compartilhada: agrupamento explicitado
 
-1. desenhar;
-2. discutir;
-3. simplificar ou corrigir;
-4. so depois implementar.
+```mermaid
+classDiagram
+    Bancada "0..1" o-- "0..*" Sensor : agrupa
+```
+
+O losango **vazio fica no todo**, `Bancada`. Neste exemplo, o sensor pode estar sem bancada ou em uma bancada, e continua cadastrado quando ela é removida. A agregação compartilhada da UML tem semântica pouco restritiva; as regras específicas precisam ser documentadas. Associação simples costuma comunicar esse vínculo com menos ambiguidade.
+
+**Aplique agora:** explique por que `PainelFixo *-- Sensor` contraria o requisito de trocar o painel sem remover o sensor. Corrija para associação. Depois justifique por que a configuração pode ser composição sob as hipóteses deste exemplo.
+
+**Como confirmar:** apagar o painel deve afetar sua configuração própria; o cadastro do sensor deve continuar existindo. Nenhum losango deve aparecer sem uma regra sobre pertencimento e ciclo de vida.
 
 ---
 
-## 7. Ponte C++ -> Python
+## 7. Realização e guia de decisão das relações
 
-O diagrama deve preservar o conceito. A linguagem concreta muda a forma de escrever.
+Se a equipe definir uma interface `Consultavel` contendo apenas operações exigidas, uma classe que a implementa pode ser modelada por **realização**:
 
-### Mesmo modelo, mesma intencao
-
-``` mermaid
+```mermaid
 classDiagram
-    class Tanque {
-        -codigo: string
-        -capacidadeLitros: double
-        -nivelAtual: double
-        +atualizarNivel(valor: double) void
-        +percentualOcupacao() double
+    class Consultavel {
+        <<interface>>
+        +valor() double
+        +unidade() string
     }
+    Consultavel <|.. Sensor
 ```
 
-### Traducao para C++
+A linha é tracejada e o triângulo vazio aponta para a **interface**. Generalização especializa um tipo; realização indica cumprimento de uma especificação. A base `Sensor` da aula 08 também mantém estado e oferece comportamento concreto: seu desenho com as derivadas continua usando generalização. Não troque todas as setas de herança por realização só porque há métodos abstratos.
+
+| Técnica/Padrão | Melhor uso | Esforço | Entregável | Limitação |
+|---|---|---|---|---|
+| Generalização `Base <\|-- Derivada` | especialização substituível | médio: conferir contrato | hierarquia justificada | semelhança de atributos não basta |
+| Realização `Interface <\|.. Classe` | implementação de especificação | médio: explicitar operações | interface e realizador | desenho não prova comportamento |
+| Associação `A --> B` | vínculo estrutural navegável de A para B | baixo: definir papéis e quantidades | relação com multiplicidades | não define posse |
+| Agregação `Todo o-- Parte` | agrupamento com significado documentado | médio: esclarecer regras | todo e partes | semântica compartilhada pouco restritiva |
+| Composição `Todo *-- Parte` | responsabilidade exclusiva pelas partes | médio: explicar ciclo de vida | todo com losango preenchido | exige mais que um atributo |
+| Dependência `Cliente ..> Fornecedor` | uso de outro elemento | baixo: identificar motivo | cliente e elemento utilizado | não expressa vínculo estrutural por si só |
+
+**Decisão por cenário:** especialização de sensor usa generalização; painel que recebe sensor só na chamada usa dependência; painel que mantém referência usa associação; configuração exclusiva pode usar composição. Prefira associação a agregação quando não houver uma regra adicional clara para comunicar.
+
+---
+
+## 8. Ponte C++ → Python: conferir o significado no código
+
+Os recortes abaixo ilustram a proposta `PainelFixo`. São material de leitura: a prática desta aula entrega modelagem sobre o programa existente, sem implementar a extensão.
 
 ```cpp
-#include <stdexcept>
-#include <string>
-
-class Tanque {
-private:
-    std::string codigo;
-    double capacidadeLitros;
-    double nivelAtual;
-
+class PainelFixo {
+    const Sensor& sensor_;  // associação: não possui o sensor
 public:
-    Tanque(std::string codigoTanque, double capacidade)
-        : codigo(codigoTanque), capacidadeLitros(capacidade), nivelAtual(0.0) {}
-
-    void atualizarNivel(double valor) {
-        if (valor < 0.0 || valor > capacidadeLitros) {
-            throw std::out_of_range("nivel invalido");
-        }
-        nivelAtual = valor;
-    }
-
-    double percentualOcupacao() const {
-        return (nivelAtual / capacidadeLitros) * 100.0;
-    }
+    explicit PainelFixo(const Sensor& sensor) : sensor_(sensor) {}
+    double leitura() const { return sensor_.valor(); }
 };
 ```
 
-### Traducao para Python
-
 ```python
-class Tanque:
-    def __init__(self, codigo, capacidade_litros):
-        self._codigo = codigo
-        self._capacidade_litros = capacidade_litros
-        self._nivel_atual = 0.0
+class PainelFixo:
+    def __init__(self, sensor: Sensor):
+        self._sensor = sensor  # associação ao mesmo objeto
 
-    def atualizar_nivel(self, valor):
-        if valor < 0 or valor > self._capacidade_litros:
-            raise ValueError("nivel invalido")
-        self._nivel_atual = valor
-
-    def percentual_ocupacao(self):
-        return (self._nivel_atual / self._capacidade_litros) * 100.0
+    def leitura(self):
+        return self._sensor.valor()
 ```
 
-### O que destacar em aula
+O conceito comum é manter acesso a **um sensor existente**. Em C++, o sensor precisa viver mais tempo que o painel que o referencia. Em Python, a referência mantém o objeto alcançável; isso não transforma automaticamente a associação em composição UML. A anotação `Sensor` não impede, por si só, receber `None`: cumprir a multiplicidade continua sendo responsabilidade da implementação.
 
-| Aspecto | C++ | Python | Impacto didatico |
-|---|---|---|---|
-| Classe no código | `class Nome {}` | `class Nome:` | a ideia e a mesma |
-| Visibilidade | `private`, `public`, `protected` | convencoes como `_atributo` e API pública | C++ explícita mais a fronteira |
-| Operacoes | assinaturas tipadas | métodos mais flexiveis | Python reduz ruido, mas o modelo contínua |
-| Regra de negócio | validação no método | validação no método | UML ajuda a ver a regra antes da sintaxe |
+Compare também a generalização existente: `class SensorNivel : public Sensor` em C++ e `class SensorNivel(Sensor)` em Python. Ambas representam especialização. Já `private` restringe acesso em C++; o prefixo `_` em Python comunica uma convenção de uso interno.
 
-### Mensagem principal da ponte
-
-O conceito de POO e mais estavel do que a sintaxe da linguagem.
-
-Se o aluno entende o diagrama, ele consegue discutir o modelo em C++, Python ou outra linguagem orientada a objetos.
+**Checkpoint:** localize nos arquivos reais da aula 08 uma operação abstrata, uma sobrescrita e a função que consulta o sensor. Registre arquivo e nome da operação na tabela de rastreabilidade. Não atribua ao programa a classe `PainelFixo`, que ainda é proposta.
 
 ---
 
-## 8. Como UML e usada na prática sem virar burocracia
+## 9. Prática cumulativa: diagrama do sistema testado
 
-Em projetos reais, diagrama de classes não deve ser tratado como decoracao de relatório. Ele funciona melhor quando aparece em momentos de decisão.
+### 9.1 Retome o fork certo
 
-### Uso prático mais comum
+Use seu fork de [rafaelrezo/poo-fundamentos-estacao](https://github.com/rafaelrezo/poo-fundamentos-estacao), com as etapas técnicas até 13 integradas (capítulo 11 concluído). O repositório da seção 08 serviu à prática de polimorfismo e permanece separado.
 
-1. alinhar entendimento do problema antes de implementar;
-2. revisar responsabilidades quando uma classe está crescendo demais;
-3. discutir composição versus herança em PR ou reuniao técnica;
-4. explicar arquitetura de um modulo para novos membros da equipe;
-5. apoiar refatoracao sem depender so de conversa abstrata.
-
-### Quando o diagrama ajuda muito
-
-- quando o requisito ainda está confuso;
-- quando ha muitas classes colaborando;
-- quando o time está discutindo responsabilidade errada;
-- quando o código existente ficou procedural demais dentro de uma classe grande.
-
-### Quando o diagrama atrapalha
-
-- quando tenta espelhar cada detalhe da implementação;
-- quando nunca e revisado apos mudança importante;
-- quando substitui leitura de código em vez de apoiar a leitura;
-- quando vira documento morto feito apenas para entrega.
-
-### Regra prática para este curso
-
-Desenhe o suficiente para responder três perguntas:
-
-1. quais classes importam;
-2. que responsabilidade cada uma assume;
-3. como elas se relacionam.
-
-Se o diagrama não ajuda nisso, ele está detalhado demais ou genérico demais.
-
----
-
-## 9. Mini-caso prático: ETA com tanque, sensor e bomba dosadora
-
-Imagine uma pequena estação de tratamento de agua onde o software precisa monitorar o pH do tanque de mistura e acionar uma bomba dosadora quando a faixa segura e violada.
-
-### Modelo inicial
-
-``` mermaid
-classDiagram
-    class ETA {
-        -nome: string
-    }
-
-    class TanqueMistura {
-        -codigo: string
-        -volumeAtual: double
-        +receberAgua(litros: double) void
-    }
-
-    class SensorPH {
-        -tag: string
-        -valorAtual: double
-        +atualizarLeitura(valor: double) void
-        +foraDaFaixa(min: double, max: double) bool
-    }
-
-    class BombaDosadora {
-        -tag: string
-        -vazaoLh: double
-        +dosar(qtd: double) void
-        +parar() void
-    }
-
-    class ControladorQualidade {
-        +avaliarTanque() void
-        +acionarCorrecao() void
-    }
-
-    ETA "1" *-- "1..*" TanqueMistura : contem
-    TanqueMistura "1" o-- "1" SensorPH : monitora
-    ControladorQualidade --> "1" SensorPH : le
-    ControladorQualidade --> "1" BombaDosadora : aciona
+```bash
+git switch main
+git pull --ff-only origin main
+git remote -v
+make test ETAPA=13
+git switch -c pratica/12-uml
 ```
 
-### O que discutir com a turma
+O remoto único deve ser `origin`, apontando para o fork. Se seu fork foi criado antes desta reorganização, execute `curl -fsSL https://raw.githubusercontent.com/rafaelrezo/poo-fundamentos-estacao/main/.github/workflows/testes.yml -o .github/workflows/testes.yml` para obter o workflow atualizado; confira o diff e inclua esse arquivo no commit da entrega. Forks novos já o incluem. O comando atualiza somente o workflow público, sem substituir implementações nem adicionar remoto. A branch está prevista no workflow atualizado e executa `make test ETAPA=13` após cada push. Não há nova operação de código nesta seção: a revisão precisa preservar o sistema funcional e os testes fornecidos.
 
-- por que `ETA` e `TanqueMistura` aparecem em composição;
-- por que `SensorPH` foi representado como agregação, e não composição forte;
-- por que `ControladorQualidade` usa `SensorPH` e `BombaDosadora`, mas não precisa herdar nada deles;
-- que atributos devem ficar públicos, privados ou protegidos quando esse modelo virar código.
+### 9.2 Modelo implementado: do código para o desenho
 
-### Licao de modelagem
+Atualize `docs/diagrama.md` em duas vistas legíveis, sem colocar todas as classes numa única figura:
 
-Observe como o diagrama obriga o aluno a separar papeis:
+1. **Tipos e colaboração:** `Sensor`, `SensorNivel`, `SensorTemperatura`, `PainelFixo`, `Bancada`, `IFonteLeitura`, `FonteNivel` e `FonteConstante`.
+2. **Falhas e registros:** `FalhaLeitura`, `FalhaCalibracao`, `IdSensor`, `Medicao` e `Catalogo<T>`. `ControladorConsulta` e `PoliticaAlarme` pertencem à próxima parte; não os inclua como incrementos concluídos nesta vista.
 
-- sensor mede;
-- tanque armazena;
-- bomba atua;
-- controlador decide.
+No modelo implementado, identifique a base concreta, a interface abstrata, as realizações, associações, agregação documentada, composição e multiplicidade do catálogo. Marque o proprietário quando isso for relevante. Não transforme funções livres como `lerFonte` em classes supostamente presentes no código.
 
-Quando essa separação aparece cedo no desenho, o código tende a nascer com mais coesao.
+Para cada vista, registre três correspondências entre elemento visual e arquivo/operação, além de uma regra comportamental que o desenho não demonstra sozinho. Exemplo: a seta da fonte para a interface não prova que suas consultas preservam estado.
 
----
+Renderize o Mermaid no GitHub ou no [Mermaid Live Editor](https://mermaid.live/). Faça um commit do modelo atual e execute `make test ETAPA=13` antes de seguir.
 
-## 10. Atividade da unidade: repositório-base e fork
+### 9.3 Modelo proposto: decidir uma extensão
 
-Nesta unidade, a atividade principal saiu do material do site e passou a existir como um **repositório-base público independente**, usado por fork.
+Uma nova solicitação da mesma estação diz:
 
-### Onde está a atividade
+> Um técnico pode acompanhar vários sensores. Um sensor pode não ter técnico, ou ter apenas um responsável por vez. Trocar o técnico não remove sensores. Cada cadastro de sensor mantém uma configuração de calibração exclusiva, removida junto com esse cadastro. O painel continua consultando uma abstração.
 
-- Starter repo: [RafaelEmerick-POO/poo-20261-cenário-04-modelagem-uml](https://github.com/RafaelEmerick-POO/poo-20261-cenário-04-modelagem-uml)
+Crie uma seção separada **Modelo proposto — manutenção**, sem afirmar que esses tipos já foram implementados. Escolha nomes e operações mínimas, justifique cada relação e explicite as multiplicidades nas duas pontas.
 
-### Por que a atividade foi movida
+Confira os estados: sensor sem técnico permitido; dois responsáveis simultâneos proibidos; técnico com dois sensores permitido; troca de responsável preserva o sensor; compartilhamento de uma configuração exclusiva proibido. Explique ainda como relacionar o cadastro à entidade física sem confundir remoção do registro com destruição do equipamento.
 
-- para ensinar fluxo real com `assignment`, branch, issue, commit e pull request;
-- para separar claramente **conteúdo de estudo** e **repositório de entrega**;
-- para permitir que cada aluno ou equipe trabalhe em seu próprio fork.
+Registre uma dúvida de requisito e a hipótese adotada. A extensão exige decisão do aluno; não há diagrama pronto para copiar. Sua implementação pode tornar-se um incremento do projeto da Parte 2.
 
-### O que o aluno vai encontrar no starter
+### 9.4 Revisão e entrega
 
-- `README.md` com o enunciado completo;
-- arquivos-base para o diagrama e para a implementação inicial;
-- `AI_LOG.md`;
-- template de issue;
-- template de pull request;
-- referências oficiais para Mermaid, Markdown e modelagem.
+```bash
+make test ETAPA=13
+git add docs/diagrama.md docs/decisoes.md AI_LOG.md .github/workflows/testes.yml
+git commit -m "modela manutencao e justifica relacoes UML"
+git push -u origin pratica/12-uml
+```
 
-### Recomendação para o docente
+Abra PR para a `main` **do próprio fork**. Inclua as figuras renderizadas, o resultado local e a CI do commit. O revisor deve ler cada relação, confrontar as multiplicidades com os estados permitidos e comparar o modelo implementado ao código. Integre após revisão e testes verdes.
 
-Publique o starter na namespace `rafaelrezo`; o estudante faz fork, valida localmente e no GitHub Actions e abre PR para a `main` do próprio fork. Mantenha esta página como referência conceitual.
+- [ ] As duas versões, implementada e proposta, estão identificadas.
+- [ ] Base e interface correspondem às declarações reais.
+- [ ] Cada losango possui justificativa de pertencimento e ciclo de vida.
+- [ ] A relação 1:N corresponde às operações do catálogo.
+- [ ] O desenho não atribui ao código classes que só existem na proposta.
+- [ ] O PR inclui decisões técnicas e rastreabilidade de IA.
 
----
-
-## 11. Videos e materiais complementares
-
-### Vídeo principal desta unidade
-
-- [Tutorial de Diagramas de Classes UML](https://www.youtube.com/watch?v=rDidOn6KN9k)
-
-### Leitura/laboratorio complementar
-
-- [Mermaid Live Editor](https://mermaid.live/)
-- [Material for MkDocs - Diagrams](https://squidfunk.github.io/mkdocs-material/reference/diagrams/)
-- [Mermaid - Class diagrams](https://mermaid.js.org/syntax/classDiagram.html)
-- [GitHub Docs - Basic writing and formatting syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
-- [Python Docs - Classes](https://docs.python.org/3/tutorial/classes.html)
-- [cppreference - Classes](https://en.cppreference.com/w/cpp/language/classes)
-- [cppreference - Derived classes](https://en.cppreference.com/w/cpp/language/derived_class)
-
-### Observação didatica
-
-O vídeo ajuda a visualizar o mecanismo. A consolidacao real acontece quando o aluno pega um requisito curto, desenha o modelo, debate relações e so depois escreve o código.
+Em avaliação, faça defesa oral curta de uma relação, uma multiplicidade e uma alternativa rejeitada. O teste confirma regressões; a correção semântica do diagrama exige revisão humana.
 
 ---
+
+## 10. Diagnóstico e fechamento da Parte 1
+
+| Sintoma | O que verificar | Correção |
+|---|---|---|
+| triângulo aponta para a derivada | direção da generalização | apontar para a classe geral |
+| losango aparece na parte | quem é o todo | reposicionar o losango |
+| todo vínculo é composição | regra de posse | usar associação quando houver apenas referência |
+| `*` foi lido como “pelo menos um” | mínimo permitido | usar `1..*` se zero for proibido |
+| desenho exige classe ausente do código | modelo atual versus proposta | separar as duas visões |
+| diagrama não renderiza | bloco e sintaxe | usar cerca `mermaid` e testar trecho mínimo |
+| CI rejeita branch UML | branch ou fork incorretos | usar `pratica/12-uml` no fork cumulativo |
+
+Ao terminar a Parte 1, o aluno deve conseguir sair de um cenário, distribuir responsabilidades, reconhecer oportunidades de composição e especialização, preservar contratos polimórficos e explicar o modelo com UML.
+
+A Parte 1 termina com objetos colaborando, interfaces, falhas controladas, identidade e igualdade, coleções e validação pelos testes fornecidos. A [Parte 2 começa por Princípios de Projeto e Testes de Objetos](../parte-2-projeto/00-principios-testes/index.md). Depois, a arquitetura e a integração aplicam essa base a JSON, padrões, persistência e comunicação.
 
 ## Perguntas de revisão rápida
 
-1. Qual a diferença entre associação, agregação e composição em um diagrama de classes?
-2. Como a multiplicidade ajuda a decidir se uma classe deve guardar um objeto ou uma coleção?
-3. Em que situacoes um diagrama de classes melhora a modelagem antes da implementação?
+1. Um painel recebe um sensor somente por parâmetro; outro guarda uma referência. Como representar e justificar cada relação? O que muda ao trocar o painel?
+2. Em `PainelFixo "0..*" --> "1" Sensor`, quantos sensores cada painel consulta e quantos painéis podem consultar um sensor? Qual mudança permite painel desconectado?
+3. Por que `SensorNivel` pode especializar `Sensor`, mas um controlador que consulta sensores não deve herdar deles? Que evidência comportamental sustenta a primeira relação?
 
 ## Fontes de referência
 
-- https://www.omg.org/spec/UML/2.5.1/About-UML
-- https://mermaid.live/
-- https://mermaid.js.org/syntax/classDiagram.html
-- https://squidfunk.github.io/mkdocs-material/reference/diagrams/
-- https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
-- https://docs.python.org/3/tutorial/classes.html
-- https://en.cppreference.com/w/cpp/language/classes
-- https://en.cppreference.com/w/cpp/language/derived_class
+- [OMG — UML 2.5.1](https://www.omg.org/spec/UML/2.5.1/About-UML): especificação de classes, associações, generalização e agregação.
+- [Mermaid — diagramas de classes](https://mermaid.js.org/syntax/classDiagram.html): sintaxe de relações, visibilidade e multiplicidade.
+- [GitHub Docs — criação de diagramas](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams): renderização de Mermaid em Markdown.
+- [GitHub Docs — sintaxe de workflows](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax): gatilhos de branches e permissões.
+- [C++ Core Guidelines — classes e hierarquias](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#S-class): interface, invariantes e hierarquias.
+- [Python Docs — classes](https://docs.python.org/3/tutorial/classes.html): referências, convenções de acesso e herança.

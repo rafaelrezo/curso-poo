@@ -6,7 +6,7 @@
 - Produzir em C++ e consumir em Python um contrato JSONL mínimo e reproduzível.
 - Acrescentar timestamp UTC somente quando surge a necessidade de ordenar eventos.
 
-**Tempo estimado:** 4h, em dois encontros de 2h.
+**Tempo estimado:** parte do marco 2 (4h compartilhadas com a integração resiliente).
 
 ## Vídeo da aula
 
@@ -16,13 +16,15 @@
 
 ## 1. Qual problema apareceu?
 
+Partimos da arquitetura aprovada no marco 1 e das coleções da seção 11. No fork concluído, crie `projeto/02-integracao`; execute `make test-projeto` antes de alterar o sistema.
+
 O controlador possui sensores em memória. Quando o processo termina, as leituras desaparecem e o Python não consegue acessá-las. Precisamos de uma fronteira explícita entre os programas.
 
 ```text
 Controlador C++ -> dados/leituras.jsonl -> Supervisor Python
 ```
 
-JSON define a representação. O arquivo é o transporte didático desta etapa. Na Parte 2, o mesmo contrato poderá passar por TCP sem que JSON “vire uma rede”.
+JSON define a representação. O arquivo é o transporte didático desta etapa. Na aula de comunicação TCP desta parte, o mesmo contrato poderá passar por TCP sem que JSON “vire uma rede”.
 
 ---
 
@@ -38,10 +40,10 @@ Cada linha será um objeto JSON completo:
 |---|---|---|
 | `tag` | string | identificador estável e não vazio |
 | `tipo` | string | categoria conhecida pelo domínio |
-| `valor` | number | número JSON, nunca texto com vírgula decimal |
+| `valor` | number ou null | número finito para `operando`/`alerta`; `null` obrigatório para `falha` |
 | `unidade` | string | acompanha o significado físico |
 | `status` | string | `operando`, `alerta` ou `falha` |
-| `timestamp` | string | instante UTC em ISO 8601 |
+| `timestamp` | string | instante UTC no formato `AAAA-MM-DDTHH:MM:SSZ` |
 
 Um JSON bem formado ainda pode violar o contrato: `{"valor":"alto"}` é JSON válido, mas não é uma telemetria válida.
 
@@ -51,6 +53,11 @@ Um JSON bem formado ainda pode violar o contrato: `{"valor":"alto"}` é JSON vá
 
 ```cpp
 #include <fstream>
+#include <cmath>
+#include <locale>
+#include <iomanip>
+#include <limits>
+#include <regex>
 #include <stdexcept>
 #include <string>
 
@@ -60,19 +67,31 @@ void gravarLeitura(
     double valor,
     const std::string& timestamp
 ) {
+    // Primeiro incremento: domínio restrito e explícito, sem texto livre.
+    if (!std::regex_match(tag, std::regex("[A-Za-z0-9_-]+")) ||
+        !std::isfinite(valor) || valor < 0 || valor > 100 ||
+        !std::regex_match(timestamp,
+            std::regex("[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z"))) {
+        throw std::invalid_argument("registro fora do contrato do produtor inicial");
+    }
+    // O chamador fornece um instante real; a validação calendárica ocorre no consumidor.
     std::ofstream arquivo(caminho, std::ios::app);
+    arquivo.imbue(std::locale::classic());
+    arquivo << std::setprecision(std::numeric_limits<double>::max_digits10);
     if (!arquivo) {
         throw std::runtime_error("não foi possível abrir " + caminho);
     }
 
+    arquivo.exceptions(std::ios::badbit | std::ios::failbit);
     arquivo << "{\"tag\":\"" << tag
             << "\",\"tipo\":\"nivel\",\"valor\":" << valor
             << ",\"unidade\":\"%\",\"status\":\"operando\""
             << ",\"timestamp\":\"" << timestamp << "\"}\n";
+    arquivo.close();
 }
 ```
 
-A montagem manual é aceitável apenas porque o contrato é pequeno e controlado. Na Parte 2, uma biblioteca JSON eliminará riscos de escape e estruturas mais complexas.
+O produtor inicial só aceita tags alfanuméricas com hífen ou sublinhado, valores finitos de nível e timestamps no formato fixado. Essa restrição impede a entrada de aspas e controles nos campos interpolados. Ao aceitar texto livre ou novos tipos de registro, substitua a montagem manual por uma biblioteca JSON e teste escapes. O consumidor da próxima atividade valida também o calendário.
 
 ---
 
@@ -133,7 +152,7 @@ st.title("Supervisório didático")
 st.dataframe(leituras)
 ```
 
-Execute:
+Crie `requirements.txt` com a dependência `streamlit`; inclua também o import de `Path` e a função `carregar_leituras` no módulo `supervisor.py`. Execute:
 
 ```bash
 python3 -m pip install -r requirements.txt
@@ -154,7 +173,9 @@ O CI deve executar, no mínimo:
 4. validação dos seis campos e tipos;
 5. execução do consumidor Python.
 
-Branch sugerida: `cap09-contrato-telemetria`.
+Continue na branch `projeto/02-integracao`. Implemente os testes acima e acrescente sua execução ao alvo `make test-projeto`, mantendo as regressões da etapa 14. A CI executa exatamente esse alvo após o push. Use diretório temporário para que execuções repetidas não acumulem registros de testes anteriores.
+
+Faça commit e push para `origin`; abra PR para a main do próprio fork, com saída local, link da CI e registro do uso de IA. Integre depois de concluir a próxima atividade de resiliência.
 
 No PR, registre uma decisão: por que JSONL foi escolhido em vez de um array JSON único? Resposta esperada: cada evento pode ser acrescentado e processado linha a linha.
 
@@ -162,7 +183,7 @@ No PR, registre uma decisão: por que JSONL foi escolhido em vez de um array JSO
 
 ## 8. Mini-caso prático
 
-O controlador produz cinco leituras e o supervisor as ordena pelo timestamp. Introduza então uma linha truncada. O consumidor atual encerra com erro: esse resultado observável prepara o tratamento de exceções.
+O controlador produz cinco leituras e o supervisor as ordena pelo timestamp. Introduza então uma linha truncada. O consumidor atual encerra com erro: esse resultado observável prepara a aplicação das exceções da seção 10 à fronteira de integração.
 
 ---
 

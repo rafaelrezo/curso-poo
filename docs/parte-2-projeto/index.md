@@ -2,11 +2,11 @@
 
 ## Objetivos de aprendizagem
 
-- Integrar os building blocks da Parte 1 em uma arquitetura evolutiva de controle e supervisão.
-- Aplicar padrões de projeto, persistência, comunicação e estratégias de qualidade a problemas observáveis.
-- Entregar incrementos por branch e pull request, com testes locais, CI e justificativa técnica.
+- Integrar os objetos e contratos construídos na Parte 1 em um sistema de engenharia.
+- Justificar arquitetura, padrões, persistência e comunicação a partir de requisitos.
+- Entregar incrementos em equipe com testes, revisão e defesa técnica.
 
-**Tempo estimado:** 21h, com encontros de 2h e um checkpoint final.
+**Tempo estimado:** proposta de 22h em sala (2h iniciais de princípios/testes e 20h de projeto), dentro das 60h do curso; conferir a [reserva provisória de horas](../index.md#3-organizacao-das-60h). Os capítulos são recursos dos marcos, não encontros adicionais.
 
 ## Vídeo de contexto
 
@@ -16,127 +16,66 @@
 
 ## 1. De onde partimos?
 
-A Parte 2 não começa do zero. Ao concluir a Parte 1, a equipe já deve possuir:
+A Parte 1 termina com [UML e modelagem](../modelagem_analise_codigo/index.md). Associação, interfaces, exceções, igualdade, coleções genéricas já foram estudados. Os testes fornecidos foram executados; agora começamos a escrever testes próprios e revisar responsabilidades. Aqui a equipe aplica esses fundamentos em um controlador C++ e um supervisório Python.
 
-- classes de sensores e atuador com estado válido;
-- controlador composto por objetos com responsabilidades distintas;
-- contrato comum para diferentes sensores;
-- coleção dinâmica com posse segura em C++ e lista em Python;
-- produtor C++ e consumidor Python ligados por JSONL;
-- timestamp UTC e distinção entre estado de falha e entrada inválida;
-- tratamento básico de exceções nas fronteiras;
-- testes cumulativos e workflow de CI.
+Reutilize o fork do [starter de fundamentos](https://github.com/rafaelrezo/poo-fundamentos-estacao), com UML12 concluída e as etapas técnicas até 13 integradas. Execute `make test ETAPA=13` e confira o diagrama antes de iniciar o projeto. O starter público contém comportamentos incompletos intencionais; cloná-lo novamente não substitui as implementações da Parte 1.
 
-Se esse baseline não estiver verde, a primeira ação é recuperar o checkpoint do capítulo 09. A Parte 2 acrescentará complexidade arquitetural, não lacunas de fundamentos.
+Comece pelo [capítulo 01 — Princípios de Projeto e Testes de Objetos](00-principios-testes/index.md), na branch `projeto/00-testes`. Execute `make test-projeto`, complete o controlador e escreva seus testes. O alvo valida a etapa técnica14; ele inicialmente falha porque essa implementação ainda não foi feita. Integre esse primeiro PR antes de abrir a arquitetura.
 
----
+## 2. Marcos de projeto
 
-## 2. Visão do sistema
+| Marco e branch | Horas em sala | Recursos de consulta | Evidência |
+|---|---:|---|---|
+| Abertura — `projeto/00-testes` | 2h | princípios de projeto e testes | controlador e testes autorais, com UML atualizada |
+| 1 — `projeto/01-arquitetura` | 2h | cenário e arquitetura | escopo, responsabilidades, UML e critérios de aceite |
+| 2 — `projeto/02-integracao` | 4h | JSON e integração resiliente | produtor C++, consumidor Python e testes de contrato |
+| 3 — `projeto/03-regras` | 4h | Strategy, Command e Observer | regra substituível e alarme desacoplado |
+| 4 — `projeto/04-persistencia` | 4h | banco de dados e Repository | histórico consultável e testes isolados |
+| 5 — `projeto/05-comunicacao` | 4h | TCP, qualidade e testes de integração | comunicação entre processos e falhas verificadas |
+| 6 — `projeto/06-entrega` | 2h | CI e projeto final | demonstração, evidências e defesa das decisões |
 
-```text
-Controlador virtual C++
-  sensores -> regras de controle -> atuadores
-       |                  ^
-       +---- eventos -----+
-              |
-          contrato JSON
-              |
-Supervisório Python
-  alarmes -> persistência -> visualização -> comandos
-```
+A página antiga de coleções encaminha para a seção 11 da Parte 1. Os capítulos de testes e CI apoiam todos os marcos desde o primeiro; não se espera o fim do projeto para testar.
 
-O sistema continua sendo didático. Ele simula responsabilidades de controle e supervisão, mas não possui garantias de tempo real, segurança funcional, I/O industrial ou protocolos de um CLP/SCADA real.
+## 3. Mini-caso prático: estação de monitoramento
 
----
-
-## 3. Sequência reorganizada
-
-| Etapa | Problema novo | Conceito/tecnologia | Evidência principal |
-|---:|---|---|---|
-| 1 | componentes funcionam isolados | arquitetura, responsabilidades e contrato versionado | diagrama e baseline integrado |
-| 2 | regras de controle variam | `Strategy` | algoritmo substituível sem alterar o controlador |
-| 3 | comandos precisam ser representados | `Command` | comando testável e rastreável |
-| 4 | vários interessados reagem a eventos | `Observer`, eventos e alarmes | alarme emitido sem acoplamento direto |
-| 5 | histórico desaparece ao encerrar | SQLite e `Repository` | leituras persistidas e consultadas |
-| 6 | arquivo não representa integração contínua | comunicação TCP e contrato | produtor e consumidor em processos distintos |
-| 7 | falhas atravessam várias camadas | recuperação, logging e timeout | falha observável sem corrupção do estado |
-| 8 | mudanças podem quebrar contratos | testes unitários, contrato e integração | matriz de testes verde |
-| 9 | validação manual não escala | análise estática, cobertura e CI | pipeline com feedback por commit |
-| 10 | decisões precisam ser defendidas | projeto final e revisão técnica | PR final, evidências e defesa oral |
-
-Listas dinâmicas e introdução a exceções deixaram de ser capítulos desta parte: agora são pré-requisitos produzidos na Parte 1. Exceções reaparecem aqui como decisão arquitetural de resiliência.
-
----
-
-## 4. Estrutura que emerge gradualmente
+Uma estação consulta fontes de nível e temperatura. O controlador aplica uma política a uma leitura; o supervisório recebe telemetria, apresenta alarmes e consulta o histórico. A equipe começa pelo caminho completo de uma leitura e amplia o sistema quando esse caminho estiver validado.
 
 ```text
-projeto-integrador/
-├── controller_cpp/
-│   ├── include/
-│   ├── src/
-│   └── tests/
-├── supervisor_py/
-│   ├── app/
-│   └── tests/
-├── contracts/
-├── data/
-├── docs/diagramas/
-├── .github/workflows/ci.yml
-├── README.md
-└── AI_LOG.md
+Fontes -> controlador C++ -> contrato JSONL -> supervisório Python
+                 |                                |
+          política de alarme                histórico e tela
 ```
 
-Não crie toda a árvore no primeiro encontro. Cada pasta deve aparecer quando uma responsabilidade concreta exigir sua existência.
+C++ e Python compartilham o significado dos campos e das falhas. Eles não precisam compartilhar classes ou detalhes de memória. Trata-se de uma simulação didática de controle e supervisão.
 
----
+## 4. Como executar cada incremento
 
-## 5. Regra de progressão
+Depois de integrar a abertura de testes, no fork concluído, atualize a main, crie a branch do marco e execute o baseline:
 
-Cada etapa segue o mesmo ciclo:
+```bash
+git switch main
+git pull --ff-only origin main
+git switch -c projeto/01-arquitetura
+make test-projeto
+```
 
-1. executar o baseline verde;
-2. observar uma limitação do sistema;
-3. registrar a necessidade em issue;
-4. criar branch curta com nome fornecido;
-5. adicionar um teste que expõe a limitação;
-6. implementar o menor incremento útil;
-7. fazer push e interpretar o CI;
-8. abrir PR com diagrama ou decisão atualizada;
-9. integrar somente com evidência de funcionamento.
+O alvo `test-projeto` inicialmente repete os contratos da etapa 14. Em cada marco, acrescente ao alvo os testes do novo comportamento. A CI já executa esse mesmo comando em pushes de branches `projeto/**`; um baseline verde não comprova que uma integração nova foi testada.
 
-Testes anteriores permanecem ativos. Esse caráter cumulativo transforma regressões em feedback formativo.
+Faça commits pequenos, push para `origin` e PR para a `main` do próprio fork. Mantenha somente `origin`; não configure `upstream` nem abra PR no repositório do docente. Em equipe, registre os papéis e as contribuições; preserve o histórico anterior ao organizar pastas.
 
----
+## 5. Como confirmar e integrar
 
-## 6. Camadas de aprendizagem
-
-| Camada | Pergunta | Evidência |
-|---|---|---|
-| conceito | por que o padrão ou técnica existe? | explicação do problema e da regra |
-| implementação | como aparece no código? | incremento compilável e legível |
-| engenharia | como integrar com segurança? | testes, CI, histórico e revisão |
-
-Não aceite uma automação verde sem explicação do modelo. Também não aceite uma explicação conceitual sem comportamento reproduzível.
-
----
-
-## 7. Mini-caso prático
-
-A equipe recebe o controlador que aciona uma bomba com limites fixos. A primeira mudança da Parte 2 será permitir outras estratégias de controle sem editar a classe central. O problema introduz `Strategy`; o padrão não aparece como catálogo antecipado.
-
----
+Cada PR inclui requisito, teste que evidencia o problema, resultado local e link da CI do commit, explicação do diff, decisão de projeto e atualização de UML quando pertinente. Registre o uso de IA e justifique o que foi aceito ou rejeitado. Integre após revisão; a defesa oral confirma compreensão além da automação.
 
 ## Perguntas de revisão rápida
 
-1. Quais fundamentos precisam estar verdes antes de iniciar a Parte 2?
-2. Por que exceções continuam presentes mesmo sem um capítulo introdutório nesta parte?
-3. O que diferencia um teste unitário de um teste do contrato C++ → Python?
+1. Quais fundamentos permitem começar o projeto sem novas aulas introdutórias de coleções e exceções?
+2. Que teste comprova a comunicação entre o produtor e o consumidor?
+3. Por que passar os testes da Parte 1 não basta para aceitar um marco novo?
 
 ## Fontes de referência
 
 - [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
-- [Python Docs](https://docs.python.org/3/)
-- [SQLite Docs](https://www.sqlite.org/docs.html)
-- [GitHub Actions Docs](https://docs.github.com/en/actions)
-- [Streamlit Docs](https://docs.streamlit.io/)
+- [Python — JSON](https://docs.python.org/3/library/json.html)
+- [SQLite](https://www.sqlite.org/docs.html)
+- [GitHub Actions](https://docs.github.com/en/actions)

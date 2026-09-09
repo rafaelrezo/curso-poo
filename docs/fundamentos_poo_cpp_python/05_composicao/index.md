@@ -18,6 +18,8 @@ O vídeo público **Relacionamento entre Classes**, do Curso em Vídeo, apresent
 
 ## 1. De onde partimos?
 
+Na [aula 05](../03_sobrecarga_construtores/index.md), oferecemos diferentes formas de inicializar um sensor. Agora usaremos construtores para inicializar as partes de um controlador.
+
 Na aula 04, `SensorNivel` passou a proteger a invariante `0 <= valor <= 100`:
 
 ```cpp
@@ -87,7 +89,7 @@ Os sinais de visibilidade usados no diagrama são:
 |---|---|---|
 | `+` | pública | operação que o código cliente pode chamar |
 | `-` | privada | detalhe interno protegido pela classe |
-| `#` | protegida | acessível pela classe e por derivadas; será retomado na aula 06 |
+| `#` | protegida | acessível pela classe e por derivadas; será retomado na aula 07 |
 
 Esses símbolos descrevem o **modelo**. A sintaxe concreta muda entre C++ e Python, mas a responsabilidade representada deve permanecer reconhecível.
 
@@ -147,7 +149,7 @@ Leia o desenho em quatro passagens:
 | composição | parte pertence ao todo | médio | membro com mesmo ciclo de vida | montagem menos flexível |
 | herança | relação substituível “é um” | alto | hierarquia de tipos | inadequada para simples reúso |
 
-Recomendação: comece por composição quando o domínio disser “tem um”. A herança será isolada na aula 06.
+Recomendação: comece por composição quando o domínio disser “tem um”. A herança será isolada na aula 07.
 
 ---
 
@@ -619,7 +621,7 @@ A UML não muda: o controlador continua sendo o todo, enquanto sensor e bomba s�
 
 Esta é a atividade que deve ser versionada e entregue. Acesse o repositório-base público [`rafaelrezo/poo-composicao-responsabilidades`](https://github.com/rafaelrezo/poo-composicao-responsabilidades), faça fork para sua conta e clone o seu fork. Ele é independente do repositório do capítulo 04: não copie arquivos nem continue uma branch anterior.
 
-O starter do capítulo 05 já contém `SensorTemperatura` implementado e validado, pois encapsulamento é conhecimento prévio. Também contém esqueletos compiláveis de `AlarmeTermico` e `EstacaoMeteorologica`, mensagens `TODO` e testes inicialmente falhando. O trabalho do estudante é completar a colaboração sem alterar o sensor.
+O starter do capítulo 06 já contém `SensorTemperatura` implementado e validado, pois encapsulamento é conhecimento prévio. Também contém esqueletos compiláveis de `AlarmeTermico` e `EstacaoMeteorologica`, mensagens `TODO` e testes inicialmente falhando. O trabalho do estudante é completar a colaboração sem alterar o sensor.
 
 ### 6.1 O que já existe no repositório-base
 
@@ -741,7 +743,7 @@ A CI repete `make test ETAPA=02`. Abra um pull request de `pratica/02-compor-est
 
 ## 8. Mini-caso e próxima aula
 
-O controlador já coordena partes concretas. Agora sensores de nível, pressão e temperatura repetem identificação e apresentação. Na aula 06, investigaremos quando a relação **“é um tipo de”** permite organizar a parte comum com herança. Ainda não entra polimorfismo: primeiro construiremos corretamente a hierarquia.
+O controlador já coordena partes concretas. Agora sensores de nível, pressão e temperatura repetem identificação e apresentação. Na aula 07, investigaremos quando a relação **“é um tipo de”** permite organizar a parte comum com herança. Ainda não entra polimorfismo: primeiro construiremos corretamente a hierarquia.
 
 ---
 
