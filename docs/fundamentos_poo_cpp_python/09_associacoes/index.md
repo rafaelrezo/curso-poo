@@ -1,108 +1,167 @@
-# 09. Objetos colaborando e contratos
+# Objetos colaborando: compartilhar o sensor e consultar um contrato
 
 ## Objetivos de aprendizagem
 
-- Distinguir associação, dependência, agregação e composição pelo vínculo e pelo ciclo de vida.
-- Definir uma interface pequena e consultar implementações distintas em C++ e Python.
-- Validar vínculos e substituição com dois incrementos cumulativos no próprio fork.
+- Explicar a diferença entre copiar uma leitura e manter um vínculo com o sensor.
+- Distinguir colaboração, posse e tempo de vida dos objetos.
+- Usar um contrato pequeno para consultar fontes diferentes em C++ e Python.
 
-**Tempo estimado:** 4h de estudo e prática, em incrementos sucessivos; a união não reduz a carga. Confira o [planejamento da turma](../../index.md).
+**Tempo estimado:** 2h de exposição dialogada e demonstrações. A aplicação dos capítulos 09 e 10 será uma única atividade ao final do capítulo 10; esta aula não exige entrega própria. O vídeo é complementar, dentro do tempo de estudo do bloco.
 
 ## Vídeo de contexto
 
 ![type:video](https://www.youtube.com/embed/GLHbxDU9iBA)
 
-Curso em Vídeo — Relacionamento entre Classes. Retome a colaboração entre objetos e procure quem mantém o vínculo; nesta aula os sensores existem antes dos painéis.
+Curso em Vídeo — Relacionamento entre Classes. Observe quem mantém o vínculo e se os objetos precisam nascer e terminar juntos.
 
 ---
 
-**Percurso da aula:** primeiro, dois painéis compartilham um sensor; depois, uma interface permite consultar fontes diferentes. A associação explica quem conhece quem; a abstração define o que o cliente pode pedir.
+## 1. O sensor mudou; por que o painel continua mostrando 10?
 
-| Incremento | Branch existente | Validação |
-|---|---|---|
-| A — colaboração concreta | `pratica/09-associacoes` | `make test ETAPA=09` |
-| B — interface e fontes | `pratica/10-interfaces` | `make test ETAPA=10` |
+No capítulo 08, uma função consultava sensores pelo mesmo contrato. Agora o operador precisa de um painel que continue ligado a um sensor entre duas chamadas. Comecemos com uma única leitura de nível.
 
-Os números de `ETAPA` identificam contratos já publicados, não capítulos. Integre o incremento A antes de abrir a branch B.
+**Preveja:** o sensor nasce com 10 e recebe 20. O que o painel mostrará se guardar apenas o número recebido na construção?
 
-## 1. Mini-caso prático: dois painéis, uma leitura
+Neste recorte, as entradas são valores válidos definidos no `main`; a validação de faixa já estudada fica fora da demonstração. O sensor do starter continua validando suas entradas. Cada programa abaixo é independente e mostra uma versão completa do mesmo problema.
 
-Na composição da seção 06, o controlador criava suas partes. Agora dois operadores precisam consultar o **mesmo sensor** em painéis diferentes. Fechar um painel não deve remover o sensor do sistema; trocar o sensor de um painel não deve afetar o outro.
-
-Se cada painel copiar a leitura ao nascer, a tela fica desatualizada. Precisamos manter um vínculo com o objeto que conhece o estado atual.
-
-**Preveja:** nível começa em 10; depois muda para 20. Os dois painéis devem mostrar 20. Esse resultado distingue associação de uma cópia antiga do valor.
-
----
-
-## 2. Retome o artefato e abra a branch
-
-Use o próprio fork de [rafaelrezo/poo-fundamentos-estacao](https://github.com/rafaelrezo/poo-fundamentos-estacao), com **a etapa 07 deste starter** concluída e integrada. O clone deve ter somente `origin`, apontando para o fork. Não copie arquivos dos repositórios das seções 01–06.
-
-```bash
-git switch main
-git pull --ff-only origin main
-git remote -v
-git switch -c pratica/09-associacoes
-make test ETAPA=09
-```
-
-O comando repete os contratos anteriores e inicialmente falha no comportamento ainda pendente desta seção. Leia a primeira mensagem; não altere testes ou automação para obter aprovação. Complete os incrementos abaixo e repita o mesmo comando.
-
----
-
-## 3. Conceito → necessidade → implementação
-
-```mermaid
-classDiagram
-    PainelFixo "0..*" --> "1" SensorNivel : consulta
-    Bancada "0..*" o-- "0..1" SensorNivel : agrupa
-```
-
-O primeiro vínculo é uma associação navegável: cada painel conhece um sensor; o mesmo sensor pode ter vários painéis. Na bancada lógica desta atividade existe apenas uma vaga; o mesmo sensor pode ser referenciado por mais de um desses agrupamentos. O losango vazio representa um agrupamento com regra explícita: liberar a vaga não destrói o sensor. Não se trata ainda de uma coleção 1:N, que será implementada na seção 11.
-
-| Técnica/Padrão | Melhor uso | Esforço | Entregável | Limitação |
-|---|---|---|---|---|
-| Dependência | uso por uma operação | baixo | parâmetro ou variável local | não informa por si só vínculo persistente |
-| Associação | colaboração mantida entre chamadas | médio | referência ao colaborador | posse precisa ser explicitada |
-| Agregação compartilhada | agrupamento com partes independentes | médio | regra de agrupamento documentada | semântica UML pouco restritiva; associação pode bastar |
-| Composição | responsabilidade exclusiva pelas partes | médio | todo e partes com ciclo de vida definido | não se deduz apenas da frase “tem um” |
-
-Escolha associação para os painéis; composição continua adequada às partes internas criadas pelo controlador anterior. A dependência `consultarAgora(sensor)` usa o parâmetro sem guardá-lo. Dependência pode significar outras necessidades entre elementos, não apenas uso temporário.
-
----
-
-## 4. Incremento guiado: os dois painéis e o sensor no mesmo programa
-
-Comece pelo `main`: o sensor nasce antes dos painéis, ambos o consultam e uma atualização aparece nos dois. Ao final do bloco interno, os painéis deixam de existir; a consulta ao sensor continua funcionando.
-
-O exemplo independente recorta o sensor para leitura, unidade e validação. No starter, a tag e a herança da etapa 07 continuam: não substitua `sensores.hpp` nem `sensores.py` pelo recorte. Adapte apenas o comportamento do painel nos arquivos de relações.
-
-### 4.1 C++: o painel guarda um endereço
-
-Salve como `exemplo_01_associacao.cpp` ou [baixe o programa completo](exemplo_01_associacao.cpp).
+Programa independente: [exemplo_03_copia.cpp](exemplo_03_copia.cpp). Salve em uma pasta de demonstrações.
 
 ```cpp
-#include <cmath>
 #include <iostream>
-#include <stdexcept>
-#include <string>
 
 class SensorNivel {
     double valor_;
 public:
-    explicit SensorNivel(double valor) : valor_(valor) {
-        if (!std::isfinite(valor) || valor < 0 || valor > 100) {
-            throw std::invalid_argument("nivel fora da faixa");
-        }
-    }
+    explicit SensorNivel(double valor) : valor_(valor) {}
     double valor() const { return valor_; }
-    std::string unidade() const { return "%"; }
-    bool atualizar(double valor) {
-        if (!std::isfinite(valor) || valor < 0 || valor > 100) return false;
-        valor_ = valor;
-        return true;
-    }
+    void atualizar(double valor) { valor_ = valor; }
+};
+
+class PainelFixo {
+    double leitura_;
+public:
+    explicit PainelFixo(const SensorNivel& sensor) : leitura_(sensor.valor()) {}
+    double leitura() const { return leitura_; }
+};
+
+int main() {
+    SensorNivel sensor{10};
+    PainelFixo painel{sensor};
+    sensor.atualizar(20);
+    std::cout << "Sensor: " << sensor.valor() << '\n';
+    std::cout << "Painel: " << painel.leitura() << '\n';
+}
+```
+
+Execute:
+
+```bash
+g++ -std=c++17 -Wall -Wextra -Werror -pedantic exemplo_03_copia.cpp -o exemplo_03_copia
+./exemplo_03_copia
+```
+
+Resultado:
+
+```text
+Sensor: 20
+Painel: 10
+```
+
+O sensor está correto. O painel guardou uma fotografia antiga em `leitura_`. Essa cópia é útil para um registro histórico, mas não atende ao pedido de acompanhar o estado atual.
+
+## 2. Guardar o vínculo em vez da fotografia
+
+O `main` permanece igual. Precisamos mudar **o que o painel guarda**, **como recebe essa informação** e **o que faz quando alguém pede a leitura**. São três alterações conectadas:
+
+| Ponto do programa | Versão com cópia | Versão com vínculo | Efeito |
+|---|---|---|---|
+| Atributo de `PainelFixo` | `double leitura_;` | `const SensorNivel* sensor_;` | guarda o endereço de um sensor, em vez de um número antigo |
+| Inicialização do atributo | `leitura_(sensor.valor())` | `sensor_(&sensor)` | guarda onde está o objeto recebido, em vez de consultar seu valor uma única vez |
+| Corpo de `leitura()` | `return leitura_;` | `return sensor_->valor();` | consulta o sensor toda vez que o método é chamado |
+
+**Acompanhe essas três linhas no programa completo.** O parâmetro `const SensorNivel& sensor` já era uma referência nas duas versões: recebê-lo por referência, sozinho, não fazia o painel manter o vínculo. A diferença está no atributo que conserva a informação depois do construtor.
+
+Programa independente: [exemplo_04_vinculo.cpp](exemplo_04_vinculo.cpp). Salve em uma pasta de demonstrações.
+
+```cpp
+#include <iostream>
+
+class SensorNivel {
+    double valor_;
+public:
+    explicit SensorNivel(double valor) : valor_(valor) {}
+    double valor() const { return valor_; }
+    void atualizar(double valor) { valor_ = valor; }
+};
+
+class PainelFixo {
+    const SensorNivel* sensor_; // 1. Guarda o endereco, nao uma copia da leitura.
+public:
+    explicit PainelFixo(const SensorNivel& sensor) : sensor_(&sensor) {} // 2. Mantem o vinculo.
+    double leitura() const { return sensor_->valor(); } // 3. Consulta o estado atual.
+};
+
+int main() {
+    SensorNivel sensor{10};
+    PainelFixo painel{sensor};
+    sensor.atualizar(20);
+    std::cout << "Sensor: " << sensor.valor() << '\n';
+    std::cout << "Painel: " << painel.leitura() << '\n';
+}
+```
+
+Execute:
+
+```bash
+g++ -std=c++17 -Wall -Wextra -Werror -pedantic exemplo_04_vinculo.cpp -o exemplo_04_vinculo
+./exemplo_04_vinculo
+```
+
+Resultado:
+
+```text
+Sensor: 20
+Painel: 20
+```
+
+### 2.1 Da construção até a consulta
+
+1. `SensorNivel sensor{10}` cria o objeto no `main`.
+2. `PainelFixo painel{sensor}` passa esse mesmo objeto ao construtor. O `&` no **tipo do parâmetro** (`const SensorNivel&`) indica uma referência: não há cópia do sensor.
+3. `sensor_(&sensor)` inicializa o atributo do painel. Aqui, o `&` na **expressão** obtém o endereço do objeto recebido. Esse endereço continua guardado depois que o construtor termina.
+4. `sensor.atualizar(20)` altera o valor dentro do sensor original.
+5. `painel.leitura()` usa `sensor_->valor()` para seguir o endereço guardado e consultar o objeto, que agora contém 20.
+
+`->` acessa um membro do objeto apontado. Neste caso, `sensor_->valor()` equivale a `(*sensor_).valor()`. O painel conhece o sensor: há uma **associação**. `const` impede alterar o sensor por esse caminho, embora o `main` ainda possa atualizá-lo.
+
+A atualização não envia uma mensagem ao painel e não sincroniza duas cópias. Existe um único estado no sensor; o painel busca esse estado quando `leitura()` é chamado.
+
+O ponteiro não é proprietário. O painel não apaga o sensor, e o chamador precisa mantê-lo vivo enquanto houver consultas. A associação explica acesso; a política de posse explica quem controla o tempo de vida.
+
+**Confirme pela leitura:** qual linha passa a buscar o valor atual? Por que a atualização no `main` aparece no painel sem chamar um método de atualização do painel?
+
+## 3. Dois painéis podem compartilhar o mesmo sensor
+
+Um segundo operador precisa observar a mesma instalação. Para compartilhar o sensor, construímos **dois objetos `PainelFixo` diferentes passando o mesmo objeto `a` aos dois construtores**:
+
+- `PainelFixo p{a}` faz o atributo `sensor_` de `p` guardar `&a`.
+- `PainelFixo q{a}` faz o atributo `sensor_` de `q` também guardar `&a`.
+
+Os painéis possuem atributos separados, mas os dois endereços apontam para o mesmo sensor. O compartilhamento nasce dessas duas construções; não existe uma palavra-chave especial que o ative.
+
+Depois, adicionamos `conectar`: esse método atribui outro endereço ao atributo do painel que recebeu a chamada. Acompanhe construção, atualização e troca no programa.
+
+Programa independente: [exemplo_05_troca.cpp](exemplo_05_troca.cpp). Salve em uma pasta de demonstrações.
+
+```cpp
+#include <iostream>
+
+class SensorNivel {
+    double valor_;
+public:
+    explicit SensorNivel(double valor) : valor_(valor) {}
+    double valor() const { return valor_; }
+    void atualizar(double valor) { valor_ = valor; }
 };
 
 class PainelFixo {
@@ -110,322 +169,232 @@ class PainelFixo {
 public:
     explicit PainelFixo(const SensorNivel& sensor) : sensor_(&sensor) {}
     double leitura() const { return sensor_->valor(); }
+    void conectar(const SensorNivel& sensor) { sensor_ = &sensor; }
 };
 
-double consultarAgora(const SensorNivel& sensor) {
-    return sensor.valor();
-}
-
 int main() {
-    SensorNivel sensor{10};
+    SensorNivel a{10};
+    SensorNivel b{70};
     {
-        PainelFixo p{sensor};
-        PainelFixo q{sensor};
-        std::cout << "Antes: " << p.leitura() << ' ' << q.leitura() << '\n';
-        sensor.atualizar(20);
-        std::cout << "Depois: " << p.leitura() << ' ' << q.leitura() << '\n';
-    } // os paineis terminam aqui; o sensor continua vivo
-    std::cout << "Sem paineis: " << consultarAgora(sensor) << '\n';
+        PainelFixo p{a}; // p.sensor_ guarda &a.
+        PainelFixo q{a}; // q.sensor_ tambem guarda &a.
+        a.atualizar(20);
+        std::cout << "Compartilhado: " << p.leitura() << ' ' << q.leitura() << '\n';
+        p.conectar(b); // Apenas p.sensor_ passa a guardar &b.
+        std::cout << "Apos troca: " << p.leitura() << ' ' << q.leitura() << '\n';
+    }
+    std::cout << "Sem paineis: " << a.valor() << ' ' << b.valor() << '\n';
 }
 ```
 
+Execute:
+
 ```bash
-g++ -std=c++17 -Wall -Wextra -Werror -pedantic exemplo_01_associacao.cpp -o exemplo_01_associacao
-./exemplo_01_associacao
+g++ -std=c++17 -Wall -Wextra -Werror -pedantic exemplo_05_troca.cpp -o exemplo_05_troca
+./exemplo_05_troca
 ```
 
-Saída esperada:
+Resultado:
 
 ```text
-Antes: 10 10
-Depois: 20 20
-Sem paineis: 20
+Compartilhado: 20 20
+Apos troca: 70 20
+Sem paineis: 20 70
 ```
 
-**Localize o vínculo:** `sensor_` guarda o endereço do sensor recebido no construtor. `&sensor` obtém esse endereço; `sensor_->valor()` consulta o objeto apontado. `const` impede modificá-lo por esse caminho, mas o `main` ainda pode atualizá-lo diretamente.
+### 3.1 O estado dos vínculos em cada passo
 
-O ponteiro não é proprietário: o painel não executa `delete`. O chamador deve manter o sensor vivo durante todas as consultas. `consultarAgora` mostra uma dependência por operação: recebe o objeto, consulta e não guarda um vínculo para chamadas futuras.
+A tabela usa `&a` e `&b` para representar os endereços dos objetos; não é necessário conhecer seus números na memória.
 
-### 4.2 Python: o painel guarda uma referência
+| Após executar | `sensor_` de `p` | `sensor_` de `q` | Valor em A | Valor em B | Resultado das consultas `p` / `q` |
+|---|---|---|---:|---:|---|
+| `PainelFixo p{a};` e `PainelFixo q{a};` | `&a` | `&a` | 10 | 70 | 10 / 10 |
+| `a.atualizar(20);` | `&a` | `&a` | 20 | 70 | 20 / 20 |
+| `p.conectar(b);` | `&b` | `&a` | 20 | 70 | 70 / 20 |
 
-O cenário é o mesmo. A função `observar_paineis` delimita o uso dos painéis; o `main` mantém sua própria referência ao sensor.
+**Por que a troca não afeta `q`?** A chamada é feita em `p`. Dentro de `conectar`, `sensor_ = &sensor` altera o atributo desse objeto — isto é, `p.sensor_`, que só pode ser acessado internamente pela classe. O atributo de `q` continua contendo `&a`.
 
-Salve como `exemplo_02_associacao.py` ou [baixe o programa completo](exemplo_02_associacao.py).
-
-```python
-from math import isfinite
-
-
-class SensorNivel:
-    def __init__(self, valor):
-        if not isfinite(valor) or not 0 <= valor <= 100:
-            raise ValueError("nivel fora da faixa")
-        self._valor = valor
-
-    def valor(self):
-        return self._valor
-
-    def unidade(self):
-        return "%"
-
-    def atualizar(self, valor):
-        if not isfinite(valor) or not 0 <= valor <= 100:
-            return False
-        self._valor = valor
-        return True
-
-
-class PainelFixo:
-    def __init__(self, sensor):
-        self._sensor = sensor
-
-    def leitura(self):
-        return self._sensor.valor()
-
-
-def consultar_agora(sensor):
-    return sensor.valor()
-
-
-def observar_paineis(sensor):
-    p = PainelFixo(sensor)
-    q = PainelFixo(sensor)
-    print(f"Antes: {p.leitura()} {q.leitura()}")
-    sensor.atualizar(20)
-    print(f"Depois: {p.leitura()} {q.leitura()}")
-
-
-def main():
-    sensor = SensorNivel(10)
-    observar_paineis(sensor)
-    print(f"Sem paineis: {consultar_agora(sensor)}")
-
-
-if __name__ == "__main__":
-    main()
-```
-
-```bash
-python3 exemplo_02_associacao.py
-```
-
-Saída esperada:
+**Por que A continua valendo 20?** `conectar` troca um endereço no painel; não chama `atualizar` e não atribui um novo valor ao sensor. Ao consultar novamente, `p.leitura()` chega a B e `q.leitura()` chega a A.
 
 ```text
-Antes: 10 10
-Depois: 20 20
-Sem paineis: 20
+Antes da troca:                Depois de p.conectar(b):
+p.sensor_ ──┐                 p.sensor_ ──────────> b: 70
+            ├──> a: 20        q.sensor_ ──────────> a: 20
+q.sensor_ ──┘
 ```
 
-Python guarda uma referência ao objeto em `self._sensor`. Encerrar `observar_paineis` não apaga o sensor referenciado pelo `main`. Isso não é uma garantia geral de destruição imediata como a saída de escopo dos objetos locais C++.
-
-**Aplique no fork:** em `include/relacoes.hpp` e `src/relacoes.py`, complete `PainelFixo.leitura` com a consulta ao associado mostrada nos programas. Preserve `conectar` e `Bancada` para a extensão. A dependência `consultarAgora`/`consultar_agora` já é fornecida pelo starter.
-
-**Confirme:** execute os exemplos; os painéis devem mudar juntos de 10 para 20. No fork, `make test ETAPA=09` ainda pode apontar falha na troca de vínculo ou na bancada: são as próximas tarefas, não motivo para enfraquecer os testes.
-
----
-
-## 5. Prática de adaptação: trocar e liberar vínculos
-
-Complete `conectar` para trocar somente o sensor daquele painel. Depois complete `Bancada.receber`, preservando a identidade do objeto recebido. `liberar` já remove o vínculo.
-
-| Ação | Resultado esperado |
-|---|---|
-| p e q ligados a A, A muda | ambos mostram o novo valor |
-| p passa a consultar B | q continua ligado a A |
-| painéis saem do escopo | sensores externos continuam utilizáveis |
-| bancada recebe A | referência/endereço é o de A |
-| bancada é liberada | vaga vazia, A permanece válido |
-
-Em Python, `grupo.sensor is sensor` compara identidade. Em C++, `grupo.sensor() == &sensor` compara os endereços desses objetos vivos. A igualdade lógica será uma decisão distinta na seção 11.
-
----
-
-## 6. Checkpoint e erros comuns
-
-`make test ETAPA=09` repete 07 e verifica os vínculos em ambas as linguagens. A saída final inclui `OK C++ etapa 09` e `OK Python etapa 09`.
-
-Se só aparece a leitura antiga, o painel guardou uma cópia do valor. Se trocar um painel altera o outro, confira se você mudou o sensor compartilhado em vez da referência do painel. Se há acesso inválido em C++, desenhe os tempos de vida e mantenha os sensores externos vivos durante as consultas.
-
-No diagrama, explique os dois lados de cada multiplicidade. Não desenhe composição para um sensor que pode existir sem o painel. O modelo documenta uma regra de domínio; não é uma tradução automática de todo atributo com ponteiro.
-
-## 7. Validação e entrega
-
-```bash
-make test ETAPA=09
-git add include/relacoes.hpp src/relacoes.py docs/decisoes.md docs/diagrama.md AI_LOG.md
-git commit -m "conclui associacoes com contratos cumulativos"
-git push -u origin pratica/09-associacoes
-```
-
-Faça um commit do incremento guiado e outro da extensão quando ambos forem verificáveis. Abra PR da branch para a `main` **do próprio fork**; confira a execução de `make test ETAPA=09` na CI correspondente ao commit. Integre após testes verdes e revisão. Não abra PR contra o repositório-base.
-
-
-Na main, a CI verifica apenas a baseline executável do starter. A entrega precisa da evidência funcional da branch/PR. Testes visíveis não comprovam entendimento: o docente revisa o diff e, em avaliação, exige defesa oral curta.
-
-Continue no segundo incremento desta mesma aula depois de integrar o primeiro checkpoint.
-
----
-
-## 8. Mini-caso prático: operar sem o sensor físico
-
-O painel da seção 09 conhece `SensorNivel`. Para preparar uma demonstração, a equipe precisa consultar também uma fonte constante. Um valor simulado não precisa herdar a identidade do sensor instalado. O cliente só precisa **consultar valor e unidade**.
-
-Antes do código, registre em `docs/decisoes.md` duas operações necessárias e duas que não devem fazer parte desse contrato. Atualizar hardware, salvar banco e formatar tela não são responsabilidades da fonte de leitura.
-
-O contrato desta atividade exige `valor()` e `unidade()`, sem alteração de estado. A infraestrutura fornece essas assinaturas para os testes; o aluno decide como torná-las abstratas e como cada implementação as cumpre.
-
----
-
-## 9. Retome o artefato e abra a branch
-
-Use o próprio fork de [rafaelrezo/poo-fundamentos-estacao](https://github.com/rafaelrezo/poo-fundamentos-estacao), com **a etapa 09** concluída e integrada. O clone deve ter somente `origin`, apontando para o fork. Não copie arquivos dos repositórios das seções 01–06.
-
-```bash
-git switch main
-git pull --ff-only origin main
-git remote -v
-git switch -c pratica/10-interfaces
-make test ETAPA=10
-```
-
-O comando repete os contratos anteriores e inicialmente falha no comportamento ainda pendente desta seção. Leia a primeira mensagem; não altere testes ou automação para obter aprovação. Complete os incrementos abaixo e repita o mesmo comando.
-
----
-
-## 10. Interface, base abstrata e classe concreta
-
-| Técnica/Padrão | Melhor uso | Esforço | Entregável | Limitação |
-|---|---|---|---|---|
-| Base concreta com estado | compartilhar representação comum | médio | hierarquia como a seção 07 | compartilhamento pode criar dependência desnecessária |
-| Classe abstrata | impedir objetos sem comportamento completo | médio | operações abstratas e possível código comum | não é sinônimo de interface mínima |
-| Interface como contrato | permitir implementações independentes | médio | operações necessárias ao cliente | assinaturas não provam regras comportamentais |
-| Contrato estrutural Python | aceitar objetos por operações disponíveis | médio | `Protocol`/anotações e verificação apropriada | anotações não validam objetos em execução sozinhas |
-
-Em C++ não há palavra-chave `interface`: representaremos essa intenção por uma classe abstrata sem estado de domínio. Em Python, a atividade usa `ABC` e `@abstractmethod`. `Protocol` será uma alternativa no projeto, não requisito para executar esta prática.
+Esse desenho mostra **instâncias e seus vínculos neste momento**. Ao terminar o bloco interno, `p` e `q` deixam de existir. A última linha da saída ainda consulta A e B, porque os sensores pertencem ao escopo externo do `main`.
 
 ```mermaid
 classDiagram
-    class IFonteLeitura {
-        <<interface>>
-        +valor() double
-        +unidade() string
-    }
-    IFonteLeitura <|.. FonteNivel
-    IFonteLeitura <|.. FonteConstante
-    FonteNivel --> SensorNivel : consulta
+    PainelFixo "0..*" --> "1" SensorNivel : consulta
 ```
 
-O triângulo tracejado representa realização do contrato na visão conceitual. No C++, sua implementação usa herança pública da classe abstrata. `FonteNivel` também se associa ao sensor já existente; não copia sua leitura.
+Cada painel consulta um sensor; um sensor pode ser consultado por vários painéis. O capítulo 12 retomará como justificar essas quantidades. Aqui basta relacionar o desenho aos dois objetos `p` e `q` que acabamos de executar.
 
----
+## 4. E quando o sensor físico não está disponível para a demonstração?
 
-## 11. Incremento guiado: do objeto real ao contrato do cliente
+A equipe precisa testar a apresentação com uma fonte constante. Fazer essa fonte herdar toda a identidade e validação de um sensor instalado acrescentaria obrigações desnecessárias. O cliente só precisa de `valor()` e `unidade()`.
 
-**Caminho a acompanhar:** o `main` cria um sensor, `FonteNivel` guarda sua referência e o cliente recebe somente `IFonteLeitura`. A fonte adapta um objeto já existente às duas operações exigidas pelo cliente; ela não armazena uma cópia antiga da leitura.
+### 4.1 Definir o contrato a partir do que o cliente precisa
 
-Os programas abaixo são independentes. O sensor está reduzido ao comportamento usado neste experimento. No fork, preserve sua classe com tag e herança; as mudanças desta aula ficam em `fontes.hpp` e `fontes.py`.
+O cliente será a função `mostrar`: sua responsabilidade é apresentar **um valor acompanhado de sua unidade**. Antes de escrever uma interface, definimos o que ela pode pedir às fontes:
 
-### 11.1 C++: interface, implementação e chamada
+| Operação exigida | Resposta neste exemplo C++ | Regra de comportamento |
+|---|---|---|
+| `valor()` | um `double` | devolver a leitura fornecida, sem alterar o estado durante a consulta |
+| `unidade()` | um `const char*` apontando para um texto válido | informar a unidade correspondente ao valor, sem alterar o estado |
 
-Salve como `exemplo_01_interface.cpp` ou [baixe o programa completo](../10_abstracao_interfaces/exemplo_01_interface.cpp).
+Esse acordo é o **contrato**. Ele inclui as operações, as respostas e as regras que as implementações devem respeitar. Atualizar sensores ou desenhar uma tela não entra nele: `mostrar` só precisa consultar.
+
+Agora expressamos a parte das operações em uma classe chamada `IFonteLeitura`. O prefixo `I` é apenas uma convenção de nome; C++ não possui uma palavra-chave `interface`.
+
+### 4.2 Distribuir os papéis antes de acompanhar o código
+
+| Elemento | Papel no exemplo | Como participa |
+|---|---|---|
+| `IFonteLeitura` | declarar as operações exigidas | declara `valor()` e `unidade()` como virtuais puras |
+| `FonteNivel` | cumprir o contrato usando um sensor existente | guarda uma referência ao sensor e delega a leitura a ele |
+| `FonteConstante` | cumprir o mesmo contrato com um valor de demonstração | devolve 42,5 e `%` |
+| `mostrar` | usar o contrato | recebe `const IFonteLeitura&` e chama as duas operações |
+| `main` | construir e conectar os objetos | cria as duas fontes e escolhe qual passar a `mostrar` |
+
+**Transição em relação ao painel:** `PainelFixo` recebia especificamente `SensorNivel` e mantinha esse vínculo entre chamadas. Agora a função `mostrar` recebe uma fonte apenas durante a chamada e depende de `IFonteLeitura`. `FonteNivel` mantém o vínculo com o sensor. Assim, a apresentação pode usar também uma fonte que não contém um sensor instalado.
+
+No programa completo, acompanhe primeiro a declaração do contrato, depois as duas implementações e, por último, as chamadas do `main`.
+
+Programa independente: [exemplo_06_fontes.cpp](exemplo_06_fontes.cpp). Salve em uma pasta de demonstrações.
 
 ```cpp
-#include <cmath>
 #include <iostream>
-#include <stdexcept>
-#include <string>
 
 class SensorNivel {
     double valor_;
 public:
-    explicit SensorNivel(double valor) : valor_(valor) {
-        if (!std::isfinite(valor) || valor < 0 || valor > 100) {
-            throw std::invalid_argument("nivel fora da faixa");
-        }
-    }
+    explicit SensorNivel(double valor) : valor_(valor) {}
     double valor() const { return valor_; }
-    std::string unidade() const { return "%"; }
-    bool atualizar(double valor) {
-        if (!std::isfinite(valor) || valor < 0 || valor > 100) return false;
-        valor_ = valor;
-        return true;
-    }
+    void atualizar(double valor) { valor_ = valor; }
 };
 
+// Contrato: as duas operacoes que a apresentacao pode pedir.
 class IFonteLeitura {
 public:
     virtual ~IFonteLeitura() = default;
     virtual double valor() const = 0;
-    virtual std::string unidade() const = 0;
+    virtual const char* unidade() const = 0;
 };
 
+// Implementacao que consulta um sensor externo.
 class FonteNivel : public IFonteLeitura {
     const SensorNivel& sensor_;
 public:
     explicit FonteNivel(const SensorNivel& sensor) : sensor_(sensor) {}
     double valor() const override { return sensor_.valor(); }
-    std::string unidade() const override { return sensor_.unidade(); }
+    const char* unidade() const override { return "%"; }
 };
 
-double lerFonte(const IFonteLeitura& fonte) {
-    return fonte.valor();
+// Outra implementacao do mesmo contrato, sem sensor instalado.
+class FonteConstante : public IFonteLeitura {
+public:
+    double valor() const override { return 42.5; }
+    const char* unidade() const override { return "%"; }
+};
+
+// Cliente: recebe o contrato e consulta o objeto concreto.
+void mostrar(const IFonteLeitura& fonte) {
+    std::cout << fonte.valor() << ' ' << fonte.unidade() << '\n';
 }
 
 int main() {
     SensorNivel sensor{10};
-    FonteNivel fonte{sensor};
-    std::cout << lerFonte(fonte) << ' ' << fonte.unidade() << '\n';
+    FonteNivel real{sensor};
+    FonteConstante simulada;
+    mostrar(real);
+    mostrar(simulada);
     sensor.atualizar(20);
-    std::cout << lerFonte(fonte) << ' ' << fonte.unidade() << '\n';
-    // IFonteLeitura incompleta; // experimento: tente instanciar o contrato
+    mostrar(real);
 }
 ```
 
+Execute:
+
 ```bash
-g++ -std=c++17 -Wall -Wextra -Werror -pedantic exemplo_01_interface.cpp -o exemplo_01_interface
-./exemplo_01_interface
+g++ -std=c++17 -Wall -Wextra -Werror -pedantic exemplo_06_fontes.cpp -o exemplo_06_fontes
+./exemplo_06_fontes
 ```
 
-Saída esperada:
+Resultado:
 
 ```text
 10 %
+42.5 %
 20 %
 ```
 
-`IFonteLeitura` diz quais operações o cliente pode pedir. `= 0` deixa a implementação a cargo das classes concretas; `FonteNivel` cumpre as duas operações com `override`. A realização do contrato usa herança pública, e a colaboração com o sensor usa uma referência.
+### 4.3 Onde o contrato é declarado e onde ele é cumprido
 
-`lerFonte` recebe `const IFonteLeitura&`: consulta o objeto original sem copiá-lo. O método concreto executado pertence à fonte recebida. O destrutor virtual já prepara o uso posterior de coleções com destruição pelo tipo-base.
+A linha `virtual double valor() const = 0;` concentra quatro informações:
 
-**Experimento:** descomente a tentativa de criar `IFonteLeitura` no `main`. O programa deixa de compilar porque o contrato é abstrato. Comente novamente; em seguida, retire apenas `const` do método `valor` de `FonteNivel`, mantendo `override`. O compilador aponta que a assinatura não corresponde à operação da interface. Restaure antes de continuar.
+| Parte da declaração | Significado |
+|---|---|
+| `double valor()` | a operação se chama `valor`, não recebe argumentos e devolve um número |
+| `const` após os parênteses | permite consultar um objeto constante e restringe alterações diretas de seus membros comuns por esse método |
+| `virtual` | uma chamada pela referência à base pode executar a implementação do objeto concreto |
+| `= 0` | declara a operação virtual pura; a classe permanece abstrata enquanto não houver implementação de todas as operações puras |
 
-### 11.2 Python: contrato abstrato e delegação ao sensor
+`virtual const char* unidade() const = 0;` aplica a mesma regra à consulta de unidade. Nos dois exemplos, o retorno é o literal `"%"`, cujo texto permanece válido durante a execução.
 
-Salve como `exemplo_02_interface.py` ou [baixe o programa completo](../10_abstracao_interfaces/exemplo_02_interface.py).
+Em `FonteNivel : public IFonteLeitura`, a classe assume o tipo-base do contrato. Os métodos com `override` fornecem as operações exigidas; o compilador verifica se correspondem às declarações virtuais da base. `FonteConstante` faz o mesmo, com outros corpos de método.
+
+O destrutor `virtual ~IFonteLeitura() = default` permite destruição correta pelo tipo-base quando houver posse polimórfica. Ele cuida do ciclo de vida; as duas operações de consulta são o contrato usado por `mostrar`.
+
+### 4.4 Seguir cada chamada até a saída
+
+| Chamada no `main` | Objeto recebido por `mostrar` | Execução de `fonte.valor()` | Execução de `fonte.unidade()` | Linha impressa |
+|---|---|---|---|---|
+| `mostrar(real)` | objeto `FonteNivel` | `FonteNivel::valor()` consulta `sensor_.valor()`, que vale 10 | `FonteNivel::unidade()` devolve `%` | `10 %` |
+| `mostrar(simulada)` | objeto `FonteConstante` | `FonteConstante::valor()` devolve 42,5 | `FonteConstante::unidade()` devolve `%` | `42.5 %` |
+| `sensor.atualizar(20);` e `mostrar(real)` | o mesmo objeto `FonteNivel` | consulta novamente o mesmo sensor, agora com 20 | devolve `%` | `20 %` |
+
+`const IFonteLeitura& fonte` é uma referência ao objeto concreto recebido; não cria uma cópia da interface. O corpo de `mostrar` permanece igual porque só pede operações declaradas no contrato. O despacho virtual escolhe os corpos de método correspondentes a `real` ou `simulada`.
+
+**Observe outra mudança de representação:** no painel, `sensor_` era um ponteiro, acessado com `->`, para permitir trocar o sensor. Em `FonteNivel`, `sensor_` é uma referência, inicializada por `sensor_(sensor)` e acessada com `.`. Nesta fonte, o vínculo é definido na construção e não pode ser religado a outro objeto. Em ambos os casos, o sensor continua externo e precisa permanecer vivo em C++.
+
+### 4.5 O que a declaração consegue verificar?
+
+- Tentar construir `IFonteLeitura fonte;` não compila: a classe é abstrata.
+- Omitir `unidade()` de `FonteConstante` deixa essa classe abstrata; construir `simulada` deixa de compilar.
+- Retirar `const` de `FonteNivel::valor()` mantendo `override` provoca erro de correspondência com a operação da base.
+- Devolver `"C"` para uma leitura que representa nível em porcentagem pode compilar, mas viola o significado do contrato.
+
+Portanto, **a interface declara operações verificáveis pelo compilador; o contrato também exige regras de comportamento verificadas por leitura e testes**. Aqui, ambas as fontes respeitam a consulta sem alteração de estado e a correspondência entre valor e unidade. O tratamento da aquisição que falha virá no capítulo 10.
+
+## 5. Python: conservar a colaboração, mudar a sintaxe
+
+Vamos manter os mesmos cinco papéis: sensor, contrato, fonte real, fonte constante e apresentação. `ABC` e `@abstractmethod` tornam explícitas as operações obrigatórias. No programa abaixo, localize a correspondência com o C++:
+
+- `class IFonteLeitura(ABC)` declara a base abstrata do contrato.
+- `@abstractmethod` marca `valor` e `unidade` como operações que uma classe concreta precisa implementar.
+- `FonteNivel(IFonteLeitura)` e `FonteConstante(IFonteLeitura)` implementam as duas operações.
+- `mostrar(fonte)` pede somente `fonte.valor()` e `fonte.unidade()`.
+
+O atributo `self._sensor` guarda a referência recebida na construção da fonte real. Quando o `main` modifica o sensor, a consulta seguinte chega ao mesmo objeto atualizado.
+
+Programa independente: [exemplo_07_fontes.py](exemplo_07_fontes.py). Salve em uma pasta de demonstrações.
 
 ```python
 from abc import ABC, abstractmethod
-from math import isfinite
 
 
 class SensorNivel:
     def __init__(self, valor):
-        if not isfinite(valor) or not 0 <= valor <= 100:
-            raise ValueError("nivel fora da faixa")
         self._valor = valor
 
     def valor(self):
         return self._valor
 
-    def unidade(self):
-        return "%"
-
     def atualizar(self, valor):
-        if not isfinite(valor) or not 0 <= valor <= 100:
-            return False
         self._valor = valor
-        return True
 
 
 class IFonteLeitura(ABC):
@@ -446,96 +415,87 @@ class FonteNivel(IFonteLeitura):
         return self._sensor.valor()
 
     def unidade(self):
-        return self._sensor.unidade()
+        return "%"
 
 
-def ler_fonte(fonte: IFonteLeitura):
-    return fonte.valor()
+class FonteConstante(IFonteLeitura):
+    def valor(self):
+        return 42.5
+
+    def unidade(self):
+        return "%"
+
+
+def mostrar(fonte):
+    print(f"{fonte.valor()} {fonte.unidade()}")
 
 
 def main():
     sensor = SensorNivel(10)
-    fonte = FonteNivel(sensor)
-    print(f"{ler_fonte(fonte)} {fonte.unidade()}")
+    real = FonteNivel(sensor)
+    simulada = FonteConstante()
+    mostrar(real)
+    mostrar(simulada)
     sensor.atualizar(20)
-    print(f"{ler_fonte(fonte)} {fonte.unidade()}")
-    # IFonteLeitura()  # experimento: tente instanciar o contrato
+    mostrar(real)
 
 
 if __name__ == "__main__":
     main()
 ```
 
+Execute:
+
 ```bash
-python3 exemplo_02_interface.py
+python3 exemplo_07_fontes.py
 ```
 
-Saída esperada:
+Resultado:
 
 ```text
 10 %
+42.5 %
 20 %
 ```
 
-A anotação de `ler_fonte` comunica o contrato, mas não valida tipos nem provoca o despacho por si só. Python encontra o método no objeto recebido. `@abstractmethod` marca as operações obrigatórias; `raise NotImplementedError` é um corpo válido que denuncia uma execução indevida, não um trecho omitido.
+`self._sensor` mantém uma referência. Enquanto essa referência existir, o objeto continua alcançável. Isso difere do ponteiro C++ sem posse, que não prolonga a vida do sensor. Nenhum desses detalhes determina sozinho a relação de domínio.
 
-**Experimento:** descomente `IFonteLeitura()` no `main`. A execução termina com `TypeError`, pois as operações abstratas não foram concretizadas. Herdar de `ABC`, sozinho, não impediria a criação. Restaure o comentário depois de observar a falha.
+### 5.1 Como o contrato aparece durante a execução
 
-**Aplique no fork:** torne abstratas as duas operações de `IFonteLeitura`, complete `FonteNivel` por delegação e adapte o cliente `lerFonte`/`ler_fonte` mostrado inteiro nos programas. Preserve a classe de sensor e as assinaturas existentes. Os testes completos ainda exigem a segunda implementação, tarefa seguinte.
+`mostrar(real)` chama `FonteNivel.valor`, que chama `self._sensor.valor()`. Já `mostrar(simulada)` chama `FonteConstante.valor`. Depois de `sensor.atualizar(20)`, o caminho de `real` chega ao valor 20, exatamente como na tabela do C++.
 
----
+`raise NotImplementedError` é o corpo da operação abstrata nesta base. As classes concretas fornecem seus próprios métodos; no fluxo demonstrado, elas não executam esse corpo da base. O que marca a obrigação de implementação para `ABC` é `@abstractmethod`.
 
-## 12. Prática de adaptação: segunda implementação, mesmo cliente
+Se uma derivada deixar `unidade` abstrato, tentar instanciá-la provoca `TypeError`. Entretanto, `ABC` não confere automaticamente se todos os parâmetros, tipos de retorno e significados estão corretos como uma verificação completa de contrato. Retornar uma unidade incompatível ainda exige inspeção ou teste para ser detectado.
 
-Complete `FonteConstante` nos arquivos de fontes: cada consulta deve devolver o valor ou a unidade recebido pelo construtor. Ela cumpre a interface sem precisar herdar a identificação de um sensor instalado ou criar um sensor artificial.
+Em Python, `mostrar` também pode receber um objeto sem essa herança explícita se ele oferecer as operações esperadas. Neste exemplo, usamos a base abstrata para deixar a intenção visível. O contrato continua sendo o acordo sobre **o que se pode pedir e o que a resposta significa**.
 
-Adapte o `main` demonstrativo para criar a fonte constante de 35% e chamar o mesmo cliente que já recebe `FonteNivel`. Mantenha as consultas anteriores: elas devem continuar mostrando 10% e 20%; a consulta adicional deve mostrar 35%. Não altere `lerFonte`/`ler_fonte` para reconhecer classes.
+## 6. Escolher a relação pela responsabilidade
 
-A suíte acrescenta uma terceira fonte desconhecida do cliente. O teste confirma substituição: qualquer implementação que cumpra o contrato deve poder ser consultada. Uma decisão por nome de classe, cast ou `isinstance` impediria esse objetivo.
+Compare as alternativas depois de observar os programas:
 
----
+| Técnica/Padrão | Melhor uso | Esforço | Entregável | Limitação |
+|---|---|---|---|---|
+| Dependência de uso | consultar um objeto recebido por uma operação | baixo | função como `mostrar` | não representa por si só um vínculo guardado |
+| Associação | manter acesso ao sensor entre chamadas | médio | painel ligado ao objeto | posse e validade precisam ser explicadas |
+| Agregação compartilhada | documentar um agrupamento com partes independentes | médio | regra de agrupamento | o losango vazio tem semântica pouco restritiva |
+| Composição | assumir responsabilidade exclusiva por uma parte | médio | todo com partes e ciclo de vida definido | não se deduz apenas de um atributo |
+| Interface | consultar implementações diferentes pelo mesmo contrato | médio | cliente e fontes substituíveis | assinaturas não comprovam todas as regras |
 
-## 13. Checkpoint: o que a abstração promete?
+Para a estação, use associação entre painel e sensor; uma configuração criada exclusivamente pelo painel pode ser composição. Prefira associação simples quando o agrupamento não tiver outra regra relevante. Generalização, vista no 07, continua expressando especialização, não qualquer forma de colaboração.
 
-`make test ETAPA=10` repete 07 e 09; verifica abstração, duas fontes, atualização do sensor associado e uma implementação adicional. A saída termina com `OK C++ etapa 10` e `OK Python etapa 10`.
-
-O contrato não promete persistência nem aquisição física. Ele promete consulta coerente de valor/unidade, sem modificar o estado. Uma implementação que sempre retorna zero mesmo quando a fonte mudou viola essa promessa, embora compile.
-
-Se C++ acusar erro em `override`, compare parâmetros e `const`. Se Python ainda instanciar a interface, confira os decoradores. Se a fonte real não acompanhar atualizações, verifique se guardou referência ao sensor ou apenas uma leitura antiga.
-
-## 14. Validação e entrega
-
-```bash
-make test ETAPA=10
-git add include/fontes.hpp src/fontes.py docs/decisoes.md docs/diagrama.md AI_LOG.md
-git commit -m "conclui interfaces com contratos cumulativos"
-git push -u origin pratica/10-interfaces
-```
-
-Faça um commit do incremento guiado e outro da extensão quando ambos forem verificáveis. Abra PR da branch para a `main` **do próprio fork**; confira a execução de `make test ETAPA=10` na CI correspondente ao commit. Integre após testes verdes e revisão. Não abra PR contra o repositório-base.
-
-- [ ] O comando local repete e preserva as etapas anteriores deste starter.
-- [ ] A extensão foi adaptada e os casos de fronteira foram explicados.
-- [ ] `docs/decisoes.md` relaciona conceito, implementação e evidência.
-- [ ] O diagrama corresponde ao estado atual do código.
-- [ ] O PR inclui saída local e link da CI do commit.
-- [ ] `AI_LOG.md` registra pedido, aceites/rejeições e justificativa, ou declara ausência de IA.
-
-Na main, a CI verifica apenas a baseline executável do starter. A entrega precisa da evidência funcional da branch/PR. Testes visíveis não comprovam entendimento: o docente revisa o diff e, em avaliação, exige defesa oral curta.
-
-Na [seção 10](../11_excecoes/index.md), uma operação de aquisição poderá falhar. A consulta abstrata continuará pequena; a fronteira de recuperação será uma responsabilidade separada.
+**O próximo problema:** até aqui toda fonte respondeu. No [capítulo 10](../11_excecoes/index.md), a aquisição poderá falhar. Vamos acompanhar o fluxo antes de aplicar colaboração e exceções na prática integrada A.
 
 ## Perguntas de revisão rápida
 
-1. Como demonstrar que dois painéis consultam o mesmo objeto sem copiar sua leitura?
-2. O que muda quando o cliente conhece IFonteLeitura em vez de SensorNivel?
-3. Quais regras de vínculo e comportamento dependem de testes além da declaração da interface?
+1. Por que copiar a leitura pode ser correto para um histórico e inadequado para um painel atual?
+2. Ao trocar o sensor de `p`, por que `q` continua consultando A? Quem mantém A vivo em C++?
+3. Que operações o cliente exige da fonte, e quais responsabilidades devem permanecer fora desse contrato?
 
 ## Fontes de referência
 
-- [UML — especificação](https://www.omg.org/spec/UML/2.5.1/About-UML)
-- [C++ Core Guidelines — posse e recursos](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#S-resource)
-- [Python — objetos e referências](https://docs.python.org/3/reference/datamodel.html)
-- [C++ — classes abstratas](https://eel.is/c++draft/class.abstract)
-- [Python — ABC](https://docs.python.org/3/library/abc.html)
-- [Python — protocolos](https://docs.python.org/3/library/typing.html#typing.Protocol)
+- [C++ Core Guidelines — classes e hierarquias](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#S-class).
+- [C++ Core Guidelines — ponteiro sem posse](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rr-ptr).
+- [Python — classes e referências](https://docs.python.org/3/tutorial/classes.html).
+- [Python — classes abstratas](https://docs.python.org/3/library/abc.html).
+- [OMG — UML 2.5.1](https://www.omg.org/spec/UML/2.5.1/About-UML).

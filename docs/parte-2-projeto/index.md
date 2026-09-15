@@ -18,7 +18,7 @@
 
 A Parte 1 termina com [UML e modelagem](../modelagem_analise_codigo/index.md). Associação, interfaces, exceções, igualdade, coleções genéricas já foram estudados. Os testes fornecidos foram executados; agora começamos a escrever testes próprios e revisar responsabilidades. Aqui a equipe aplica esses fundamentos em um controlador C++ e um supervisório Python.
 
-Reutilize o fork do [starter de fundamentos](https://github.com/rafaelrezo/poo-fundamentos-estacao), com UML12 concluída e as etapas técnicas até 13 integradas. Execute `make test ETAPA=13` e confira o diagrama antes de iniciar o projeto. O starter público contém comportamentos incompletos intencionais; cloná-lo novamente não substitui as implementações da Parte 1.
+Reutilize o fork do [starter de fundamentos](https://github.com/rafaelrezo/poo-fundamentos-estacao), com a prática integrada B (capítulos 11+12) concluída e integrada. Execute `make test ETAPA=B` e confira o diagrama antes de iniciar o projeto. O starter público contém comportamentos incompletos intencionais; cloná-lo novamente não substitui as implementações da Parte 1.
 
 Comece pelo [capítulo 01 — Princípios de Projeto e Testes de Objetos](00-principios-testes/index.md), na branch `projeto/00-testes`. Execute `make test-projeto`, complete o controlador e escreva seus testes. O alvo valida a etapa técnica14; ele inicialmente falha porque essa implementação ainda não foi feita. Integre esse primeiro PR antes de abrir a arquitetura.
 

@@ -28,7 +28,7 @@ Antes de implementar, registre como mudariam os arquivos se fosse necessário tr
 
 ## 2. Retome o artefato e abra a branch
 
-Use o próprio fork de [rafaelrezo/poo-fundamentos-estacao](https://github.com/rafaelrezo/poo-fundamentos-estacao), com **o capítulo 12 — UML concluído e as etapas técnicas até 13 integradas**. Este é o primeiro incremento da Parte 2. O clone deve ter somente `origin`, apontando para o fork. Não copie arquivos dos repositórios das seções 01–06.
+Use o próprio fork de [rafaelrezo/poo-fundamentos-estacao](https://github.com/rafaelrezo/poo-fundamentos-estacao), com **a prática integrada B (capítulos 11+12) concluída e integrada**, incluindo o modelo do catálogo. `make test ETAPA=B` deve passar; ele cobre todos os contratos até 13, inclusive a infraestrutura fornecida. Não há entrega extra de UML nem etapas antigas a refazer. Este é o primeiro incremento da Parte 2. O clone deve ter somente `origin`, apontando para o fork. Não copie arquivos dos repositórios das seções 01–06.
 
 ```bash
 git switch main

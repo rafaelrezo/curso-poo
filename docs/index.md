@@ -24,10 +24,10 @@
 - `06. Composição e responsabilidades`: fazer sensor, bomba e controlador colaborarem sem concentrar funções.
 - `07. Herança e especialização`: representar famílias de sensores e justificar a relação “é um”.
 - `08. Polimorfismo e contratos`: consultar sensores diferentes por uma interface comum.
-- `09. Objetos colaborando e contratos`: associação, dependência, agregação, abstração e interfaces em dois incrementos.
-- `10. Exceções e recursos`: lançamento, propagação, exceções próprias, RAII e `finally`.
-- `11. Identidade, igualdade e coleções`: chaves estáveis, comparação, hash, catálogos e tipos genéricos.
-- `12. UML e modelagem de cenários`: fechar a Parte 1 com notações, multiplicidades e prática de modelagem.
+- `09. Objetos colaborando e contratos`: associação, dependência e interfaces em demonstrações progressivas; prepara a prática A.
+- `10. Exceções e recursos`: lançamento, propagação e limpeza; encerra a prática A, integrada ao capítulo 09.
+- `11. Identidade, igualdade e coleções`: chaves estáveis, comparação e catálogos em demonstrações; prepara a prática B.
+- `12. UML e modelagem de cenários`: fechar a Parte 1 com a prática B: catálogo e modelagem, integrada ao capítulo 11.
 - `13. Parte 2 — Projeto Integrador`: começar por princípios de projeto e testes de objetos; aplicar a base em arquitetura, JSON, integração, padrões, persistência e comunicação.
 - `14. Checklist profissional de entrega`: reunir as evidências da solução.
 
@@ -35,9 +35,9 @@
 
 As seções 01 a 06 já ministradas permanecem preservadas. A seção 07 usa o [starter de fundamentos](https://github.com/rafaelrezo/poo-fundamentos-estacao); a seção 08 mantém sua atividade própria. As seções 09 a 12 retomam o fork iniciado em 07.
 
-Os capítulos antigos 09+10 formam agora o09; os antigos12+13 formam o11. Exceções passa a10; UML passa a12 e encerra a Parte 1. Princípios e testes abre a Parte 2 como seu capítulo 01. Os endereços anteriores encaminham ao conteúdo atual.
+Os capítulos 09 e 11 concentram exposição dialogada e programas demonstrativos completos. Há **duas entregas no bloco 09–12**: prática A ao final do 10 (colaboração e falhas), e prática B ao final do 12 (catálogo e modelo). Cada atividade usa uma branch, commits do incremento guiado e da extensão, testes cumulativos e uma PR no próprio fork.
 
-Os números de `ETAPA` e das branches existentes são identificadores técnicos dos contratos, preservados para não invalidar forks. A aula09 usa etapas09 e10; a aula10 usa etapa11; a aula11 usa etapas12 e13; UML12 verifica até a etapa13. A autoria de testes (etapa 14) começa na Parte 2, depois da UML.
+O starter fornece os mecanismos que não são foco da implementação: interfaces, fontes, limpeza, comparação, hash e infraestrutura de coleções. Os comandos `make test ETAPA=A` e `make test ETAPA=B` validam, respectivamente, até os contratos técnicos 11 e 13. Os IDs e as branches antigas permanecem disponíveis para compatibilidade, sem entregas adicionais. Forks antigos seguem o [guia de atualização](https://github.com/rafaelrezo/poo-fundamentos-estacao/blob/main/ATUALIZACAO.md).
 
 ## 3. Organização das 60h
 
@@ -56,13 +56,15 @@ A transferência de princípios e testes move 2h para o início da Parte 2; não
 | Fundamentos restantes | Sala | Trabalho orientado |
 |---|---:|---:|
 | 07–08: herança e polimorfismo | 2h | 4h |
-| 09: colaboração e contratos | 2h | 2h |
-| 10: exceções e recursos | 2h | — |
-| 11: identidade e coleções | 2h | 4h |
-| 12: oficina UML | 2h | 2h |
-| Total de estudo/prática dos blocos | 10h | 12h |
+| 09: colaboração e contratos, demonstrativo | 2h | — |
+| 10: exceções e prática integrada A (09+10) | 2h | até 2h |
+| 11: identidade e coleções, demonstrativo | 2h | — |
+| 12: modelagem e prática integrada B (11+12) | 2h | até 2h |
+| Total de estudo/prática dos blocos | 10h | até 8h |
 
-As 12h externas não integram as 60h presenciais. A aula11 exige preparação prévia e implementação orientada do catálogo; sem essa preparação, o calendário precisa de ajuste. A fusão de capítulos organiza a continuidade, mas não reduz automaticamente o esforço de aprender os conceitos.
+As horas externas não integram as 60h presenciais. O bloco 09–12 passa de 8h para um orçamento de **até 4h externas**, incluindo preparação e revisão das duas práticas; as 4h previstas para 07–08 permanecem. Essa redução depende do recorte de tarefas e da infraestrutura fornecida, não apenas da fusão de entregas. Os tempos são estimativas a calibrar com a turma.
+
+Em sala, o 09 e o 11 dedicam 2h às demonstrações; o 10 reserva aproximadamente 80 min à exposição e 40 min à prática A; o 12 reserva 60 min à modelagem e 60 min à prática B. Os vídeos são complementares dentro do tempo previsto, sem tarefas obrigatórias extras nos capítulos expositivos.
 
 ## 4. Resultado esperado ao concluir a Parte 1
 

@@ -264,3 +264,12 @@ A estrutura de página é uma referência, não um roteiro obrigatório. Não im
 - Em aula exclusivamente expositiva, omitir prática, fork, checkpoints operacionais e entrega. Código demonstrativo completo não obriga criar uma atividade ou um repositório novo.
 - As exigências de fork/CI/prática cumulativa deste arquivo aplicam-se às atividades de programação atribuídas aos alunos; não tornam obrigatória uma atividade numa aula expositiva.
 - A aula05 de Construtores e Sobrecarga é exclusivamente expositiva. Na aula08 de Polimorfismo, toda a atividade fica na seção8, como um único exemplo guiado com incrementos cumulativos.
+
+### Práticas integradas dos capítulos 09–12
+
+- Os capítulos 09 (Colaboração e Contratos) e 11 (Identidade, Igualdade e Coleções) são expositivos, com demonstrações progressivas e sem entrega própria.
+- A prática A encerra os capítulos 09+10 no final do 10; a prática B encerra 11+12 no final do 12, reunindo catálogo e modelagem na mesma entrega.
+- Cada prática usa uma branch, commits do incremento guiado e da extensão e uma PR para a main do próprio fork. Não recriar as seis entregas antigas.
+- Manter interfaces, fontes, limpeza de recursos, comparação, hash e infraestrutura de coleções como código fornecido e explicado; as tarefas autorais têm recorte explícito. A solução das extensões não deve ser publicada com o starter.
+- Preservar a compatibilidade dos contratos e a continuidade para a Parte 2 ao atualizar o starter.
+- A conferência visual local é feita pelo docente com `make run`; não iniciar serviços de visualização sem solicitação explícita.

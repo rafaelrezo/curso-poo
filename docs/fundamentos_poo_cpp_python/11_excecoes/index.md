@@ -1,78 +1,158 @@
-# 10. Exceções: lançar, propagar, recuperar e liberar recursos
+# Exceções e recursos: falhar, recuperar e continuar
 
 ## Objetivos de aprendizagem
 
-- Distinguir rejeição esperada de uma operação e falha excepcional de aquisição.
-- Modelar exceções próprias e rastrear lançamento, propagação e captura em C++ e Python.
-- Liberar recursos no sucesso e na falha, usando RAII em C++ e finally em Python.
+- Distinguir uma atualização rejeitada de uma aquisição que não produz leitura.
+- Acompanhar lançamento, propagação e captura de uma exceção.
+- Explicar a limpeza de recursos e aplicar os conceitos dos capítulos 09 e 10 em uma atividade integrada.
 
-**Tempo estimado:** 2h de estudo e prática. O vídeo é preparação prévia; confira a distribuição entre sala e prática no [roteiro da trilha](../../index.md).
+**Tempo estimado:** 2h em sala, com aproximadamente 80 min de exposição dialogada e 40 min para iniciar a prática A; até 2h de trabalho orientado para concluí-la, incluindo preparação e revisão. Confira o [planejamento](../../index.md). O vídeo é complementar dentro desse tempo.
 
 ## Vídeo de contexto
 
 ![type:video](https://www.youtube.com/embed/RHSxIKGCX7c)
 
-Otávio Miranda — Try, Except, Tratando Exceções em Python. Observe onde o fluxo normal para e por que a limpeza precisa ocorrer mesmo sem resultado.
+Otávio Miranda — Try, Except, Tratando Exceções em Python. Procure onde o fluxo normal é interrompido e quem decide o que fazer depois.
 
 ---
 
-## 1. Mini-caso prático: a fonte pode ficar indisponível
+## 1. A consulta pode não produzir um número
 
-A estação tem fontes consultáveis. Durante uma aquisição, a conexão simulada pode estar indisponível ou a calibração pode estar pendente. O operador precisa receber uma falha identificável e continuar no ciclo seguinte, sem deixar uma sessão aberta.
+No capítulo 09, o cliente consultou uma fonte real e uma simulada. Agora a aquisição pode estar indisponível. Retornar zero seria ambíguo: zero também é uma leitura válida de nível.
 
-**O contrato antigo continua:** `SensorNivel.atualizar` retorna falso ao rejeitar uma leitura. Vamos criar uma operação diferente, `adquirir`, que pode lançar falhas de aquisição. Não mude silenciosamente a semântica do sensor já testado.
+Há dois contratos diferentes: `SensorNivel.atualizar` rejeita uma entrada inválida retornando falso e preservando o estado; `adquirir` precisa comunicar que não conseguiu obter uma leitura. Não vamos mudar silenciosamente a regra do sensor.
 
-```text
-executarCiclo -> lerServico -> adquirir -> consulta da fonte
-      ^                           |
-      +------ falha propagada ----+
+## 2. Interromper a operação e tratar a falha no cliente
+
+A fonte constante continua produzindo 42,5. A disponibilidade é simulada por um booleano para observar o fluxo sem introduzir rede. Preveja os três ciclos: disponível, indisponível e disponível outra vez.
+
+Programa independente: [exemplo_03_falha.cpp](exemplo_03_falha.cpp). Salve em uma pasta de demonstrações.
+
+```cpp
+#include <iostream>
+#include <stdexcept>
+
+class FonteConstante {
+public:
+    double valor() const { return 42.5; }
+};
+
+class FalhaLeitura : public std::runtime_error {
+public:
+    using std::runtime_error::runtime_error;
+};
+
+double adquirir(const FonteConstante& fonte, bool disponivel) {
+    if (!disponivel) throw FalhaLeitura("fonte indisponivel");
+    return fonte.valor();
+}
+
+int main() {
+    FonteConstante fonte;
+    for (bool disponivel : {true, false, true}) {
+        try {
+            const double valor = adquirir(fonte, disponivel);
+            std::cout << "Leitura: " << valor << '\n';
+        } catch (const FalhaLeitura& erro) {
+            std::cout << "Sem leitura: " << erro.what() << '\n';
+        }
+    }
+}
 ```
 
-O serviço intermediário não tem uma decisão útil de recuperação e deixa a falha subir. A fronteira decide devolver resultado sem leitura.
-
----
-
-## 2. Retome o artefato e abra a branch
-
-Esta é a aula 10; `ETAPA=11` e a branch existente são identificadores técnicos preservados do starter.
-
-Use o próprio fork de [rafaelrezo/poo-fundamentos-estacao](https://github.com/rafaelrezo/poo-fundamentos-estacao), com **a etapa 10** concluída e integrada. O clone deve ter somente `origin`, apontando para o fork. Não copie arquivos dos repositórios das seções 01–06.
+Execute:
 
 ```bash
-git switch main
-git pull --ff-only origin main
-git remote -v
-git switch -c pratica/11-excecoes
-make test ETAPA=11
+g++ -std=c++17 -Wall -Wextra -Werror -pedantic exemplo_03_falha.cpp -o exemplo_03_falha
+./exemplo_03_falha
 ```
 
-O comando repete os contratos anteriores e inicialmente falha no comportamento ainda pendente desta seção. Leia a primeira mensagem; não altere testes ou automação para obter aprovação. Complete os incrementos abaixo e repita o mesmo comando.
+Resultado:
 
----
+```text
+Leitura: 42.5
+Sem leitura: fonte indisponivel
+Leitura: 42.5
+```
 
-## 3. O tipo de erro comunica a decisão possível
+No segundo ciclo, `throw` interrompe `adquirir` antes de `return fonte.valor()`. A execução procura uma captura compatível; o `catch` no cliente explica a ausência. O laço continua no terceiro ciclo.
 
-O esqueleto oferece `FalhaLeitura` e sua especialização `FalhaCalibracao`. Os programas completos a seguir começam pela falha geral; a calibração será acrescentada na prática de adaptação.
+`FalhaLeitura` é um tipo próprio derivado de `std::runtime_error`; o `using` reutiliza seus construtores de mensagem. Capturar por referência constante evita copiar o objeto de exceção. O resultado só é apresentado depois que a aquisição termina com sucesso.
 
-Uma falha de calibração também é uma falha de leitura. Por isso uma captura pela classe-base pode tratar ambas. A classe define o tipo de problema; as condições da operação definem quando lançá-lo.
+## 3. A falha atravessa quem não pode resolvê-la
 
-| Condição | Resposta |
-|---|---|
-| disponível e calibrada | devolver valor consultado |
-| indisponível | lançar `FalhaLeitura` |
-| disponível, sem calibração | lançar `FalhaCalibracao` |
-| ambas as condições falham | indisponibilidade tem prioridade |
-| defeito inesperado na implementação | liberar recurso e propagar; não mascarar como falha prevista |
+Acrescentamos um serviço entre cliente e aquisição. Ele coordena a chamada, mas não sabe apresentar uma resposta ao operador. Por isso deixa a exceção propagar.
 
----
+Programa independente: [exemplo_04_propagacao.cpp](exemplo_04_propagacao.cpp). Salve em uma pasta de demonstrações.
 
-## 4. C++: acompanhar lançamento, propagação e limpeza até o main
+```cpp
+#include <iostream>
+#include <stdexcept>
 
-O recurso é um contador de sessões, sem rede real. O resultado deve ser observável: depois de cada ciclo, o contador volta a zero. Leia primeiro os três ciclos do `main` (sucesso, indisponibilidade, sucesso); depois siga `executarCiclo`, `lerServico` e `adquirir`.
+class FonteConstante {
+public:
+    double valor() const { return 42.5; }
+};
 
-Este programa independente usa uma fonte fixa de 42,5 para concentrar o estudo no fluxo de falha. O starter continua recebendo `IFonteLeitura` e também o parâmetro `calibrado`; preserve essa interface ao adaptar o exemplo. A segunda condição de falha fica para a extensão.
+class FalhaLeitura : public std::runtime_error {
+public:
+    using std::runtime_error::runtime_error;
+};
 
-Salve como `exemplo_01_excecoes.cpp` ou [baixe o programa completo](exemplo_01_excecoes.cpp).
+double adquirir(const FonteConstante& fonte, bool disponivel) {
+    if (!disponivel) throw FalhaLeitura("fonte indisponivel");
+    return fonte.valor();
+}
+
+double lerServico(const FonteConstante& fonte, bool disponivel) {
+    return adquirir(fonte, disponivel);
+}
+
+int main() {
+    FonteConstante fonte;
+    for (bool disponivel : {true, false, true}) {
+        try {
+            const double valor = lerServico(fonte, disponivel);
+            std::cout << "Leitura: " << valor << '\n';
+        } catch (const FalhaLeitura& erro) {
+            std::cout << "Sem leitura: " << erro.what() << '\n';
+        }
+    }
+}
+```
+
+Execute:
+
+```bash
+g++ -std=c++17 -Wall -Wextra -Werror -pedantic exemplo_04_propagacao.cpp -o exemplo_04_propagacao
+./exemplo_04_propagacao
+```
+
+Resultado:
+
+```text
+Leitura: 42.5
+Sem leitura: fonte indisponivel
+Leitura: 42.5
+```
+
+A saída permanece igual. No caminho normal, o número retorna por `lerServico`; na falha, nenhum desses retornos produz valor. A captura continua no cliente.
+
+```text
+main -> lerServico -> adquirir
+  ^                      |
+  +---- FalhaLeitura ----+
+```
+
+**Explique:** colocar um `catch` no serviço apenas para devolver zero esconderia qual informação? A fronteira de recuperação deve estar onde existe uma decisão útil; não é necessário capturar em toda função.
+
+## 4. O recurso precisa ser liberado mesmo sem retorno normal
+
+Imagine que a aquisição abra uma sessão. Primeiro surge a obrigação: cada abertura deve ter uma liberação, inclusive quando a chamada falhar. Vamos representar a sessão por um contador e conferir que ele volta a zero.
+
+No programa completo, `executarCiclo` assume a captura antes feita pelo `main`. A classe `Sessao` controla o recurso. `lerServico` conserva seu papel de propagação.
+
+Programa independente: [exemplo_01_excecoes.cpp](exemplo_01_excecoes.cpp). Salve em uma pasta de demonstrações.
 
 ```cpp
 #include <iostream>
@@ -139,12 +219,14 @@ int main() {
 }
 ```
 
+Execute:
+
 ```bash
 g++ -std=c++17 -Wall -Wextra -Werror -pedantic exemplo_01_excecoes.cpp -o exemplo_01_excecoes
 ./exemplo_01_excecoes
 ```
 
-Saída esperada:
+Resultado:
 
 ```text
 Leitura: 42.5 | sessoes: 0
@@ -152,27 +234,17 @@ Sem leitura | sessoes: 0
 Leitura: 42.5 | sessoes: 0
 ```
 
-### 4.1 Por que o segundo ciclo não apresenta um número?
+No sucesso, sair de `adquirir` destrói a sessão local. Na propagação da falha até a captura, o mesmo destrutor é executado ao abandonar esse escopo. Esse uso de **RAII** associa a duração do recurso à vida do objeto. A cópia de `Sessao` é proibida para não criar duas liberações para uma abertura.
 
-1. `adquirir` cria `Sessao`, elevando o contador a 1.
-2. A indisponibilidade provoca `throw FalhaLeitura`. O retorno da consulta não é executado.
-3. Ao sair desse escopo durante a propagação, o destrutor de `Sessao` reduz o contador a 0.
-4. `lerServico` não captura; a falha chega a `executarCiclo`, que captura a família prevista por referência constante.
-5. `mostrar` verifica `sucesso` e escreve `Sem leitura`. O terceiro ciclo comprova que o programa pode continuar.
+O resultado `{false, 0}` comunica ausência pelo campo `sucesso`; esse zero não é uma medição. `mostrar` verifica a condição antes de ler o número. O terceiro ciclo confirma que a falha anterior não deixou uma sessão aberta.
 
-O zero no resultado de falha não é uma medição: o cliente deve verificar `sucesso` antes de usar `valor`. Nunca atualize o sensor com esse zero. Em integração, o contrato poderá representar ausência com valor nulo.
+**Demonstração de defeito:** retire apenas o decremento no destrutor. Os contadores passam a 1, 2 e 3. Restaure e confira os zeros. A limpeza resolve o recurso; a captura resolve a resposta ao operador.
 
-**RAII** vincula o recurso à vida do objeto: abre no construtor e libera no destrutor, tanto no retorno normal como na propagação tratada aqui. A cópia de `Sessao` é proibida para evitar duas liberações para uma abertura. C++ padrão não tem `finally`.
+## 5. Python: a mesma obrigação com finally
 
-**Aplique no fork:** em `include/excecoes.hpp`, complete a liberação no destrutor, a verificação de disponibilidade em `adquirir` e a captura em `executarCiclo`, seguindo o fluxo completo. Mantenha `lerServico` sem captura e preserve seus parâmetros, inclusive `calibrado`. O `using` na exceção reaproveita os construtores de mensagem de `std::runtime_error`.
+Mantenha os três ciclos e acompanhe as duas responsabilidades: `except` trata uma falha prevista; `finally` fecha a sessão ao deixar a aquisição.
 
----
-
-## 5. Python: o mesmo fluxo com finally
-
-A decisão de negócio permanece igual. O que muda é onde a limpeza está escrita: `finally` pertence à operação de aquisição e executa mesmo quando ela retorna ou propaga uma exceção.
-
-Salve como `exemplo_02_excecoes.py` ou [baixe o programa completo](exemplo_02_excecoes.py).
+Programa independente: [exemplo_02_excecoes.py](exemplo_02_excecoes.py). Salve em uma pasta de demonstrações.
 
 ```python
 class FonteConstante:
@@ -237,11 +309,13 @@ if __name__ == "__main__":
     main()
 ```
 
+Execute:
+
 ```bash
 python3 exemplo_02_excecoes.py
 ```
 
-Saída esperada:
+Resultado:
 
 ```text
 Leitura: 42.5 | sessoes: 0
@@ -249,60 +323,103 @@ Sem leitura | sessoes: 0
 Leitura: 42.5 | sessoes: 0
 ```
 
-**Localize os dois papéis:** `except FalhaLeitura` escolhe uma resposta para a falha prevista; `finally` fecha a sessão independentemente dessa resposta. As classes de exceção podem ter corpo `pass`: herdam o comportamento da base e introduzem um tipo próprio; isso não é uma implementação omitida.
+O fechamento acontece quando a operação retorna ou propaga uma exceção. Não retorne dentro de `finally`, pois isso pode suprimir um resultado ou uma falha. Para recursos como arquivos, `with` normalmente reúne aquisição e fechamento em uma estrutura própria; coleta de lixo não é uma política de fechamento oportuno.
 
-**Experimente nos dois programas:** retire temporariamente a limpeza (o decremento do destrutor C++ ou a chamada `sessao.fechar()` Python, mantendo `pass` no bloco `finally`). Os contadores passam a 1, 2 e 3. Restaure a limpeza e confira os três zeros antes de adaptar ao fork.
+## 6. Qual falha o cliente pode recuperar?
 
-Em Python, não retorne de dentro de `finally`: isso pode esconder um resultado ou uma exceção. Para arquivos, `with` normalmente expressa a mesma obrigação de fechamento. Coleta de lixo não substitui uma política de liberação de recursos externos no momento adequado. [Python — limpeza com finally](https://docs.python.org/3/tutorial/errors.html#defining-clean-up-actions).
-
-**Aplique no fork:** em `src/excecoes.py`, mantenha abertura antes de `try`, condição e consulta dentro dele e fechamento no `finally`. Complete `executar_ciclo` com a captura da família prevista; preserve `ler_servico`, as assinaturas e o parâmetro `calibrado`. O teste cumulativo ainda aponta a calibração pendente até a extensão seguinte.
-
----
-
-## 6. Prática de adaptação: calibração e falha inesperada
-
-Adicione a falha específica de calibração, depois da verificação de disponibilidade. Preserve as assinaturas e a chamada intermediária do serviço, que também é utilizada na verificação dos testes autorais da seção 01 da Parte 2.
-
-`make test ETAPA=11` deve confirmar sucesso, dois tipos de falha, captura na fronteira, propagação pelo serviço e contador voltando a zero em todos os caminhos. A suíte inclui uma fonte que lança um defeito fora da família `FalhaLeitura`: esse erro deve escapar da captura, com a sessão já liberada.
+Uma fonte pode estar indisponível ou precisar de calibração. Podemos especializar `FalhaLeitura` com `FalhaCalibracao`; capturar a família prevista continua permitindo que o próximo ciclo execute. A prática usará essa extensão, sem alterar o contrato de atualização do sensor.
 
 | Técnica/Padrão | Melhor uso | Esforço | Entregável | Limitação |
 |---|---|---|---|---|
-| Retorno falso | rejeição prevista de atualização | baixo | estado preservado e resposta explícita | cliente precisa verificar o retorno |
-| Exceção própria | operação não consegue produzir resultado | médio | tipo e contexto de falha | captura genérica pode esconder defeitos |
-| RAII / `finally` / `with` | obrigação de liberar recurso | médio | fechamento no sucesso e na falha | limpeza não significa recuperação do negócio |
+| Retorno falso | rejeição prevista de uma atualização | baixo | estado preservado e resposta | o cliente precisa conferir o retorno |
+| Exceção própria | aquisição que não consegue produzir leitura | médio | tipo de falha e propagação | captura ampla pode esconder defeitos |
+| RAII em C++ | associar recurso ao tempo de vida do objeto | médio | liberação ao sair do escopo | limpeza não define recuperação |
+| `finally` / `with` em Python | garantir a liberação na saída da operação | médio | fechamento no sucesso e na falha | não substitui o tratamento do problema |
 
-Se o contador cresce, revise a limpeza. Se o teste espera `FalhaCalibracao` e recebe sucesso, a nova condição não foi implementada. Se o ciclo seguinte falha, procure estado residual. A próxima seção separará também identidade do objeto e igualdade dos seus valores.
+Na estação, capture `FalhaLeitura` na fronteira. Um erro inesperado de implementação deve propagar depois da limpeza; convertê-lo em “sensor indisponível” dificultaria o diagnóstico.
 
-## 7. Validação e entrega
+---
+
+## 7. Prática integrada A — consultar e adquirir com segurança
+
+Esta é a **única entrega dos capítulos 09 e 10**. Trabalhe no fork de [rafaelrezo/poo-fundamentos-estacao](https://github.com/rafaelrezo/poo-fundamentos-estacao) iniciado no capítulo 07, com herança validada e integrada. O repositório do capítulo 08 permanece separado.
+
+### 7.1 Retomar uma base executável
+
+O starter atualizado fornece interface, fontes, troca de vínculo, bancada, sessão, falha de indisponibilidade e captura. Você implementará apenas a consulta do painel e a extensão de calibração, em C++ e Python. Leia os arquivos fornecidos: eles concretizam as demonstrações, mas conservam as assinaturas do projeto.
+
+Se seu fork ainda usa o roteiro antigo, siga primeiro o [guia de atualização](https://github.com/rafaelrezo/poo-fundamentos-estacao/blob/main/ATUALIZACAO.md), que preserva o código já escrito. Não substitua o fork inteiro por um starter novo.
 
 ```bash
-make test ETAPA=11
-git add include/excecoes.hpp src/excecoes.py docs/decisoes.md docs/diagrama.md AI_LOG.md
-git commit -m "conclui excecoes com contratos cumulativos"
-git push -u origin pratica/11-excecoes
+git switch main
+git pull --ff-only origin main
+git remote -v
+git switch -c pratica/integrada-a
+make test ETAPA=A
 ```
 
-Faça um commit do incremento guiado e outro da extensão quando ambos forem verificáveis. Abra PR da branch para a `main` **do próprio fork**; confira a execução de `make test ETAPA=11` na CI correspondente ao commit. Integre após testes verdes e revisão. Não abra PR contra o repositório-base.
+Se o guia de atualização já criou `pratica/integrada-a`, continue nela e não repita o bloco de criação acima; execute apenas o teste.
 
-- [ ] O comando local repete e preserva as etapas anteriores deste starter.
-- [ ] A extensão foi adaptada e os casos de fronteira foram explicados.
-- [ ] `docs/decisoes.md` relaciona conceito, implementação e evidência.
-- [ ] O diagrama corresponde ao estado atual do código.
-- [ ] O PR inclui saída local e link da CI do commit.
-- [ ] `AI_LOG.md` registra pedido, aceites/rejeições e justificativa, ou declara ausência de IA.
+O remoto único deve ser `origin`, apontando para seu fork. O teste compila o programa e repete os contratos anteriores. No starter atualizado, a primeira falha desta prática pede a consulta ao sensor associado. Se a mensagem pedir a tag na classe-base, falta concluir o capítulo 07.
 
-Na main, a CI verifica apenas a baseline executável do starter. A entrega precisa da evidência funcional da branch/PR. Testes visíveis não comprovam entendimento: o docente revisa o diff e, em avaliação, exige defesa oral curta.
+### 7.2 Incremento guiado — a leitura acompanha o objeto
 
-Na [seção 11](../12_igualdade_identidade/index.md), definiremos como reconhecer identificadores equivalentes sem confundir dois objetos com uma única instância.
+Abra `include/relacoes.hpp` e `src/relacoes.py`. No método `PainelFixo.leitura`, aplique a consulta demonstrada na seção 2 do capítulo 09: use o sensor guardado pelo painel a cada chamada. A construção e a troca de vínculo já estão fornecidas. Não copie a classe reduzida da exposição sobre o sensor validado do starter.
+
+Execute `make test ETAPA=A`. Os testes de vínculos e interfaces devem passar; a primeira pendência agora é a calibração. Faça um commit desse avanço, mantendo a branch aberta:
+
+```bash
+git add include/relacoes.hpp src/relacoes.py
+git commit -m "consulta a leitura atual do sensor associado"
+```
+
+### 7.3 Extensão — identificar a falta de calibração
+
+Em `include/excecoes.hpp` e `src/excecoes.py`, complete a condição pendente de `adquirir`. A classe `FalhaCalibracao` já existe. Decida onde lançar essa falha respeitando a ordem abaixo; preserve a abertura, a limpeza, o serviço e a captura fornecidos.
+
+| Situação | Comportamento esperado |
+|---|---|
+| disponível e calibrada | devolver a leitura atual |
+| indisponível | propagar `FalhaLeitura` |
+| disponível, sem calibração | propagar `FalhaCalibracao` |
+| indisponível e sem calibração | priorizar indisponibilidade |
+| captura da falha prevista | resultado sem leitura e próxima consulta possível |
+| defeito inesperado da fonte | propagar o defeito, com recurso já liberado |
+
+Execute novamente **o mesmo comando**, `make test ETAPA=A`. O fechamento esperado é `OK pratica integrada A (C++ e Python)`. Os contratos incluem consulta compartilhada, propagação e contador de sessões zerado. A extensão exige adaptação: sua solução não está no starter.
+
+### 7.4 Revisão e entrega única
+
+Registre em `docs/decisoes.md` por que o painel não copia a leitura e onde a falha é recuperada. Em `AI_LOG.md`, registre pedidos à IA, aceites/rejeições e justificativa, ou declare ausência de IA.
+
+```bash
+git add include/excecoes.hpp src/excecoes.py docs/decisoes.md AI_LOG.md
+git commit -m "trata calibracao preservando propagacao e limpeza"
+git push -u origin pratica/integrada-a
+```
+
+Abra **uma PR da branch para a `main` do próprio fork**. Se fizer outros pushes durante o trabalho, a CI executará o mesmo `make test ETAPA=A`; uma falha durante a extensão é feedback de comportamento pendente. Integre somente após concluir a atividade, revisar e obter testes verdes.
+
+- [ ] Consulta e aquisição observam o mesmo sensor atualizado.
+- [ ] A falha de calibração tem o tipo e a prioridade corretos.
+- [ ] O próximo ciclo funciona e a sessão termina liberada.
+- [ ] A PR registra a saída local, o link da CI do commit e a explicação técnica.
+- [ ] O diff preserva testes e automação, e a rastreabilidade de IA está registrada.
+
+Se Actions estiver desativado no fork, habilite os workflows na aba Actions e envie o commit seguinte. A execução na `main` verifica apenas a baseline; a evidência funcional é a CI da branch/PR. Testes visíveis precisam ser complementados por revisão do diff e, em avaliação, defesa oral curta. Não abra PR contra o repositório-base.
+
+No [capítulo 11](../12_igualdade_identidade/index.md), passaremos da consulta individual ao cadastro de várias medições. O novo problema será decidir quando dois identificadores representam a mesma chave.
 
 ## Perguntas de revisão rápida
 
-1. Por que uma atualização rejeitada pode retornar falso enquanto a aquisição indisponível lança uma exceção?
-2. Qual caminho a falha percorre entre adquirir, serviço e ciclo? Onde ocorre a limpeza?
-3. Por que capturar a falha prevista não deve esconder um defeito inesperado?
+1. Por que zero não comunica, sozinho, que uma aquisição falhou?
+2. Qual função lança, qual propaga e qual captura? Em que momento o recurso é liberado?
+3. Por que a falha prevista pode ser tratada sem esconder um defeito inesperado da fonte?
 
 ## Fontes de referência
 
-- [Python — erros, exceções e limpeza](https://docs.python.org/3/tutorial/errors.html)
-- [C++ — tratamento de exceções](https://eel.is/c++draft/except)
-- [C++ Core Guidelines — RAII](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rr-raii)
+- [Python — erros, exceções e limpeza](https://docs.python.org/3/tutorial/errors.html).
+- [C++ — tratamento de exceções](https://eel.is/c++draft/except).
+- [C++ Core Guidelines — RAII](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rr-raii).
+- [GitHub Docs — eventos de workflows](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows).
+- [GitHub Docs — sintaxe e permissões](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax).

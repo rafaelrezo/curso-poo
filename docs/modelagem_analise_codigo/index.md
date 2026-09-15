@@ -1,350 +1,366 @@
-# 12. UML e modelagem de cenários: do requisito ao diagrama de classes
+# UML e modelagem: explicar o catálogo antes de alterá-lo
 
 ## Objetivos de aprendizagem
 
-- Extrair classes, responsabilidades e regras de um cenário de engenharia.
-- Ler e representar visibilidade, abstração, relações e multiplicidades em UML.
-- Confrontar o modelo com C++ e Python e defender uma extensão em um pull request.
+- Extrair responsabilidades e regras do cenário já implementado.
+- Relacionar classes, vínculos e multiplicidades ao código C++ e Python.
+- Completar um catálogo e justificar seu modelo na prática integrada dos capítulos 11 e 12.
 
-**Tempo estimado:** 4h de estudo e prática, distribuíveis entre sala e trabalho entre encontros. Esta seção encerra a Parte 1 após Identidade, Igualdade e Coleções (capítulo 11). Princípios de projeto e testes autorais serão a abertura da Parte 2. O vídeo é preparação prévia.
+**Tempo estimado:** 2h em sala, com aproximadamente 60 min de modelagem dialogada e 60 min para a prática B; até 2h de trabalho orientado para conclusão, preparação e revisão. Esta é a segunda atividade integrada do bloco 09–12 e encerra a Parte 1.
 
 ## Vídeo da aula
 
 ![type:video](https://www.youtube.com/embed/rDidOn6KN9k)
 
-[Tutorial de Diagramas de Classes UML](https://www.youtube.com/watch?v=rDidOn6KN9k), em português, já utilizado no material de modelagem do curso. Durante o vídeo, desenhe um exemplo de herança e um de associação; depois explique para onde aponta cada símbolo.
+Tutorial de Diagramas de Classes UML. Use o vídeo como apoio dentro do tempo de estudo: procure como a notação comunica uma decisão de modelagem.
 
 ---
 
-## 1. Mini-caso prático: explicar a estação antes de ampliá-la
+## 1. Outra equipe precisa entender o cadastro
 
-Na seção 08, um painel consultou sensores de nível, temperatura e pressão pelo contrato `Sensor`. O programa funciona, mas outra equipe precisa entender quem guarda a leitura, quem decide o alerta e quem apenas apresenta o resultado. Ler todos os arquivos antes de discutir uma mudança torna a revisão demorada.
+A estação consulta fontes, trata falhas e cadastra medições. Vamos continuar com o sistema dos capítulos 09–11. O pedido é:
 
-Vamos produzir um modelo que responda a essas perguntas e usá-lo para analisar este pedido:
+> Um catálogo registra medições por identificadores estáveis. Uma tag duplicada não substitui a medição anterior. O catálogo pode estar vazio. O operador precisa remover um registro sem alterar o sensor instalado. Os painéis continuam consultando sensores externos.
 
-> A estação consulta sensores de nível, temperatura e pressão. Cada sensor possui identificação e mantém a última leitura válida. Uma atualização inválida preserva essa leitura. O painel apresenta o valor, a unidade e o alerta usando o contrato comum. Para a próxima versão, um operador poderá manter um painel ligado a um sensor instalado; trocar o painel não deve remover o sensor do cadastro.
+Antes de desenhar, separe o que já funciona da mudança solicitada. Inserção e busca foram demonstradas no 11. Remoção será a extensão da prática B. O modelo deve deixar visível essa diferença.
 
-Esta retomada usa o recorte polimórfico da seção 08 para aprender a ler notações. Na prática final, o modelo atual será o do fork cumulativo das seções 07 e 09–11: nele `Sensor` é uma base sem operações abstratas, e `IFonteLeitura` é a interface elaborada na seção 09. Não misture as duas versões no mesmo diagrama.
+UML é uma linguagem de modelagem. O diagrama de classes descreve a estrutura; ele ajuda a discutir responsabilidades e relações, mas não comprova, sozinho, a preservação da medição ao rejeitar duplicatas.
 
-**Primeira ação:** destaque responsabilidades no texto. “Sensor” sugere uma classe; “última leitura” sugere estado; “apresentar” sugere uma operação. Nem todo substantivo vira classe: `unidade` pode continuar sendo um valor textual.
+## 2. Encontrar responsabilidades antes das setas
 
-| Encontro | Atividades | Tempo |
-|---|---|---:|
-| 1 | cenário e responsabilidades; classes; herança e dependência; associação e multiplicidade; revisão do desenho | 15 + 20 + 30 + 35 + 20 min |
-| 2 | retomada; composição, agregação e realização; ponte com código; extensão autônoma; PR e defesa | 10 + 25 + 20 + 40 + 25 min |
+| Elemento | Responsabilidade | Evidência no programa |
+|---|---|---|
+| `IdSensor` | representar uma chave estável | comparação pela tag |
+| `Medicao` | representar o valor registrado e sua unidade | registro independente de uma nova consulta |
+| `Catalogo` | inserir e localizar registros pela chave | `inserir`, `buscar`, `quantidade` |
+| `SensorNivel` | manter o estado atual do sensor | `valor` e, no starter, `atualizar` |
+| `PainelFixo` | consultar o sensor associado | vínculo introduzido no 09 |
 
-**Checkpoint inicial:** em dupla, explique por que o painel não deve guardar as regras de alerta. Isso recupera o polimorfismo e prepara a distribuição de responsabilidades.
+“Operador” participa do cenário, mas não precisa virar classe se o programa não representa estado ou comportamento dele. “Tag” pode ser um texto dentro de `IdSensor`; nem todo substantivo pede outro objeto.
 
----
-
-## 2. Do texto para responsabilidades e classes
-
-UML é uma linguagem de modelagem. Nesta aula, usamos o **diagrama de classes** para representar estrutura: tipos, operações e relações. Um diagrama de sequência responderia à ordem das mensagens; um diagrama de objetos mostraria instâncias em um instante. O foco aqui é construir e ler o modelo estrutural necessário ao curso.
-
-Comece com uma tabela de responsabilidades, antes das setas:
-
-| Candidato | Responsabilidade | Estado ou operação relevante | Decisão |
-|---|---|---|---|
-| `Sensor` | definir a interface comum e a identificação | tag e consultas abstratas | classe abstrata já existente |
-| `SensorNivel` | validar nível e avaliar seu alerta | leitura, atualização, alerta | especialização existente |
-| `SensorTemperatura` | validar temperatura e avaliar seu alerta | leitura, atualização, alerta | especialização existente |
-| `SensorPressao` | validar pressão e avaliar seu alerta | leitura, atualização, alerta | especialização existente |
-| função de apresentação | formatar o resultado do sensor recebido | consulta por parâmetro | função existente; não inventar uma classe no retrato do código |
-| `PainelFixo` | manter vínculo com um sensor e apresentar suas consultas | referência ao sensor | proposta da próxima versão |
-
-**Aplique agora:** registre essa tabela em seu rascunho de leitura da seção 08. Na prática final, produza `docs/diagrama.md` no fork cumulativo. Separe o **modelo atual**, conferido no código, do **modelo proposto**, ainda sem implementação. Essa distinção permite revisar uma ideia sem afirmar que ela já funciona.
-
-**Como confirmar:** cada responsabilidade deve ter uma frase do requisito como justificativa. “Controlador herda de sensor porque lê o sensor” não passa: ler não significa ser um sensor.
-
----
-
-## 3. Como ler a caixa de uma classe
-
-Uma classe possui compartimentos para nome, atributos e operações. Na escrita UML usual, um atributo é `nome: Tipo` e uma operação é `nome(parâmetro: Tipo): Retorno`. Mermaid usa uma sintaxe textual própria para renderizar esse desenho.
+Comecemos pelo menor desenho que ajuda a ler o catálogo:
 
 ```mermaid
 classDiagram
-    class Sensor {
-        <<abstract>>
-        -string tag_
-        +tag() string
-        +valor() double
-        +unidade() string
-        +atualizar(double leitura) bool
-        +emAlerta() bool
+    class Catalogo {
+        -itens
+        +inserir(id, item) bool
+        +buscar(id) Medicao
+        +quantidade() inteiro
     }
+    class IdSensor {
+        -valor
+    }
+    class Medicao {
+        +valor
+        +unidade
+    }
+    Catalogo ..> IdSensor : usa como chave
+    Catalogo "1" --> "0..*" Medicao : mantem registros
 ```
 
-O marcador indica que `Sensor` é abstrata. No código da aula 08, `tag()` é concreta e as quatro operações seguintes são abstratas; o diagrama resumido omite detalhes do construtor e destrutor. Em UML, nomes em itálico podem indicar elementos abstratos. Sempre explique a convenção adotada quando a ferramenta usar um marcador textual.
+A caixa reúne nome, atributos e operações. `+` indica público; `-`, privado no modelo. O retorno de `buscar` foi abreviado: o contrato também admite ausência. Registre essa regra ao lado do diagrama. Em Python, o prefixo `_` expressa convenção de uso interno; não equivale à restrição `private` de C++.
 
-| Sinal | Visibilidade UML | Correspondência no curso |
-|---|---|---|
-| `+` | pública | operação oferecida ao cliente |
-| `-` | privada | estado encapsulado |
-| `#` | protegida | acesso previsto para subclasses |
-| `~` | pacote | conhecer a notação; não equivale automaticamente a um recurso C++/Python |
+## 3. Conferir o desenho em um programa completo
 
-`LT-101` é uma identificação de **objeto**, não o nome de uma classe. `SensorNivel` descreve o tipo de vários objetos possíveis. Também não confunda uma operação com seu algoritmo: o desenho informa a assinatura; a regra “nível menor que 20 dispara alerta” precisa de uma nota ou de um contrato escrito.
+O catálogo continua específico de `Medicao` neste recorte. O `main` consulta um sensor e registra uma fotografia dessa leitura. Isso é diferente do painel do 09, que consulta o sensor a cada chamada.
 
-**Aplique agora:** acrescente `SensorNivel`, sua leitura privada e as operações relevantes. Anote a regra de atualização: valor fora de `0..100` é rejeitado sem alterar o estado.
+### C++: o catálogo armazena o registro por valor
 
-**Como confirmar:** o leitor consegue diferenciar “consultar a leitura” de “alterar a leitura”? A visibilidade impede que o diagrama proponha acesso público direto ao estado? Isso prepara as relações entre as caixas.
+Programa independente: [exemplo_01_modelo.cpp](exemplo_01_modelo.cpp).
 
----
+```cpp
+#include <iostream>
+#include <map>
+#include <stdexcept>
+#include <string>
 
-## 4. Herança e dependência: desenhar o que já funciona
+class IdSensor {
+    std::string valor_;
+public:
+    explicit IdSensor(std::string valor) : valor_(valor) {
+        if (valor.empty()) throw std::invalid_argument("tag vazia");
+    }
+    const std::string& valor() const { return valor_; }
+    bool operator<(const IdSensor& outro) const { return valor_ < outro.valor_; }
+    bool operator==(const IdSensor& outro) const { return valor_ == outro.valor_; }
+};
 
-### 4.1 Generalização: “é um tipo de”
+struct Medicao {
+    double valor;
+    std::string unidade;
+};
+
+class Catalogo {
+    std::map<IdSensor, Medicao> itens_;
+public:
+    bool inserir(const IdSensor& id, const Medicao& item) {
+        return itens_.emplace(id, item).second;
+    }
+    const Medicao* buscar(const IdSensor& id) const {
+        auto it = itens_.find(id);
+        return it == itens_.end() ? nullptr : &it->second;
+    }
+    std::size_t quantidade() const { return itens_.size(); }
+};
+
+class SensorNivel {
+    double valor_;
+public:
+    explicit SensorNivel(double valor) : valor_(valor) {}
+    double valor() const { return valor_; }
+};
+
+int main() {
+    SensorNivel sensor{12};
+    Catalogo catalogo;
+    catalogo.inserir(IdSensor{"LT-101"}, {sensor.valor(), "%"});
+    std::cout << "Registros: " << catalogo.quantidade() << '\n';
+    std::cout << "Sensor: " << sensor.valor() << " %\n";
+}
+```
+
+Execute:
+
+```bash
+g++ -std=c++17 -Wall -Wextra -Werror -pedantic exemplo_01_modelo.cpp -o exemplo_01_modelo
+./exemplo_01_modelo
+```
+
+Resultado:
+
+```text
+Registros: 1
+Sensor: 12 %
+```
+
+O catálogo recebe o número e a unidade. Ele não guarda uma referência ao sensor. Não há associação `Catalogo --> SensorNivel` só porque o `main` utiliza ambos. A dependência da operação de inserção é com a chave e o registro.
+
+### Python: o catálogo guarda uma referência ao registro imutável
+
+Programa independente: [exemplo_02_modelo.py](exemplo_02_modelo.py).
+
+```python
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
+class IdSensor:
+    valor: str
+
+    def __post_init__(self):
+        if not self.valor:
+            raise ValueError("tag vazia")
+
+
+@dataclass(frozen=True)
+class Medicao:
+    valor: float
+    unidade: str
+
+
+class Catalogo:
+    def __init__(self):
+        self._itens = {}
+
+    def inserir(self, id, item):
+        if id in self._itens:
+            return False
+        self._itens[id] = item
+        return True
+
+    def buscar(self, id):
+        return self._itens.get(id)
+
+    def quantidade(self):
+        return len(self._itens)
+
+
+class SensorNivel:
+    def __init__(self, valor):
+        self._valor = valor
+
+    def valor(self):
+        return self._valor
+
+
+def main():
+    sensor = SensorNivel(12)
+    catalogo = Catalogo()
+    catalogo.inserir(IdSensor("LT-101"), Medicao(sensor.valor(), "%"))
+    print(f"Registros: {catalogo.quantidade()}")
+    print(f"Sensor: {sensor.valor()} %")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+Execute:
+
+```bash
+python3 exemplo_02_modelo.py
+```
+
+Resultado:
+
+```text
+Registros: 1
+Sensor: 12 %
+```
+
+O significado do cadastro é igual, embora o armazenamento difira: C++ armazena o valor; Python guarda uma referência a `Medicao`. Uma variável externa pode manter outra referência à medição Python. Apagar uma entrada do catálogo não deve ser confundido com destruir o objeto físico ou todas as referências ao registro.
+
+**Confirme:** localize em cada programa a chave, a medição e a construção do catálogo. Qual linha faria a quantidade crescer? Qual regra impede o segundo cadastro da mesma tag?
+
+## 4. Quantos registros e quem é responsável por eles?
+
+Na relação `Catalogo "1" --> "0..*" Medicao`, um catálogo pode ter zero ou vários registros. O limite mínimo zero precisa ser compatível com a construção e a busca no vazio.
+
+A ponta `1` adota a visão de um registro pertencente a um catálogo neste cenário. Ela é uma regra do modelo; o Python apresentado não impede que o chamador compartilhe o mesmo objeto imutável entre catálogos. Se esse compartilhamento fizer parte do requisito, ajuste a multiplicidade junto de `Catalogo` para `0..*` e mantenha uma associação simples.
+
+A implementação por valor C++ permite modelar os registros internos como partes do catálogo. Um modelo com composição exigiria explicitar que se trata dessas partes internas:
 
 ```mermaid
 classDiagram
-    class Sensor {
-        <<abstract>>
-    }
+    Catalogo "1" *-- "0..*" RegistroInterno : possui
+```
+
+`RegistroInterno` aqui é uma **visão conceitual da entrada armazenada**, não uma classe declarada no programa. A parte pode ser removida antes do todo; composição não significa que toda parte deva existir até o fim do catálogo. Não desenhe composição com o sensor físico: o catálogo não controla sua existência.
+
+| Multiplicidade | Pergunta para o requisito |
+|---|---|
+| `1` | é obrigatório ter exatamente um? |
+| `0..1` | a ausência é um estado permitido? |
+| `0..*` | vazio e vários são permitidos? |
+| `1..*` | quem impede o conjunto vazio? |
+
+**Teste mental:** um catálogo recém-criado é válido? Sim. Uma duplicata aumenta a quantidade? Não. O desenho ajuda a formular as perguntas; os testes e a leitura das operações confirmam as respostas.
+
+## 5. Retomar as relações da estação sem misturar responsabilidades
+
+Os capítulos 07 e 09–11 usam o mesmo starter. Nele `Sensor` guarda a tag e não declara operações abstratas; `IFonteLeitura` é o contrato abstrato. O tipo do capítulo 08 era outro recorte demonstrativo. Nesta aula, mantenha os nomes e as declarações do starter cumulativo.
+
+```mermaid
+classDiagram
     Sensor <|-- SensorNivel
     Sensor <|-- SensorTemperatura
-    Sensor <|-- SensorPressao
-```
-
-A linha é contínua e o triângulo vazio aponta para a classe **mais geral**, `Sensor`. Leia: “SensorPressao é um Sensor”. A base fica na ponta do triângulo independentemente de estar acima, abaixo ou ao lado no desenho.
-
-A relação exige compatibilidade com o contrato: uma especialização que apaga a leitura ao rejeitar uma atualização não respeita o comportamento esperado. A seta, sozinha, não prova substituição correta.
-
-### 4.2 Dependência: “precisa desse tipo para realizar algo”
-
-A apresentação da aula 08 recebe um sensor por parâmetro e consulta suas operações; não mantém esse vínculo como estado. Isso é uma dependência de uso. Dependência também pode representar outros motivos pelos quais mudar um elemento afeta outro; não significa necessariamente “duração curta”.
-
-```mermaid
-classDiagram
-    class Apresentacao {
-        <<utility>>
-        +formatarLinha(Sensor sensor) string
-    }
-    class Sensor
-    Apresentacao ..> Sensor : consulta por parametro
-```
-
-A seta tracejada vai do **cliente** ao **elemento utilizado**. Aqui `Apresentacao` é um agrupamento visual da função, não uma classe já implementada; registre essa convenção no modelo atual.
-
-**Checkpoint:** o painel depende de `Sensor` ou de cada especialização? Desenhe a dependência do contrato comum e explique por que incluir `SensorPressao` não exigiu editar o cliente. Agora podemos modelar um vínculo que permanece entre chamadas.
-
----
-
-## 5. Associação e multiplicidade: quem conhece quem e quantos?
-
-O pedido da próxima versão diz que `PainelFixo` mantém um sensor associado. Essa referência persistente motiva uma **associação**, representada por linha contínua. Uma seta aberta de navegabilidade informa que o painel consegue alcançar o sensor; uma linha sem setas não permite concluir automaticamente que o código navega nos dois sentidos.
-
-```mermaid
-classDiagram
-    class PainelFixo {
-        +mostrar() string
-    }
-    class Sensor
-    PainelFixo "0..*" --> "1" Sensor : consulta
-```
-
-Leia cada extremidade a partir de **um objeto da outra ponta**:
-
-- para **um PainelFixo**, existe exatamente **um Sensor**, pois `1` está junto a `Sensor`;
-- para **um Sensor**, podem existir **zero ou vários PainelFixo**, pois `0..*` está junto a `PainelFixo`.
-
-O enunciado exige o primeiro limite; o segundo é uma **hipótese de projeto**: permitir vários painéis para o mesmo sensor. Registre-a e peça que o colega tente contradizê-la com um requisito.
-
-| Multiplicidade | Leitura | Pergunta de validação |
-|---|---|---|
-| `1` | exatamente um | pode faltar? |
-| `0..1` | nenhum ou um | como representar ausência? |
-| `0..*` ou `*` | zero ou mais | o caso vazio é permitido? |
-| `1..*` | um ou mais | quem garante o mínimo? |
-| `2..4` | entre dois e quatro | onde o limite será validado? |
-
-Multiplicidades descrevem instâncias permitidas; não são colocadas nas setas de generalização. Uma associação obrigatória exige uma decisão de construção/validação. Uma relação “muitos” retoma as coleções estudadas na seção 11, mas não escolhe automaticamente `vector`, `list` ou uma estratégia de posse.
-
-**Aplique agora:** desenhe dois painéis ligados ao mesmo sensor em um rascunho de objetos. Depois tente desenhar um painel sem sensor. O primeiro caso satisfaz o modelo; o segundo o viola. Se a manutenção precisar permitir painel desconectado, altere conscientemente `1` para `0..1` e documente a mudança de regra.
-
----
-
-## 6. Todo e parte: composição e agregação
-
-Ter um atributo com outro objeto não determina, sozinho, a relação UML. Pergunte quem é responsável pela parte e se ela pode pertencer simultaneamente a outro todo.
-
-### 6.1 Composição: posse exclusiva no modelo
-
-Para esta simulação, suponha que cada painel crie sua própria configuração de exibição e seja responsável por sua existência. A configuração não é compartilhada entre painéis.
-
-```mermaid
-classDiagram
-    PainelFixo "1" *-- "1" ConfiguracaoPainel : possui
-```
-
-O losango **preenchido fica no todo**, `PainelFixo`. Na composição, uma parte pertence a no máximo um todo composto por vez; a destruição do todo envolve as partes que ainda lhe pertencem. O modelo pode admitir remover ou transferir uma parte antes disso, se houver regras explícitas.
-
-Essa relação trata de objetos do software: encerrar o cadastro de uma estação não destrói fisicamente sensores. Não use a palavra “possui” do enunciado como prova suficiente de composição.
-
-### 6.2 Agregação compartilhada: agrupamento explicitado
-
-```mermaid
-classDiagram
-    Bancada "0..1" o-- "0..*" Sensor : agrupa
-```
-
-O losango **vazio fica no todo**, `Bancada`. Neste exemplo, o sensor pode estar sem bancada ou em uma bancada, e continua cadastrado quando ela é removida. A agregação compartilhada da UML tem semântica pouco restritiva; as regras específicas precisam ser documentadas. Associação simples costuma comunicar esse vínculo com menos ambiguidade.
-
-**Aplique agora:** explique por que `PainelFixo *-- Sensor` contraria o requisito de trocar o painel sem remover o sensor. Corrija para associação. Depois justifique por que a configuração pode ser composição sob as hipóteses deste exemplo.
-
-**Como confirmar:** apagar o painel deve afetar sua configuração própria; o cadastro do sensor deve continuar existindo. Nenhum losango deve aparecer sem uma regra sobre pertencimento e ciclo de vida.
-
----
-
-## 7. Realização e guia de decisão das relações
-
-Se a equipe definir uma interface `Consultavel` contendo apenas operações exigidas, uma classe que a implementa pode ser modelada por **realização**:
-
-```mermaid
-classDiagram
-    class Consultavel {
+    class IFonteLeitura {
         <<interface>>
-        +valor() double
-        +unidade() string
+        +valor()
+        +unidade()
     }
-    Consultavel <|.. Sensor
+    IFonteLeitura <|.. FonteNivel
+    IFonteLeitura <|.. FonteConstante
+    FonteNivel "0..*" --> "1" SensorNivel : consulta
+    PainelFixo "0..*" --> "1" SensorNivel : acompanha
 ```
 
-A linha é tracejada e o triângulo vazio aponta para a **interface**. Generalização especializa um tipo; realização indica cumprimento de uma especificação. A base `Sensor` da aula 08 também mantém estado e oferece comportamento concreto: seu desenho com as derivadas continua usando generalização. Não troque todas as setas de herança por realização só porque há métodos abstratos.
+O triângulo aponta para o tipo geral ou para a especificação. A generalização de `SensorNivel` diz que ele especializa `Sensor`; a realização de `FonteNivel` comunica que ela atende a `IFonteLeitura`. Em C++, a realização é implementada por herança pública da classe abstrata. A associação com o sensor é outra relação: ela fornece o objeto ao qual a fonte delega a consulta.
 
 | Técnica/Padrão | Melhor uso | Esforço | Entregável | Limitação |
 |---|---|---|---|---|
-| Generalização `Base <\|-- Derivada` | especialização substituível | médio: conferir contrato | hierarquia justificada | semelhança de atributos não basta |
-| Realização `Interface <\|.. Classe` | implementação de especificação | médio: explicitar operações | interface e realizador | desenho não prova comportamento |
-| Associação `A --> B` | vínculo estrutural navegável de A para B | baixo: definir papéis e quantidades | relação com multiplicidades | não define posse |
-| Agregação `Todo o-- Parte` | agrupamento com significado documentado | médio: esclarecer regras | todo e partes | semântica compartilhada pouco restritiva |
-| Composição `Todo *-- Parte` | responsabilidade exclusiva pelas partes | médio: explicar ciclo de vida | todo com losango preenchido | exige mais que um atributo |
-| Dependência `Cliente ..> Fornecedor` | uso de outro elemento | baixo: identificar motivo | cliente e elemento utilizado | não expressa vínculo estrutural por si só |
+| Generalização | especialização compatível com a base | médio | hierarquia justificada | atributos parecidos não bastam |
+| Realização | cumprimento de uma especificação | médio | interface e implementações | não demonstra todas as regras do contrato |
+| Dependência | uso de um tipo ou operação | baixo | cliente e elemento necessário | não indica vínculo persistente sozinha |
+| Associação | acesso estrutural a outro objeto | médio | vínculo com multiplicidades | não estabelece posse |
+| Agregação compartilhada | agrupamento com regra adicional explícita | médio | todo e partes independentes | semântica pouco restritiva; associação pode bastar |
+| Composição | responsabilidade exclusiva pelas partes | médio | modelo de pertencimento e ciclo de vida | requer distinguir registro interno e objeto externo |
 
-**Decisão por cenário:** especialização de sensor usa generalização; painel que recebe sensor só na chamada usa dependência; painel que mantém referência usa associação; configuração exclusiva pode usar composição. Prefira associação a agregação quando não houver uma regra adicional clara para comunicar.
+Para o painel, associação expressa a regra observada. Para uma configuração exclusiva criada pelo painel, composição pode ser adequada. Na bancada de uma vaga fornecida pelo starter, remover o vínculo preserva o sensor; não há motivo para transformar isso em composição.
+
+## 6. Decidir uma mudança e prever suas consequências
+
+A remoção deve responder a três situações: catálogo vazio, chave existente e chave já removida. Antes de implementar, registre as respostas e confronte o modelo.
+
+```text
+catalogo vazio -> inserir LT-101 -> quantidade 1
+quantidade 1 -> remover LT-101 -> quantidade 0
+quantidade 0 -> remover LT-101 novamente -> ausencia
+sensor externo -> continua com a mesma leitura em todos os passos
+```
+
+O diagrama estrutural não explica sozinho essa sequência. Uma pequena tabela de estados e a saída do teste complementam as setas. Separe o modelo atual da operação proposta; depois da implementação, atualize o modelo com a evidência observada.
 
 ---
 
-## 8. Ponte C++ → Python: conferir o significado no código
+## 7. Prática integrada B — catálogo e modelo do mesmo sistema
 
-Os recortes abaixo ilustram a proposta `PainelFixo`. São material de leitura: a prática desta aula entrega modelagem sobre o programa existente, sem implementar a extensão.
+Esta é a **única entrega dos capítulos 11 e 12**. Use o fork da prática A já concluída e integrada. A infraestrutura de identidade, ordenação, hash, genericidade e iteração polimórfica está fornecida. Você implementará inserção, busca e remoção, e explicará o modelo; não haverá uma atividade UML separada.
 
-```cpp
-class PainelFixo {
-    const Sensor& sensor_;  // associação: não possui o sensor
-public:
-    explicit PainelFixo(const Sensor& sensor) : sensor_(sensor) {}
-    double leitura() const { return sensor_.valor(); }
-};
-```
-
-```python
-class PainelFixo:
-    def __init__(self, sensor: Sensor):
-        self._sensor = sensor  # associação ao mesmo objeto
-
-    def leitura(self):
-        return self._sensor.valor()
-```
-
-O conceito comum é manter acesso a **um sensor existente**. Em C++, o sensor precisa viver mais tempo que o painel que o referencia. Em Python, a referência mantém o objeto alcançável; isso não transforma automaticamente a associação em composição UML. A anotação `Sensor` não impede, por si só, receber `None`: cumprir a multiplicidade continua sendo responsabilidade da implementação.
-
-Compare também a generalização existente: `class SensorNivel : public Sensor` em C++ e `class SensorNivel(Sensor)` em Python. Ambas representam especialização. Já `private` restringe acesso em C++; o prefixo `_` em Python comunica uma convenção de uso interno.
-
-**Checkpoint:** localize nos arquivos reais da aula 08 uma operação abstrata, uma sobrescrita e a função que consulta o sensor. Registre arquivo e nome da operação na tabela de rastreabilidade. Não atribua ao programa a classe `PainelFixo`, que ainda é proposta.
-
----
-
-## 9. Prática cumulativa: diagrama do sistema testado
-
-### 9.1 Retome o fork certo
-
-Use seu fork de [rafaelrezo/poo-fundamentos-estacao](https://github.com/rafaelrezo/poo-fundamentos-estacao), com as etapas técnicas até 13 integradas (capítulo 11 concluído). O repositório da seção 08 serviu à prática de polimorfismo e permanece separado.
+### 7.1 Retomar e observar a pendência
 
 ```bash
 git switch main
 git pull --ff-only origin main
 git remote -v
-make test ETAPA=13
-git switch -c pratica/12-uml
+git switch -c pratica/integrada-b
+make test ETAPA=B
 ```
 
-O remoto único deve ser `origin`, apontando para o fork. Se seu fork foi criado antes desta reorganização, execute `curl -fsSL https://raw.githubusercontent.com/rafaelrezo/poo-fundamentos-estacao/main/.github/workflows/testes.yml -o .github/workflows/testes.yml` para obter o workflow atualizado; confira o diff e inclua esse arquivo no commit da entrega. Forks novos já o incluem. O comando atualiza somente o workflow público, sem substituir implementações nem adicionar remoto. A branch está prevista no workflow atualizado e executa `make test ETAPA=13` após cada push. Não há nova operação de código nesta seção: a revisão precisa preservar o sistema funcional e os testes fornecidos.
+Somente `origin` deve apontar para seu fork de [poo-fundamentos-estacao](https://github.com/rafaelrezo/poo-fundamentos-estacao). O teste repete os contratos da prática A e da comparação fornecida. A primeira pendência nova pede a inserção de objetos no catálogo.
 
-### 9.2 Modelo implementado: do código para o desenho
+### 7.2 Incremento guiado — inserir e buscar
 
-Atualize `docs/diagrama.md` em duas vistas legíveis, sem colocar todas as classes numa única figura:
+Em `include/colecoes.hpp` e `src/colecoes.py`, complete `inserir` e `buscar` usando os programas da seção 4 e 5 do capítulo 11 como guia. No starter, o tipo do item é genérico (`T`), mas as operações são as mesmas. Preserve `IdSensor`, `quantidade`, `ids` e a infraestrutura fornecida.
 
-1. **Tipos e colaboração:** `Sensor`, `SensorNivel`, `SensorTemperatura`, `PainelFixo`, `Bancada`, `IFonteLeitura`, `FonteNivel` e `FonteConstante`.
-2. **Falhas e registros:** `FalhaLeitura`, `FalhaCalibracao`, `IdSensor`, `Medicao` e `Catalogo<T>`. `ControladorConsulta` e `PoliticaAlarme` pertencem à próxima parte; não os inclua como incrementos concluídos nesta vista.
-
-No modelo implementado, identifique a base concreta, a interface abstrata, as realizações, associações, agregação documentada, composição e multiplicidade do catálogo. Marque o proprietário quando isso for relevante. Não transforme funções livres como `lerFonte` em classes supostamente presentes no código.
-
-Para cada vista, registre três correspondências entre elemento visual e arquivo/operação, além de uma regra comportamental que o desenho não demonstra sozinho. Exemplo: a seta da fonte para a interface não prova que suas consultas preservam estado.
-
-Renderize o Mermaid no GitHub ou no [Mermaid Live Editor](https://mermaid.live/). Faça um commit do modelo atual e execute `make test ETAPA=13` antes de seguir.
-
-### 9.3 Modelo proposto: decidir uma extensão
-
-Uma nova solicitação da mesma estação diz:
-
-> Um técnico pode acompanhar vários sensores. Um sensor pode não ter técnico, ou ter apenas um responsável por vez. Trocar o técnico não remove sensores. Cada cadastro de sensor mantém uma configuração de calibração exclusiva, removida junto com esse cadastro. O painel continua consultando uma abstração.
-
-Crie uma seção separada **Modelo proposto — manutenção**, sem afirmar que esses tipos já foram implementados. Escolha nomes e operações mínimas, justifique cada relação e explicite as multiplicidades nas duas pontas.
-
-Confira os estados: sensor sem técnico permitido; dois responsáveis simultâneos proibidos; técnico com dois sensores permitido; troca de responsável preserva o sensor; compartilhamento de uma configuração exclusiva proibido. Explique ainda como relacionar o cadastro à entidade física sem confundir remoção do registro com destruição do equipamento.
-
-Registre uma dúvida de requisito e a hipótese adotada. A extensão exige decisão do aluno; não há diagrama pronto para copiar. Sua implementação pode tornar-se um incremento do projeto da Parte 2.
-
-### 9.4 Revisão e entrega
+Confirme com `make test ETAPA=B`: inserção, duplicata, busca e listagem devem passar; o próximo diagnóstico será a remoção ainda incompleta. Faça o commit do incremento guiado:
 
 ```bash
-make test ETAPA=13
-git add docs/diagrama.md docs/decisoes.md AI_LOG.md .github/workflows/testes.yml
-git commit -m "modela manutencao e justifica relacoes UML"
-git push -u origin pratica/12-uml
+git add include/colecoes.hpp src/colecoes.py
+git commit -m "insere e busca sem sobrescrever cadastros repetidos"
 ```
 
-Abra PR para a `main` **do próprio fork**. Inclua as figuras renderizadas, o resultado local e a CI do commit. O revisor deve ler cada relação, confrontar as multiplicidades com os estados permitidos e comparar o modelo implementado ao código. Integre após revisão e testes verdes.
+### 7.3 Extensão — remover e explicar o que permanece
 
-- [ ] As duas versões, implementada e proposta, estão identificadas.
-- [ ] Base e interface correspondem às declarações reais.
-- [ ] Cada losango possui justificativa de pertencimento e ciclo de vida.
-- [ ] A relação 1:N corresponde às operações do catálogo.
-- [ ] O desenho não atribui ao código classes que só existem na proposta.
-- [ ] O PR inclui decisões técnicas e rastreabilidade de IA.
+Implemente `remover` com resposta verdadeira apenas quando a chave existia. Consulte as operações de remoção da coleção escolhida. A solução da extensão não está no starter nem nos programas demonstrativos.
 
-Em avaliação, faça defesa oral curta de uma relação, uma multiplicidade e uma alternativa rejeitada. O teste confirma regressões; a correção semântica do diagrama exige revisão humana.
+| Ação | Resultado exigido |
+|---|---|
+| buscar ou remover no vazio | ausência ou falso |
+| inserir duas tags diferentes | dois registros |
+| inserir outra instância de uma tag existente | falso; registro anterior preservado |
+| remover uma chave existente | verdadeiro; quantidade diminui |
+| remover a mesma chave novamente | falso |
+| consultar sensor externo após remover registro | sensor continua válido |
 
----
+Execute `make test ETAPA=B` até obter `OK pratica integrada B (C++ e Python)`. Os testes anteriores continuam ativos. Não altere os testes nem a CI para obter aprovação.
 
-## 10. Diagnóstico e fechamento da Parte 1
+Em `docs/diagrama.md`, desenhe a vista do catálogo com `IdSensor`, `Medicao` e as operações implementadas. Registre três correspondências entre elemento do desenho e arquivo/operação. Acrescente uma vista pequena de colaboração com `FonteNivel`, `IFonteLeitura` e `SensorNivel`, retomando a prática A sem desenhar todo o projeto.
 
-| Sintoma | O que verificar | Correção |
-|---|---|---|
-| triângulo aponta para a derivada | direção da generalização | apontar para a classe geral |
-| losango aparece na parte | quem é o todo | reposicionar o losango |
-| todo vínculo é composição | regra de posse | usar associação quando houver apenas referência |
-| `*` foi lido como “pelo menos um” | mínimo permitido | usar `1..*` se zero for proibido |
-| desenho exige classe ausente do código | modelo atual versus proposta | separar as duas visões |
-| diagrama não renderiza | bloco e sintaxe | usar cerca `mermaid` e testar trecho mínimo |
-| CI rejeita branch UML | branch ou fork incorretos | usar `pratica/12-uml` no fork cumulativo |
+Justifique as multiplicidades e a escolha entre associação e composição, distinguindo armazenamento C++ e Python. Relacione a remoção à independência do sensor. Registre em `docs/decisoes.md` uma hipótese de domínio e uma alternativa rejeitada. O modelo entregue deve representar o código final; se discutir uma mudança ainda não implementada, identifique-a separadamente como proposta.
 
-Ao terminar a Parte 1, o aluno deve conseguir sair de um cenário, distribuir responsabilidades, reconhecer oportunidades de composição e especialização, preservar contratos polimórficos e explicar o modelo com UML.
+### 7.4 Entrega única e passagem para o projeto
 
-A Parte 1 termina com objetos colaborando, interfaces, falhas controladas, identidade e igualdade, coleções e validação pelos testes fornecidos. A [Parte 2 começa por Princípios de Projeto e Testes de Objetos](../parte-2-projeto/00-principios-testes/index.md). Depois, a arquitetura e a integração aplicam essa base a JSON, padrões, persistência e comunicação.
+```bash
+git add include/colecoes.hpp src/colecoes.py docs/diagrama.md docs/decisoes.md AI_LOG.md
+git commit -m "remove registros e justifica o modelo do catalogo"
+git push -u origin pratica/integrada-b
+```
+
+Abra **uma PR da branch para a `main` do próprio fork**, com evidências locais e link da CI do commit. A branch executa o mesmo `make test ETAPA=B` a cada push. Revise o diff e integre somente com a prática completa e testes verdes.
+
+- [ ] Duplicatas e remoções respeitam os resultados previstos.
+- [ ] O modelo corresponde às classes e operações presentes.
+- [ ] As multiplicidades e a política de posse têm justificativa.
+- [ ] A PR reúne código, diagrama renderizado, decisões, validação local e remota.
+- [ ] `AI_LOG.md` registra pedidos, aceites/rejeições e justificativas, ou ausência de IA.
+
+A CI verifica comportamento e regressões, não a semântica do diagrama. A revisão deve confrontar desenho, requisito e código; em avaliação, faça uma defesa oral curta de uma relação e de uma decisão de implementação.
+
+A Parte 1 termina com **duas práticas integradas neste bloco**. A [Parte 2 começa por Princípios de Projeto e Testes de Objetos](../parte-2-projeto/00-principios-testes/index.md), usando a mesma base após integrar B. Não é necessário abrir as branches antigas de igualdade, coleções ou UML como entregas adicionais.
 
 ## Perguntas de revisão rápida
 
-1. Um painel recebe um sensor somente por parâmetro; outro guarda uma referência. Como representar e justificar cada relação? O que muda ao trocar o painel?
-2. Em `PainelFixo "0..*" --> "1" Sensor`, quantos sensores cada painel consulta e quantos painéis podem consultar um sensor? Qual mudança permite painel desconectado?
-3. Por que `SensorNivel` pode especializar `Sensor`, mas um controlador que consulta sensores não deve herdar deles? Que evidência comportamental sustenta a primeira relação?
+1. Por que o catálogo pode usar uma chave e uma medição sem manter associação com o sensor físico?
+2. Que diferença existe entre multiplicidade permitida no modelo e comportamento comprovado pelos testes?
+3. O que permanece após remover um registro em C++ e Python? Que hipótese justificaria composição em cada caso?
 
 ## Fontes de referência
 
-- [OMG — UML 2.5.1](https://www.omg.org/spec/UML/2.5.1/About-UML): especificação de classes, associações, generalização e agregação.
-- [Mermaid — diagramas de classes](https://mermaid.js.org/syntax/classDiagram.html): sintaxe de relações, visibilidade e multiplicidade.
-- [GitHub Docs — criação de diagramas](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams): renderização de Mermaid em Markdown.
-- [GitHub Docs — sintaxe de workflows](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax): gatilhos de branches e permissões.
-- [C++ Core Guidelines — classes e hierarquias](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#S-class): interface, invariantes e hierarquias.
-- [Python Docs — classes](https://docs.python.org/3/tutorial/classes.html): referências, convenções de acesso e herança.
+- [OMG — UML 2.5.1](https://www.omg.org/spec/UML/2.5.1/About-UML).
+- [Mermaid — diagramas de classes](https://mermaid.js.org/syntax/classDiagram.html).
+- [Python — classes](https://docs.python.org/3/tutorial/classes.html).
+- [C++ — map::erase](https://en.cppreference.com/w/cpp/container/map/erase).
+- [Python — tipos de mapeamento](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict).
+- [GitHub Docs — criação de diagramas](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams).
