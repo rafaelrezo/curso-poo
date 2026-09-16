@@ -273,14 +273,20 @@ O pedido de 15 foi aceito. O pedido de 120 foi rejeitado, e a leitura continuou 
 
 Voltamos à mesma pergunta sobre a unidade. O exemplo Python corresponde ao programa da seção 4: duas implementações, um contrato e a função comum. Não é necessário introduzir outro cenário.
 
+`ABC` vem do módulo padrão `abc` e permite declarar `Sensor` como **classe-base abstrata**. `@abstractmethod` marca `unidade()` como uma operação que uma subclasse concreta precisa implementar. Por isso `SensorNivel()` e `SensorTemperatura()` podem ser criados, mas `Sensor()` — ou uma subclasse que não implemente `unidade()` — provoca `TypeError` na instanciação. O `raise NotImplementedError` é apenas o corpo de reserva do método; sozinho, ele **não** torna a classe abstrata. Leia a [documentação oficial do módulo `abc`](https://docs.python.org/3/library/abc.html) para mais detalhes.
+
+Comece a leitura por `main`: dois objetos concretos entram na mesma função `imprimir`, e cada chamada a `sensor.unidade()` chega à implementação do objeto recebido.
+
+Programa completo: [exemplo_11_despacho_python.py](exemplo_11_despacho_python.py).
+
 ```python
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod  # Ferramentas para declarar uma classe abstrata.
 
 
-class Sensor(ABC):
-    @abstractmethod
+class Sensor(ABC):  # Base comum; nao criaremos Sensor diretamente.
+    @abstractmethod  # Obriga cada classe concreta a implementar unidade().
     def unidade(self):
-        raise NotImplementedError
+        raise NotImplementedError  # Corpo de reserva; as derivadas abaixo o substituem.
 
 
 class SensorNivel(Sensor):
@@ -293,20 +299,22 @@ class SensorTemperatura(Sensor):
         return "C"
 
 
-def imprimir(sensor: Sensor):
-    print(sensor.unidade())
+def imprimir(sensor: Sensor):  # O cliente conhece o contrato, nao a classe concreta.
+    print(sensor.unidade())  # A implementacao vem do objeto recebido.
 
 
 def main():
     nivel = SensorNivel()
     temperatura = SensorTemperatura()
-    imprimir(nivel)
-    imprimir(temperatura)
+    imprimir(nivel)  # Chama SensorNivel.unidade().
+    imprimir(temperatura)  # Chama SensorTemperatura.unidade().
 
 
 if __name__ == "__main__":
     main()
 ```
+
+Execute `python3 exemplo_11_despacho_python.py`.
 
 Resultado:
 
@@ -318,7 +326,7 @@ C
 **O mesmo conceito em Python:**
 
 - **Despacho:** Python encontra o método no objeto recebido; não usa `virtual`.
-- **`ABC` e `@abstractmethod`:** exigem operações concretizadas antes de instanciar a subclasse.
+- **`ABC` e `@abstractmethod`:** tornam verificável, na instanciação, a obrigação de implementar `unidade()` nas subclasses concretas.
 - **Anotação `sensor: Sensor`:** comunica a intenção, sem verificar o tipo em execução.
 - **Contrato comportamental:** a abstração não comprova que a unidade devolvida está correta.
 

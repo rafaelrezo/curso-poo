@@ -3,8 +3,8 @@ class FonteConstante:
         return 42.5
 
 
-class FalhaLeitura(Exception):
-    pass
+class FalhaLeitura(Exception):  # Tipo proprio para uma falha prevista de aquisicao.
+    pass  # A classe herda o comportamento de Exception; nao precisa de metodo novo.
 
 
 class Sessao:
@@ -19,24 +19,25 @@ class Sessao:
 
 
 def adquirir(fonte, disponivel, sessao):
-    sessao.abrir()
+    sessao.abrir()  # A partir daqui ha uma sessao ativa.
+    print(f"Durante aquisicao | sessoes: {sessao.abertas}")
     try:
         if not disponivel:
-            raise FalhaLeitura("fonte indisponivel")
+            raise FalhaLeitura("fonte indisponivel")  # Interrompe a aquisicao.
         return fonte.valor()
     finally:
-        sessao.fechar()
+        sessao.fechar()  # Executa no retorno normal e antes de propagar a falha.
 
 
 def ler_servico(fonte, disponivel, sessao):
-    return adquirir(fonte, disponivel, sessao)
+    return adquirir(fonte, disponivel, sessao)  # Nao captura: a falha sobe ao cliente.
 
 
 def executar_ciclo(fonte, disponivel, sessao):
     try:
         return True, ler_servico(fonte, disponivel, sessao)
-    except FalhaLeitura:
-        return False, 0
+    except FalhaLeitura:  # So a falha prevista vira "sem leitura".
+        return False, 0  # O False marca ausencia; zero nao e uma medicao.
 
 
 def mostrar(resultado, sessao):

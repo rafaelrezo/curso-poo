@@ -33,11 +33,11 @@
 
 ## 2. Continuidade para a turma atual
 
-As seções 01 a 06 já ministradas permanecem preservadas. A seção 07 usa o [starter de fundamentos](https://github.com/rafaelrezo/poo-fundamentos-estacao); a seção 08 mantém sua atividade própria. As seções 09 a 12 retomam o fork iniciado em 07.
+As seções 01 a 06 já ministradas permanecem preservadas. A seção 07 usa o [starter de fundamentos](https://github.com/rafaelrezo/poo-fundamentos-estacao); a seção 08 mantém sua atividade própria. A prática A dos capítulos 09 e 10 usa um [starter independente](https://github.com/rafaelrezo/poo-colaboracao-excecoes). A prática B dos capítulos 11 e 12 conserva, por ora, o fork de fundamentos iniciado em 07.
 
 Os capítulos 09 e 11 concentram exposição dialogada e programas demonstrativos completos. Há **duas entregas no bloco 09–12**: prática A ao final do 10 (colaboração e falhas), e prática B ao final do 12 (catálogo e modelo). Cada atividade usa uma branch, commits do incremento guiado e da extensão, testes cumulativos e uma PR no próprio fork.
 
-O starter fornece os mecanismos que não são foco da implementação: interfaces, fontes, limpeza, comparação, hash e infraestrutura de coleções. Os comandos `make test ETAPA=A` e `make test ETAPA=B` validam, respectivamente, até os contratos técnicos 11 e 13. Os IDs e as branches antigas permanecem disponíveis para compatibilidade, sem entregas adicionais. Forks antigos seguem o [guia de atualização](https://github.com/rafaelrezo/poo-fundamentos-estacao/blob/main/ATUALIZACAO.md).
+Cada prática fornece os mecanismos que não são foco da implementação. Na prática A, interface, fontes e limpeza estão prontas; `make test ETAPA=A` valida colaboração e falhas no repositório próprio. Na prática B, comparação, hash e infraestrutura de coleções permanecem no starter de fundamentos, com `make test ETAPA=B`. A prática A não requer atualização de forks antigos.
 
 ## 3. Organização das 60h
 
@@ -57,12 +57,12 @@ A transferência de princípios e testes move 2h para o início da Parte 2; não
 |---|---:|---:|
 | 07–08: herança e polimorfismo | 2h | 4h |
 | 09: colaboração e contratos, demonstrativo | 2h | — |
-| 10: exceções e prática integrada A (09+10) | 2h | até 2h |
+| 10: exceções e prática integrada A (09+10) | 2h | cerca de 20 min externos (1h total de prática) |
 | 11: identidade e coleções, demonstrativo | 2h | — |
 | 12: modelagem e prática integrada B (11+12) | 2h | até 2h |
-| Total de estudo/prática dos blocos | 10h | até 8h |
+| Total de estudo/prática dos blocos | 10h | até 6h20 |
 
-As horas externas não integram as 60h presenciais. O bloco 09–12 passa de 8h para um orçamento de **até 4h externas**, incluindo preparação e revisão das duas práticas; as 4h previstas para 07–08 permanecem. Essa redução depende do recorte de tarefas e da infraestrutura fornecida, não apenas da fusão de entregas. Os tempos são estimativas a calibrar com a turma.
+As horas externas não integram as 60h presenciais. O bloco 09–12 passa de 8h para um orçamento de **até 2h20 externas**, incluindo preparação e revisão das duas práticas; as 4h previstas para 07–08 permanecem. Essa redução depende do recorte de tarefas e da infraestrutura fornecida, não apenas da fusão de entregas. Os tempos são estimativas a calibrar com a turma.
 
 Em sala, o 09 e o 11 dedicam 2h às demonstrações; o 10 reserva aproximadamente 80 min à exposição e 40 min à prática A; o 12 reserva 60 min à modelagem e 60 min à prática B. Os vídeos são complementares dentro do tempo previsto, sem tarefas obrigatórias extras nos capítulos expositivos.
 

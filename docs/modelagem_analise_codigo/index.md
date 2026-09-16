@@ -286,7 +286,7 @@ O diagrama estrutural não explica sozinho essa sequência. Uma pequena tabela d
 
 ## 7. Prática integrada B — catálogo e modelo do mesmo sistema
 
-Esta é a **única entrega dos capítulos 11 e 12**. Use o fork da prática A já concluída e integrada. A infraestrutura de identidade, ordenação, hash, genericidade e iteração polimórfica está fornecida. Você implementará inserção, busca e remoção, e explicará o modelo; não haverá uma atividade UML separada.
+Esta é a **única entrega dos capítulos 11 e 12**. Use o fork de fundamentos iniciado no capítulo 07; a prática A agora tem repositório próprio e não é pré-requisito de arquivos para esta entrega. A infraestrutura de identidade, ordenação, hash, genericidade e iteração polimórfica está fornecida. Você implementará inserção, busca e remoção, e explicará o modelo; não haverá uma atividade UML separada.
 
 ### 7.1 Retomar e observar a pendência
 
@@ -298,7 +298,7 @@ git switch -c pratica/integrada-b
 make test ETAPA=B
 ```
 
-Somente `origin` deve apontar para seu fork de [poo-fundamentos-estacao](https://github.com/rafaelrezo/poo-fundamentos-estacao). O teste repete os contratos da prática A e da comparação fornecida. A primeira pendência nova pede a inserção de objetos no catálogo.
+Somente `origin` deve apontar para seu fork de [poo-fundamentos-estacao](https://github.com/rafaelrezo/poo-fundamentos-estacao). O teste repete os contratos de colaboração e exceções fornecidos neste starter e da comparação fornecida. Não migre o código da prática A. A primeira pendência nova pede a inserção de objetos no catálogo.
 
 ### 7.2 Incremento guiado — inserir e buscar
 
@@ -324,7 +324,7 @@ Implemente `remover` com resposta verdadeira apenas quando a chave existia. Cons
 | remover a mesma chave novamente | falso |
 | consultar sensor externo após remover registro | sensor continua válido |
 
-Execute `make test ETAPA=B` até obter `OK pratica integrada B (C++ e Python)`. Os testes anteriores continuam ativos. Não altere os testes nem a CI para obter aprovação.
+Execute `make test ETAPA=B` até obter `OK pratica integrada B (C++ e Python)`. Os testes de base deste repositório continuam ativos. Não altere os testes nem a CI para obter aprovação.
 
 Em `docs/diagrama.md`, desenhe a vista do catálogo com `IdSensor`, `Medicao` e as operações implementadas. Registre três correspondências entre elemento do desenho e arquivo/operação. Acrescente uma vista pequena de colaboração com `FonteNivel`, `IFonteLeitura` e `SensorNivel`, retomando a prática A sem desenhar todo o projeto.
 
