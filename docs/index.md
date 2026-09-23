@@ -26,18 +26,18 @@
 - `08. Polimorfismo e contratos`: consultar sensores diferentes por uma interface comum.
 - `09. Objetos colaborando e contratos`: associação, dependência e interfaces em demonstrações progressivas; prepara a prática A.
 - `10. Exceções e recursos`: lançamento, propagação e limpeza; encerra a prática A, integrada ao capítulo 09.
-- `11. Identidade, igualdade e coleções`: chaves estáveis, comparação e catálogos em demonstrações; prepara a prática B.
-- `12. UML e modelagem de cenários`: fechar a Parte 1 com a prática B: catálogo e modelagem, integrada ao capítulo 11.
+- `11. Identidade, igualdade e coleções`: fundamentos e prática independente de catálogo/histórico em C++ e Python.
+- `12. UML e modelagem de cenários`: representar responsabilidades, relações e multiplicidades, com oficina de diagramas.
 - `13. Parte 2 — Projeto Integrador`: começar por princípios de projeto e testes de objetos; aplicar a base em arquitetura, JSON, integração, padrões, persistência e comunicação.
 - `14. Checklist profissional de entrega`: reunir as evidências da solução.
 
 ## 2. Continuidade para a turma atual
 
-As seções 01 a 06 já ministradas permanecem preservadas. A seção 07 usa o [starter de fundamentos](https://github.com/rafaelrezo/poo-fundamentos-estacao); a seção 08 mantém sua atividade própria. A prática A dos capítulos 09 e 10 usa um [starter independente](https://github.com/rafaelrezo/poo-colaboracao-excecoes). A prática B dos capítulos 11 e 12 conserva, por ora, o fork de fundamentos iniciado em 07.
+As seções 01 a 06 já ministradas permanecem preservadas. A seção 07 usa o [starter de fundamentos](https://github.com/rafaelrezo/poo-fundamentos-estacao); a seção 08 mantém sua atividade própria. A prática A dos capítulos 09 e 10 usa um [starter independente](https://github.com/rafaelrezo/poo-colaboracao-excecoes). O capítulo 11 passa a usar o [starter independente de identidade e coleções](https://github.com/rafaelrezo/poo-identidade-colecoes).
 
-Os capítulos 09 e 11 concentram exposição dialogada e programas demonstrativos completos. Há **duas entregas no bloco 09–12**: prática A ao final do 10 (colaboração e falhas), e prática B ao final do 12 (catálogo e modelo). Cada atividade usa uma branch, commits do incremento guiado e da extensão, testes cumulativos e uma PR no próprio fork.
+Há **duas atividades de programação no bloco 09–12**: prática A ao final do 10, com uma PR, e prática de coleções ao final do 11, com dois incrementos cumulativos e uma PR por incremento. O capítulo 09 é expositivo; o 12 trabalha apenas modelagem e revisão de diagramas, sem implementação adicional.
 
-Cada prática fornece os mecanismos que não são foco da implementação. Na prática A, interface, fontes e limpeza estão prontas; `make test ETAPA=A` valida colaboração e falhas no repositório próprio. Na prática B, comparação, hash e infraestrutura de coleções permanecem no starter de fundamentos, com `make test ETAPA=B`. A prática A não requer atualização de forks antigos.
+Na prática A, interface, fontes e limpeza estão prontas; `make test ETAPA=A` valida colaboração e falhas. No novo starter do 11, comparação, hash e infraestrutura estão fornecidos: `make test ETAPA=01` valida o catálogo e `make test ETAPA=02` acrescenta remoção e consulta ao histórico. Ambas as linguagens são obrigatórias. A [entrada da Parte 2](parte-2-projeto/00-principios-testes/index.md) orienta o reaproveitamento dos métodos no fork de fundamentos; o capítulo 11 não exige migrar forks antigos.
 
 ## 3. Organização das 60h
 
@@ -58,13 +58,13 @@ A transferência de princípios e testes move 2h para o início da Parte 2; não
 | 07–08: herança e polimorfismo | 2h | 4h |
 | 09: colaboração e contratos, demonstrativo | 2h | — |
 | 10: exceções e prática integrada A (09+10) | 2h | cerca de 20 min externos (1h total de prática) |
-| 11: identidade e coleções, demonstrativo | 2h | — |
-| 12: modelagem e prática integrada B (11+12) | 2h | até 2h |
-| Total de estudo/prática dos blocos | 10h | até 6h20 |
+| 11: identidade, coleções e início da prática própria | 2h | cerca de 80 min externos (2h total de prática) |
+| 12: modelagem e oficina de diagramas | 2h | — |
+| Total de estudo/prática dos blocos | 10h | cerca de 5h40 |
 
-As horas externas não integram as 60h presenciais. O bloco 09–12 passa de 8h para um orçamento de **até 2h20 externas**, incluindo preparação e revisão das duas práticas; as 4h previstas para 07–08 permanecem. Essa redução depende do recorte de tarefas e da infraestrutura fornecida, não apenas da fusão de entregas. Os tempos são estimativas a calibrar com a turma.
+As horas externas não integram as 60h presenciais. O bloco 09–12 prevê **cerca de 1h40 externa**, incluindo 20 min para concluir a prática A e 80 min para concluir a prática do 11; as 4h previstas para 07–08 permanecem. Os tempos são estimativas a calibrar com a turma.
 
-Em sala, o 09 e o 11 dedicam 2h às demonstrações; o 10 reserva aproximadamente 80 min à exposição e 40 min à prática A; o 12 reserva 60 min à modelagem e 60 min à prática B. Os vídeos são complementares dentro do tempo previsto, sem tarefas obrigatórias extras nos capítulos expositivos.
+Em sala, o 09 dedica 2h às demonstrações; o 10 e o 11 reservam aproximadamente 80 min à exposição e 40 min ao início de suas práticas; o 12 reserva 80 min à modelagem dialogada e 40 min à oficina de diagramas. Os vídeos são complementares dentro do tempo previsto.
 
 ## 4. Resultado esperado ao concluir a Parte 1
 

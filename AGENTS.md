@@ -265,11 +265,12 @@ A estrutura de página é uma referência, não um roteiro obrigatório. Não im
 - As exigências de fork/CI/prática cumulativa deste arquivo aplicam-se às atividades de programação atribuídas aos alunos; não tornam obrigatória uma atividade numa aula expositiva.
 - A aula05 de Construtores e Sobrecarga é exclusivamente expositiva. Na aula08 de Polimorfismo, toda a atividade fica na seção8, como um único exemplo guiado com incrementos cumulativos.
 
-### Práticas integradas dos capítulos 09–12
+### Práticas e modelagem dos capítulos 09–12
 
-- Os capítulos 09 (Colaboração e Contratos) e 11 (Identidade, Igualdade e Coleções) são expositivos, com demonstrações progressivas e sem entrega própria.
-- A prática A encerra os capítulos 09+10 no final do 10; a prática B encerra 11+12 no final do 12, reunindo catálogo e modelagem na mesma entrega.
-- Cada prática usa uma branch, commits do incremento guiado e da extensão e uma PR para a main do próprio fork. Não recriar as seis entregas antigas.
+- O capítulo 09 é expositivo; a prática A encerra os capítulos 09+10 no final do 10.
+- Por orientação do docente, o capítulo 11 tem prática independente em `rafaelrezo/poo-identidade-colecoes`: etapa 01 guiada de catálogo e etapa 02 de remoção/consulta ao histórico, em C++ e Python. Cada etapa usa uma branch e PR para a main do próprio fork, com testes cumulativos.
+- O capítulo 12 foca modelagem e oficina de diagramas, sem implementação adicional de catálogo. A antiga prática integrada B de 11+12 foi substituída. Não recriar as seis entregas antigas.
+- A prática A mantém sua branch e PR únicas; a prática do 11 integra a etapa 01 antes de abrir a etapa 02.
 - Manter interfaces, fontes, limpeza de recursos, comparação, hash e infraestrutura de coleções como código fornecido e explicado; as tarefas autorais têm recorte explícito. A solução das extensões não deve ser publicada com o starter.
 - Preservar a compatibilidade dos contratos e a continuidade para a Parte 2 ao atualizar o starter.
 - A conferência visual local é feita pelo docente com `make run`; não iniciar serviços de visualização sem solicitação explícita.

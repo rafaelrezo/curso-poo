@@ -28,13 +28,23 @@ Antes de implementar, registre como mudariam os arquivos se fosse necessário tr
 
 ## 2. Retome o artefato e abra a branch
 
-Use o próprio fork de [rafaelrezo/poo-fundamentos-estacao](https://github.com/rafaelrezo/poo-fundamentos-estacao), com **a prática integrada B (capítulos 11+12) concluída e integrada**, incluindo o modelo do catálogo. `make test ETAPA=B` deve passar; ele cobre todos os contratos até 13, inclusive a infraestrutura fornecida. Não há entrega extra de UML nem etapas antigas a refazer. Este é o primeiro incremento da Parte 2. O clone deve ter somente `origin`, apontando para o fork. Não copie arquivos dos repositórios das seções 01–06.
+Use o próprio fork de [rafaelrezo/poo-fundamentos-estacao](https://github.com/rafaelrezo/poo-fundamentos-estacao), iniciado no capítulo 07. A prática de programação do capítulo 11 agora tem [repositório independente](https://github.com/rafaelrezo/poo-identidade-colecoes); o capítulo 12 trabalha somente modelagem.
+
+**Ponte entre os repositórios:** se seu fork de fundamentos ainda tem os `TODO B` no catálogo, reaproveite os corpos de `inserir`, `buscar` e `remover` que você já concluiu no 11, nas classes `Catalogo` de `include/colecoes.hpp` e `src/colecoes.py`. Preserve o restante desses arquivos: o starter de fundamentos também contém operações com fontes que não existem na prática independente. Não substitua os arquivos inteiros nem copie o histórico. As assinaturas e a política de duplicatas são compatíveis.
+
+Faça essa adaptação na branch `projeto/00-testes`, valide com `make test ETAPA=B` e registre um commit de preparação antes de implementar o controlador. `B` permanece como identificador técnico da base de testes do starter antigo; **não representa uma nova entrega nem a antiga prática integrada 11+12**. Se o catálogo já está implementado, basta conferir esse teste. Reveja seu diagrama do capítulo 12 para apoiar a leitura das relações.
+
+**Fork antigo com `TODO A`:** a base publicada de fundamentos pode ainda ter pendências de painel e calibração, mesmo que você tenha concluído a prática A em seu repositório independente. Em `include/relacoes.hpp` e `src/relacoes.py`, faça `PainelFixo.leitura` consultar o sensor associado (`sensor_->valor()` / `self._sensor.valor()`). Em `adquirir`, nos arquivos de exceções, preserve a rejeição de indisponibilidade e lance `FalhaCalibracao` quando faltar calibração, como no capítulo 10. Preserve a interface e o retorno antigos de `executarCiclo`/`executar_ciclo`; não copie a classe inteira do outro starter. Isso recompõe a infraestrutura já estudada, sem nova atividade. Falhas da etapa 07 indicam que a implementação anterior de sensores também precisa estar concluída.
+
+O clone mantém somente `origin` apontando para seu fork. Não copie arquivos dos repositórios das seções 01–06.
 
 ```bash
 git switch main
 git pull --ff-only origin main
 git remote -v
 git switch -c projeto/00-testes
+# Se necessário, adapte os três métodos do catálogo antes de testar.
+make test ETAPA=B
 make test-projeto
 ```
 
