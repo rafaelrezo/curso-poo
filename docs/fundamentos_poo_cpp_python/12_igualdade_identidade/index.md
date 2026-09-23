@@ -190,6 +190,10 @@ O termo **trade-off** descreve essa troca: ganhamos uma possibilidade, como cons
 
 **4. Salvar e carregar sob demanda: consultar pedidos de anos anteriores.** O aplicativo grava os pedidos em armazenamento persistente e carrega apenas os necessários à consulta, por exemplo, os vinte pedidos de uma página. Assim, o histórico pode sobreviver ao encerramento e não precisa caber inteiro na memória do aplicativo. O custo é implementar gravação, leitura e tratamento de falhas; abrir outra página pode exigir novo acesso ao armazenamento. É uma boa escolha para históricos duráveis e extensos. Para uma soma temporária de poucos valores, essa infraestrutura acrescentaria trabalho sem atender a uma necessidade real.
 
+[![Ilustração em quatro painéis: calculadora que guarda apenas o total, carrinho completo em memória, lista limitada aos dez produtos recentes e pedidos persistidos carregados por página. Cada painel apresenta benefícios e limitações da estratégia.](ilustracao-estrategias-retencao.jpeg)](ilustracao-estrategias-retencao.jpeg)
+
+*Quatro estratégias de retenção: o que permanece disponível, quanto precisa ficar em memória e quais consultas deixam de ser possíveis. Clique na figura para ampliar.*
+
 A comparação abaixo resume **quando cada escolha ajuda e quando atrapalha**:
 
 | Técnica/Padrão | Melhor uso | Esforço | Entregável | Limitação |
